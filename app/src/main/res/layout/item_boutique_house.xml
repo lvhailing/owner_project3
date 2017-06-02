@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/bg_myperson_white_gray"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/net_fail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_house_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_loan_elite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/img_normal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/iv_loan_elite"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_house_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="12"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="帕诺拉普吉岛豪华海景公寓"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_house_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="3卧1卫/100-125㎡"
+                android:textColor="@color/gray_dark"
+                android:textSize="14.0sp"/>
+
+            <TextView
+                android:id="@+id/tv_house_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="80-112.5万元"
+                android:textColor="@color/gray_dark"
+                android:textSize="14.0sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">海德汇</string>
+
+    <string name="net_fail_text">当前网络不可用，点此检查网络设置</string>
+</resources>

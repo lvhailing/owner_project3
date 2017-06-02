@@ -1,0 +1,26 @@
+package com.haidehui.common;
+
+
+public class Urls {
+    //测试环境
+    public static String URL_DEBUG = "http://192.168.1.86:82/";
+    // 正式环境IP
+    public static String URL_OFFICIAL = "https://jdhapp.cf360.com/";
+    //代树理
+    public static final String URL_DSL = "http://192.168.1.106:9999/junde-hui-app/";
+
+    // 邢玉洁
+    public static final String URL_XYJ = "http://192.168.1.125:9999/junde-hui-app/";
+
+    // 调试，上线时只需改此处环境即可
+    private static String EC_HOST = URL_DEBUG;
+
+    //首页
+    public static final String URL_HOME = EC_HOST + "index";
+    // 轮播图
+    public static final String URL_CYCLE_ADVERTISE_INDEX = EC_HOST + "turn/advertise";
+    //意见反馈
+    public static final String URL_ADVICE = EC_HOST + "problem/reply/save";
+    //检查版本
+    public static final String URL_CHECKVERSION = EC_HOST + "version/check";
+}
