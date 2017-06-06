@@ -2,4 +2,8 @@
     <string name="app_name">海德汇</string>
 
     <string name="net_fail_text">当前网络不可用，点此检查网络设置</string>
+    <string name="title_null"></string>
+    <string name="title_hot_house">最热房源</string>
+    <string name="title_house_detail">房源详情</string>
+
 </resources>

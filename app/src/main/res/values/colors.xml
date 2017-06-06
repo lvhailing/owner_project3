@@ -11,7 +11,7 @@
     <color name="gray_dark">#696969</color>
     <color name="gray_d">#ff999999</color>
 
-
+    <color name="bg_gray_gray">#CCCCCC</color>
     <color name="blue_light">#ff11bbee</color>
     <color name="title_bgnew">#ff3392c9</color>
     <color name="txt_white">#fff9f9f9</color>

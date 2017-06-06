@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.haidehui.common.Urls;
+import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
 import com.haidehui.model.VersionMo;
@@ -97,38 +98,71 @@ public class HtmlRequest extends BaseRequester {
         });
     }
     // 首页-- 精品房源数据
-//    public static void getBoutiqueHouseData(final Context context, Map<String, Object> param, OnRequestListener listener) {
-//        final String data = getResult(param);
-//        final String url = Urls.URL_CYCLE_ADVERTISE_INDEX;
-//
-//        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
-//            @Override
-//            public Object doTask(BaseParams params) {
-//                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
-//                HttpEntity entity = null;
-//                try {
-//                    entity = new StringEntity(data);
-//                } catch (UnsupportedEncodingException e1) {
-//                    e1.printStackTrace();
-//                }
-//                client.post(url, entity);
-//                String result = (String) client.getResult();
-//                if (isCancelled() || result == null) {
-//                    return null;
-//                }
-//                Gson gson = new Gson();
-//                ResultCycleIndexContent1B b = gson.fromJson(result, ResultCycleIndexContent1B.class);
-//                return b.getData();
-//            }
-//
-//            @Override
-//            public void onPostExecute(Object result, BaseParams params) {
-//                params.result = result;
-//                params.sendResult();
-//            }
-//
-//        });
-//    }
+    public static void getBoutiqueHouseData(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CYCLE_ADVERTISE_INDEX;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                Gson gson = new Gson();
+                ResultCycleIndexContent1B b = gson.fromJson(result, ResultCycleIndexContent1B.class);
+                return b.getData();
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
+    // 首页-- 最热房源列表数据
+    public static void getHotHouseData(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CYCLE_ADVERTISE_INDEX;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                Gson gson = new Gson();
+                HotHouse1B b = gson.fromJson(result, HotHouse1B.class);
+                return b.getData();
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
 
 
     public static void checkVersion(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {

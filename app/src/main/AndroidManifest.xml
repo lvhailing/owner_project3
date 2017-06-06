@@ -40,6 +40,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".act.HotHouseActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".act.HouseDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

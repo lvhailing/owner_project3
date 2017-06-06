@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.act.HotHouseActivity;
 import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
@@ -34,8 +35,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.R.id.list;
-
 /**
  * 底部导航---产品
  */
@@ -47,14 +46,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private CycleAdapter cycleAdapter;//自定义viewPager
     private MyListView myListView; // 精品房源推荐
     private BoutiqueHouseAdapter myAdapter;
-    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; //固收、浮收、保险
+    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; //最热房源、海外项目、我的客服
     private ScrollView scrollView;
     private Context context;
-//    private ResultProductIndexBean productIndexBean;
+    //    private ResultProductIndexBean productIndexBean;
     private MouldList<ResultCycleIndex2B> homeCycleBean;
-    private MouldList<BoutiqueHouse2B> list; // 精品房源数据
+    private MouldList<BoutiqueHouse2B> list = new MouldList<>();; // 精品房源数据
     private TextView tv_home_notice;
     private LinearLayout ll_home_notice;
+    private Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         context = getActivity();
 //        productIndexBean = new ResultProductIndexBean();
         homeCycleBean = new MouldList<ResultCycleIndex2B>();
-        list = new MouldList<BoutiqueHouse2B>();
+
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
@@ -194,8 +194,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_hot_house:  // 最热房源
-//                Intent i_gushou = new Intent(context, GushouActivity.class);
-//                startActivity(i_gushou);
+                intent = new Intent(context, HotHouseActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
 //                Intent i_float = new Intent(context, FloatActivity.class);
@@ -258,7 +258,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private void requestCycleIndex() {
         Map<String, Object> param = new HashMap<>();
         param.put("appType", "android");
-        HtmlRequest.getCycleIndex(context,param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
