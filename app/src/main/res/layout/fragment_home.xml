@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@mipmap/img_home_notice"/>
+                    android:src="@mipmap/icon_home_notice"/>
 
                 <ImageView
                     android:layout_width="1dp"
