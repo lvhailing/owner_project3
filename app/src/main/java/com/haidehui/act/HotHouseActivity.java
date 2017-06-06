@@ -77,8 +77,8 @@ public class HotHouseActivity extends BaseActivity implements View.OnClickListen
     private void initData() {
         mAdapter = new HotHouseAdapter(mContext, totalList);
         listView.setAdapter(mAdapter);
-//
-        requestListData();
+
+//        requestListData();
 
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
