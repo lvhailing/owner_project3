@@ -12,7 +12,6 @@ import java.util.Date;
 
 /**
  * 日志工具类
- * Created by lmnrenbc on 2017/5/3.
  */
 public class LogUtil {
     private static Boolean LOG_SWITCH = true; // 日志文件总开关

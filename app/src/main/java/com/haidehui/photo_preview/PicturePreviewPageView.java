@@ -13,7 +13,6 @@ import com.haidehui.photo_preview.ScaleImageView.SubsamplingScaleImageView;
 
 /**
  * 图片预览页
- * Created by lmnrenbc on 2017/5/3.
  */
 public class PicturePreviewPageView extends FrameLayout {
 

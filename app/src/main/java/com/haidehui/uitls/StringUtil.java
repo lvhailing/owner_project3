@@ -12,8 +12,6 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.widget.Button;
 
-import com.haidehui.R;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -57,6 +55,13 @@ public class StringUtil {
         } else {
             return strTarget;
         }
+    }
+
+    public static boolean fromNet(String s) {
+        if (TextUtils.isEmpty(s)) {
+            return false;
+        }
+        return s.contains("http://") || s.contains("https://");
     }
 
     /**

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 /**
  * 图片预览页面
  * 注意，SHOW_SELECT_BTN属性为true时或底部操作栏显示时，KEY_SELECTED 值不能为null
- * Created by lmnrenbc on 2017/5/2.
  */
 
 public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener {
@@ -45,11 +44,11 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         currentPos = getIntent().getIntExtra("currentPos", 0);
 
         //设置适配器
-        previewAdapter = new PreviewAdapter(this, urls);
-        mViewPager.setOffscreenPageLimit(1);
+        previewAdapter = new PreviewAdapter(urls);
+//        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(previewAdapter);
         mViewPager.addOnPageChangeListener(pageChangeListener);
-//        mViewPager.setCurrentItem(currentPos);
+        mViewPager.setCurrentItem(currentPos);
 
         updateNum();
     }
