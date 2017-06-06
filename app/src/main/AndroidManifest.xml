@@ -48,6 +48,9 @@
         <activity
             android:name=".act.HouseDetailActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".photo_preview.PhotoPreviewAc"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

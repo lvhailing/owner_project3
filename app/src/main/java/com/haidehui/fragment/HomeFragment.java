@@ -17,14 +17,15 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.act.HotHouseActivity;
-import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
+import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.photo_preview.PhotoPreviewAc;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.MyListView;
@@ -32,6 +33,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,12 +48,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private CycleAdapter cycleAdapter;//自定义viewPager
     private MyListView myListView; // 精品房源推荐
     private BoutiqueHouseAdapter myAdapter;
-    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; //最热房源、海外项目、我的客服
+    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; //固收、浮收、保险
     private ScrollView scrollView;
     private Context context;
-    //    private ResultProductIndexBean productIndexBean;
+//    private ResultProductIndexBean productIndexBean;
     private MouldList<ResultCycleIndex2B> homeCycleBean;
-    private MouldList<BoutiqueHouse2B> list = new MouldList<>();; // 精品房源数据
+    private MouldList<BoutiqueHouse2B> list; // 精品房源数据
     private TextView tv_home_notice;
     private LinearLayout ll_home_notice;
     private Intent intent;
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         context = getActivity();
 //        productIndexBean = new ResultProductIndexBean();
         homeCycleBean = new MouldList<ResultCycleIndex2B>();
-
+        list = new MouldList<BoutiqueHouse2B>();
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
@@ -200,6 +202,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
             case R.id.tv_oversea_project: // 海外项目
 //                Intent i_float = new Intent(context, FloatActivity.class);
 //                startActivity(i_float);
+                ArrayList<String> list = new ArrayList<>();
+                list.add("http://www.mincoder.com/images/201451/2_kz6JPhk5sVYKeiQL.jpeg");
+                list.add("http://www.mincoder.com/assets/images/avatar.jpg");
+                list.add("http://img.blog.csdn.net/20140829232452908?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveXVlcWluZ2xrb25n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center");
+                list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
+                list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
+
+                Intent intent = new Intent(getActivity(), PhotoPreviewAc.class);
+                intent.putStringArrayListExtra("urls", list);
+                intent.putExtra("currentPos", 2);
+                getActivity().startActivity(intent);
                 break;
             case R.id.tv_customer_service: // 我的客服
 //                Intent i_insurance = new Intent(context, InsuranceActivity.class);
@@ -258,7 +271,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private void requestCycleIndex() {
         Map<String, Object> param = new HashMap<>();
         param.put("appType", "android");
-        HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.getCycleIndex(context,param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {

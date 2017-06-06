@@ -6,67 +6,57 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.haidehui.R;
+import com.haidehui.uitls.Constants.Config;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.haidehui.uitls.Constants.Config;
 
 /**
  * 图片加载缓存管理
- * 
+ *
  * @author cxy
- * 
  */
 public class ImageLoaderManager {
 
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
-	@SuppressWarnings("unused")
-	public static void initStrictMode() {
-		if (Config.DEVELOPER_MODE
-				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-					.detectAll().penaltyDialog().build());
-			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-					.detectAll().penaltyDeath().build());
-		}
+    public static DisplayImageOptions options=ImageLoaderManager.initDisplayImageOptions(R.drawable.icons, R.drawable.icons, R.drawable.icons);;
 
-	}
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    @SuppressWarnings("unused")
+    public static void initStrictMode() {
+        if (Config.DEVELOPER_MODE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyDialog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyDeath().build());
+        }
 
-	/**
-	 * 
-	 * @param context
-	 */
-	public static void initImageLoader(Context context) {
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				context).threadPoolSize(5)
-				.threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.writeDebugLogs() // Remove
-				.build();
-		ImageLoader.getInstance().init(config);
-	}
+    }
 
-	public static DisplayImageOptions options;
+    /**
+     * @param context
+     */
+    public static void initImageLoader(Context context) {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .threadPoolSize(5)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .writeDebugLogs() // Remove
+                .build();
+        ImageLoader.getInstance().init(config);
+    }
 
-	/**
-	 * init displayImageOptions this.options = new DisplayImageOptions.Builder()
-	 * .showImageOnLoading(R.drawable.answerloading)
-	 * .showImageOnFail(R.drawable.answerloadfailed)
-	 * .showImageForEmptyUri(R.drawable.answerloadfailed)
-	 * .cacheInMemory(true).cacheOnDisc(true).considerExifParams(true)
-	 * .bitmapConfig(Bitmap.Config.RGB_565).build();
-	 */
-	public static DisplayImageOptions initDisplayImageOptions(int onLoadingImg,
-			int forEmptyUriImg, int onFailImg) {
-		return new DisplayImageOptions.Builder()
-				.showImageOnLoading(onLoadingImg)
-				.showImageForEmptyUri(forEmptyUriImg)
-				.showImageOnFail(onFailImg).cacheInMemory(true)
-				.cacheOnDisc(true).considerExifParams(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
-	}
+    public static DisplayImageOptions initDisplayImageOptions(int onLoadingImg, int forEmptyUriImg, int onFailImg) {
+        return new DisplayImageOptions.Builder()
+                .showImageOnLoading(onLoadingImg)
+                .showImageForEmptyUri(forEmptyUriImg)
+                .showImageOnFail(onFailImg)
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+    }
 }
