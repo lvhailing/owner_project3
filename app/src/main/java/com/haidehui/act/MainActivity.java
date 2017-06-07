@@ -23,6 +23,7 @@ import com.haidehui.model.VersionMo;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,11 +56,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private MineFragment tab_house_resources; //房源
     private MineFragment tab_discovery; //发现
     private MineFragment tab_mine; //我的
+    private TitleBar title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.activity_main);
+        initTopTitle();
+
         initView();
         initVP();
         setSelect(0);
@@ -119,6 +123,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+
+    public void initTopTitle() {
+        title = (TitleBar) findViewById(R.id.rl_title);
+        title.setVisibility(View.GONE);
+
+    }
+
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
         ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
@@ -158,19 +169,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (pos) {
             case 0:
                 tv_home.setTextColor(Color.parseColor("#8a0002"));
-//                iv_home.setImageResource(R.mipmap.icon_tab_asset_pressed);
+                iv_home.setImageResource(R.mipmap.bg_home_pressed);
                 break;
             case 1:
                 tv_house_resources.setTextColor(Color.parseColor("#8a0002"));
-//                iv_house_resources.setImageResource(R.mipmap.icon_tab_product_pressed);
+                iv_house_resources.setImageResource(R.mipmap.bg_house_resources_pressed);
                 break;
             case 2:
                 tv_discovery.setTextColor(Color.parseColor("#8a0002"));
-//                iv_discovery.setImageResource(R.mipmap.icon_tab_service_pressed);
+                iv_discovery.setImageResource(R.mipmap.bg_discovery_pressed);
                 break;
             case 3:
                 tv_mine.setTextColor(Color.parseColor("#8a0002"));
-//                mIvmine.setImageResource(R.mipmap.icon_tab_mine_pressde);
+                mIvmine.setImageResource(R.mipmap.bg_mine_pressed);
                 break;
 
         }
@@ -184,10 +195,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void resetImages() {
-//        iv_home.setImageResource(R.mipmap.img_asset_icon_normal);
-//        iv_house_resources.setImageResource(R.mipmap.img_product_icon_normal);
-//        iv_discovery.setImageResource(R.mipmap.img_news_icon_normal);
-//        mIvmine.setImageResource(R.mipmap.img_mine_icon_normal);
+        iv_home.setImageResource(R.mipmap.bg_home_normal);
+        iv_house_resources.setImageResource(R.mipmap.bg_house_resources_normal);
+        iv_discovery.setImageResource(R.mipmap.bg_discovery_normal);
+        mIvmine.setImageResource(R.mipmap.bg_mine_normal);
     }
 
     //检查版本更新
@@ -195,18 +206,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Map<String, Object> param = new HashMap<>();
         param.put("type", "android");
         HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
-                    @Override
-                    public void onRequestFinished(BaseParams params) {
-                        if (params.result != null) {
-                            final VersionMo b = (VersionMo) params.result;
-                            //后台版本为已停运、未上线，不做处理
-                            if (!TextUtils.isEmpty(b.getVersion())) {
-                                Toast.makeText(mContext, "new version" + b.getVersion(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result != null) {
+                    final VersionMo b = (VersionMo) params.result;
+                    //后台版本为已停运、未上线，不做处理
+                    if (!TextUtils.isEmpty(b.getVersion())) {
+                        Toast.makeText(mContext, "new version" + b.getVersion(), Toast.LENGTH_SHORT).show();
                     }
                 }
-        );
+            }
+        });
     }
 
     private boolean isAppInstalled(String uri) {

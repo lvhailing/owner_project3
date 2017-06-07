@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.act.HotHouseActivity;
+import com.haidehui.act.HouseDetailActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
@@ -119,7 +120,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+        options = new DisplayImageOptions.Builder()
+                .showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one)
+                .resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
         requestCycleIndex();
     }
@@ -196,16 +200,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_hot_house:  // 最热房源
-                intent = new Intent(context, HotHouseActivity.class);
+                intent = new Intent(context, HouseDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
 //                Intent i_float = new Intent(context, FloatActivity.class);
 //                startActivity(i_float);
                 ArrayList<String> list = new ArrayList<>();
-                list.add("http://www.mincoder.com/images/201451/2_kz6JPhk5sVYKeiQL.jpeg");
+                list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
                 list.add("http://www.mincoder.com/assets/images/avatar.jpg");
-                list.add("http://img.blog.csdn.net/20140829232452908?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveXVlcWluZ2xrb25n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center");
+                list.add("http://pic.58pic.com/58pic/12/74/05/99C58PICYck.jpg");
                 list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
                 list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
 

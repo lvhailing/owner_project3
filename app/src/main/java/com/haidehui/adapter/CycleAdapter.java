@@ -255,7 +255,7 @@ public class CycleAdapter extends ViewPager {
             } else {
                 view.setBackgroundResource(R.drawable.dot_normal);
             }
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20, 20);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(12, 12);
             layoutParams.setMargins(8, 0, 8, 0);
             mLinearLayout.addView(view, layoutParams);
             dotList.add(view);
@@ -307,8 +307,7 @@ public class CycleAdapter extends ViewPager {
             if (images.size() > 0) {
                 iv = imageViews.get(position % imageViews.size());
 
-                // Log.e(tag,
-                // "instantiateItem="+images.get(position).getPicture());
+                // Log.e(tag, "instantiateItem="+images.get(position).getPicture());
                 // Log.e(tag, "instantiateItem="+imageViews.get(position));
 
                 imageLoader.displayImage(images.get(position % images.size()).getPicture(), iv, options, new SimpleImageLoadingListener() {
@@ -339,9 +338,7 @@ public class CycleAdapter extends ViewPager {
                                 message = "Unknown error";
                                 break;
                         }
-                        // Toast.makeText(context, message,
-                        // Toast.LENGTH_SHORT)
-                        // .show();
+//                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
                     }
 

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="2dip"
-            android:src="@mipmap/img_asset_icon_normal"/>
+            android:src="@mipmap/bg_home_normal"/>
 
         <TextView
             android:id="@+id/tv_home"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="2dip"
-            android:src="@mipmap/img_asset_icon_normal"/>
+            android:src="@mipmap/bg_house_resources_normal"/>
 
         <TextView
             android:id="@+id/tv_house_resources"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="2dip"
-            android:src="@mipmap/img_asset_icon_normal"/>
+            android:src="@mipmap/bg_discovery_normal"/>
 
         <TextView
             android:id="@+id/tv_discovery"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="2dip"
-                android:src="@mipmap/img_asset_icon_normal"/>
+                android:src="@mipmap/bg_mine_normal"/>
 
             <TextView
                 android:id="@+id/tv_mine"

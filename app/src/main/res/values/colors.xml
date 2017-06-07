@@ -18,7 +18,8 @@
     <color name="white">#fefefefe</color>
     <color name="black">#404040</color>
     <color name="transparent">#00000000</color>
-    <color name="txt_black">#FF333333</color>
+    <color name="txt_black">#333333</color>
+    <color name="txt_light_gray">#b3b3b3</color>
     <color name="txt_red">#FFff4c4c</color>
     <color name="red4">#8a0002</color>
 </resources>
