@@ -30,7 +30,7 @@
                 android:id="@+id/tv_house_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="帕诺拉普吉岛海景3居室公寓"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="14sp"/>
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="aaa"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="14sp"/>
         </RelativeLayout>

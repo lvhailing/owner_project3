@@ -40,9 +40,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-             .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-             .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -73,11 +71,11 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
         list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
 
-        mAdapter = new MyAdapter(mContext,list);
+        mAdapter = new MyAdapter(mContext, list);
         vp.setAdapter(mAdapter);
         mAdapter.setOnImageListener(new MyAdapter.ImageViewListener() {
             @Override
-            public void onImageClick(int postion, View imageView) {
+            public void onImageClick(int postion) {
                 Intent intent = new Intent(mContext, PhotoPreviewAc.class);
                 intent.putStringArrayListExtra("urls", list);
                 intent.putExtra("currentPos", postion);

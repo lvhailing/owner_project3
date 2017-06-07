@@ -40,7 +40,6 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         title.setTitle(getResources().getString(R.string.title_null))
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
                 .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
-
             @Override
             public void onMenu(int id) {
             }
@@ -56,7 +55,6 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
             }
         });
     }
-
 
     private void initUI() {
         iv_back = (ImageView) findViewById(R.id.iv_back);
