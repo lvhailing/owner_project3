@@ -1,6 +1,51 @@
 <resources>
     <string name="app_name">海德汇</string>
 
+    <!-- 登录 -->
+
+    <string name="login_title">您身边的海外配置管家</string>
+    <string name="login_phone">手机号：</string>
+    <string name="login_password">密码：</string>
+    <string name="login_forget_password">忘记密码？</string>
+    <string name="login_sign">注册</string>
+    <string name="login_name">登录</string>
+
+    <!-- 注册 -->
+
+    <string name="sign_phone_name">手机号码</string>
+    <string name="sign_verify">验证码</string>
+    <string name="sign_password">请输入登录密码</string>
+    <string name="sign_real_name">真实姓名</string>
+    <string name="sign_recommendation">推荐码</string>
+    <string name="sign_get_verify">获取验证码</string>
+    <string name="sign_agree">我已阅读并同意</string>
+    <string name="sign_web">《海德汇》</string>
+    <string name="sign_agree_two">服务协议。</string>
+    <string name="sign_btn_name">立即注册</string>
+    <string name="sign_getsms_again">重新获取</string>
+
+
+    <!-- 找回密码 -->
+    <string name="findpassword_titile">找回密码</string>
+    <string name="findpassword_phone">注册的手机号</string>
+    <string name="findpassword_verify_code_mess">请输入注册手机号收到的短信验证码。</string>
+    <string name="findpassword_password">新密码</string>
+    <string name="findpassword_password_new">确认密码</string>
+    <string name="findpassword_btn">密码重置</string>
+
+    <!-- 消息模块 -->
+    <string name="message_title">消息</string>
+    <string name="message_info">收支消息</string>
+    <string name="message_notice">公告通知</string>
+    <string name="message_other">其他</string>
+
+
+
+    <!-- 客服电话 -->
+
+    <string name="phone_number_format">400-820-8888</string>
+    <string name="phone_number">400-820-8888</string>
+
     <string name="net_fail_text">当前网络不可用，点此检查网络设置</string>
     <string name="title_null"></string>
     <string name="title_hot_house">最热房源</string>

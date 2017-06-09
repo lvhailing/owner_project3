@@ -63,8 +63,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="80-112.5万元"
-                android:textSize="18sp"
-                android:textColor="@color/txt_black"/>
+                android:textColor="@color/txt_black"
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -95,7 +95,8 @@
             android:id="@+id/img_top"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
+            android:layout_gravity="end|bottom"
+            android:layout_marginTop="18dp"
             android:scaleType="fitXY"
             android:src="@drawable/vertical_lines"/>
 
@@ -111,8 +112,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="100-120㎡"
-                android:textSize="18sp"
-                android:textColor="@color/txt_black"/>
+                android:textColor="@color/txt_black"
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -143,6 +144,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:scaleType="fitXY"
         android:src="@drawable/tab_lines"/>
 
@@ -164,8 +167,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="3卧1卫"
-                android:textSize="18sp"
-                android:textColor="@color/txt_black"/>
+                android:textColor="@color/txt_black"
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -197,6 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
+            android:layout_marginBottom="18dp"
             android:scaleType="fitXY"
             android:src="@drawable/vertical_lines"/>
 
@@ -212,8 +216,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="认证可见"
-                android:textSize="18sp"
-                android:textColor="@color/txt_black"/>
+                android:textColor="@color/txt_black"
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -241,6 +245,72 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/bg_line"/>
 
+    <RelativeLayout
+        android:id="@+id/rl_house_detail_addr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp">
+
+
+        <ImageView
+            android:id="@+id/iv_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_address"/>
+
+        <TextView
+            android:id="@+id/tv_house_detail_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/iv_addr"
+            android:text="素林4号帽子街苏林海滩附近"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_go_forward"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/bg_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="9dp">
+
+        <Button
+            android:id="@+id/btn_essential_info"
+            style="@style/btn_house_detail_stytle"
+            android:text="基本信息"/>
+
+        <Button
+            android:id="@+id/btn_purchase_cost"
+            style="@style/btn_house_detail_stytle"
+            android:text="购房费用"/>
+
+        <Button
+            android:id="@+id/btn_purchase_flow"
+            style="@style/btn_house_detail_stytle"
+            android:text="购房流程"/>
+
+    </LinearLayout>
 
 </LinearLayout>

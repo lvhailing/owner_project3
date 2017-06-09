@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
+import com.haidehui.uitls.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -261,7 +263,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setSelect(2);
                 break;
             case R.id.ll_tab_mine:  // 我的
-                setSelect(3);
+                PreferenceUtil.setLogin(false);
+                if(PreferenceUtil.isLogin()){
+                    setSelect(3);
+                }else{
+
+                    Intent i_login = new Intent(this,LoginActivity.class);
+                    startActivity(i_login);
+
+                }
+
                 break;
 
         }

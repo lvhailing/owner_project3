@@ -15,6 +15,35 @@ public class Urls {
     // 调试，上线时只需改此处环境即可
     private static String EC_HOST = URL_DEBUG;
 
+    /**
+     * 登出
+     */
+    public static final String URL_LOGINOFF = EC_HOST + "account/user/logoff";
+    /**
+     * 登陆
+     */
+    public static final String URL_LOGIN = EC_HOST + "android/user/login";
+    /**
+     * 发送手机短信
+     */
+    public static final String URL_SMS = EC_HOST
+            + "user/mobile/send/verifycode";
+
+
+    /**
+     * 短信类型
+     *
+     */
+    public static final String REGISTER = "register";       //  用户注册
+
+    public static final String LOGINRET = "loginRet";       //  登录密码找回
+
+    public static final String MOBILEBIND = "mobileBind";       //  绑定手机
+
+    public static final String MOBILEEDIT = "mobileEdit";       //  修改手机
+
+
+
     //首页
     public static final String URL_HOME = EC_HOST + "index";
     // 轮播图

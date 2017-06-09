@@ -32,7 +32,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".act.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.SignActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.FindPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.MessageActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.MessageInfoActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".act.HotHouseActivity"
             android:screenOrientation="portrait"/>

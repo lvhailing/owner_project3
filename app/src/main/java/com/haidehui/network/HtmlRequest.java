@@ -6,10 +6,13 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.haidehui.common.Constants;
 import com.haidehui.common.Urls;
 import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
+import com.haidehui.model.ResultLoginOffBean;
+import com.haidehui.model.ResultSentSMSBean;
 import com.haidehui.model.VersionMo;
 import com.haidehui.network.http.SimpleHttpClient;
 import com.haidehui.network.types.IMouldType;
@@ -25,7 +28,7 @@ import java.util.Map;
 
 public class HtmlRequest extends BaseRequester {
 
-    private static String getResult(Map<String, Object> param) {
+    public static String getResult(Map<String, Object> param) {
         Gson gson = new Gson();
         String md5 = MD5.stringToMD5(gson.toJson(param));
         String result = null;
@@ -41,7 +44,7 @@ public class HtmlRequest extends BaseRequester {
         return result;
     }
 
-    private static String getResultNoEncrypt(Map<String, Object> param) {
+    public static String getResultNoEncrypt(Map<String, Object> param) {
         Gson gson = new Gson();
         String md5 = MD5.stringToMD5(gson.toJson(param));
         String result = null;
@@ -54,6 +57,98 @@ public class HtmlRequest extends BaseRequester {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * 发送手机短信
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void sentSMS(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_SMS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled()||result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    ResultSentSMSBean b = json.fromJson(result, ResultSentSMSBean.class);
+                    return b.getData();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }finally {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 登出
+     *
+     * @param context 上下文
+     * @param listener  监听事件
+     *
+     */
+    public static void loginoff(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_LOGINOFF;
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                Gson json = new Gson();
+
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                ResultLoginOffBean b = json.fromJson(result, ResultLoginOffBean.class);
+                return b.getData();
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
     }
 
     /**

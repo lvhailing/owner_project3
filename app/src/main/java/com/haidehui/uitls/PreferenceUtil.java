@@ -363,4 +363,5 @@ public class PreferenceUtil {
 		return getUserSharedPreferences().getBoolean("getGestureMsg", false);
 	}
 
+
 }

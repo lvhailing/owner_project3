@@ -7,14 +7,17 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.text.Editable;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.haidehui.R;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class ViewUtils {
@@ -172,4 +175,77 @@ public class ViewUtils {
 		listView.getLoadingLayoutProxy(false, true).setRefreshingLabel("加载中...");
 		listView.getLoadingLayoutProxy(false, true).setReleaseLabel("松开加载");
 	}
+
+
+	/**
+	 *
+	 * 判空处理按钮背景和可否点击
+	 * @param str1  第一个参数
+	 * @param str2  第二个参数
+	 *
+	 */
+
+	public static void setButton(String str1,String str2,Button btn_sign){
+		if(TextUtils.isEmpty(str1)){
+			btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+			btn_sign.setClickable(false);
+		}else {
+			if(TextUtils.isEmpty(str2)){
+				btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+				btn_sign.setClickable(false);
+			}else{
+				btn_sign.setBackgroundResource(R.drawable.shape_center_orange);
+				btn_sign.setClickable(true);
+
+			}
+		}
+	}
+
+	public static void setButton(String str1,String str2,String str3,Button btn_sign){
+		if(TextUtils.isEmpty(str1)){
+			btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+			btn_sign.setClickable(false);
+		}else {
+			if(TextUtils.isEmpty(str2)){
+				btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+				btn_sign.setClickable(false);
+			}else{
+				if(TextUtils.isEmpty(str3)){
+					btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+					btn_sign.setClickable(false);
+				}else{
+					btn_sign.setBackgroundResource(R.drawable.shape_center_orange);
+					btn_sign.setClickable(true);
+				}
+			}
+		}
+	}
+
+	public static void setButton(String str1,String str2,String str3,String str4,Button btn_sign){
+		if(TextUtils.isEmpty(str1)){
+			btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+			btn_sign.setClickable(false);
+		}else {
+			if(TextUtils.isEmpty(str2)){
+				btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+				btn_sign.setClickable(false);
+			}else{
+				if(TextUtils.isEmpty(str3)){
+					btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+					btn_sign.setClickable(false);
+				}else{
+					if(TextUtils.isEmpty(str4)){
+						btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+						btn_sign.setClickable(false);
+					}else{
+						btn_sign.setBackgroundResource(R.drawable.shape_center_orange);
+						btn_sign.setClickable(true);
+					}
+
+				}
+			}
+		}
+	}
+
+
 }

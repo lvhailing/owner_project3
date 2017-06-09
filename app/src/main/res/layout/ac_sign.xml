@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_login_phone_number"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+        <EditText
+            android:id="@+id/et_sign_phone"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:hint="@string/sign_phone_name"
+            android:paddingLeft="8dip"
+            android:textColorHint="@color/bg_gray_gray"
+            android:inputType="phone"
+            android:maxLength="11"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dip"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_sign_verify_code"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_sign_get_verify_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_center_orange"
+                android:layout_alignParentRight="true"
+                android:text="@string/sign_get_verify"
+                android:textColor="@color/txt_white"
+                android:layout_marginRight="10dip"
+                android:padding="5dip"
+                android:layout_marginLeft="5dip"
+                />
+            <EditText
+                android:id="@+id/et_sign_verify_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_white"
+                android:layout_marginLeft="1dip"
+                android:hint="@string/sign_verify"
+                android:paddingLeft="8dip"
+                android:textColorHint="@color/bg_gray_gray"
+                android:layout_toLeftOf="@id/tv_sign_get_verify_code"
+                android:padding="5dip"
+                android:inputType="number"
+                android:maxLength="10"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dip"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_sign_password"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+        <EditText
+            android:id="@+id/et_sign_password"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:hint="@string/sign_password"
+            android:paddingLeft="8dip"
+            android:textColorHint="@color/bg_gray_gray"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dip"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_sign_real_name_user"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+        <EditText
+            android:id="@+id/et_sign_real_name"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:hint="@string/sign_real_name"
+            android:paddingLeft="8dip"
+            android:textColorHint="@color/bg_gray_gray"
+            android:maxLength="10"
+            android:maxLines="1"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dip"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_sign_recommendation"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+        <EditText
+            android:id="@+id/et_sign_recommendation"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:hint="@string/sign_recommendation"
+            android:paddingLeft="8dip"
+            android:textColorHint="@color/bg_gray_gray"
+            android:maxLength="20"
+            android:maxLines="1"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="20dip"
+        >
+
+        <CheckBox
+            android:id="@+id/signup_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/checkbox_signup"
+            android:checked="true"
+            android:button="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dip"
+            android:text="@string/sign_agree"
+            android:textSize="14.0sp"
+            android:textColor="@color/txt_grad"
+
+            />
+
+        <TextView
+            android:id="@+id/signup_web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/sign_web"
+            android:textColor="@color/txt_orange"
+            android:textSize="14.0sp" />
+
+        <TextView
+            android:id="@+id/signup_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/sign_agree_two"
+            android:textSize="14.0sp"
+            android:textColor="@color/txt_grad"
+            />
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="110dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:src="@drawable/a"
+        android:scaleType="fitXY"
+        android:layout_marginTop="25dip"
+        />
+
+    <Button
+        android:id="@+id/btn_sign"
+        android:layout_width="match_parent"
+        android:layout_height="42dip"
+        android:layout_marginTop="20dip"
+        android:text="@string/sign_btn_name"
+        android:background="@drawable/shape_center_gray"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:textColor="@color/txt_white"
+        android:textSize="15sp"
+        />
+
+</LinearLayout>

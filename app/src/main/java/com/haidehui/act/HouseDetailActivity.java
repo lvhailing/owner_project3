@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -26,6 +27,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private ArrayList<String> list;
     private TextView tv_house_name;
     private MyAdapter mAdapter;
+    private RelativeLayout rl_house_detail_addr; // 地址布局
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,8 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+             .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -63,7 +66,10 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         vp = (ViewPager) findViewById(R.id.vp);
         tv_house_name = (TextView) findViewById(R.id.tv_house_name);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
+        rl_house_detail_addr = (RelativeLayout) findViewById(R.id.rl_house_detail_addr);
 
+
+        rl_house_detail_addr.setOnClickListener(this);
         list = new ArrayList<>();
         list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
         list.add("http://www.mincoder.com/assets/images/avatar.jpg");
@@ -123,13 +129,11 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 //            case R.id.iv_back:
 //                finish();
 //                break;
-//            case R.id.btn_submit:   //立即预约
-//                Intent intent = new Intent(GolfDetailActivity.this, SubBookingGolfActivity.class);
+            case R.id.rl_house_detail_addr:   // 地址点击监听
+//                Intent intent = new Intent(mContext, SubBookingGolfActivity.class);
 //                intent.putExtra("id", id);
-//                intent.putExtra("name", detail.getGolfName());
-//                intent.putExtra("golfRights", detail.getGolfRights());//高尔夫权限  not：优惠价  A1：嘉宾价  A2和VIP（都显示）：会员价
 //                startActivity(intent);
-//                break;
+                break;
         }
     }
 
