@@ -24,9 +24,9 @@ import com.haidehui.widget.TitleBar;
 import java.util.ArrayList;
 
 /**
- * 房源详情
+ * 海外项目详情
  */
-public class HouseDetailActivity extends BaseActivity implements View.OnClickListener {
+public class OverseaProjectDetailActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager vp;
     private int currentPos;
     private TextView tv_vp_page;
@@ -47,7 +47,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_house_detail);
+        baseSetContentView(R.layout.ac_oversea_project_detail);
 
         initTopTitle();
         initView();

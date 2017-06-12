@@ -8,9 +8,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.adapter.HotHouseAdapter;
-import com.haidehui.model.HotHouse2B;
-import com.haidehui.model.HotHouse3B;
+import com.haidehui.adapter.OverseaProjectAdapter;
+import com.haidehui.model.OverseaProject2B;
+import com.haidehui.model.OverseaProject3B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -25,18 +25,18 @@ import java.util.Map;
 
 
 /**
- *  首页-- 最热房源列表
+ *  首页-- 海外项目列表
  */
-public class HotHouseActivity extends BaseActivity implements View.OnClickListener {
+public class OverseaProjectActivity extends BaseActivity implements View.OnClickListener {
     private PullToRefreshListView listView;
-    private HotHouseAdapter mAdapter;
-    private MouldList<HotHouse3B> totalList = new MouldList<>();
+    private OverseaProjectAdapter mAdapter;
+    private MouldList<OverseaProject3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_hot_house);
+        baseSetContentView(R.layout.ac_oversea_project);
 
         initTopTitle();
         initView();
@@ -48,7 +48,7 @@ public class HotHouseActivity extends BaseActivity implements View.OnClickListen
         title.showLeftImg(true);
         title.setTitle(getResources().getString(R.string.title_null))
                 .setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-                .setCenterText(getResources().getString(R.string.title_hot_house))
+                .setCenterText(getResources().getString(R.string.title_oversea_project))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
@@ -75,7 +75,7 @@ public class HotHouseActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initData() {
-        mAdapter = new HotHouseAdapter(mContext, totalList);
+        mAdapter = new OverseaProjectAdapter(mContext, totalList);
         listView.setAdapter(mAdapter);
 
 //        requestListData();
@@ -96,7 +96,7 @@ public class HotHouseActivity extends BaseActivity implements View.OnClickListen
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Intent intent = new Intent(mContext, HouseDetailActivity.class);
+                Intent intent = new Intent(mContext, OverseaProjectDetailActivity.class);
                 intent.putExtra("id", totalList.get(position - 1).getId());
                 startActivity(intent);
             }
@@ -128,8 +128,8 @@ public class HotHouseActivity extends BaseActivity implements View.OnClickListen
                         return;
                     }
 
-                    HotHouse2B data = (HotHouse2B) params.result;
-                    MouldList<HotHouse3B> everyList = data.getList();
+                    OverseaProject2B data = (OverseaProject2B) params.result;
+                    MouldList<OverseaProject3B> everyList = data.getList();
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
                         Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                     }

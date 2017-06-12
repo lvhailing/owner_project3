@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.haidehui.R;
 
 /**
- * 底部导航---产品
+ * 房源详情页---购房信息
  */
 public class PurchaseCostFragment extends Fragment  {
     private View mView;
@@ -22,7 +22,7 @@ public class PurchaseCostFragment extends Fragment  {
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_purchase_cost, container, false);
             try {
-                initView(mView);
+//                initView(mView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -40,11 +40,8 @@ public class PurchaseCostFragment extends Fragment  {
         super.onResume();
     }
 
-
     private void initView(View mView) {
         context = getActivity();
-
-//        tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
 
     }
 

@@ -56,6 +56,12 @@
         <activity
             android:name=".act.HotHouseActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.OverseaProjectActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.OverseaProjectDetailActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".act.HouseDetailActivity"

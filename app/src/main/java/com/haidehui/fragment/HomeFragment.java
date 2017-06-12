@@ -3,6 +3,7 @@ package com.haidehui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.haidehui.R;
 import com.haidehui.act.HotHouseActivity;
 import com.haidehui.act.HouseDetailActivity;
+import com.haidehui.act.OverseaProjectActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
@@ -52,7 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private TextView tv_hot_house, tv_oversea_project, tv_customer_service; //固收、浮收、保险
     private ScrollView scrollView;
     private Context context;
-//    private ResultProductIndexBean productIndexBean;
+    //    private ResultProductIndexBean productIndexBean;
     private MouldList<ResultCycleIndex2B> homeCycleBean;
     private MouldList<BoutiqueHouse2B> list; // 精品房源数据
     private TextView tv_home_notice;
@@ -120,10 +122,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one)
-                .resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
         requestCycleIndex();
     }
@@ -204,23 +203,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
                 startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
-//                Intent i_float = new Intent(context, FloatActivity.class);
-//                startActivity(i_float);
-                ArrayList<String> list = new ArrayList<>();
-                list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
-                list.add("http://www.mincoder.com/assets/images/avatar.jpg");
-                list.add("http://pic.58pic.com/58pic/12/74/05/99C58PICYck.jpg");
-                list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
-                list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
-
-                Intent intent = new Intent(getActivity(), PhotoPreviewAc.class);
-                intent.putStringArrayListExtra("urls", list);
-                intent.putExtra("currentPos", 2);
-                getActivity().startActivity(intent);
+                intent = new Intent(context, OverseaProjectActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_customer_service: // 我的客服
-//                Intent i_insurance = new Intent(context, InsuranceActivity.class);
-//                startActivity(i_insurance);
+                intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + getString(R.string.phone_number));
+                intent.setData(data);
+                startActivity(intent);
                 break;
             case R.id.ll_home_notice: // 公告的点击监听
                 String userId = null;
@@ -275,7 +265,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private void requestCycleIndex() {
         Map<String, Object> param = new HashMap<>();
         param.put("appType", "android");
-        HtmlRequest.getCycleIndex(context,param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
