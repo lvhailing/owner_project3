@@ -22,7 +22,7 @@
         android:text="+500.00"
         android:layout_toLeftOf="@id/iv_message_info_item_arrow"
         android:layout_centerVertical="true"
-        android:textColor="@color/txt_grad"
+        android:textColor="@color/txt_gray"
         android:textSize="14sp"
         />
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="佣金收益"
             android:layout_marginBottom="2dip"
-            android:textColor="@color/txt_grad_d"
+            android:textColor="@color/txt_gray_d"
             android:textSize="15sp"
             />
 
@@ -50,14 +50,14 @@
             android:layout_height="wrap_content"
             android:text="4-12 5:00"
             android:layout_marginTop="2dip"
-            android:textColor="@color/txt_grad"
+            android:textColor="@color/txt_gray"
             android:textSize="14sp"
             />
 
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="2dip"
+        android:layout_height="1dip"
         android:src="@color/bg_gray"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dip"

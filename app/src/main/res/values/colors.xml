@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="txt_grad">#777777</color>
-    <color name="txt_grad_d">#373737</color>
+    <color name="txt_gray">#777777</color>
+    <color name="txt_gray_d">#373737</color>
     <color name="txt_orange">#ddb57f</color>
     <!-- 背景色 -->
 
@@ -25,12 +25,14 @@
     <color name="bg_gray_gray">#CCCCCC</color>
     <color name="blue_light">#ff11bbee</color>
     <color name="title_bgnew">#ff3392c9</color>
-    <color name="txt_white">#fff9f9f9</color>
     <color name="white">#fefefefe</color>
     <color name="black">#404040</color>
     <color name="transparent">#00000000</color>
     <color name="txt_black">#333333</color>
+    <color name="txt_white">#fff9f9f9</color>
     <color name="txt_light_gray">#b3b3b3</color>
     <color name="txt_red">#FFff4c4c</color>
     <color name="red4">#8a0002</color>
+
+    <color name="province_line_border">#C7C7C7</color>
 </resources>

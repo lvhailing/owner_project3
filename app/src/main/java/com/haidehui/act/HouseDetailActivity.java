@@ -1,15 +1,22 @@
 package com.haidehui.act;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.adapter.MyAdapter;
+import com.haidehui.fragment.EssentialInfoFragment;
+import com.haidehui.fragment.PurchaseCostFragment;
+import com.haidehui.fragment.PurchaseFlowFragment;
 import com.haidehui.photo_preview.PhotoPreviewAc;
 import com.haidehui.widget.TitleBar;
 
@@ -28,6 +35,11 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_house_name;
     private MyAdapter mAdapter;
     private RelativeLayout rl_house_detail_addr; // 地址布局
+    private Button btn_essential_info, btn_purchase_cost, btn_purchase_flow; // 基本信息、购房费用、购房流程
+    private FragmentTransaction transaction;
+    private EssentialInfoFragment essentialInfoFragment;
+    private PurchaseCostFragment purchaseCostFragment;
+    private PurchaseFlowFragment purchaseFlowFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +54,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-             .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -62,14 +73,28 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
 //        id = getIntent().getStringExtra("id");
         vp = (ViewPager) findViewById(R.id.vp);
         tv_house_name = (TextView) findViewById(R.id.tv_house_name);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
         rl_house_detail_addr = (RelativeLayout) findViewById(R.id.rl_house_detail_addr);
+        btn_essential_info = (Button) findViewById(R.id.btn_essential_info);
+        btn_purchase_cost = (Button) findViewById(R.id.btn_purchase_cost);
+        btn_purchase_flow = (Button) findViewById(R.id.btn_purchase_flow);
 
+        btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
+        essentialInfoFragment = new EssentialInfoFragment();
+        transaction.replace(R.id.fragment_container, essentialInfoFragment);
+        transaction.commit();
 
         rl_house_detail_addr.setOnClickListener(this);
+        btn_essential_info.setOnClickListener(this);
+        btn_purchase_cost.setOnClickListener(this);
+        btn_purchase_flow.setOnClickListener(this);
+
         list = new ArrayList<>();
         list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
         list.add("http://www.mincoder.com/assets/images/avatar.jpg");
@@ -125,6 +150,8 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+        resetBtnText();
+
         switch (v.getId()) {
 //            case R.id.iv_back:
 //                finish();
@@ -134,6 +161,47 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 //                intent.putExtra("id", id);
 //                startActivity(intent);
                 break;
+            case R.id.btn_essential_info:  // 基本信息
+                btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
+                hideFragment(transaction);
+                essentialInfoFragment = new EssentialInfoFragment();
+                transaction.replace(R.id.fragment_container, essentialInfoFragment);
+                transaction.commit();
+
+                break;
+            case R.id.btn_purchase_cost:  // 购房费用
+                btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
+                hideFragment(transaction);
+                purchaseCostFragment = new PurchaseCostFragment();
+                transaction.replace(R.id.fragment_container, purchaseCostFragment);
+                transaction.commit();
+                break;
+            case R.id.btn_purchase_flow:  // 购房流程
+                btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
+                hideFragment(transaction);
+                purchaseFlowFragment = new PurchaseFlowFragment();
+                transaction.replace(R.id.fragment_container, purchaseFlowFragment);
+                transaction.commit();
+                break;
+        }
+    }
+
+    private void resetBtnText() {
+        btn_essential_info.setTextColor(Color.parseColor("#b3b3b3"));
+        btn_purchase_cost.setTextColor(Color.parseColor("#b3b3b3"));
+        btn_purchase_flow.setTextColor(Color.parseColor("#b3b3b3"));
+    }
+
+    // 去除所有的Fragment
+    private void hideFragment(FragmentTransaction transaction) {
+        if (essentialInfoFragment != null) {
+            transaction.remove(essentialInfoFragment);
+        }
+        if (purchaseCostFragment != null) {
+            transaction.remove(purchaseCostFragment);
+        }
+        if (purchaseFlowFragment != null) {
+            transaction.remove(purchaseFlowFragment);
         }
     }
 

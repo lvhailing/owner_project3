@@ -19,9 +19,16 @@ public class Urls {
      * 登出
      */
     public static final String URL_LOGINOFF = EC_HOST + "account/user/logoff";
+
+    /**
+     * 收支消息列表
+     */
+    public static final String URL_MESSAGE_INFO = EC_HOST + "";
+
     /**
      * 登陆
      */
+
     public static final String URL_LOGIN = EC_HOST + "android/user/login";
     /**
      * 发送手机短信

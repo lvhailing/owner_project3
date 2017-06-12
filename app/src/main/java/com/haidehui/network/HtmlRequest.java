@@ -111,6 +111,57 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
+     * 获取收支消息列表
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void sentMessageInfo(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_MESSAGE_INFO;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled()||result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    ResultSentSMSBean b = json.fromJson(result, ResultSentSMSBean.class);
+                    return b.getData();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }finally {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
      * 登出
      *
      * @param context 上下文
@@ -303,5 +354,56 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
+    /**
+     * 我的主页面
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getMineData(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CHECKVERSION;
+//        final String data = HtmlLoadUtil.checkVersion(type);
+//        final String url = Urls.URL_CHECKVERSION;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                Log.i("hh", "后台数据:" + result);
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                Gson gson = new Gson();
+                ResultCheckVersionBean b = gson.fromJson(result, ResultCheckVersionBean.class);
+//                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+//                Map<String, Object> map = gson.fromJson(result, new TypeToken<Map<String, Object>>() {
+//                }.getType());
+//                VersionMo b = (VersionMo) map.get("data");
+//
+//                Map<String, Object> data = (Map<String, Object>) map.get("data");
+//                String listStr = (String) data.get("list");
+//                ArrayList<VersionMo> list = gson.fromJson(listStr, new TypeToken<ArrayList<VersionMo>>() {
+//                }.getType());
+                return b.getData();
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
 
 }

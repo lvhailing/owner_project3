@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ViewSwitcher
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/vs_messgae_info"
     android:background="@color/bg_gray"
     >
     <com.handmark.pulltorefresh.library.PullToRefreshListView
@@ -14,7 +15,17 @@
         android:dividerHeight="0dp"
         android:scrollbars="none"
         ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="both"/>
+        ptr:ptrMode="both"
 
+        />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/tv_myinfo_nodata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/message_nodata"
+        android:textSize="16sp"
+        android:textColor="@color/txt_gray_d"
+        android:layout_gravity="center"
+        />
+</ViewSwitcher>

@@ -48,12 +48,42 @@
             android:name=".act.MessageInfoActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".act.MessageNoticeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.MessageOtherActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".act.HotHouseActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".act.HouseDetailActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".act.MyInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".act.MyInfoForNameActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.CustomerInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.SubmitCustomerInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.CustomerDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity            android:name=".act.PartnerIdentifyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.AccountBookActivity"
+            android:screenOrientation="portrait"/>
+
+
 
         <activity android:name=".photo_preview.PhotoPreviewAc"
                   android:screenOrientation="portrait"/>

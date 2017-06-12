@@ -209,7 +209,7 @@
             android:layout_marginLeft="10.0dip"
             android:text="@string/sign_agree"
             android:textSize="14.0sp"
-            android:textColor="@color/txt_grad"
+            android:textColor="@color/txt_gray"
 
             />
 
@@ -229,7 +229,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/sign_agree_two"
             android:textSize="14.0sp"
-            android:textColor="@color/txt_grad"
+            android:textColor="@color/txt_gray"
             />
 
     </LinearLayout>

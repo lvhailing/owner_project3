@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:paddingBottom="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客户姓名"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入客户姓名"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系电话"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入联系电话"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_phone"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电子邮箱"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入邮箱地址"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_email"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="购买意向"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房产所在地"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入房产所在国家"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_location"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="项目"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入项目名称"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_project"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_room_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房号"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_room_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入房产房号"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_room_number"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="面积"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入房产面积"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_area"
+                android:background="@color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总价"
+                android:textColor="@color/gray_dark"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/edt_total_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="输入房产总价"
+                android:gravity="right"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"
+                android:layout_toRightOf="@+id/tv_total_amount"
+                android:background="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="立即保存"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_center_orange"/>
+</RelativeLayout>

@@ -56,7 +56,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.setTitle(getResources().getString(R.string.title_null))
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.login_sign))
+                .setCenterText(getResources().getString(R.string.message_title))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
@@ -109,10 +109,12 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.rl_messgae_notice:
-
+                Intent i_notice = new Intent(this,MessageNoticeActivity.class);
+                startActivity(i_notice);
                 break;
             case R.id.rl_messgae_other:
-
+                Intent i_other = new Intent(this,MessageOtherActivity.class);
+                startActivity(i_other);
                 break;
 
             default:

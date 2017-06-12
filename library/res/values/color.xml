@@ -4,5 +4,6 @@
     <color name="gray_light">#F2F2F2</color>
     <color name="white">#fefefefe</color>
     <color name="gray_d">#ff999999</color>
+    <color name="bg_top">#F5F5F5</color>
 
 </resources>

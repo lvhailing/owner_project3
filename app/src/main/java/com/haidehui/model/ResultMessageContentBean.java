@@ -12,6 +12,15 @@ public class ResultMessageContentBean implements IMouldType{
     private String name;
     private String num;
     private String date;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getName() {
         return name;

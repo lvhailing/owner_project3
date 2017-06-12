@@ -9,7 +9,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/title_bar_height_new</item>
         <item name="android:layout_alignParentTop">true</item>
-        <item name="android:background">@color/bg_title</item>
+        <item name="android:background">@color/bg_top</item>
     </style>
 
     <style name="TitleBar_Menu_New">
@@ -58,8 +58,18 @@
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/shape_center_gray_white</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">30dp</item>
-        <item name="android:paddingRight">30dp</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>
