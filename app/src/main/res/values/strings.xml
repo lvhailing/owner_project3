@@ -52,6 +52,7 @@
     <string name="title_null"></string>
     <string name="title_hot_house">最热房源</string>
     <string name="title_oversea_project">海外项目</string>
+    <string name="title_oversea_project_detail">项目详情</string>
     <string name="title_house_detail">房源详情</string>
     <string name="title_my_info">我的信息</string>
     <string name="title_customer_info">客户信息</string>

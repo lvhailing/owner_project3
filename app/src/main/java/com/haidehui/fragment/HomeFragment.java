@@ -20,6 +20,7 @@ import com.haidehui.R;
 import com.haidehui.act.HotHouseActivity;
 import com.haidehui.act.HouseDetailActivity;
 import com.haidehui.act.OverseaProjectActivity;
+import com.haidehui.act.OverseaProjectDetailActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
@@ -203,7 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
                 startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
-                intent = new Intent(context, OverseaProjectActivity.class);
+                intent = new Intent(context, OverseaProjectDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_customer_service: // 我的客服
