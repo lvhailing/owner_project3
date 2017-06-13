@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.fragment.HomeFragment;
+import com.haidehui.fragment.HouseResourcesFragment;
 import com.haidehui.fragment.MineFragment;
 import com.haidehui.model.VersionMo;
 import com.haidehui.network.BaseParams;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private List<Fragment> mFragments;
     private HomeFragment tab_home; //首页
-    private MineFragment tab_house_resources; //房源
+    private HouseResourcesFragment tab_house_resources; //房源
     private MineFragment tab_discovery; //发现
     private MineFragment tab_mine; //我的
     private TitleBar title;
@@ -76,7 +77,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragments = new ArrayList<>();
 
         tab_home = new HomeFragment();
-        tab_house_resources = new MineFragment();
+        tab_house_resources = new HouseResourcesFragment();
         tab_discovery = new MineFragment();
         tab_mine = new MineFragment();
 
