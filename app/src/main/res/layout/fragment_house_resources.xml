@@ -44,8 +44,8 @@
 
             <ImageView
                 android:id="@+id/iv_select_type"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="14dp"
+                android:layout_height="10dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_house_resources_type"
@@ -76,8 +76,8 @@
 
             <ImageView
                 android:id="@+id/iv_select_price"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="14dp"
+                android:layout_height="10dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_house_resources_price"
@@ -108,8 +108,8 @@
 
             <ImageView
                 android:id="@+id/iv_select_function"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="14dp"
+                android:layout_height="10dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_house_function"
@@ -122,6 +122,399 @@
         android:layout_height="1dp"
         android:background="@color/bg_gray"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/gray_light"
+            android:dividerHeight="1dp"
+            android:scrollbars="none"
+            ptr:ptrAnimationStyle="flip"
+            ptr:ptrMode="both"/>
+
+        <View
+            android:id="@+id/v_hidden"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66000000"
+            android:visibility="gone"/>
+
+        <!--房源类型展开布局-->
+        <LinearLayout
+            android:id="@+id/ll_hidden_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_type_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="公寓"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="商铺"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="别墅"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_type_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv4"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="学区"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv5"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="土地"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv6"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="庄园"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/bg_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="52dp"
+                android:layout_marginRight="52dp"
+                android:orientation="horizontal"
+                android:paddingBottom="40dp"
+                android:paddingTop="40dp">
+
+                <Button
+                    android:id="@+id/btn_type_reset"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_orange_white"
+                    android:gravity="center"
+                    android:text="重置"
+                    android:textColor="@color/txt_orange"
+                    android:textSize="18sp"/>
+
+                <Button
+                    android:id="@+id/btn_type_sure"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_orange"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--房源价格展开布局-->
+        <LinearLayout
+            android:id="@+id/ll_hidden_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_1"
+                style="@style/house_resource_price_stytle"
+                android:text="不限"
+                android:textColor="@color/txt_orange"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_gray"/>
+
+            <TextView
+                android:id="@+id/tv_2"
+                style="@style/house_resource_price_stytle"
+                android:text="50万元以下"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_gray"/>
+
+            <TextView
+                android:id="@+id/tv_3"
+                style="@style/house_resource_price_stytle"
+                android:text="50-100万元"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_gray"/>
+
+            <TextView
+                android:id="@+id/tv_4"
+                style="@style/house_resource_price_stytle"
+                android:text="100-200万元"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_gray"/>
+
+            <TextView
+                android:id="@+id/tv_5"
+                style="@style/house_resource_price_stytle"
+                android:text="200-500万元"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_gray"/>
+
+            <TextView
+                android:id="@+id/tv_6"
+                style="@style/house_resource_price_stytle"
+                android:text="500-1000万元"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_gray"/>
+
+            <TextView
+                android:id="@+id/tv_7"
+                style="@style/house_resource_price_stytle"
+                android:text="1000万元以上"/>
+        </LinearLayout>
+
+        <!--房源功能展开布局-->
+        <LinearLayout
+            android:id="@+id/ll_hidden_function"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_function_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv1_func"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="投资"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv2_func"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="自住"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv3_func"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="度假"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hidden_function_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tv4_func"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="海景"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv5_func"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text="移民"
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv6_func"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_gray_white"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/txt_black"
+                    android:textSize="18sp"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/bg_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="52dp"
+                android:layout_marginRight="52dp"
+                android:orientation="horizontal"
+                android:paddingBottom="40dp"
+                android:paddingTop="40dp">
+
+                <Button
+                    android:id="@+id/btn_func_reset"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_orange_white"
+                    android:gravity="center"
+                    android:text="重置"
+                    android:textColor="@color/txt_orange"
+                    android:textSize="18sp"/>
+
+                <Button
+                    android:id="@+id/btn_func_sure"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="34dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_center_orange"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

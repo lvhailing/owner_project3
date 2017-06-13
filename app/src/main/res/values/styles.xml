@@ -62,6 +62,17 @@
         <item name="android:paddingRight">15dp</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <!--房源页价钱样式-->
+    <style name="house_resource_price_stytle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <style name="Dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
