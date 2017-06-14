@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,19 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.CustomerInfoActivity;
-import com.haidehui.act.MyInfoActivity;
-import com.haidehui.act.PartnerIdentifyActivity;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.haidehui.R.id.btn_type_reset;
-import static com.haidehui.R.id.tv_customer_follow;
-import static com.haidehui.R.id.tv_rengou_state;
 
 /**
  * 底部导航--房源模块
@@ -185,11 +177,133 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             public void onAnimationEnd(Animator animation) {
                 v_hidden.setVisibility(View.GONE);
                 ll_hidden_layout.setVisibility(View.GONE);
+                resetLayout(ll_hidden_layout);
             }
         });
         isOpened = false;
     }
 
+    //将布局重置到原始位置
+    private void resetLayout(final LinearLayout ll_hidden_layout) {
+        ObjectAnimator oa = ObjectAnimator.ofFloat(ll_hidden_layout, "translationY", -ll_hidden_layout.getMeasuredHeight(), 0f);
+        oa.setDuration(0);
+        oa.start();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_house_resources_type:  // 类型
+                if (isOpened) {
+                    //动画是开启状态
+                    if (currentFlag == 1) {
+                        //类型处于展开状态，则需关闭动画，且箭头置成向下
+                        iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                        closeShopping(ll_hidden_type);
+                    } else {
+                        //价格或功能处于展开状态
+                        ll_hidden_type.setVisibility(View.VISIBLE);
+                        ll_hidden_price.setVisibility(View.GONE);
+                        ll_hidden_function.setVisibility(View.GONE);
+                        iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    }
+                } else {
+                    //动画是关闭状态
+                    openShopping(ll_hidden_type);
+                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_up);
+                }
+
+                currentFlag = 1;
+
+                //无论价格、功能现状如何，都让它们箭头向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+
+                break;
+            case R.id.rl_house_resources_price:  // 价格
+                if (isOpened) {
+                    //动画是开启状态
+                    if (currentFlag == 2) {
+                        //价格处于展开状态，则需关闭动画，且箭头置成向下
+                        iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                        closeShopping(ll_hidden_price);
+                    } else {
+                        //类型或功能处于展开状态
+                        ll_hidden_type.setVisibility(View.GONE);
+                        ll_hidden_price.setVisibility(View.VISIBLE);
+                        ll_hidden_function.setVisibility(View.GONE);
+                        iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    }
+                } else {
+                    //动画是关闭状态
+                    openShopping(ll_hidden_price);
+                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_up);
+                }
+
+                currentFlag = 2;
+
+                //无论类型、功能现状如何，都让它们箭头向下
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+
+                break;
+            case R.id.rl_house_function:  // 功能
+                if (isOpened) {
+                    //动画是开启状态
+                    if (currentFlag == 3) {
+                        //功能处于展开状态，则需关闭动画，且箭头置成向下
+                        iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+                        closeShopping(ll_hidden_function);
+                    } else {
+                        //价格或类型处于展开状态
+                        ll_hidden_type.setVisibility(View.GONE);
+                        ll_hidden_price.setVisibility(View.GONE);
+                        ll_hidden_function.setVisibility(View.VISIBLE);
+                        iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    }
+                } else {
+                    //动画是关闭状态
+                    openShopping(ll_hidden_function);
+                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_up);
+                }
+
+                currentFlag = 3;
+
+                //无论类型、价格现状如何，都让它们箭头向下
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+
+                break;
+            case R.id.v_hidden:  // 隐藏布局 关闭动画
+                if (currentFlag == 1) {
+                    closeShopping(ll_hidden_type);
+                } else if (currentFlag == 2) {
+                    closeShopping(ll_hidden_price);
+                } else {
+                    closeShopping(ll_hidden_function);
+                }
+
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+
+                break;
+            case R.id.tv_rengou_state:  //
+
+                break;
+            case R.id.layout_identify: //
+
+                break;
+            case R.id.layout_account_book:  //
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+/*
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -294,6 +408,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 break;
         }
     }
+*/
 
     //我的主页面数据
     private void requestData() {
