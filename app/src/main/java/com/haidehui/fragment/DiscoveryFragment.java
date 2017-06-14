@@ -3,7 +3,6 @@ package com.haidehui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,10 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -115,7 +111,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
         setTitleStyle(0);
 
         fragments = new ArrayList<Fragment>();
-        fragments.add(new Tab1Fragment());
+        fragments.add(new InvestmentGuideFragment());
         fragments.add(new Tab2Fragment());
 
         //屏幕宽度
