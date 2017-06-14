@@ -1,5 +1,8 @@
 package com.haidehui.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,16 +39,19 @@ import static com.haidehui.R.id.tv_rengou_state;
 public class HouseResourcesFragment extends Fragment implements OnClickListener {
     private Context context;
     private View mView;
-
     private RelativeLayout rl_house_resources_type, rl_house_resources_price, rl_house_function; // 顶部的类型、价格、功能
     private ImageView iv_select_type, iv_select_price, iv_select_function; // 顶部的类型、价格、功能后面的小箭头
-    private View v_hidden; // 隐藏的类型或状态布局背景
+    private View v_hidden; // 隐藏的 类型、价格、功能布局背景
     private LinearLayout ll_hidden_type, ll_hidden_price, ll_hidden_function; // 点击顶部的类型、价格、功能等时对应的布局
-    private TextView tv1,tv2,tv3,tv4,tv5,tv6; // 顶部的类型( 公寓，商铺，别墅，学区，土地，庄园)
-    private TextView tv_1,tv_2,tv_3,tv_4,tv_5,tv_6,tv_7; // 顶部的价格( 不限，50万元以下，50-100万元，100-200万元，200-500万元，500-1000万元,1000万以上)
-    private TextView tv1_func,tv2_func,tv3_func,tv4_func,tv5_func; // 顶部的功能( 投资，自住，度假，海景，移民)
-    private Button btn_type_reset,btn_type_sure; // 类型布局里面的重置，确定按钮
-    private Button btn_func_reset,btn_func_sure; // 功能布局里面的重置，确定按钮
+    private TextView tv1, tv2, tv3, tv4, tv5, tv6; // 顶部的类型( 公寓，商铺，别墅，学区，土地，庄园)
+    private TextView tv_1, tv_2, tv_3, tv_4, tv_5, tv_6, tv_7; // 顶部的价格( 不限，50万元以下，50-100万元，100-200万元，200-500万元，500-1000万元,1000万以上)
+    private TextView tv1_func, tv2_func, tv3_func, tv4_func, tv5_func; // 顶部的功能( 投资，自住，度假，海景，移民)
+    private Button btn_type_reset, btn_type_sure; // 类型布局里面的重置，确定按钮
+    private Button btn_func_reset, btn_func_sure; // 功能布局里面的重置，确定按钮
+
+    private boolean isShow = false;
+    private boolean isOpened = false;   //动画是否开启
+    private int currentFlag;  //当前选择哪个按钮  1、类型按钮  2、价格按钮  3、功能按钮
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +84,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         ll_hidden_price = (LinearLayout) mView.findViewById(R.id.ll_hidden_price);
         ll_hidden_function = (LinearLayout) mView.findViewById(R.id.ll_hidden_function);
 
+        // 类型展开布局里的按钮
         tv1 = (TextView) mView.findViewById(R.id.tv1);
         tv2 = (TextView) mView.findViewById(R.id.tv2);
         tv3 = (TextView) mView.findViewById(R.id.tv3);
@@ -87,6 +94,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         btn_type_reset = (Button) mView.findViewById(R.id.btn_type_reset);
         btn_type_sure = (Button) mView.findViewById(R.id.btn_type_sure);
 
+        // 价格展开布局
         tv_1 = (TextView) mView.findViewById(R.id.tv_1);
         tv_2 = (TextView) mView.findViewById(R.id.tv_2);
         tv_3 = (TextView) mView.findViewById(R.id.tv_3);
@@ -95,12 +103,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         tv_6 = (TextView) mView.findViewById(R.id.tv_6);
         tv_7 = (TextView) mView.findViewById(R.id.tv_7);
 
+        // 功能展开布局里的按钮
         tv1_func = (TextView) mView.findViewById(R.id.tv1_func);
         tv2_func = (TextView) mView.findViewById(R.id.tv2_func);
         tv3_func = (TextView) mView.findViewById(R.id.tv3_func);
         tv4_func = (TextView) mView.findViewById(R.id.tv4_func);
         tv5_func = (TextView) mView.findViewById(R.id.tv5_func);
-
         btn_func_reset = (Button) mView.findViewById(R.id.btn_func_reset);
         btn_func_sure = (Button) mView.findViewById(R.id.btn_func_sure);
 
@@ -108,6 +116,32 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         rl_house_resources_type.setOnClickListener(this);
         rl_house_resources_price.setOnClickListener(this);
         rl_house_function.setOnClickListener(this);
+
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
+        tv3.setOnClickListener(this);
+        tv4.setOnClickListener(this);
+        tv5.setOnClickListener(this);
+        tv6.setOnClickListener(this);
+        btn_type_reset.setOnClickListener(this);
+        btn_type_sure.setOnClickListener(this);
+
+        tv_1.setOnClickListener(this);
+        tv_2.setOnClickListener(this);
+        tv_3.setOnClickListener(this);
+        tv_4.setOnClickListener(this);
+        tv_5.setOnClickListener(this);
+        tv_6.setOnClickListener(this);
+        tv_7.setOnClickListener(this);
+
+        tv1_func.setOnClickListener(this);
+        tv2_func.setOnClickListener(this);
+        tv3_func.setOnClickListener(this);
+        tv4_func.setOnClickListener(this);
+        tv5_func.setOnClickListener(this);
+        btn_func_reset.setOnClickListener(this);
+        btn_func_sure.setOnClickListener(this);
+
     }
 
     @Override
@@ -131,34 +165,129 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     }
 
+    //开启动画
+    private void openShopping(LinearLayout ll_hidden_layout) {
+        ObjectAnimator oa = ObjectAnimator.ofFloat(ll_hidden_layout, "translationY", -ll_hidden_layout.getMeasuredHeight(), 0f);
+        oa.setDuration(200);
+        oa.start();
+        v_hidden.setVisibility(View.VISIBLE);
+        ll_hidden_layout.setVisibility(View.VISIBLE);
+        isOpened = true;
+    }
+
+    //关闭动画
+    private void closeShopping(final LinearLayout ll_hidden_layout) {
+        ObjectAnimator oa = ObjectAnimator.ofFloat(ll_hidden_layout, "translationY", 0f, -ll_hidden_layout.getMeasuredHeight());
+        oa.setDuration(200);
+        oa.start();
+        oa.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                v_hidden.setVisibility(View.GONE);
+                ll_hidden_layout.setVisibility(View.GONE);
+            }
+        });
+        isOpened = false;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_email://跳转邮件
+            case R.id.rl_house_resources_type:  // 类型
+                if (isOpened && currentFlag == 2 || currentFlag == 3) {
+                    currentFlag = 1;
+                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_up);
+                } else if (isOpened) {
+                    //类型是开启状态 则需关闭动画
+                    currentFlag = 1;
+                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                    closeShopping(ll_hidden_type);
+                } else {
+                    //否则开启动画
+                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    currentFlag = 1;
+
+                    // 当类型开启动画时，价格和功能应关闭动画
+                    openShopping(ll_hidden_type);
+                    closeShopping(ll_hidden_price);
+                    closeShopping(ll_hidden_function);
+                }
+                //点价格时 无论类型、功能结果如何，都让它们右边的箭头改变
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
 
                 break;
-            case R.id.layout_my_info://跳转我的信息
-                Intent i_my_info = new Intent(context, MyInfoActivity.class);
-                i_my_info.putExtra("name", "明天你好");
-                startActivity(i_my_info);
-                break;
-            case R.id.tv_customer_info://跳转客户信息
-                Intent i_customer_info = new Intent(context, CustomerInfoActivity.class);
-                startActivity(i_customer_info);
-                break;
-            case tv_customer_follow://跳转客户跟踪
+            case R.id.rl_house_resources_price:  // 价格
+                if (isOpened && currentFlag == 1 || currentFlag == 3) {
+                    currentFlag = 2;
+                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_up);
+                } else if (isOpened) {
+                    //类型是开启状态 则需关闭动画
+                    currentFlag = 2;
+                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                    closeShopping(ll_hidden_price);
+                } else {
+                    //否则开启动画
+                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    currentFlag = 2;
+
+                    // 当价格动画开启时，类型和功能动画应关闭
+                    openShopping(ll_hidden_price);
+                    closeShopping(ll_hidden_type);
+                    closeShopping(ll_hidden_function);
+                }
+                //点类型时 无论价格、功能结果如何，都让它们的箭头改变
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
 
                 break;
-            case tv_rengou_state://跳转认购状态
+            case R.id.rl_house_function:  // 功能
+                if (isOpened && currentFlag == 1 || currentFlag == 2) {
+                    currentFlag = 3;
+                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_up);
+                } else if (isOpened) {
+                    //类型是开启状态 则需关闭动画
+                    currentFlag = 3;
+                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+                    closeShopping(ll_hidden_function);
+                } else {
+                    //否则开启动画
+                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    currentFlag = 3;
+
+                    // 当功能开启动画时，类型和价格应关闭动画；
+                    openShopping(ll_hidden_function);
+                    closeShopping(ll_hidden_type);
+                    closeShopping(ll_hidden_price);
+                }
+                //点价格时 无论类型、功能结果如何，都让它们的箭头收回
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+
 
                 break;
-            case R.id.layout_identify://跳转事业合伙人认证
-                Intent i_identify = new Intent(context, PartnerIdentifyActivity.class);
-                startActivity(i_identify);
+            case R.id.v_hidden:  // 隐藏布局 关闭动画
+//                if (currentFlag == 1) {
+//                } else if (currentFlag == 2) {
+//                } else {
+//                }
+                closeShopping(ll_hidden_type);
+                closeShopping(ll_hidden_price);
+                closeShopping(ll_hidden_function);
+
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+
                 break;
-            case R.id.layout_account_book://跳转我的账本
-                Intent i_account_book = new Intent(context, PartnerIdentifyActivity.class);
-                startActivity(i_account_book);
+            case R.id.tv_rengou_state:  //
+
+                break;
+            case R.id.layout_identify: //
+
+                break;
+            case R.id.layout_account_book:  //
+
                 break;
 
             default:
