@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.fragment.DiscoveryFragment;
 import com.haidehui.fragment.HomeFragment;
 import com.haidehui.fragment.HouseResourcesFragment;
 import com.haidehui.fragment.MineFragment;
@@ -57,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<Fragment> mFragments;
     private HomeFragment tab_home; //首页
     private HouseResourcesFragment tab_house_resources; //房源
-    private MineFragment tab_discovery; //发现
+    private DiscoveryFragment tab_discovery; //发现
     private MineFragment tab_mine; //我的
     private TitleBar title;
 
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         tab_home = new HomeFragment();
         tab_house_resources = new HouseResourcesFragment();
-        tab_discovery = new MineFragment();
+        tab_discovery = new DiscoveryFragment();
         tab_mine = new MineFragment();
 
         mFragments.add(tab_home);

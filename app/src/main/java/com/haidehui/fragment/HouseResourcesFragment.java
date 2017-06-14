@@ -105,6 +105,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         btn_func_sure = (Button) mView.findViewById(R.id.btn_func_sure);
 
 
+        v_hidden.setOnClickListener(this);
+
         rl_house_resources_type.setOnClickListener(this);
         rl_house_resources_price.setOnClickListener(this);
         rl_house_function.setOnClickListener(this);
