@@ -22,7 +22,9 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +46,10 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private boolean isShow = false;
     private boolean isOpened = false;   //动画是否开启
     private int currentFlag;  //当前选择哪个按钮  1、类型按钮  2、价格按钮  3、功能按钮
+    private List<String> functions = new ArrayList<>();
+    private List<String> types = new ArrayList<>();
+    private String function = "";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -299,10 +305,38 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             case R.id.layout_account_book:  //
 
                 break;
+            case R.id.tv1_func:  //投资
+                clickItem(tv1_func, "touzi");
+                break;
+            case R.id.tv2_func:  //自住
+                clickItem(tv2_func, "zizhu");
+                break;
+            case R.id.tv3_func:  //度假
+
+                break;
 
             default:
                 break;
         }
+    }
+
+    private void clickItem(TextView tv, String item) {
+        if (functions.contains(item)) {
+            //添加过
+            functions.remove(item);
+//            tv.setTextColor("heise");
+        } else {
+            //未添加过
+            functions.add(item);
+//            tv.setTextColor("hongse");
+        }
+        StringBuffer sb = new StringBuffer();
+        for (String str : functions) {
+            sb.append(str);
+            sb.append(",");
+        }
+        String strResult = sb.toString();
+        function = strResult.substring(0, strResult.length());
     }
 
 /*

@@ -36,32 +36,23 @@
                 android:id="@+id/tv_house_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLength="12"
-                android:maxLines="1"
+                android:maxLength="22"
+                android:singleLine="true"
                 android:padding="5dp"
-                android:text="帕诺拉普吉岛豪华海景公寓"
-                android:textSize="14sp"/>
+                android:text="如何选到称心如意的好房"
+                android:textColor="@color/txt_black"
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/tv_house_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:padding="5dp"
-                android:text="3卧1卫/100-125㎡"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="fffffffffffffffffffffffffffffff"
                 android:textColor="@color/gray_dark"
-                android:textSize="14.0sp"/>
-
-            <TextView
-                android:id="@+id/tv_house_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:padding="5dp"
-                android:text="80-112.5万元"
-                android:textColor="@color/gray_dark"
-                android:textSize="14.0sp"/>
+                android:textSize="16sp"/>
         </LinearLayout>
     </RelativeLayout>
 
