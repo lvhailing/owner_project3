@@ -5,40 +5,40 @@
     android:background="@color/gray_light"
     android:orientation="vertical">
 
-        <include
-            layout="@layout/net_fail"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+    <include
+        layout="@layout/net_fail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_height_new"
-            android:background="@color/bg_top">
-            <ImageView
-                android:id="@+id/img_back"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
-                android:src="@drawable/back"
-                android:layout_centerVertical="true"
-                android:contentDescription="@null"
-                android:singleLine="true" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="客户信息"
-                android:textSize="18sp"
-                />
-            <ImageView
-                android:id="@+id/img_add_follow"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/img_add_folow"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height_new"
+        android:background="@color/bg_top">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:singleLine="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="客户信息"
+            android:textSize="18sp"
+            />
+        <ImageView
+            android:id="@+id/img_add_follow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_add_folow"/>
 
-        </RelativeLayout>
+    </RelativeLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -237,4 +237,4 @@
             android:text="客户信息无效，请您提交真实的客户信息！"/>
     </FrameLayout>
 
-    </LinearLayout>
+</LinearLayout>

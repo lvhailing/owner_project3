@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.CustomerInfoActivity;
 import com.haidehui.act.HotHouseActivity;
 import com.haidehui.act.MyInfoActivity;
@@ -79,6 +80,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         tv_customer_follow.setOnClickListener(this);
         tv_rengou_state.setOnClickListener(this);
         layout_indentify.setOnClickListener(this);
+        layout_account_book.setOnClickListener(this);
 
     }
     @Override
@@ -126,7 +128,7 @@ public class MineFragment extends Fragment implements OnClickListener {
                 startActivity(i_identify);
                 break;
             case R.id.layout_account_book://跳转我的账本
-                Intent i_account_book = new Intent(context, PartnerIdentifyActivity.class);
+                Intent i_account_book = new Intent(context, AccountBookActivity.class);
                 startActivity(i_account_book);
                 break;
 

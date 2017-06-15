@@ -42,7 +42,6 @@ public class ViewUtils {
 	 * 将px值转换为sp值，保证文字大小不变
 	 * 
 	 * @param pxValue
-	 * @param fontScale
 	 *            （DisplayMetrics类中属性scaledDensity）
 	 * @return
 	 */
@@ -55,7 +54,6 @@ public class ViewUtils {
 	 * 将sp值转换为px值，保证文字大小不变
 	 * 
 	 * @param spValue
-	 * @param fontScale
 	 *            （DisplayMetrics类中属性scaledDensity）
 	 * @return
 	 */
@@ -240,6 +238,73 @@ public class ViewUtils {
 					}else{
 						btn_sign.setBackgroundResource(R.drawable.shape_center_orange);
 						btn_sign.setClickable(true);
+					}
+
+				}
+			}
+		}
+	}
+
+	public static void setButton(String str1,String str2,String str3,String str4,String str5,Button btn_sign){
+		if(TextUtils.isEmpty(str1)){
+			btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+			btn_sign.setClickable(false);
+		}else {
+			if(TextUtils.isEmpty(str2)){
+				btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+				btn_sign.setClickable(false);
+			}else{
+				if(TextUtils.isEmpty(str3)){
+					btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+					btn_sign.setClickable(false);
+				}else{
+					if(TextUtils.isEmpty(str4)){
+						btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+						btn_sign.setClickable(false);
+					}else{
+						if(TextUtils.isEmpty(str5)){
+							btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+							btn_sign.setClickable(false);
+						}else{
+							btn_sign.setBackgroundResource(R.drawable.shape_center_orange);
+							btn_sign.setClickable(true);
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	public static void setButton(String str1,String str2,String str3,String str4,String str5,String str6,Button btn_sign){
+		if(TextUtils.isEmpty(str1)){
+			btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+			btn_sign.setClickable(false);
+		}else {
+			if(TextUtils.isEmpty(str2)){
+				btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+				btn_sign.setClickable(false);
+			}else{
+				if(TextUtils.isEmpty(str3)){
+					btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+					btn_sign.setClickable(false);
+				}else{
+					if(TextUtils.isEmpty(str4)){
+						btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+						btn_sign.setClickable(false);
+					}else{
+						if(TextUtils.isEmpty(str5)){
+							btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+							btn_sign.setClickable(false);
+						}else{
+							if(TextUtils.isEmpty(str6)){
+								btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
+								btn_sign.setClickable(false);
+							}else{
+								btn_sign.setBackgroundResource(R.drawable.shape_center_orange);
+								btn_sign.setClickable(true);
+							}
+						}
 					}
 
 				}

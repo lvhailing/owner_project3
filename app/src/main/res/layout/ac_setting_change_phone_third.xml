@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="15dip"
+        android:layout_marginBottom="15dip"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_change_phone_third_message"
+            android:textColor="@color/txt_gray"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_login_phone_number"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+        <TextView
+            android:id="@+id/et_change_phone"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:text="18565487598"
+            android:paddingLeft="8dip"
+            android:textColorHint="@color/bg_gray_gray"
+            android:maxLength="11"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/txt_gray"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="1dip"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_sign_verify_code"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_change_phone_get_verify_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_center_orange"
+                android:layout_alignParentRight="true"
+                android:text="@string/sign_get_verify"
+                android:textColor="@color/txt_white"
+                android:layout_marginRight="10dip"
+                android:padding="5dip"
+                android:layout_marginLeft="5dip"
+                />
+            <EditText
+                android:id="@+id/et_change_phone_verify_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_white"
+                android:layout_marginLeft="1dip"
+                android:hint="@string/setting_change_phone_third_verifycode"
+                android:paddingLeft="8dip"
+                android:textColorHint="@color/bg_gray_gray"
+                android:layout_toLeftOf="@id/tv_change_phone_get_verify_code"
+                android:padding="5dip"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textSize="15sp"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -265,7 +265,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     // 请求轮播图数据
     private void requestCycleIndex() {
         Map<String, Object> param = new HashMap<>();
-        param.put("appType", "android");
+        param.put("params", "params");
         HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {

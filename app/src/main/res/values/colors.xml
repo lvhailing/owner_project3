@@ -8,7 +8,7 @@
     <color name="txt_gray_d">#373737</color>
     <color name="txt_orange">#ddb57f</color>
     <!-- 背景色 -->
-
+    <color name="light_gray">#FFEDEDED</color>
     <color name="bg_gray">#F5F5F5</color>
     <color name="bg_white">#ffffff</color>
     <color name="bg_title">#0078ba</color>
@@ -37,4 +37,7 @@
     <color name="red4">#8a0002</color>
 
     <color name="province_line_border">#C7C7C7</color>
+
+    <color name="txt_vertical_line">#6F82E8</color>
+
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:text="收支说明" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="15dp"
+            android:text="哈哈哈的哈哈哈的哈哈哈的哈哈哈导航导航好的好的活的好好地活的好好地和打电话好的好的好的好的好的活的好好地好的好的和" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="10dp"
+            android:text="哈哈哈的哈哈哈的哈哈哈的哈哈哈导航导航好的好的活的好好地活的好好地和打电话好的好的好的好的好的活的好好地好的好的和" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="10dp"
+            android:text="哈哈哈的哈哈哈的哈哈哈的哈哈哈导航导航好的好的活的好好地活的好好地和打电话好的好的好的好的好的活的好好地好的好的和" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="10dp"
+            android:text="哈哈哈的哈哈哈的哈哈哈的哈哈哈导航导航好的好的活的好好地活的好好地和打电话好的好的好的好的好的活的好好地好的好的和" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:src="@mipmap/img_dialog_delete"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

@@ -57,10 +57,12 @@ public class Urls {
 
     //首页
     public static final String URL_HOME = EC_HOST + "index";
-    // 轮播图
-    public static final String URL_CYCLE_ADVERTISE_INDEX = EC_HOST + "turn/advertise";
+    // 首页--轮播图
+    public static final String URL_HOME_ADVERTISE = EC_HOST + "home/advertise";
     // 发现-- 轮播图
     public static final String URL_DISCOVERY_ADVERTISE = EC_HOST + "discovery/advertise";
+    // 发现-- 投资指南列表
+    public static final String URL_INVESTMENTGUIDE_LIST = EC_HOST + "investmentguide/list";
     //意见反馈
     public static final String URL_ADVICE = EC_HOST + "problem/reply/save";
     //检查版本

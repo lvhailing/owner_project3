@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="15dip"
+        android:layout_marginBottom="15dip"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_change_phone_second_phone"
+            android:textColor="@color/txt_gray"
+            />
+        <TextView
+            android:id="@+id/tv_change_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="185***6542"
+            android:textColor="@color/txt_gray"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/img_login_phone_number"
+            android:background="@color/bg_white"
+            android:padding="8dip"
+            />
+        <EditText
+            android:id="@+id/et_change_phone"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/bg_white"
+            android:layout_marginLeft="1dip"
+            android:hint="@string/setting_change_phone_second"
+            android:paddingLeft="8dip"
+            android:textColorHint="@color/bg_gray_gray"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textSize="14sp"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.act.WebActivity;
@@ -47,12 +48,11 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     private MouldList<ResultCycleIndex2B> CycleBean;
     private Intent intent;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
-    private ViewPager viewPager;
-    private View v_line;
+    private ViewPager vp;
+    private View v_line; // 投资指南，产品路演下的下划线
     private ArrayList<Fragment> fragments;
     private int screenWidth; // 屏幕宽度
     private int line_width; // 下划线宽度
-//    private int tagerX;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,38 +76,23 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onResume() {
         super.onResume();
-//        requestBoutiqueHouseData();
-//        scrollView.smoothScrollTo(0, 0);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-//            requestBoutiqueHouseData();
-//            scrollView.smoothScrollTo(0, 0);
-        } else {
-
-        }
+//        requestInvestmentGuideListData();
     }
 
     private void initView(View mView) {
         context = getActivity();
-//        productIndexBean = new ResultProductIndexBean();
         CycleBean = new MouldList<ResultCycleIndex2B>();
-//        scrollView = (ScrollView) mView.findViewById(R.id.scrollview);
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
         tv_discovery_tab1 = (TextView) mView.findViewById(R.id.tv_discovery_tab1);
         tv_discovery_tab2 = (TextView) mView.findViewById(R.id.tv_discovery_tab2);
 
-        viewPager = (ViewPager) mView.findViewById(R.id.viewPager);
-        v_line = mView.findViewById(R.id.line); // tab下的下划线
+        vp = (ViewPager) mView.findViewById(R.id.vp);
+        v_line = mView.findViewById(R.id.line);
 
         tv_discovery_tab1.setOnClickListener(this);
         tv_discovery_tab2.setOnClickListener(this);
-
 
         // 默认设置第0个title状态
         setTitleStyle(0);
@@ -124,7 +109,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
         v_line.getLayoutParams().width = line_width;
         v_line.requestLayout();
 
-        viewPager.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
+        vp.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
             @Override
             public int getCount() {
                 return fragments.size();
@@ -136,7 +121,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
             }
         });
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int arg0) {
                 setTitleStyle(arg0);
@@ -209,26 +194,24 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
         mViewPager.addView(cycleAdapter);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_discovery_tab1:  // 投资指南
                 setTitleStyle(0);
                 setLineStyle(0);
-                viewPager.setCurrentItem(0);
+                vp.setCurrentItem(0);
 
                 break;
             case R.id.tv_discovery_tab2: // 产品路演
                 setTitleStyle(1);
                 setLineStyle(1);
-                viewPager.setCurrentItem(1);
+                vp.setCurrentItem(1);
 
                 break;
 
         }
     }
-
 
     // 请求轮播图数据
     private void requestCycleIndex() {
@@ -242,7 +225,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
                         CycleBean = (MouldList<ResultCycleIndex2B>) params.result;
                     }
                 }
-//                requestData();
+                requestData();
             }
         });
     }

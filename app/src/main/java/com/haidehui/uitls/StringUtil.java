@@ -11,6 +11,9 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.haidehui.R;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -656,5 +659,42 @@ public class StringUtil {
         String regex = "^(-?[1-9]\\d*\\.?\\d*)|(-?0\\.\\d*[1-9])|(-?[0])|(-?[0]\\.\\d*)$";
         return value.matches(regex);
     }
+    /**
+     * 修改账本三个按钮方法
+     *
+     * @param btn
+     * @param mResource
+     */
+    public static void changeButtonStyleThree(TextView btn_one, TextView btn_two, TextView btn_three, int btn, Resources mResource) {
 
+       if (btn == btn_one.getId()) {
+           btn_one.setBackgroundResource(R.drawable.shape_center_white);
+           btn_one.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+
+           btn_two.setBackgroundResource(R.drawable.shape_center_light_gray);
+           btn_two.setTextColor(mResource.getColor(R.color.gray_d));
+
+           btn_three.setBackgroundResource(R.drawable.shape_center_light_gray);
+           btn_three.setTextColor(mResource.getColor(R.color.gray_d));
+        } else if (btn == btn_two.getId()) {
+           btn_two.setBackgroundResource(R.drawable.shape_center_white);
+           btn_two.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+
+           btn_one.setBackgroundResource(R.drawable.shape_center_light_gray);
+           btn_one.setTextColor(mResource.getColor(R.color.gray_d));
+
+           btn_three.setBackgroundResource(R.drawable.shape_center_light_gray);
+           btn_three.setTextColor(mResource.getColor(R.color.gray_d));
+        }else if (btn == btn_three.getId()) {
+           btn_three.setBackgroundResource(R.drawable.shape_center_white);
+           btn_three.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+
+           btn_two.setBackgroundResource(R.drawable.shape_center_light_gray);
+           btn_two.setTextColor(mResource.getColor(R.color.gray_d));
+
+           btn_one.setBackgroundResource(R.drawable.shape_center_light_gray);
+           btn_one.setTextColor(mResource.getColor(R.color.gray_d));
+       }
+
+    }
 }

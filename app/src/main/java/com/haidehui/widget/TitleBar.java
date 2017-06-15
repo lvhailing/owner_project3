@@ -60,6 +60,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
 
     private Context mContext;
     private DisplayImageOptions options;
+    private TextView child;
 
     public TitleBar(Context context) {
         super(context);
@@ -315,18 +316,20 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         return TitleBar.this;
     }
 
+
+
     /**
      * 在标题栏中添加一个可点击的button 带文字的
      *
      * @param act
      * @return
      */
-    public TitleBar addAction(Action act, String text, int ishow) {
+    public TitleBar addAction(Action act, String text, int background) {
         if (actions.getChildCount() == 3) {
             throw new RuntimeException("action container is full,limit is 2");
         }
-        TextView child = new TextView(mContext);
-        child.setPadding(0, 0, 10, 0);
+        child = new TextView(mContext);
+        child.setPadding(10, 0, 10, 0);
         child.setGravity(Gravity.CENTER);
         if (text.length() >= 3) {
             child.setTextSize(14);
@@ -348,12 +351,30 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         Drawable drawable = getResources().getDrawable(act.background);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         child.setCompoundDrawables(drawable, null, null, null);
-        child.setBackgroundResource(R.drawable.title_selector);
+        child.setBackgroundResource(background);
         child.setOnClickListener(this);
+        child.setClickable(false);
         // int w = ViewUtils.dip2px(mContext, 56);
-        child.setVisibility(ishow);
-        actions.addView(child, new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+//        child.setVisibility(ishow);
+        LinearLayout.LayoutParams LayoutParams_l = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams_l.setMargins(0, 25, 35, 25);
+        actions.addView(child, LayoutParams_l);
         return TitleBar.this;
+    }
+
+    /**
+     *
+     * 修改右按钮背景和是否可以点击
+     * @param background    背景颜色
+     * @param isClick  是否可以点击
+     */
+
+    public void setChildBankground(int background,boolean isClick){
+
+
+        child.setBackgroundResource(background);
+        child.setClickable(isClick);
+
     }
 
 

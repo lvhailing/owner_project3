@@ -9,20 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.model.BoutiqueHouse2B;
+import com.haidehui.model.InvestmentGuide3B;
 import com.haidehui.network.types.MouldList;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import static com.haidehui.uitls.ImageLoaderManager.options;
 
 // 发现-- 投资指南列表 Adapter
 public class InvestmentGuideAdapter extends BaseAdapter {
 
     private static final String tag = "recommendProductAdapter";
-    private MouldList<BoutiqueHouse2B> list;
+    private MouldList<InvestmentGuide3B> list;
     private Context context;
     private LayoutInflater inflater;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public InvestmentGuideAdapter(Context context, MouldList<BoutiqueHouse2B> list) {
+    public InvestmentGuideAdapter(Context context, MouldList<InvestmentGuide3B> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -58,13 +60,18 @@ public class InvestmentGuideAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
+        //加载左侧图片
+        ImageLoader.getInstance().displayImage(list.get(position).getPicture(), holder.iv_guide_photo, options);
+
+        holder.tv_guide_title.setText(list.get(position).getTitile());
+        holder.tv_guide_detail .setText(list.get(position).getGraphicDetails());
         return convertView;
     }
 
     class Holder {
-        ImageView iv_guide_photo;
-        TextView tv_guide_title;
-        TextView tv_guide_detail;
+        ImageView iv_guide_photo; // 左侧图片
+        TextView tv_guide_title; // 标题
+        TextView tv_guide_detail; // 详情简介
 
     }
 }

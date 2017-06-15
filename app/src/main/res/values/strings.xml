@@ -40,6 +40,70 @@
     <string name="message_other">其他</string>
     <string name="message_nodata">暂无数据</string>
 
+    <!-- 设置模块 -->
+    <string name="setting_title">设置</string>
+    <string name="setting_change_phone">修改手机</string>
+    <string name="setting_gesture_password">手势密码</string>
+    <string name="setting_change_gesture_password">修改手势密码</string>
+    <string name="setting_change_password">修改登录密码</string>
+    <string name="setting_service_agreement">服务条款</string>
+    <string name="setting_privacy_agreement">隐私协议</string>
+    <string name="setting_advice">意见反馈</string>
+    <string name="setting_invite">推荐大富翁APP朋友</string>
+    <string name="setting_about">关于我们</string>
+    <string name="setting_version">版本号</string>
+    <string name="setting_change_phone_first">请输入当前登录密码</string>
+    <string name="setting_change_phone_first_title">验证登录密码</string>
+    <string name="setting_change_phone_next">下一步</string>
+    <string name="setting_change_phone_second">请输入新手机号码</string>
+    <string name="setting_change_phone_second_phone">当前手机号：</string>
+    <string name="setting_change_phone_second_title">修改手机号</string>
+    <string name="setting_change_phone_third_title">填写验证码</string>
+    <string name="setting_change_phone_third_message">短信验证码已发送，请填写验证码</string>
+    <string name="setting_change_phone_third_verifycode">请输入验证码</string>
+    <string name="setting_change_phone_third_submit">提   交</string>
+    <string name="setting_change_password_sure">确   定</string>
+    <string name="setting_change_password_old">旧密码</string>
+    <string name="setting_change_password_new">新密码（8-16位字母数字组合）</string>
+    <string name="setting_change_password_new_again">确认密码</string>
+    <string name="setting_change_password_title">修改密码</string>
+    <string name="setting_advice_edit">请输入您的意见及建议，我们将为您不断改进！</string>
+    <string name="setting_advice_sevice">如有疑问，您也可以直接联系：</string>
+    <string name="setting_recommend_title">推荐APP给好友</string>
+    <string name="setting_recommend_btn">推荐给朋友</string>
+    <string name="setting_recommend_rule">推荐规则</string>
+    <string name="setting_recommend_record">推荐记录</string>
+    <string name="setting_recommend_des">推荐说明：</string>
+    <string name="setting_recommend_des_1">1、您注册大富翁成功后会自动生成一个您的专属推荐码。</string>
+    <string name="setting_recommend_des_2">2、您可以通过微信、微信朋友圈、新浪微博、QQ、短信、扫描二维码等方式分享给您的好友，也可以以让您身边的好友在注册大富翁时，输入您的推荐码。</string>
+    <string name="setting_recommend_des_3">3、好友通过推荐链接或输入您的推荐码成功注册后则您和您的好友将建立推荐与被推荐关系，推荐的好友成单后，您可以获得相应金额的推荐奖励。</string>
+    <string name="setting_recommend_des_4">4、若您的好友注册时未填写您的推荐码或未通过您的推荐链接注册，则推荐关系不成立。</string>
+    <string name="setting_recommend_record_name">荐好友成单获得推荐奖励！</string>
+    <string name="setting_recommend_friend">推荐好友</string>
+    <string name="setting_recommend_level">推荐级别</string>
+    <string name="setting_recommend_account">总共为您赚了</string>
+    <string name="setting_logout">退出登录</string>
+
+    <!-- 我的银行卡 -->
+
+    <string name="mybank_title">我的银行卡</string>
+    <string name="mybank_add_card">添加银行卡</string>
+    <string name="mybank_add_card_verify_code">输入短信验证码</string>
+    <string name="mybank_add_card_real_name">输入您的真实姓名</string>
+    <string name="mybank_add_card_idcard">输入您的身份证号</string>
+    <string name="mybank_add_card_bank_name">输入银行名称</string>
+    <string name="mybank_add_card_bank_address">输入开户行所在地</string>
+    <string name="mybank_add_card_bank_number">输入银行卡号</string>
+    <string name="mybank_add_card_title">请绑定本人的储蓄卡</string>
+    <string name="mybank_add_card_button">确认添加</string>
+
+    <!-- 提现 -->
+
+    <string name="withdraw_choose_bank_title">选择提现账户</string>
+
+
+    <!-- 邀请好友内容 -->
+    <string name="shared_message">爱来不来</string>
 
 
     <!-- 客服电话 -->
@@ -59,5 +123,9 @@
     <string name="title_submit_info">提交客户信息</string>
     <string name="title_partner_identify">事业合伙人认证</string>
     <string name="title_account_book">账本</string>
+    <string name="title_commission_details">收益详情</string>
+    <string name="title_award_details">奖励详情</string>
+    <string name="title_withdraw_details">提现详情</string>
+
 
 </resources>

@@ -1,67 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    android:paddingBottom="10dp">
+
+
+  <ScrollView
+      android:id="@+id/scrollview"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="none">
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray"
     android:orientation="vertical">
+    <include
+        layout="@layout/net_fail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
-        android:id="@+id/layout_photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="头像"
-            android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:textColor="@color/gray_dark"/>
-
-        <com.haidehui.widget.CircularImage
-            android:id="@+id/img_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_toLeftOf="@+id/img_arrow"
-            android:src="@mipmap/img_photo"/>
-
-
+        android:layout_height="@dimen/title_bar_height_new"
+        android:background="@color/bg_btn_orange">
         <ImageView
-            android:id="@+id/img_arrow"
+            android:id="@+id/img_back"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@drawable/back"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:singleLine="true" />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
+            android:text="账本"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+        <ImageView
+            android:id="@+id/img_income_intro"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/arrow" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/layout_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginTop="2dp"
-        android:padding="10dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_add_folow"/>
 
-        <TextView
+    </RelativeLayout>
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textSize="16sp"
-            android:textColor="@color/gray_dark"/>
-
+            android:orientation="vertical"
+            android:background="@color/bg_btn_orange">
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_not_give"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:text="某某某"
-            android:layout_marginRight="10dp"/>
-    </RelativeLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="666666.666"
+            android:textSize="30sp"
+            android:textColor="@color/white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="未发佣金(元)"
+            android:textColor="@color/white"/>
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_total_give"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="111111111"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="应发佣金(元)"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_gived"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="111111111"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="已发佣金(元)"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/tv_commission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:gravity="center"
+            android:background="@drawable/shape_center_white"
+            android:textColor="@color/gray_d"
+            android:text="佣金收益"/>
+        <TextView
+            android:id="@+id/tv_award"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_d"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:gravity="center"
+            android:text="活动奖励"/>
+        <TextView
+            android:id="@+id/tv_withdraw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_d"
+            android:padding="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="提现记录"/>
+    </LinearLayout>
+    <com.haidehui.widget.MyListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/lv_commission"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="57dp"
+        android:divider="@color/gray_light"
+        android:scrollbars="none"
+        android:dividerHeight="5dp"
+        android:listSelector="#00000000"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="disabled" />
+    <com.haidehui.widget.MyListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/lv_award"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="57dp"
+        android:divider="@color/gray_light"
+        android:scrollbars="none"
+        android:visibility="gone"
+        android:dividerHeight="5dp"
+        android:listSelector="#00000000"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="disabled" />
+    <com.haidehui.widget.MyListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/lv_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="57dp"
+        android:divider="@color/gray_light"
+        android:scrollbars="none"
+        android:visibility="gone"
+        android:dividerHeight="5dp"
+        android:listSelector="#00000000"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="disabled" />
+
+    </LinearLayout>
+</ScrollView>
+    <Button
+        android:id="@+id/btn_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="申请提现"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_center_orange"/>
+</RelativeLayout>
