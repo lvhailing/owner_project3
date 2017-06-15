@@ -1,35 +1,34 @@
 package com.haidehui.fragment;
 
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.haidehui.R;
-import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.InvestmentGuideAdapter;
+import com.haidehui.adapter.ProductRoadShowAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.MyListView;
 
 import static com.haidehui.fragment.HomeFragment.setListViewHeightBasedOnChildren;
 
-// 发现--投资指南 列表页
-public class InvestmentGuideFragment extends Fragment {
+// 发现--产品路演 列表页
+public class ProductRoadshowFragment extends Fragment {
     private View mView;
-    private Context context;
+    private FragmentActivity context;
     private MyListView myListView;
-    private InvestmentGuideAdapter myAdapter;
+    private ProductRoadShowAdapter myAdapter;
     private MouldList<BoutiqueHouse2B> list; // 精品房源数据
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_investment_guide, container, false);
+            mView = inflater.inflate(R.layout.fragment_product_road_show, container, false);
             try {
                 initView(mView);
                 initData();
@@ -43,9 +42,7 @@ public class InvestmentGuideFragment extends Fragment {
         }
 
         return mView;
-
     }
-
 
     private void initView(View mView) {
         context = getActivity();
@@ -53,7 +50,7 @@ public class InvestmentGuideFragment extends Fragment {
     }
 
     private void initData() {
-        myAdapter = new InvestmentGuideAdapter(context, list);
+        myAdapter = new ProductRoadShowAdapter(context, list);
         myListView.setAdapter(myAdapter);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,4 +61,5 @@ public class InvestmentGuideFragment extends Fragment {
         setListViewHeightBasedOnChildren(getActivity(), myListView, 0);
 
     }
+
 }

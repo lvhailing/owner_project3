@@ -4,6 +4,7 @@ package com.haidehui.model;
 import com.haidehui.network.types.IMouldType;
 import com.haidehui.network.types.MouldList;
 
+// 首页、发现轮播图共用
 public class ResultCycleIndexContent1B implements IMouldType {
 	private String check;
 	private String code;

@@ -350,14 +350,14 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     // 类型里的每个按钮被选时调的方法
     private void clickTypeItem(TextView tv, String item) {
-        if (functions.contains(item)) {
+        if (types.contains(item)) {
             //添加过
-            functions.remove(item);
+            types.remove(item);
             tv.setTextColor(getResources().getColor(R.color.txt_black));
             tv.setBackgroundResource(R.drawable.shape_center_gray_white);
         } else {
             //未添加过
-            functions.add(item);
+            types.add(item);
             tv.setTextColor(getResources().getColor(R.color.txt_orange));
             tv.setBackgroundResource(R.drawable.shape_center_orange_white);
         }

@@ -3,10 +3,9 @@ package com.haidehui.model;
 
 import com.haidehui.network.types.IMouldType;
 
+// 首页、发现轮播图共用 (用于接收后台返回图片地址)
 public class ResultCycleIndex2B implements IMouldType {
     private String picture;
-    private String url;
-    private String description;
 
     public String getPicture() {
         return picture;
@@ -16,19 +15,4 @@ public class ResultCycleIndex2B implements IMouldType {
         this.picture = picture;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

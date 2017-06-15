@@ -1,6 +1,5 @@
 package com.haidehui.fragment;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.act.WebActivity;
 import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
@@ -43,7 +44,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     private ScrollView scrollView;
     private Context context;
     //    private ResultProductIndexBean productIndexBean;
-    private MouldList<ResultCycleIndex2B> homeCycleBean;
+    private MouldList<ResultCycleIndex2B> CycleBean;
     private Intent intent;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
     private ViewPager viewPager;
@@ -93,7 +94,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     private void initView(View mView) {
         context = getActivity();
 //        productIndexBean = new ResultProductIndexBean();
-        homeCycleBean = new MouldList<ResultCycleIndex2B>();
+        CycleBean = new MouldList<ResultCycleIndex2B>();
 //        scrollView = (ScrollView) mView.findViewById(R.id.scrollview);
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
@@ -113,7 +114,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
 
         fragments = new ArrayList<Fragment>();
         fragments.add(new InvestmentGuideFragment());
-        fragments.add(new Tab2Fragment());
+        fragments.add(new ProductRoadshowFragment());
 
         //屏幕宽度
         screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
@@ -189,20 +190,18 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
      * 请求轮播图数据
      */
     private void requestData() {
-        cycleAdapter = new CycleAdapter(context, homeCycleBean, options);
+        cycleAdapter = new CycleAdapter(context, CycleBean, options);
         cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
         cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
             @Override
             public void onImageClick(int postion, View imageView) {
-                if (homeCycleBean != null && homeCycleBean.size() != 0) {
-                   /* if (!TextUtils.isEmpty(homeCycleBean.get(postion % homeCycleBean.size()).getUrl())) {
+                /*if (CycleBean != null && CycleBean.size() != 0) {
+                    if (!TextUtils.isEmpty(CycleBean.get(postion % CycleBean.size()).getPicture())) {
                         Intent i_web = new Intent(context, WebActivity.class);
-                        i_web.putExtra("type", WebActivity.WEBTYPE_BANNER);
-                        i_web.putExtra("url", homeCycleBean.get(postion % homeCycleBean.size()).getUrl());
-                        i_web.putExtra("title", homeCycleBean.get(postion % homeCycleBean.size()).getDescription());
+                        i_web.putExtra("url", CycleBean.get(postion % CycleBean.size()).getPicture());
                         getActivity().startActivity(i_web);
-                    }*/
-                }
+                    }
+                }*/
             }
         });
         cycleAdapter.setCycle(true);
@@ -234,16 +233,16 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     // 请求轮播图数据
     private void requestCycleIndex() {
         Map<String, Object> param = new HashMap<>();
-        param.put("appType", "android");
-        HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
+        param.put("params", "params");
+        HtmlRequest.getDiscoveryCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        homeCycleBean = (MouldList<ResultCycleIndex2B>) params.result;
+                        CycleBean = (MouldList<ResultCycleIndex2B>) params.result;
                     }
                 }
-                requestData();
+//                requestData();
             }
         });
     }

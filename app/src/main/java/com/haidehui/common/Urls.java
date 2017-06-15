@@ -6,20 +6,21 @@ public class Urls {
     public static String URL_DEBUG = "http://192.168.1.86:82/";
     // 正式环境IP
     public static String URL_OFFICIAL = "https://jdhapp.cf360.com/";
+
     //代树理
-    public static final String URL_DSL = "http://192.168.1.106:9999/junde-hui-app/";
+    public static final String URL_DSL = "http://192.168.1.106:9999/overseasProperty-app/";
 
     //张殿洋
     public static final String URL_ZDY = "192.168.1.138:9999/junde-hui-app";
 
     //张亚磊
-    public static final String URL_ZYL = "192.168.1.193:9999/junde-hui-app";
+    public static final String URL_ZYL = "http://192.168.1.193:9999/overseas-app";
 
     // 邢玉洁
     public static final String URL_XYJ = "http://192.168.1.125:9999/junde-hui-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_DEBUG;
+    private static String EC_HOST = URL_DSL;
 
     /**
      * 登出
@@ -39,13 +40,11 @@ public class Urls {
     /**
      * 发送手机短信
      */
-    public static final String URL_SMS = EC_HOST
-            + "user/mobile/send/verifycode";
+    public static final String URL_SMS = EC_HOST + "user/mobile/send/verifycode";
 
 
     /**
      * 短信类型
-     *
      */
     public static final String REGISTER = "register";       //  用户注册
 
@@ -56,11 +55,12 @@ public class Urls {
     public static final String MOBILEEDIT = "mobileEdit";       //  修改手机
 
 
-
     //首页
     public static final String URL_HOME = EC_HOST + "index";
     // 轮播图
     public static final String URL_CYCLE_ADVERTISE_INDEX = EC_HOST + "turn/advertise";
+    // 发现-- 轮播图
+    public static final String URL_DISCOVERY_ADVERTISE = EC_HOST + "discovery/advertise";
     //意见反馈
     public static final String URL_ADVICE = EC_HOST + "problem/reply/save";
     //检查版本
