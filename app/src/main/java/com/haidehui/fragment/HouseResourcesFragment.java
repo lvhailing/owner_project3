@@ -49,6 +49,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private List<String> functions = new ArrayList<>();
     private List<String> types = new ArrayList<>();
     private String function = "";
+    private String type = "";
 
 
     @Override
@@ -296,22 +297,49 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
 
                 break;
-            case R.id.tv_rengou_state:  //
+            case R.id.tv1:  // 类型：公寓
+                clickTypeItem(tv1, "gy");
+                break;
+            case R.id.tv2: // 类型：商铺
+                clickTypeItem(tv2, "sp");
+                break;
+            case R.id.tv3:  // 类型： 别墅
+                clickTypeItem(tv3, "bs");
+                break;
+            case R.id.tv4:  // 类型：学区
+                clickTypeItem(tv4, "xq");
+                break;
+            case R.id.tv5: // 类型：土地
+                clickTypeItem(tv5, "td");
+                break;
+            case R.id.tv6:  // 类型： 庄园
+                clickTypeItem(tv6, "zy");
+                break;
+            case R.id.btn_type_reset:  // 类型： 重置
+                clickTypeBtnReset();
+                break;
+            case R.id.btn_type_sure:  // 类型： 确定
 
                 break;
-            case R.id.layout_identify: //
-
+            case R.id.tv1_func:  // 功能：投资
+                clickFunctionItem(tv1_func, "touzi");
                 break;
-            case R.id.layout_account_book:  //
-
+            case R.id.tv2_func:  // 功能：自住
+                clickFunctionItem(tv2_func, "zizhu");
                 break;
-            case R.id.tv1_func:  //投资
-                clickItem(tv1_func, "touzi");
+            case R.id.tv3_func:  // 功能：度假
+                clickFunctionItem(tv3_func, "dj");
                 break;
-            case R.id.tv2_func:  //自住
-                clickItem(tv2_func, "zizhu");
+            case R.id.tv4_func:  // 功能：海景
+                clickFunctionItem(tv4_func, "hj");
                 break;
-            case R.id.tv3_func:  //度假
+            case R.id.tv5_func:  // 功能：移民
+                clickFunctionItem(tv5_func, "ym");
+                break;
+            case R.id.btn_func_reset:  // 功能： 重置
+                clickFunctionBtnReset();
+                break;
+            case R.id.btn_func_sure:  // 功能： 确定
 
                 break;
 
@@ -320,15 +348,51 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         }
     }
 
-    private void clickItem(TextView tv, String item) {
+    // 类型里的每个按钮被选时调的方法
+    private void clickTypeItem(TextView tv, String item) {
         if (functions.contains(item)) {
             //添加过
             functions.remove(item);
-//            tv.setTextColor("heise");
+            tv.setTextColor(getResources().getColor(R.color.txt_black));
+            tv.setBackgroundResource(R.drawable.shape_center_gray_white);
         } else {
             //未添加过
             functions.add(item);
-//            tv.setTextColor("hongse");
+            tv.setTextColor(getResources().getColor(R.color.txt_orange));
+            tv.setBackgroundResource(R.drawable.shape_center_orange_white);
+        }
+        StringBuffer sb = new StringBuffer();
+        for (String str : types) {
+            sb.append(str);
+            sb.append(",");
+        }
+        String strResult = sb.toString();
+        type = strResult.substring(0, strResult.length());
+    }
+
+    // 类型里的重置按钮点击时调的方法
+    private void clickTypeBtnReset() {
+        types.clear();
+       changTextColorAndBg(tv1);
+       changTextColorAndBg(tv2);
+       changTextColorAndBg(tv3);
+       changTextColorAndBg(tv4);
+       changTextColorAndBg(tv5);
+       changTextColorAndBg(tv6);
+    }
+
+    // 功能里的每个按钮被选时调的方法
+    private void clickFunctionItem(TextView tv, String item) {
+        if (functions.contains(item)) {
+            //添加过
+            functions.remove(item);
+            tv.setTextColor(getResources().getColor(R.color.txt_black));
+            tv.setBackgroundResource(R.drawable.shape_center_gray_white);
+        } else {
+            //未添加过
+            functions.add(item);
+            tv.setTextColor(getResources().getColor(R.color.txt_orange));
+            tv.setBackgroundResource(R.drawable.shape_center_orange_white);
         }
         StringBuffer sb = new StringBuffer();
         for (String str : functions) {
@@ -339,112 +403,22 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         function = strResult.substring(0, strResult.length());
     }
 
-/*
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_house_resources_type:  // 类型
-                if (isOpened && currentFlag == 2 || currentFlag == 3) {
-                    currentFlag = 1;
-                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_up);
-                } else if (isOpened) {
-                    //类型是开启状态 则需关闭动画
-                    currentFlag = 1;
-                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
-                    closeShopping(ll_hidden_type);
-                } else {
-                    //否则开启动画
-                    iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_up);
-                    currentFlag = 1;
-
-                    // 当类型开启动画时，价格和功能应关闭动画
-                    openShopping(ll_hidden_type);
-                    closeShopping(ll_hidden_price);
-                    closeShopping(ll_hidden_function);
-                }
-                //点价格时 无论类型、功能结果如何，都让它们右边的箭头改变
-                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
-                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
-
-                break;
-            case R.id.rl_house_resources_price:  // 价格
-                if (isOpened && currentFlag == 1 || currentFlag == 3) {
-                    currentFlag = 2;
-                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_up);
-                } else if (isOpened) {
-                    //类型是开启状态 则需关闭动画
-                    currentFlag = 2;
-                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
-                    closeShopping(ll_hidden_price);
-                } else {
-                    //否则开启动画
-                    iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_up);
-                    currentFlag = 2;
-
-                    // 当价格动画开启时，类型和功能动画应关闭
-                    openShopping(ll_hidden_price);
-                    closeShopping(ll_hidden_type);
-                    closeShopping(ll_hidden_function);
-                }
-                //点类型时 无论价格、功能结果如何，都让它们的箭头改变
-                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
-                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
-
-                break;
-            case R.id.rl_house_function:  // 功能
-                if (isOpened && currentFlag == 1 || currentFlag == 2) {
-                    currentFlag = 3;
-                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_up);
-                } else if (isOpened) {
-                    //类型是开启状态 则需关闭动画
-                    currentFlag = 3;
-                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
-                    closeShopping(ll_hidden_function);
-                } else {
-                    //否则开启动画
-                    iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_up);
-                    currentFlag = 3;
-
-                    // 当功能开启动画时，类型和价格应关闭动画；
-                    openShopping(ll_hidden_function);
-                    closeShopping(ll_hidden_type);
-                    closeShopping(ll_hidden_price);
-                }
-                //点价格时 无论类型、功能结果如何，都让它们的箭头收回
-                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
-                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
-
-
-                break;
-            case R.id.v_hidden:  // 隐藏布局 关闭动画
-//                if (currentFlag == 1) {
-//                } else if (currentFlag == 2) {
-//                } else {
-//                }
-                closeShopping(ll_hidden_type);
-                closeShopping(ll_hidden_price);
-                closeShopping(ll_hidden_function);
-
-                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
-                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
-                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
-
-                break;
-            case R.id.tv_rengou_state:  //
-
-                break;
-            case R.id.layout_identify: //
-
-                break;
-            case R.id.layout_account_book:  //
-
-                break;
-
-            default:
-                break;
-        }
+    // 功能里的重置按钮点击时调的方法
+    private void clickFunctionBtnReset() {
+        functions.clear();
+        changTextColorAndBg(tv1_func);
+        changTextColorAndBg(tv2_func);
+        changTextColorAndBg(tv3_func);
+        changTextColorAndBg(tv4_func);
+        changTextColorAndBg(tv5_func);
     }
-*/
+
+    // 重置textView 的颜色和背景
+    private void changTextColorAndBg(TextView tv) {
+        tv.setTextColor(getResources().getColor(R.color.txt_black));
+        tv.setBackgroundResource(R.drawable.shape_center_gray_white);
+    }
+
 
     //我的主页面数据
     private void requestData() {

@@ -1,5 +1,6 @@
 package com.haidehui.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -145,6 +146,10 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
                 //此处在手滑动时 会被不停调用
                 float tagerX = arg0 * line_width + arg2 / fragments.size();
                 ViewPropertyAnimator.animate(v_line).translationX(tagerX).setDuration(0);
+
+//                ObjectAnimator oa = ObjectAnimator.ofFloat(v_line, "translationX", tagerX);
+//                oa.setDuration(0);
+//                oa.start();
 
             }
 

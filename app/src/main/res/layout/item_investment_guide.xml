@@ -12,45 +12,45 @@
 
     <RelativeLayout
         android:id="@+id/rl_house_info"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/iv_loan_elite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_guide_photo"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_margin="12dp"
             android:layout_centerVertical="true"
-            android:scaleType="centerInside"
             android:src="@mipmap/img_normal"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/iv_loan_elite"
+            android:layout_marginRight="12dp"
+            android:layout_toRightOf="@id/iv_guide_photo"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_house_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_guide_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="22"
-                android:singleLine="true"
-                android:padding="5dp"
-                android:text="如何选到称心如意的好房"
+                android:layout_marginTop="5dp"
+                android:maxLength="18"
+                android:maxLines="1"
+                android:text="如何选到称心如意的好房?"
                 android:textColor="@color/txt_black"
                 android:textSize="18sp"/>
 
             <TextView
-                android:id="@+id/tv_house_area"
+                android:id="@+id/tv_guide_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:text="fffffffffffffffffffffffffffffff"
+                android:text="aa"
                 android:textColor="@color/gray_dark"
                 android:textSize="16sp"/>
         </LinearLayout>
@@ -60,5 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@color/bg_gray_gray"/>
 </LinearLayout>

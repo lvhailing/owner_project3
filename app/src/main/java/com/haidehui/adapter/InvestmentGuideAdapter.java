@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -49,7 +50,9 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new Holder();
             convertView = inflater.inflate(R.layout.item_investment_guide, null);
-//            holder.tv_hot_product_content_title = (TextView) convertView.findViewById(R.id.tv_hot_product_content_title);
+            holder.iv_guide_photo = (ImageView) convertView.findViewById(R.id.iv_guide_photo);
+            holder.tv_guide_title = (TextView) convertView.findViewById(R.id.tv_guide_title);
+            holder.tv_guide_detail = (TextView) convertView.findViewById(R.id.tv_guide_detail);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
@@ -59,7 +62,9 @@ public class InvestmentGuideAdapter extends BaseAdapter {
     }
 
     class Holder {
-        TextView tv_hot_product_content_Third_two;
+        ImageView iv_guide_photo;
+        TextView tv_guide_title;
+        TextView tv_guide_detail;
 
     }
 }

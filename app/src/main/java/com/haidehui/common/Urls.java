@@ -9,6 +9,12 @@ public class Urls {
     //代树理
     public static final String URL_DSL = "http://192.168.1.106:9999/junde-hui-app/";
 
+    //张殿洋
+    public static final String URL_ZDY = "192.168.1.138:9999/junde-hui-app";
+
+    //张亚磊
+    public static final String URL_ZYL = "192.168.1.193:9999/junde-hui-app";
+
     // 邢玉洁
     public static final String URL_XYJ = "http://192.168.1.125:9999/junde-hui-app/";
 
