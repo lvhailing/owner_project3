@@ -2,13 +2,12 @@ package com.haidehui.model;
 
 
 import com.haidehui.network.types.IMouldType;
-import com.haidehui.network.types.MouldList;
 
 // 发现--投资指南列表
 public class InvestmentGuide1B implements IMouldType {
 	private String check;
 	private String code;
-	private MouldList<InvestmentGuide3B> data;
+	private InvestmentGuide2B data;
 	private String msg;
 
 	public String getCheck() {
@@ -27,19 +26,19 @@ public class InvestmentGuide1B implements IMouldType {
 		this.code = code;
 	}
 
-	public MouldList<InvestmentGuide3B> getData() {
-		return data;
-	}
-
-	public void setData(MouldList<InvestmentGuide3B> data) {
-		this.data = data;
-	}
-
 	public String getMsg() {
 		return msg;
 	}
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public InvestmentGuide2B getData() {
+		return data;
+	}
+
+	public void setData(InvestmentGuide2B data) {
+		this.data = data;
 	}
 }

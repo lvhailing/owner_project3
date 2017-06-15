@@ -4,19 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.haidehui.common.Constants;
 import com.haidehui.common.Urls;
-import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.InvestmentGuide1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
 import com.haidehui.model.ResultLoginOffBean;
 import com.haidehui.model.ResultSentSMSBean;
-import com.haidehui.model.VersionMo;
 import com.haidehui.network.http.SimpleHttpClient;
-import com.haidehui.network.types.IMouldType;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.MD5;
 
@@ -298,7 +292,8 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
-     *  发现-- 投资指南列表
+     * 发现-- 投资指南列表
+     *
      * @param context
      * @param param
      * @param listener
@@ -320,13 +315,12 @@ public class HtmlRequest extends BaseRequester {
                 client.post(url, entity);
                 String result = (String) client.getResult();
 
-                Log.i("hh", "投资指南列表数据:" + result);
-
                 if (isCancelled() || result == null) {
                     return null;
                 }
                 try {
                     result = DESUtil.decrypt(result);
+                    Log.i("hh", "投资指南列表数据:" + result);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

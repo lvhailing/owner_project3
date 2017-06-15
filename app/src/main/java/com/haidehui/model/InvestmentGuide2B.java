@@ -5,7 +5,7 @@ import com.haidehui.network.types.IMouldType;
 import com.haidehui.network.types.MouldList;
 
 /**
- * 服务--展示豪华邮轮列表
+ * 发现--投资指南列表
  */
 public class InvestmentGuide2B implements IMouldType {
     private MouldList<InvestmentGuide3B> list;
