@@ -42,7 +42,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     private ScrollView scrollView;
     private Context context;
     //    private ResultProductIndexBean productIndexBean;
-    private MouldList<ResultCycleIndex2B> CycleBean;
+    private MouldList<ResultCycleIndex2B> cycleBean;
     private Intent intent;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
     private ViewPager vp;
@@ -78,7 +78,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
 
     private void initView(View mView) {
         context = getActivity();
-        CycleBean = new MouldList<ResultCycleIndex2B>();
+        cycleBean = new MouldList<ResultCycleIndex2B>();
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
@@ -172,15 +172,15 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
      * 请求轮播图数据
      */
     private void requestData() {
-        cycleAdapter = new CycleAdapter(context, CycleBean, options);
+        cycleAdapter = new CycleAdapter(context, cycleBean, options);
         cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
         cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
             @Override
             public void onImageClick(int postion, View imageView) {
-                /*if (CycleBean != null && CycleBean.size() != 0) {
-                    if (!TextUtils.isEmpty(CycleBean.get(postion % CycleBean.size()).getPicture())) {
+                /*if (cycleBean != null && cycleBean.size() != 0) {
+                    if (!TextUtils.isEmpty(cycleBean.get(postion % cycleBean.size()).getPicture())) {
                         Intent i_web = new Intent(context, WebActivity.class);
-                        i_web.putExtra("url", CycleBean.get(postion % CycleBean.size()).getPicture());
+                        i_web.putExtra("url", cycleBean.get(postion % cycleBean.size()).getPicture());
                         getActivity().startActivity(i_web);
                     }
                 }*/
@@ -219,7 +219,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        CycleBean = (MouldList<ResultCycleIndex2B>) params.result;
+                        cycleBean = (MouldList<ResultCycleIndex2B>) params.result;
                     }
                 }
                 requestData();
