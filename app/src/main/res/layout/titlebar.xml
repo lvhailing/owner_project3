@@ -17,8 +17,9 @@
 
         <ImageView
             android:id="@+id/top_title_leftview"
+            style="@style/TitleBar_LeftButton"
             android:layout_width="25dp"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_gravity="center"
             android:contentDescription="@null"
             android:singleLine="true" />
@@ -26,8 +27,7 @@
         <ImageView
             android:id="@+id/top_title_leftbtn"
             style="@style/TitleBar_LeftButton"
-            android:layout_width="@dimen/title_bar_width_new"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:singleLine="true"
             android:src="@drawable/icons"
             android:textSize="16sp" />
@@ -99,8 +99,9 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:layout_centerInParent="true"	
-        android:textColor="@color/txt_black"
+        android:textColor="@color/gray_dark"
         android:ellipsize="end"
+        android:textStyle="bold"
         android:maxEms="12"
         android:textSize="18sp" />
 
@@ -119,6 +120,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/head_shadow" />
+        android:background="@color/gray_light" />
 
 </RelativeLayout>

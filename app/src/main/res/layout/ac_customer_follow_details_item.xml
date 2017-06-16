@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp">
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:background="@drawable/checkbox_follow"
+            android:button="@null" />
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_marginLeft="7dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:textColor="@color/gray_dark"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

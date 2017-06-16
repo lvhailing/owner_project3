@@ -17,7 +17,8 @@
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="25dp"
-            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="25dp"
             android:src="@drawable/back"
             android:layout_centerVertical="true"
             android:contentDescription="@null"
@@ -27,6 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="客户信息"
+            android:textStyle="bold"
+            android:textColor="@color/gray_dark"
             android:textSize="18sp"
             />
         <ImageView
@@ -231,9 +234,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="10dp"
             android:textColor="@color/white"
-            android:background="#FE7273"
+            android:background="@color/red2"
             android:text="客户信息无效，请您提交真实的客户信息！"/>
     </FrameLayout>
 

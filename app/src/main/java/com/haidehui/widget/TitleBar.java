@@ -98,7 +98,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         animation.setFillAfter(true);
         leftImg.startAnimation(animation);// 为左侧回去图标设置动来动去的动画
         // setAnimationLeft(R.anim.left_title_first);
-        actions_back.setBackgroundResource(R.drawable.title_selector);// 设置大块返回点击给用户反应
+ //       actions_back.setBackgroundResource(R.drawable.title_selector);// 设置大块返回点击给用户反应
         // --变身灰色
 
         actions_back.setOnClickListener(this);

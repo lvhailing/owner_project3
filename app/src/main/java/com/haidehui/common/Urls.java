@@ -17,7 +17,10 @@ public class Urls {
     public static final String URL_ZYL = "http://192.168.1.193:9999/overseas-app";
 
     // 邢玉洁
-    public static final String URL_XYJ = "http://192.168.1.125:9999/junde-hui-app/";
+    public static final String URL_XYJ = "http://192.168.1.125:9999/overseas-app/";
+
+    // 张殿洋
+    public static final String URL_BB = "http://192.168.1.138:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
     private static String EC_HOST = URL_DSL;
@@ -42,6 +45,23 @@ public class Urls {
      */
     public static final String URL_SMS = EC_HOST + "user/mobile/send/verifycode";
 
+    /**
+     * 我的银行卡
+     */
+    public static final String URL_GETBANKLIST = EC_HOST
+            + "account/bankcard/list";
+
+    /**
+     * 删除银行卡
+     */
+    public static final String URL_DELETEBANKLIST = EC_HOST
+            + "bankcard/del";
+     /**
+     * 添加银行卡
+     */
+    public static final String URL_ADDBANKLIST = EC_HOST
+            + "bankcard/add";
+
 
     /**
      * 短信类型
@@ -54,6 +74,22 @@ public class Urls {
 
     public static final String MOBILEEDIT = "mobileEdit";       //  修改手机
 
+    public static final String ADDBANKCARD = "bankCardBind";       //  添加银行卡
+
+
+    // */ 手势密码点的状态
+    public static final int POINT_STATE_NORMAL = 0; // 正常状态
+
+    public static final int POINT_STATE_SELECTED = 1; // 按下状态
+
+    public static final int POINT_STATE_WRONG = 2; // 错误状态
+
+    public static final String ACTIVITY_SPLASH = "activity_splash";
+    public static final String ACTIVITY_GESEDIT = "activity_gesedit";
+    public static final String ACTIVITY_GESVERIFY = "activity_gesverify";
+    public static final String ACTIVITY_ACCOUNTSET = "activity_accountset";
+    public static final String ACTIVITY_ACCOUNT = "activity_account";
+    public static final String ACTIVITY_CHANGE_GESTURE = "activity_change_gesture";
 
     //首页
     public static final String URL_HOME = EC_HOST + "index";
@@ -67,4 +103,11 @@ public class Urls {
     public static final String URL_ADVICE = EC_HOST + "problem/reply/save";
     //检查版本
     public static final String URL_CHECKVERSION = EC_HOST + "version/check";
+    //佣金列表 以及 账本url
+    public static final String URL_COMMISSION_LIST = EC_HOST + "account/userrewardrecord/commission/list";
+    //活动奖励列表
+    public static final String URL_AWARD_LIST = EC_HOST + "account/userrewardrecord/reward/list";
+    //提现列表
+    public static final String URL_WITHDRAW_LIST = EC_HOST + "account/withdrawcash/list";
+
 }

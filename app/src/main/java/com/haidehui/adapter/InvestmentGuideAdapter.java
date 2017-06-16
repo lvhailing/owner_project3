@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class InvestmentGuideAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int arg0) {
-        return getItem(arg0);
+        return list.get(arg0);
     }
 
     @Override
@@ -48,6 +49,7 @@ public class InvestmentGuideAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i("aa", "投资指南："+list);
         Holder holder = null;
         if (convertView == null) {
             holder = new Holder();
@@ -64,7 +66,7 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(list.get(position).getPicture(), holder.iv_guide_photo, options);
 
         holder.tv_guide_title.setText(list.get(position).getTitile());
-        holder.tv_guide_detail .setText(list.get(position).getGraphicDetails());
+//        holder.tv_guide_detail .setText(list.get(position).getGraphicDetails());
         return convertView;
     }
 

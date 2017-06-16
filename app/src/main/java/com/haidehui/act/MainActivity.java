@@ -267,7 +267,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setSelect(2);
                 break;
             case R.id.ll_tab_mine:  // 我的
-                PreferenceUtil.setLogin(false);
+                PreferenceUtil.setLogin(true);
                 if(PreferenceUtil.isLogin()){
                     setSelect(3);
                 }else{

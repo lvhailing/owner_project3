@@ -5,10 +5,17 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.haidehui.common.Urls;
+import com.haidehui.model.AccountBookAward1B;
+import com.haidehui.model.AccountBookAward3B;
+import com.haidehui.model.AccountBookCommission1B;
+import com.haidehui.model.AccountBookWithdraw1B;
+import com.haidehui.model.AccountBookWithdraw2B;
+import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.InvestmentGuide1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
 import com.haidehui.model.ResultLoginOffBean;
+import com.haidehui.model.ResultMyBankListBean;
 import com.haidehui.model.ResultSentSMSBean;
 import com.haidehui.network.http.SimpleHttpClient;
 import com.haidehui.uitls.DESUtil;
@@ -106,6 +113,162 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
+     * 我的银行卡列表
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void getMyBankList(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_GETBANKLIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled()||result == null) {
+                    return null;
+                }
+                try {
+                    String data = DESUtil.decrypt(result);
+                    Gson json = new Gson();
+                    ResultMyBankListBean b = json.fromJson(data, ResultMyBankListBean.class);
+                    return b.getData();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }finally {
+//                    return null;
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 删除银行卡
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void deleteBankList(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_DELETEBANKLIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled()||result == null) {
+                    return null;
+                }
+                try {
+                    String data = DESUtil.decrypt(result);
+                    Gson json = new Gson();
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }finally {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 新增银行卡
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void addBankCard(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ADDBANKLIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled()||result == null) {
+                    return null;
+                }
+                try {
+                    String data = DESUtil.decrypt(result);
+                    Gson json = new Gson();
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return null;
+                }finally {
+                    return null;
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
      * 获取收支消息列表
      *
      * @param context
@@ -138,7 +301,7 @@ public class HtmlRequest extends BaseRequester {
                     ResultSentSMSBean b = json.fromJson(result, ResultSentSMSBean.class);
                     return b.getData();
 
-                } catch (Exception e) {
+                }catch (Exception e){
                     e.printStackTrace();
                     return null;
                 } finally {
@@ -266,14 +429,12 @@ public class HtmlRequest extends BaseRequester {
                 }
                 client.post(url, entity);
                 String result = (String) client.getResult();
-
-                Log.i("hh", "轮播图数据:" + result);
-
                 if (isCancelled() || result == null) {
                     return null;
                 }
                 try {
                     result = DESUtil.decrypt(result);
+                    Log.i("hh", "轮播图数据:" + result);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -460,9 +621,7 @@ public class HtmlRequest extends BaseRequester {
      */
     public static void getMineData(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
-        final String url = Urls.URL_CHECKVERSION;
-//        final String data = HtmlLoadUtil.checkVersion(type);
-//        final String url = Urls.URL_CHECKVERSION;
+        final String url = Urls.URL_COMMISSION_LIST;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
             @Override
@@ -476,24 +635,20 @@ public class HtmlRequest extends BaseRequester {
                 }
                 client.post(url, entity);
                 String result = (String) client.getResult();
-                Log.i("hh", "后台数据:" + result);
-                if (isCancelled() || result == null) {
-                    return null;
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    ResultCheckVersionBean b = gson.fromJson(data, ResultCheckVersionBean.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                Gson gson = new Gson();
-                ResultCheckVersionBean b = gson.fromJson(result, ResultCheckVersionBean.class);
-//                Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-//                Map<String, Object> map = gson.fromJson(result, new TypeToken<Map<String, Object>>() {
-//                }.getType());
-//                VersionMo b = (VersionMo) map.get("data");
-//
-//                Map<String, Object> data = (Map<String, Object>) map.get("data");
-//                String listStr = (String) data.get("list");
-//                ArrayList<VersionMo> list = gson.fromJson(listStr, new TypeToken<ArrayList<VersionMo>>() {
-//                }.getType());
-                return b.getData();
-            }
 
+                return null;
+            }
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -501,6 +656,181 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+    /**
+     * 账本主页数据
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getAccountBookData(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_COMMISSION_LIST;
 
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    AccountBookCommission1B b = gson.fromJson(data, AccountBookCommission1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 佣金收益列表
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getCommissionList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_COMMISSION_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    AccountBookCommission1B b = gson.fromJson(data, AccountBookCommission1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return  null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 活动奖励列表
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getAwardList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_AWARD_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    AccountBookAward1B b = gson.fromJson(data, AccountBookAward1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return  null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 提现记录列表
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getWithdrawList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_WITHDRAW_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    AccountBookWithdraw1B b = gson.fromJson(data, AccountBookWithdraw1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
 
 }

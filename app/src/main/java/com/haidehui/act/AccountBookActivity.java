@@ -12,17 +12,29 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.adapter.AccountBookAdapter;
-import com.haidehui.adapter.CustomerInfoAdapter;
-import com.haidehui.bean.ResultAccountBooklistBean;
+import com.haidehui.adapter.AccountBookAwardAdapter;
+import com.haidehui.adapter.AccountBookCommissionAdapter;
+import com.haidehui.adapter.AccountBookWithdrawAdapter;
 import com.haidehui.dialog.IntroductionsDialog;
+import com.haidehui.model.AccountBookAward2B;
+import com.haidehui.model.AccountBookAward3B;
+import com.haidehui.model.AccountBookCommission2B;
+import com.haidehui.model.AccountBookCommission3B;
+import com.haidehui.model.AccountBookWithDraw3B;
+import com.haidehui.model.AccountBookWithdraw2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,7 +53,12 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
     private MyListView lv_commission;
     private MyListView lv_award;
     private MyListView lv_withdraw;
-    private AccountBookAdapter adapter;
+    private AccountBookCommissionAdapter adapterCommission;
+    private AccountBookAwardAdapter adapterAward;
+    private AccountBookWithdrawAdapter adapterWithdraw;
+    private MouldList<AccountBookCommission3B> commissionList;
+    private MouldList<AccountBookAward3B> awardList;
+    private MouldList<AccountBookWithDraw3B> withdrawlist;
     private Resources mResource;
 
 
@@ -52,6 +69,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
         initTopTitle();
         initView();
         initData();
+        requestData();
         DefaultView();
     }
 
@@ -82,6 +100,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
                 Intent intent = new Intent(AccountBookActivity.this, CommissionDetailsActivity.class);
+                intent.putExtra("id", commissionList.get(position - 1).getId());
                 startActivity(intent);
             }
         });
@@ -91,6 +110,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
                 Intent intent = new Intent(AccountBookActivity.this, AwardDetailsActivity.class);
+                intent.putExtra("id", awardList.get(position - 1).getId());
                 startActivity(intent);
             }
         });
@@ -100,6 +120,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
                 Intent intent = new Intent(AccountBookActivity.this, WithDrawDetailsActivity.class);
+                intent.putExtra("id", withdrawlist.get(position - 1).getId());
                 startActivity(intent);
             }
         });
@@ -145,23 +166,20 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
             lv_commission.setVisibility(View.VISIBLE);
             lv_award.setVisibility(View.GONE);
             lv_withdraw.setVisibility(View.GONE);
-            test1();
+            requestCommissionList();
             scrollview.smoothScrollTo(0, 0);
-            //          requestHotProductData();
         } else if (status.equals("award")) {
             lv_award.setVisibility(View.VISIBLE);
             lv_commission.setVisibility(View.GONE);
             lv_withdraw.setVisibility(View.GONE);
-            test2();
+            requestAwardList();
             scrollview.smoothScrollTo(0, 0);
-  //          requestRecommendProductData();
         }else if(status.equals("withdraw")) {
             lv_withdraw.setVisibility(View.VISIBLE);
             lv_award.setVisibility(View.GONE);
             lv_commission.setVisibility(View.GONE);
-            test3();
+            requestWithDrawList();
             scrollview.smoothScrollTo(0, 0);
-  //          requestRecommendProductData();
         }
     }
 
@@ -171,69 +189,6 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 R.id.tv_commission, mResource);
     }
 
-    private void test1(){
-        MouldList<ResultAccountBooklistBean> list=new MouldList<ResultAccountBooklistBean>();
-        for (int i=0;i<10;i++){
-            ResultAccountBooklistBean bean=new ResultAccountBooklistBean();
-            if(i%2==0){
-                bean.setInfo("多伦多皇冠大道四季酒店"+i);
-                bean.setMoney("+2222.22");
-                bean.setTime("08-20 04:09");
-                bean.setStatus("finished");
-            }else{
-                bean.setInfo("香港维多利亚");
-                bean.setMoney("+555555.22");
-                bean.setTime("08-20 04:09");
-                bean.setStatus("ing");
-            }
-            list.add(bean);
-        }
-        adapter = new AccountBookAdapter(AccountBookActivity.this, list);
-        lv_commission.setAdapter(adapter);
-        setListViewHeightBasedOnChildren(AccountBookActivity.this, lv_commission, 0);
-    }
-    private void test2(){
-        MouldList<ResultAccountBooklistBean> list=new MouldList<>();
-        for (int i=0;i<10;i++){
-            ResultAccountBooklistBean bean=new ResultAccountBooklistBean();
-            if(i%2==0){
-                bean.setInfo("变变变222了"+i);
-                bean.setMoney("+2222.22");
-                bean.setTime("08-20 04:09");
-                bean.setStatus("finished");
-            }else{
-                bean.setInfo("香港维多利亚");
-                bean.setMoney("+5555555.22");
-                bean.setTime("08-20 04:09");
-                bean.setStatus("ing");
-            }
-            list.add(bean);
-        }
-        adapter = new AccountBookAdapter(AccountBookActivity.this, list);
-        lv_award.setAdapter(adapter);
-        setListViewHeightBasedOnChildren(AccountBookActivity.this, lv_award, 0);
-    }
-    private void test3(){
-        MouldList<ResultAccountBooklistBean> list=new MouldList<>();
-        for (int i=0;i<10;i++){
-            ResultAccountBooklistBean bean=new ResultAccountBooklistBean();
-            if(i%2==0){
-                bean.setInfo("变变变3了"+i);
-                bean.setMoney("+2222.22");
-                bean.setTime("08-20 04:09");
-                bean.setStatus("finished");
-            }else{
-                bean.setInfo("香港维多利亚");
-                bean.setMoney("+55555.22");
-                bean.setTime("08-20 04:09");
-                bean.setStatus("ing");
-            }
-            list.add(bean);
-        }
-        adapter = new AccountBookAdapter(AccountBookActivity.this, list);
-        lv_withdraw.setAdapter(adapter);
-        setListViewHeightBasedOnChildren(AccountBookActivity.this, lv_withdraw, 0);
-    }
     /**
      * 动态设置ListView的高度
      * @param listView
@@ -257,53 +212,97 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
 
         listView.setLayoutParams(params);
     }
-    /* private void requestListData() {  // 获取最热房源列表数据
+
+    private void requestData() {
         Map<String, Object> param = new HashMap<>();
-        param.put("currentPage", currentPage + "");
+        param.put("userId", "17021511395798036131");
+        HtmlRequest.getAccountBookData(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        AccountBookCommission2B data = (AccountBookCommission2B) params.result;
+                        setData(data);
+                    }
+                }
+        );
+    }
+    private void setData(AccountBookCommission2B data) {
+        tv_not_give.setText(data.getAvailableCommission());
+        tv_gived.setText(data.getSendedCommission());
+        tv_total_give.setText(data.getTotalCommission());
+    }
+     private void requestCommissionList() {  // 获取佣金收益列表数据
+        Map<String, Object> param = new HashMap<>();
+        param.put("userId", "17021511395798036131");
 
         try {
-            HtmlRequest.getHotHouseData(mContext, param, new BaseRequester.OnRequestListener() {
+            HtmlRequest.getCommissionList(mContext, param, new BaseRequester.OnRequestListener() {
                 @Override
                 public void onRequestFinished(BaseParams params) {
                     if (params.result == null) {
                         Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                        listView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                listView.onRefreshComplete();
-                            }
-                        }, 1000);
                         return;
                     }
-
-                    HotHouse2B data = (HotHouse2B) params.result;
-                    MouldList<HotHouse3B> everyList = data.getList();
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    mAdapter.notifyDataSetChanged();
-
-                    listView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            listView.onRefreshComplete();
-                        }
-                    }, 1000);
+                    AccountBookCommission2B data = (AccountBookCommission2B) params.result;
+                    commissionList = data.getList();
+                    adapterCommission = new AccountBookCommissionAdapter(AccountBookActivity.this, commissionList);
+                    lv_commission.setAdapter(adapterCommission);
+                    setListViewHeightBasedOnChildren(AccountBookActivity.this, lv_commission, 0);
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
+    private void requestAwardList() {  // 获取活动奖励列表数据
+        Map<String, Object> param = new HashMap<>();
+        param.put("userId", "17021511395798036131");
 
+        try {
+            HtmlRequest.getAwardList(mContext, param, new BaseRequester.OnRequestListener() {
+                @Override
+                public void onRequestFinished(BaseParams params) {
+                    if (params.result == null) {
+                        Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    AccountBookAward2B data = (AccountBookAward2B) params.result;
+                    awardList = data.getList();
+                    adapterAward = new AccountBookAwardAdapter(AccountBookActivity.this, awardList);
+                    lv_commission.setAdapter(adapterAward);
+                    setListViewHeightBasedOnChildren(AccountBookActivity.this, lv_commission, 0);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void requestWithDrawList() {  // 获取提现记录列表数据
+        Map<String, Object> param = new HashMap<>();
+        param.put("userId", "17021511395798036131");
+
+        try {
+            HtmlRequest.getWithdrawList(mContext, param, new BaseRequester.OnRequestListener() {
+                @Override
+                public void onRequestFinished(BaseParams params) {
+                    if (params.result == null) {
+                        Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    AccountBookWithdraw2B data = (AccountBookWithdraw2B) params.result;
+                    withdrawlist = data.getList();
+                    adapterWithdraw = new AccountBookWithdrawAdapter(AccountBookActivity.this, withdrawlist);
+                    lv_commission.setAdapter(adapterWithdraw);
+                    setListViewHeightBasedOnChildren(AccountBookActivity.this, lv_commission, 0);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

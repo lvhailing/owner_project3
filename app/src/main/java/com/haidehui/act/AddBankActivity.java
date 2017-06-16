@@ -121,11 +121,58 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
     private void requestSMS() {
         Map<String, Object> param = new HashMap<>();
-        param.put("mobile", "");
-        param.put("busiType", Urls.REGISTER);
-        param.put("token", token);
+
+
+//        param.put("userId", "17030215570956997221");
+//        param.put("busiType_1", "bankCardBind");
+
+        param.put("userId", "17030215570956997221");
+        param.put("validateCode", verifyCode);
+        param.put("realName", realName);
+        param.put("idNo", idCard);
+        param.put("bankName", bankName);
+        param.put("bankAddress", bankAddress);
+        param.put("bankCardNum", bankNum);
 
         HtmlRequest.sentSMS(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if (Boolean.parseBoolean(b.getResult())) {
+                        Toast.makeText(AddBankActivity.this, "短信发送成功",
+                                Toast.LENGTH_LONG).show();
+                        smsflag = true;
+                        startThread();
+                    } else {
+                        smsflag = false;
+                        Toast.makeText(AddBankActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(AddBankActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
+    private void addBankCard() {
+        Map<String, Object> param = new HashMap<>();
+
+
+        param.put("userId", "17030215570956997221");
+        param.put("validateCode", verifyCode);
+        param.put("realName", realName);
+        param.put("idNo", idCard);
+        param.put("bankName", bankName);
+        param.put("bankAddress", bankAddress);
+        param.put("bankCardNum", bankNum);
+
+        HtmlRequest.addBankCard(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
             @Override
             public void onRequestFinished(BaseParams params) {
@@ -184,13 +231,15 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.tv_add_bank_get_verify_code:
 
-//                requestSMS();
-                smsflag = true;
-                startThread();
+                requestSMS();
+//                smsflag = true;
+//                startThread();
 
                 break;
 
             case R.id.btn_add_bankcard:
+
+                addBankCard();
 
                 break;
 
@@ -281,6 +330,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable editable) {
 
+                verifyCode = et_add_bank_verify_code.getText().toString();
                 realName = et_add_bank_real_name.getText().toString();
                 idCard = et_add_bank_idcard.getText().toString();
                 bankName = et_bank_name.getText().toString();
@@ -310,6 +360,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             public void afterTextChanged(Editable editable) {
 
                 verifyCode = et_add_bank_verify_code.getText().toString();
+                realName = et_add_bank_real_name.getText().toString();
                 idCard = et_add_bank_idcard.getText().toString();
                 bankName = et_bank_name.getText().toString();
                 bankAddress = et_bank_address.getText().toString();
@@ -336,6 +387,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             public void afterTextChanged(Editable editable) {
                 verifyCode = et_add_bank_verify_code.getText().toString();
                 realName = et_add_bank_real_name.getText().toString();
+                idCard = et_add_bank_idcard.getText().toString();
                 bankName = et_bank_name.getText().toString();
                 bankAddress = et_bank_address.getText().toString();
                 bankNum = et_bank_num.getText().toString();
@@ -360,6 +412,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
                 verifyCode = et_add_bank_verify_code.getText().toString();
                 realName = et_add_bank_real_name.getText().toString();
                 idCard = et_add_bank_idcard.getText().toString();
+                bankName = et_bank_name.getText().toString();
                 bankAddress = et_bank_address.getText().toString();
                 bankNum = et_bank_num.getText().toString();
 
@@ -384,6 +437,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
                 realName = et_add_bank_real_name.getText().toString();
                 idCard = et_add_bank_idcard.getText().toString();
                 bankName = et_bank_name.getText().toString();
+                bankAddress = et_bank_address.getText().toString();
                 bankNum = et_bank_num.getText().toString();
 
                 ViewUtils.setButton(verifyCode,realName,idCard,bankName,editable.toString(),bankNum,btn_add_bankcard);
@@ -408,6 +462,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
                 idCard = et_add_bank_idcard.getText().toString();
                 bankName = et_bank_name.getText().toString();
                 bankAddress = et_bank_address.getText().toString();
+                bankNum = et_bank_num.getText().toString();
 
                 ViewUtils.setButton(verifyCode,realName,idCard,bankName,bankAddress,editable.toString(),btn_add_bankcard);
             }

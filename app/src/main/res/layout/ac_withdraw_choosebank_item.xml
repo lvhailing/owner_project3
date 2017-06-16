@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/shape_center_white"
+        android:layout_marginTop="5dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginBottom="5dip"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dip"
+            android:layout_marginLeft="15dip"
+            >
+            <TextView
+                android:id="@+id/tv_bank_banknum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="654645646****4654654"
+                android:textColor="@color/txt_orange"
+                android:textSize="18sp"
+                />
+            <TextView
+                android:id="@+id/tv_bank_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:text="zhang"
+                android:textColor="@color/txt_orange"
+                android:textSize="18sp"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="工商银行"
+            android:layout_marginTop="5dip"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:textColor="@color/txt_gray"
+            android:textSize="16sp"
+            android:layout_marginBottom="15dip"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

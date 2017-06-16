@@ -140,6 +140,12 @@
             android:name=".act.AddBankActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".act.WithdrawActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.WithdrawConfirmActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".act.HotHouseActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -183,7 +189,21 @@
         <activity
             android:name=".act.WithDrawDetailsActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".act.RenGouStatusActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.CustomerFollowActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.CustomerFollowDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.RengouDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.AddCustomerFollowActivity"
+            android:screenOrientation="portrait"/>
 
 
 

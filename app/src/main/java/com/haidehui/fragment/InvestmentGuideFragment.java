@@ -2,12 +2,14 @@ package com.haidehui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
@@ -18,7 +20,9 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
-import com.haidehui.widget.MyListView;
+import com.haidehui.uitls.ViewUtils;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +31,8 @@ import java.util.Map;
 public class InvestmentGuideFragment extends Fragment {
     private View mView;
     private Context context;
-    private MyListView myListView;
+    private PullToRefreshListView listView;
     private InvestmentGuideAdapter myAdapter;
-    private MouldList<InvestmentGuide3B> list; // 投资指南列表数据
     private MouldList<InvestmentGuide3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
 
@@ -56,22 +59,39 @@ public class InvestmentGuideFragment extends Fragment {
 
     private void initView(View mView) {
         context = getActivity();
-        myListView = (MyListView) mView.findViewById(R.id.myListView);
+        listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
+
+        //PullToRefreshListView  上滑加载更多及下拉刷新
+        ViewUtils.slideAndDropDown(listView);
     }
 
     private void initData() {
-        myAdapter = new InvestmentGuideAdapter(context, list);
-        myListView.setAdapter(myAdapter);
+        myAdapter = new InvestmentGuideAdapter(context, totalList);
+        listView.setAdapter(myAdapter);
 
         requestInvestmentGuideListData();
 
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                if (refreshView.isHeaderShown()) {
+                    //下拉刷新
+                    currentPage = 1;
+                } else {
+                    //上划加载下一页
+                    currentPage++;
+                }
+                requestInvestmentGuideListData();
             }
         });
-//        setListViewHeightBasedOnChildren(getActivity(), myListView, 0);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+//                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
+//                intent.putExtra("id", totalList.get(position - 1).getId());
+//                startActivity(intent);
+            }
+        });
 
     }
 
@@ -85,6 +105,7 @@ public class InvestmentGuideFragment extends Fragment {
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {
                     Toast.makeText(context, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    upDate(listView);
                     return;
                 }
 
@@ -103,8 +124,19 @@ public class InvestmentGuideFragment extends Fragment {
                 //刷新数据
                 myAdapter.notifyDataSetChanged();
 
+                upDate(listView);
+
             }
         });
 
+    }
+
+    private void upDate(final PullToRefreshListView listView) {
+        listView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listView.onRefreshComplete();
+            }
+        }, 1000);
     }
 }

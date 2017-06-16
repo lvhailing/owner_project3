@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:text="666666.666"
+            android:text="- - -"
             android:textSize="30sp"
             android:textColor="@color/white"/>
         <TextView
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:text="111111111"/>
+                    android:text="- - -"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:text="111111111"/>
+                    android:text="- - -"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

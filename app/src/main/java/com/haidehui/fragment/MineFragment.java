@@ -14,10 +14,12 @@ import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
+import com.haidehui.act.CustomerFollowActivity;
 import com.haidehui.act.CustomerInfoActivity;
 import com.haidehui.act.HotHouseActivity;
 import com.haidehui.act.MyInfoActivity;
 import com.haidehui.act.PartnerIdentifyActivity;
+import com.haidehui.act.RenGouStatusActivity;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -118,10 +120,12 @@ public class MineFragment extends Fragment implements OnClickListener {
                 startActivity(i_customer_info);
                 break;
             case R.id.tv_customer_follow://跳转客户跟踪
-
+                Intent i_customer_follow = new Intent(context, CustomerFollowActivity.class);
+                startActivity(i_customer_follow);
                 break;
             case R.id.tv_rengou_state://跳转认购状态
-
+                Intent i_rengou = new Intent(context, RenGouStatusActivity.class);
+                startActivity(i_rengou);
                 break;
             case R.id.layout_identify://跳转事业合伙人认证
                 Intent i_identify = new Intent(context, PartnerIdentifyActivity.class);
@@ -140,7 +144,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     //我的主页面数据
     private void requestData() {
         Map<String, Object> param = new HashMap<>();
-        param.put("type", "android");
+        param.put("userId", "17021511395798036131");
         HtmlRequest.getMineData(context, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {

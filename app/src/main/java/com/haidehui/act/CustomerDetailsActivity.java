@@ -1,5 +1,6 @@
 package com.haidehui.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,7 +49,8 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.img_add_follow:
-
+                Intent intent = new Intent(CustomerDetailsActivity.this, AddCustomerFollowActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -3,7 +3,7 @@
 
     <item android:drawable="@color/gray_d" android:state_pressed="true"/>
     <item android:drawable="@color/bg_gray" android:state_focused="false" android:state_pressed="false"/>
-    <item android:drawable="@color/bg_gray" android:state_focused="true"/>
-    <item android:drawable="@color/gray_dark" android:state_focused="false"/>
+    <item android:drawable="@color/gray_d" android:state_focused="true"/>
+    <item android:drawable="@color/bg_gray" android:state_focused="false"/>
 
 </selector>

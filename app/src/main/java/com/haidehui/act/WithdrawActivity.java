@@ -1,7 +1,12 @@
 package com.haidehui.act;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.haidehui.R;
@@ -19,6 +24,8 @@ public class WithdrawActivity extends BaseActivity{
     private ListView lv_withdraw_mybank;
     private Context context;
     private MouldList<ResultMessageContentBean> list;
+    private int lastPress = 0;
+    private WithdrawAdapter withdrawAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +38,61 @@ public class WithdrawActivity extends BaseActivity{
     }
 
     public void initView(){
-
+        context = this;
         lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
 
         test();
-        WithdrawAdapter withdrawAdapter = new WithdrawAdapter(context,list);
+        withdrawAdapter = new WithdrawAdapter(context,list);
 
         lv_withdraw_mybank.setAdapter(withdrawAdapter);
+
+        lv_withdraw_mybank.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            private View delview;
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                if (lastPress < parent.getCount()) {
+                    new AlertDialog.Builder(context)
+
+                            .setMessage("您确定删除么？")
+                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+//                                Intent i_recharge = new Intent();
+//                                i_recharge.setClass(context, ReChargeActivity.class);
+//                                context.startActivity(i_recharge);
+//                                    requestCancelData();
+                                    list.remove(position);
+                                    withdrawAdapter.notifyDataSetChanged();
+
+                                }
+                            })
+                            .show();
+                }
+
+                return true;
+            }
+        });
+
+        lv_withdraw_mybank.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent i_withdrawConfirm = new Intent(context,WithdrawConfirmActivity.class);
+
+                startActivity(i_withdrawConfirm);
+
+            }
+        });
+
+
 
     }
 
@@ -93,7 +148,7 @@ public class WithdrawActivity extends BaseActivity{
 
         list = new MouldList<ResultMessageContentBean>();
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<10;i++){
             ResultMessageContentBean bean = new ResultMessageContentBean();
 
             bean.setName("中国银行"+i);

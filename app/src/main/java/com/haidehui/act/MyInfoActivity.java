@@ -274,6 +274,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             Bitmap bm = extras.getParcelable("data");
             newZoomImage = zoomImage(bm, 600, 300);
 //			sendImage(newZoomImage);
+        }else if(requestCode==1000 && resultCode==2000){
+           String nameData= data.getStringExtra("name");
+            tv_name.setText(nameData);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

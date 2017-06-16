@@ -8,15 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.adapter.MyBankAdapter;
-import com.haidehui.model.ResultMessageContentBean;
+import com.haidehui.common.Urls;
+import com.haidehui.model.ResultMyBankListContentBean;
+import com.haidehui.model.ResultMyBankListContentItemBean;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.TitleBar;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 我的银行卡
@@ -26,8 +33,10 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
     private ListView lv_mybank;         //
     private Context context;
-    private MouldList<ResultMessageContentBean> list;
+    private MouldList<ResultMyBankListContentItemBean> list;
     private int lastPress = 0;
+    private MyBankAdapter bankAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +50,9 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
     public void initData(){
 
-        test();
-        final MyBankAdapter bankAdapter = new MyBankAdapter(context,list);
+//        test();
+        requestData();
 
-        lv_mybank.setAdapter(bankAdapter);
 
         View view = View.inflate(MyBankActivity.this, R.layout.ac_mybank_item_button, null);
         view.findViewById(R.id.rl_mybank_add).setOnClickListener(new View.OnClickListener() {
@@ -84,8 +92,8 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 //                                i_recharge.setClass(context, ReChargeActivity.class);
 //                                context.startActivity(i_recharge);
 //                                    requestCancelData();
-                                    list.remove(position);
-                                    bankAdapter.notifyDataSetChanged();
+                                    delete(position,list.get(position).getId());
+
 
                                 }
                             })
@@ -100,9 +108,76 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+    private void requestData() {
+        Map<String, Object> param = new HashMap<>();
+
+        param.put("userId", "17021511395798036131");
+        param.put("page", "1");
+        HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultMyBankListContentBean b = (ResultMyBankListContentBean) params.result;
+                if (b != null) {
+                    list = b.getList();
+                    bankAdapter = new MyBankAdapter(context,list);
+
+                    lv_mybank.setAdapter(bankAdapter);
+
+
+                } else {
+                    Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
+    private void delete(final int position, String id) {
+        Map<String, Object> param = new HashMap<>();
+
+//        param.put("userId", "17021511395798036131");
+//        param.put("id", id);
+
+        param.put("userId", "17030215570956997221");
+        param.put("validateCode", "5457845");
+        param.put("realName", "zhang");
+        param.put("idNo", "112554541545");
+        param.put("bankName", "建设");
+        param.put("bankAddress", "北京");
+        param.put("bankCardNum", "45487454545");
+
+
+        HtmlRequest.deleteBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if(b.getFlag().equals("true")){
+                        list.remove(position);
+                        bankAdapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(MyBankActivity.this, b.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                    Toast.makeText(MyBankActivity.this, b.getMessage(),
+                            Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
     public void initView(){
 
         context = this;
+        list = new MouldList<ResultMyBankListContentItemBean>();
         lv_mybank = (ListView) findViewById(R.id.lv_mybank);
 
 
@@ -171,21 +246,5 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    public void test(){
-
-        list = new MouldList<ResultMessageContentBean>();
-
-        for(int i=0;i<5;i++){
-            ResultMessageContentBean bean = new ResultMessageContentBean();
-
-            bean.setName("中国银行"+i);
-            bean.setNum("5454545**"+i);
-            bean.setContent("zhang+"+i);
-            list.add(bean);
-
-        }
-
-
-    }
 
 }

@@ -697,4 +697,33 @@ public class StringUtil {
        }
 
     }
+    /**
+     * 修改认购状态三个按钮方法
+     *
+     * @param btn
+     * @param mResource
+     */
+    public static void changeButtonStyleRenGou(TextView btn_one, TextView btn_two, TextView btn_three, int btn, Resources mResource) {
+
+        if (btn == btn_one.getId()) {
+            btn_one.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+
+            btn_two.setTextColor(mResource.getColor(R.color.gray_d));
+
+            btn_three.setTextColor(mResource.getColor(R.color.gray_d));
+        } else if (btn == btn_two.getId()) {
+            btn_two.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+
+            btn_one.setTextColor(mResource.getColor(R.color.gray_d));
+
+            btn_three.setTextColor(mResource.getColor(R.color.gray_d));
+        }else if (btn == btn_three.getId()) {
+            btn_three.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+
+            btn_two.setTextColor(mResource.getColor(R.color.gray_d));
+
+            btn_one.setTextColor(mResource.getColor(R.color.gray_d));
+        }
+
+    }
 }

@@ -57,6 +57,7 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
         btn_save= (Button) findViewById(R.id.btn_save);
 
         edt_name.setText(name);
+        edt_name.requestFocusFromTouch();
     }
 
     private void initData() {
