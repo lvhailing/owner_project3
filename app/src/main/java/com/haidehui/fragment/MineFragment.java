@@ -16,7 +16,6 @@ import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.CustomerFollowActivity;
 import com.haidehui.act.CustomerInfoActivity;
-import com.haidehui.act.HotHouseActivity;
 import com.haidehui.act.MyInfoActivity;
 import com.haidehui.act.PartnerIdentifyActivity;
 import com.haidehui.act.RenGouStatusActivity;
@@ -24,9 +23,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * 底部导航 我的

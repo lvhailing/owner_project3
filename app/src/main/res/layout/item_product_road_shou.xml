@@ -25,7 +25,7 @@
             android:layout_marginTop="10dp"
             android:maxLength="18"
             android:maxLines="1"
-            android:text="房贷款与首付利率"
+            android:text=""
             android:textColor="@color/txt_black"
             android:textSize="18sp"/>
 
@@ -36,7 +36,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:src="@mipmap/img_normal"/>
+            android:src="@mipmap/bg_oversea_project_normal"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="发布日期：2017-06-11"
+                android:text="发布日期："
                 android:textColor="@color/txt_black"
                 android:textSize="13sp"/>
 
@@ -59,7 +59,7 @@
                 android:layout_alignParentRight="true"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="演讲嘉宾：王月朋"
+                android:text="演讲嘉宾："
                 android:textColor="@color/txt_black"
                 android:textSize="13sp"/>
         </RelativeLayout>

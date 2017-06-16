@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-        requestData();
+//        requestData();
     }
 
     private void setTab(int pos) {
@@ -209,22 +209,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     //检查版本更新
-    private void requestData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("type", "android");
-        HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                if (params.result != null) {
-                    final VersionMo b = (VersionMo) params.result;
-                    //后台版本为已停运、未上线，不做处理
-                    if (!TextUtils.isEmpty(b.getVersion())) {
-                        Toast.makeText(mContext, "new version" + b.getVersion(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-    }
+//    private void requestData() {
+//        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+//        param.put("type", "android");
+//        HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
+//            @Override
+//            public void onRequestFinished(BaseParams params) {
+//                if (params.result != null) {
+//                    final VersionMo b = (VersionMo) params.result;
+//                    //后台版本为已停运、未上线，不做处理
+//                    if (!TextUtils.isEmpty(b.getVersion())) {
+//                        Toast.makeText(mContext, "new version" + b.getVersion(), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     private boolean isAppInstalled(String uri) {
         PackageManager pm = getPackageManager();

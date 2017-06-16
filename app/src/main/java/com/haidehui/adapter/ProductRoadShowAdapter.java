@@ -10,19 +10,22 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.model.BoutiqueHouse2B;
+import com.haidehui.model.ProductRoadshow3B;
 import com.haidehui.network.types.MouldList;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import static com.haidehui.uitls.ImageLoaderManager.options;
 
 // 发现-- 投资指南列表 Adapter
 public class ProductRoadShowAdapter extends BaseAdapter {
 
     private static final String tag = "recommendProductAdapter";
-    private MouldList<BoutiqueHouse2B> list;
+    private MouldList<ProductRoadshow3B> list;
     private Context context;
     private LayoutInflater inflater;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ProductRoadShowAdapter(Context context, MouldList<BoutiqueHouse2B> list) {
+    public ProductRoadShowAdapter(Context context, MouldList<ProductRoadshow3B> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -59,12 +62,20 @@ public class ProductRoadShowAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
+        //加载图片
+        ImageLoader.getInstance().displayImage(list.get(position).getVideoPicture(), holder.iv_product_road_show, options);
+
+        holder.tv_product_road_show_title.setText(list.get(position).getVideoName());
+        holder.tv_release_time.setText("发布日期：" + list.get(position).getEditTime());
+        holder.tv_guest_speaker.setText("演讲嘉宾：" + list.get(position).getSpeaker());
+
+
         return convertView;
     }
 
     class Holder {
         ImageView iv_product_road_show; // 图片
-        TextView tv_product_road_show_title; // 标题
+        TextView tv_product_road_show_title; // 视频名称
         TextView tv_release_time; // 发布日期
         TextView tv_guest_speaker; // 演讲嘉宾
 

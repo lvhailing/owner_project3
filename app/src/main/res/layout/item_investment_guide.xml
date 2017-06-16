@@ -39,7 +39,7 @@
                 android:layout_marginTop="5dp"
                 android:maxLength="18"
                 android:maxLines="1"
-                android:text="如何选到称心如意的好房?"
+                android:text=""
                 android:textColor="@color/txt_black"
                 android:textSize="18sp"/>
 
@@ -50,7 +50,7 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:text="aa"
+                android:text=""
                 android:textColor="@color/gray_dark"
                 android:textSize="16sp"/>
         </LinearLayout>

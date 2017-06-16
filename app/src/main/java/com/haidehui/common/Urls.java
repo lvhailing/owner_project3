@@ -10,9 +10,6 @@ public class Urls {
     //代树理
     public static final String URL_DSL = "http://192.168.1.106:9999/overseasProperty-app/";
 
-    //张殿洋
-    public static final String URL_ZDY = "192.168.1.138:9999/junde-hui-app";
-
     //张亚磊
     public static final String URL_ZYL = "http://192.168.1.193:9999/overseas-app";
 
@@ -23,7 +20,7 @@ public class Urls {
     public static final String URL_BB = "http://192.168.1.138:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_DSL;
+    private static String EC_HOST = URL_BB;
 
     /**
      * 登出
@@ -48,23 +45,28 @@ public class Urls {
     /**
      * 我的银行卡
      */
-    public static final String URL_GETBANKLIST = EC_HOST
-            + "account/bankcard/list";
+    public static final String URL_GETBANKLIST = EC_HOST + "account/bankcard/list";
 
     /**
      * 删除银行卡
      */
-    public static final String URL_DELETEBANKLIST = EC_HOST
-            + "bankcard/del";
-     /**
+    public static final String URL_DELETEBANKLIST = EC_HOST + "bankcard/del";
+    /**
      * 添加银行卡
      */
-    public static final String URL_ADDBANKLIST = EC_HOST
-            + "bankcard/add";
-//
-//   public static final String URL_ADDBANKLIST = EC_HOST
-//            + "investmentguide/list";
+    public static final String URL_ADDBANKLIST = EC_HOST + "bankcard/add";
 
+    /**
+     * 获取确认提现信息
+     */
+    public static final String URL_GETWITHDRAWINFO = EC_HOST
+            + "account/withdrawcash/cashnum";
+
+    /**
+     * 确认提现
+     */
+    public static final String URL_WITHDRAWCONFIRM = EC_HOST
+            + "withdrawcash/add";
 
     /**
      * 短信类型
@@ -78,6 +80,8 @@ public class Urls {
     public static final String MOBILEEDIT = "mobileEdit";       //  修改手机
 
     public static final String ADDBANKCARD = "bankCardBind";       //  添加银行卡
+
+    public static final String WITHDRAW = "withdrawCash";       //  提现
 
 
     // */ 手势密码点的状态
@@ -95,21 +99,35 @@ public class Urls {
     public static final String ACTIVITY_CHANGE_GESTURE = "activity_change_gesture";
 
     //首页
-    public static final String URL_HOME = EC_HOST + "index";
+    public static final String URL_INDEX = EC_HOST + "index";
+
+    //最热房源列表
+    public static final String URL_INDEX_HOTLIST = EC_HOST + "index/hotlist";
+
     // 首页--轮播图
     public static final String URL_HOME_ADVERTISE = EC_HOST + "home/advertise";
+
     // 发现-- 轮播图
     public static final String URL_DISCOVERY_ADVERTISE = EC_HOST + "discovery/advertise";
+
     // 发现-- 投资指南列表
     public static final String URL_INVESTMENTGUIDE_LIST = EC_HOST + "investmentguide/list";
+
+    // 发现-- 路演列表
+    public static final String URL_ROADSHOWVIDEO_LIST = EC_HOST + "roadshowvideo/list";
+
     //意见反馈
     public static final String URL_ADVICE = EC_HOST + "problem/reply/save";
+
     //检查版本
     public static final String URL_CHECKVERSION = EC_HOST + "version/check";
+
     //佣金列表 以及 账本url
     public static final String URL_COMMISSION_LIST = EC_HOST + "account/userrewardrecord/commission/list";
+
     //活动奖励列表
     public static final String URL_AWARD_LIST = EC_HOST + "account/userrewardrecord/reward/list";
+
     //提现列表
     public static final String URL_WITHDRAW_LIST = EC_HOST + "account/withdrawcash/list";
 

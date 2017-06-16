@@ -8,12 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.adapter.MyBankAdapter;
 import com.haidehui.adapter.WithdrawAdapter;
 import com.haidehui.model.ResultMessageContentBean;
+import com.haidehui.model.ResultMyBankListContentBean;
+import com.haidehui.model.ResultMyBankListContentItemBean;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.TitleBar;
+
+import java.util.LinkedHashMap;
 
 /**
  * 提现--选择提现账号
@@ -23,7 +33,7 @@ public class WithdrawActivity extends BaseActivity{
 
     private ListView lv_withdraw_mybank;
     private Context context;
-    private MouldList<ResultMessageContentBean> list;
+    private MouldList<ResultMyBankListContentItemBean> list;
     private int lastPress = 0;
     private WithdrawAdapter withdrawAdapter;
 
@@ -41,10 +51,10 @@ public class WithdrawActivity extends BaseActivity{
         context = this;
         lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
 
-        test();
-        withdrawAdapter = new WithdrawAdapter(context,list);
+        requestData();
+//        test();
 
-        lv_withdraw_mybank.setAdapter(withdrawAdapter);
+
 
         lv_withdraw_mybank.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             private View delview;
@@ -72,6 +82,8 @@ public class WithdrawActivity extends BaseActivity{
                                     list.remove(position);
                                     withdrawAdapter.notifyDataSetChanged();
 
+                                    delete(position,list.get(position).getId());
+
                                 }
                             })
                             .show();
@@ -86,6 +98,12 @@ public class WithdrawActivity extends BaseActivity{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Intent i_withdrawConfirm = new Intent(context,WithdrawConfirmActivity.class);
+                i_withdrawConfirm.putExtra("bankAddress",list.get(i).getBankCardNum());
+                i_withdrawConfirm.putExtra("bankCardId",list.get(i).getId());
+                i_withdrawConfirm.putExtra("bankCardNum",list.get(i).getBankCardNum());
+                i_withdrawConfirm.putExtra("bankName",list.get(i).getBankName());
+                i_withdrawConfirm.putExtra("realName",list.get(i).getRealName());
+
 
                 startActivity(i_withdrawConfirm);
 
@@ -119,6 +137,63 @@ public class WithdrawActivity extends BaseActivity{
         });
     }
 
+    private void requestData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("page", "1");
+        param.put("userId", "17021511395798036131");
+
+        HtmlRequest.getMyBankList(WithdrawActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultMyBankListContentBean b = (ResultMyBankListContentBean) params.result;
+                if (b != null) {
+                    list = b.getList();
+                    withdrawAdapter = new WithdrawAdapter(context,list);
+
+                    lv_withdraw_mybank.setAdapter(withdrawAdapter);
+
+
+                } else {
+                    Toast.makeText(WithdrawActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
+    private void delete(final int position, String id) {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("id", id);
+        param.put("userId", "17021511395798036131");
+
+        HtmlRequest.deleteBankList(WithdrawActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if(b.getFlag().equals("true")){
+                        list.remove(position);
+                        withdrawAdapter.notifyDataSetChanged();
+                    }
+                    Toast.makeText(WithdrawActivity.this, b.getMessage(),
+                            Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(WithdrawActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -142,23 +217,6 @@ public class WithdrawActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    public void test(){
-
-        list = new MouldList<ResultMessageContentBean>();
-
-        for(int i=0;i<10;i++){
-            ResultMessageContentBean bean = new ResultMessageContentBean();
-
-            bean.setName("中国银行"+i);
-            bean.setNum("5454545**"+i);
-            bean.setContent("zhang+"+i);
-            list.add(bean);
-
-        }
-
-
     }
 
 

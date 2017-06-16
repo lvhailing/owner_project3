@@ -166,11 +166,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 //                Intent i_setting = new Intent(this,SettingActivity.class);          //  设置页面
 //                startActivity(i_setting);
 
-                Intent i_mybank = new Intent(this,MyBankActivity.class);          //  我的银行卡
-                startActivity(i_mybank);
+//                Intent i_mybank = new Intent(this,MyBankActivity.class);          //  我的银行卡
+//                startActivity(i_mybank);
 
-//                Intent i_withdraw = new Intent(this,WithdrawActivity.class);          //  提现
-//                startActivity(i_withdraw);
+                Intent i_withdraw = new Intent(this,WithdrawActivity.class);          //  提现
+                startActivity(i_withdraw);
                 break;
 
             case R.id.tv_login_forget_password:

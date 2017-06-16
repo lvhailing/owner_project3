@@ -9,6 +9,15 @@ public class ResultMyBankListContentItemBean implements IMouldType {
 	private String bankName;		//	银行名称
 	private String id;		//	银行id
 	private String realName;		//	用户姓名
+	private String bankAddress;			//	银行卡卡户所在地
+
+	public String getBankAddress() {
+		return bankAddress;
+	}
+
+	public void setBankAddress(String bankAddress) {
+		this.bankAddress = bankAddress;
+	}
 
 	public String getBankCardNum() {
 		return bankCardNum;

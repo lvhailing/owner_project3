@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.model.ResultMessageContentBean;
+import com.haidehui.model.ResultMyBankListContentItemBean;
 import com.haidehui.network.types.MouldList;
 
 /**
@@ -18,10 +19,10 @@ import com.haidehui.network.types.MouldList;
 public class WithdrawAdapter extends BaseAdapter{
 
     private Context context;
-    private MouldList<ResultMessageContentBean> list;
+    private MouldList<ResultMyBankListContentItemBean> list;
     private LayoutInflater inflater;
 
-    public WithdrawAdapter(Context context, MouldList<ResultMessageContentBean> list) {
+    public WithdrawAdapter(Context context, MouldList<ResultMyBankListContentItemBean> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -57,9 +58,9 @@ public class WithdrawAdapter extends BaseAdapter{
 
             holder = (Holder) view.getTag();
         }
-        holder.tv_bank_banknum.setText(list.get(i).getName());
-        holder.tv_bank_username.setText(list.get(i).getNum());
-        holder.tv_bank_name.setText(list.get(i).getContent());
+        holder.tv_bank_banknum.setText(list.get(i).getBankCardNum());
+        holder.tv_bank_username.setText(list.get(i).getRealName());
+        holder.tv_bank_name.setText(list.get(i).getBankName());
 
         return view;
     }

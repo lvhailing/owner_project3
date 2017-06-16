@@ -24,9 +24,7 @@ import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 // 发现--投资指南 列表页
 public class InvestmentGuideFragment extends Fragment {

@@ -45,7 +45,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
         baseSetContentView(R.layout.ac_mybank);
         initTopTitle();
         initView();
-        initData();
+
 
     }
 
@@ -112,8 +112,8 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-        param.put("userId", "17021511395798036131");
         param.put("page", "1");
+        param.put("userId", "17021511395798036131");
 
         HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -139,18 +139,8 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     private void delete(final int position, String id) {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-//        param.put("userId", "17021511395798036131");
-//        param.put("id", id);
-
-
-        param.put("validateCode", "5457845");
-        param.put("userId", "17030215570956997221");
-        param.put("realName", "zhang");
-        param.put("idNo", "112554541545");
-        param.put("bankName", "建设");
-        param.put("bankAddress", "北京");
-        param.put("bankCardNum", "45487454545");
-
+        param.put("id", id);
+        param.put("userId", "17021511395798036131");
 
         HtmlRequest.deleteBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -161,9 +151,6 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
                     if(b.getFlag().equals("true")){
                         list.remove(position);
                         bankAdapter.notifyDataSetChanged();
-                    }else{
-                        Toast.makeText(MyBankActivity.this, b.getMessage(),
-                                Toast.LENGTH_LONG).show();
                     }
                     Toast.makeText(MyBankActivity.this, b.getMessage(),
                             Toast.LENGTH_LONG).show();
@@ -219,6 +206,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

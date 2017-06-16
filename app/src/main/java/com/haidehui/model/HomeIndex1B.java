@@ -2,13 +2,14 @@ package com.haidehui.model;
 
 
 import com.haidehui.network.types.IMouldType;
+import com.haidehui.network.types.MouldList;
 
-// 最热房源列表
-public class HotHouse1B implements IMouldType {
+// 首页
+public class HomeIndex1B implements IMouldType {
 	private String check;
 	private String code;
+	private HomeIndex2B data;
 	private String msg;
-	private HotHouse2B data;
 
 	public String getCheck() {
 		return check;
@@ -26,6 +27,14 @@ public class HotHouse1B implements IMouldType {
 		this.code = code;
 	}
 
+	public HomeIndex2B getData() {
+		return data;
+	}
+
+	public void setData(HomeIndex2B data) {
+		this.data = data;
+	}
+
 	public String getMsg() {
 		return msg;
 	}
@@ -33,13 +42,4 @@ public class HotHouse1B implements IMouldType {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-
-	public HotHouse2B getData() {
-		return data;
-	}
-
-	public void setData(HotHouse2B data) {
-		this.data = data;
-	}
 }
-	

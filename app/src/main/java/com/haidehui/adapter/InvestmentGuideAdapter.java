@@ -29,7 +29,6 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
-//		Log.e(tag, "list=="+list.size());
     }
 
     @Override
@@ -64,10 +63,8 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         //加载左侧图片
         ImageLoader.getInstance().displayImage(list.get(position).getPicture(), holder.iv_guide_photo, options);
 
-//        holder.tv_guide_title.setText(list.get(position).getTitile());
-        String titile = list.get(position).getTitile();
-        Log.i("fff", "标题："+titile);
-//        holder.tv_guide_detail .setText(list.get(position).getGraphicDetails());
+        holder.tv_guide_title.setText(list.get(position).getTitle());
+        holder.tv_guide_detail .setText(list.get(position).getBriefIntroduction());
         return convertView;
     }
 

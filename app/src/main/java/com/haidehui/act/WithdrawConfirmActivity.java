@@ -19,6 +19,7 @@ import com.haidehui.adapter.WithdrawAdapter;
 import com.haidehui.common.Urls;
 import com.haidehui.model.ResultMessageContentBean;
 import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.model.ResultWithdrawInfoContentBean;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -45,6 +46,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
     private TextView tv_withdraw_get_verify_code;       //  获取验证码
     private EditText et_withdraw_verify_code;       //  输入验证码
     private Button btn_withdraw_confirm;       //  申请提现
+    private TextView tv_withdraw_reward;        //  奖励提示
 
 
     private boolean smsflag = true;
@@ -55,6 +57,13 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
     private String amount = "";
     private String verifyCode = "";
+    private ResultWithdrawInfoContentBean b;
+
+    private String bankAddress = "";        //      银行开户地
+    private String bankCardId = "";        //      银行卡id
+    private String bankCardNum = "";        //      银行卡号
+    private String bankName = "";        //      银行名称
+    private String realName = "";        //      姓名开户名
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +71,26 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         baseSetContentView(R.layout.ac_withdraw_confirm);
         initTopTitle();
         initView();
+        initData();
 
+    }
+
+    public void initData(){
+
+        getWithdrawInfo();
 
     }
 
     public void initView(){
         context = this;
+        b =  new ResultWithdrawInfoContentBean();
+        bankAddress = getIntent().getStringExtra("bankAddress");
+        bankCardId = getIntent().getStringExtra("bankCardId");
+        bankCardNum = getIntent().getStringExtra("bankCardNum");
+        bankName = getIntent().getStringExtra("bankName");
+        realName = getIntent().getStringExtra("realName");
+
+
         tv_bank_banknum = (TextView) findViewById(R.id.tv_bank_banknum);
         tv_bank_username = (TextView) findViewById(R.id.tv_bank_username);
         tv_bank_name = (TextView) findViewById(R.id.tv_bank_name);
@@ -76,6 +99,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         tv_withdraw_get_verify_code = (TextView) findViewById(R.id.tv_withdraw_get_verify_code);
         et_withdraw_verify_code = (EditText) findViewById(R.id.et_withdraw_verify_code);
         btn_withdraw_confirm = (Button) findViewById(R.id.btn_withdraw_confirm);
+        tv_withdraw_reward = (TextView) findViewById(R.id.tv_withdraw_reward);
 
         tv_withdraw_get_verify_code.setOnClickListener(this);
         btn_withdraw_confirm.setOnClickListener(this);
@@ -144,13 +168,15 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
             case R.id.tv_withdraw_get_verify_code:
 
-//                requestSMS();
-                smsflag = true;
-                startThread();
+                requestSMS();
+//                smsflag = true;
+//                startThread();
 
                 break;
 
             case R.id.btn_withdraw_confirm:
+
+                WithdrawConfirm();
 
                 break;
 
@@ -163,11 +189,92 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
     }
 
+
+    private void getWithdrawInfo() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("userId", "17021511395798036131");
+
+        HtmlRequest.getWithdrawInfo(WithdrawConfirmActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                b = (ResultWithdrawInfoContentBean) params.result;
+                if (b != null) {
+
+                    setView();
+
+                } else {
+                    Toast.makeText(WithdrawConfirmActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * 确认提现
+     *
+     */
+    private void WithdrawConfirm() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("bankAddress", bankAddress);
+        param.put("bankCardId", bankCardId);
+        param.put("bankCardNum", bankCardNum);
+        param.put("bankName", bankName);
+        param.put("cashNum", amount);
+        param.put("realName", realName);
+        param.put("userId", "17021511395798036131");
+        param.put("validateCode", verifyCode);
+
+        HtmlRequest.WithdrawConfirm(WithdrawConfirmActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                b = (ResultWithdrawInfoContentBean) params.result;
+                if (b != null) {
+
+                    setView();
+
+                } else {
+                    Toast.makeText(WithdrawConfirmActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
+    public void setView(){
+
+        tv_withdraw_able.setText("可提现金额"+b.getCashNum()+"元");
+
+        if(b.getRewardStatus().equals("init")){
+            tv_withdraw_reward.setVisibility(View.VISIBLE);
+        }else if(b.getRewardStatus().equals("sended")){
+            tv_withdraw_reward.setVisibility(View.GONE);
+        }else{
+            tv_withdraw_reward.setVisibility(View.GONE);
+        }
+
+
+        tv_bank_banknum.setText(bankCardNum);
+        tv_bank_username.setText(realName);
+        tv_bank_name.setText(bankName);
+
+
+    }
+
+
+
+
+
     private void requestSMS() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("mobile", "");
-        param.put("busiType", Urls.REGISTER);
-        param.put("token", token);
+
+        param.put("busiType", Urls.WITHDRAW);
+        param.put("userId", "17021511395798036131");
 
         HtmlRequest.sentSMS(WithdrawConfirmActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -270,6 +377,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void afterTextChanged(Editable editable) {
+                amount = et_withdraw_amount.getText().toString();
                 verifyCode = et_withdraw_verify_code.getText().toString();
                 ViewUtils.setButton(editable.toString(),verifyCode,btn_withdraw_confirm);
             }
@@ -289,6 +397,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable editable) {
                 amount = et_withdraw_amount.getText().toString();
+                verifyCode = et_withdraw_verify_code.getText().toString();
                 ViewUtils.setButton(amount,editable.toString(),btn_withdraw_confirm);
             }
         });

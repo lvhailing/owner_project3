@@ -123,17 +123,9 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
     private void requestSMS() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
+        param.put("busiType", Urls.ADDBANKCARD);
+        param.put("userId", "17021511395798036131");
 
-//        param.put("userId", "17030215570956997221");
-//        param.put("busiType_1", "bankCardBind");
-
-        param.put("userId", "17030215570956997221");
-        param.put("validateCode", verifyCode);
-        param.put("realName", realName);
-        param.put("idNo", idCard);
-        param.put("bankName", bankName);
-        param.put("bankAddress", bankAddress);
-        param.put("bankCardNum", bankNum);
 
         HtmlRequest.sentSMS(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -164,13 +156,12 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
     private void addBankCard() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-
         param.put("bankAddress", bankAddress);
         param.put("bankCardNum", bankNum);
         param.put("bankName", bankName);
         param.put("idNo", idCard);
         param.put("realName", realName);
-        param.put("userId", "17030215570956997221");
+        param.put("userId", "17021511395798036131");
         param.put("validateCode", verifyCode);
 
         HtmlRequest.addBankCard(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
@@ -179,17 +170,12 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             public void onRequestFinished(BaseParams params) {
                 ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                 if (b != null) {
-                    if (Boolean.parseBoolean(b.getResult())) {
-                        Toast.makeText(AddBankActivity.this, "短信发送成功",
-                                Toast.LENGTH_LONG).show();
-                        smsflag = true;
-                        startThread();
-                    } else {
-                        smsflag = false;
-                        Toast.makeText(AddBankActivity.this,
-                                b.getMessage(), Toast.LENGTH_LONG)
-                                .show();
+                    if (b.getFlag().equals("true")) {
+                        finish();
                     }
+                    Toast.makeText(AddBankActivity.this,
+                            b.getMessage(), Toast.LENGTH_LONG)
+                            .show();
                 } else {
                     Toast.makeText(AddBankActivity.this, "加载失败，请确认网络通畅",
                             Toast.LENGTH_LONG).show();

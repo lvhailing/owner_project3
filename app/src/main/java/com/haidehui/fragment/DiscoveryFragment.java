@@ -151,8 +151,8 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
             tv_discovery_tab1.setTextColor(getResources().getColor(R.color.txt_orange));
             tv_discovery_tab2.setTextColor(getResources().getColor(R.color.txt_light_gray));
         } else if (pos == 1) {
-            tv_discovery_tab1.setTextColor(getResources().getColor(R.color.txt_orange));
-            tv_discovery_tab2.setTextColor(getResources().getColor(R.color.txt_light_gray));
+            tv_discovery_tab1.setTextColor(getResources().getColor(R.color.txt_light_gray));
+            tv_discovery_tab2.setTextColor(getResources().getColor(R.color.txt_orange));
         }
 
     }

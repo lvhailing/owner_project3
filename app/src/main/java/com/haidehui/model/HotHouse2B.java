@@ -4,6 +4,7 @@ package com.haidehui.model;
 import com.haidehui.network.types.IMouldType;
 import com.haidehui.network.types.MouldList;
 
+// 最热房源列表
 public class HotHouse2B implements IMouldType {
     private MouldList<HotHouse3B> list;
     private String flag;

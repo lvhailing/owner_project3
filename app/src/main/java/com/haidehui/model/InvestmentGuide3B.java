@@ -2,15 +2,23 @@ package com.haidehui.model;
 
 
 import com.haidehui.network.types.IMouldType;
-import com.haidehui.network.types.MouldList;
 
 // 发现--投资指南列表  接收后台返回数据
 public class InvestmentGuide3B implements IMouldType {
 	private String id;
-	private String titile; // 标题
+	private String title; // 标题
 	private String graphicDetails; //  图文详情
 	private String source; //  来源
 	private String picture; //  封面图片
+	private String briefIntroduction; //  图文详情
+
+	public String getBriefIntroduction() {
+		return briefIntroduction;
+	}
+
+	public void setBriefIntroduction(String briefIntroduction) {
+		this.briefIntroduction = briefIntroduction;
+	}
 
 	public String getId() {
 		return id;
@@ -20,12 +28,12 @@ public class InvestmentGuide3B implements IMouldType {
 		this.id = id;
 	}
 
-	public String getTitile() {
-		return titile;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTitile(String titile) {
-		this.titile = titile;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getGraphicDetails() {

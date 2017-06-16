@@ -13,37 +13,39 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.HotHouseActivity;
+import com.haidehui.act.HotHouseListActivity;
 import com.haidehui.act.HouseDetailActivity;
-import com.haidehui.act.OverseaProjectActivity;
 import com.haidehui.act.OverseaProjectDetailActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.CycleAdapter;
+import com.haidehui.adapter.InvestmentGuideAdapter;
 import com.haidehui.model.BoutiqueHouse2B;
+import com.haidehui.model.HomeIndex2B;
+import com.haidehui.model.HomeIndex3B;
+import com.haidehui.model.InvestmentGuide2B;
+import com.haidehui.model.InvestmentGuide3B;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
-import com.haidehui.photo_preview.PhotoPreviewAc;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
-import com.haidehui.widget.MyListView;
+import com.haidehui.uitls.ViewUtils;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
- * 底部导航---产品
+ * 底部导航---首页
  */
 public class HomeFragment extends Fragment implements View.OnClickListener, CycleAdapter.ImageCycleViewListener {
     private View mView;
@@ -51,17 +53,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
     private DisplayImageOptions options;
     private CycleAdapter cycleAdapter;//自定义viewPager
-    private MyListView myListView; // 精品房源推荐
+    private PullToRefreshListView listView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter;
-    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; //固收、浮收、保险
-    private ScrollView scrollView;
+    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
     private Context context;
-    //    private ResultProductIndexBean productIndexBean;
     private MouldList<ResultCycleIndex2B> homeCycleBean;
-    private MouldList<BoutiqueHouse2B> list; // 精品房源数据
-    private TextView tv_home_notice;
-    private LinearLayout ll_home_notice;
+    private LinearLayout ll_home_notice; // 公告布局
+    private TextView tv_home_notice; // 公告标题
     private Intent intent;
+    private MouldList<HomeIndex3B> totalList = new MouldList<>();
+    private int currentPage = 1;    //当前页
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     public void onResume() {
         super.onResume();
 //        requestBoutiqueHouseData();
-        scrollView.smoothScrollTo(0, 0);
     }
 
     @Override
@@ -104,17 +104,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         context = getActivity();
 //        productIndexBean = new ResultProductIndexBean();
         homeCycleBean = new MouldList<ResultCycleIndex2B>();
-        list = new MouldList<BoutiqueHouse2B>();
+//        list = new MouldList<BoutiqueHouse2B>();
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
-        myListView = (MyListView) mView.findViewById(R.id.lv_boutique_house);
-        scrollView = (ScrollView) mView.findViewById(R.id.scrollview);
         tv_hot_house = (TextView) mView.findViewById(R.id.tv_hot_house);
         tv_oversea_project = (TextView) mView.findViewById(R.id.tv_oversea_project);
         tv_customer_service = (TextView) mView.findViewById(R.id.tv_customer_service);
         tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
         ll_home_notice = (LinearLayout) mView.findViewById(R.id.ll_home_notice);
+        listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
+        //PullToRefreshListView  上滑加载更多及下拉刷新
+        ViewUtils.slideAndDropDown(listView);
 
         tv_hot_house.setOnClickListener(this);
         tv_oversea_project.setOnClickListener(this);
@@ -127,29 +128,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
         requestCycleIndex();
-    }
 
-    /**
-     * 动态设置ListView的高度
-     *
-     * @param listView
-     */
-    public static void setListViewHeightBasedOnChildren(Context context, ListView listView, int dividerHeight) {
-        if (listView == null) return;
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += (listItem.getMeasuredHeight() + dividerHeight);
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * listAdapter.getCount()) + 5;
+        myAdapter = new BoutiqueHouseAdapter(context, totalList);
+        listView.setAdapter(myAdapter);
+        requestHomeIndexData();
 
-        listView.setLayoutParams(params);
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                if (refreshView.isHeaderShown()) {
+                    //下拉刷新
+                    currentPage = 1;
+                } else {
+                    //上划加载下一页
+                    currentPage++;
+                }
+                requestHomeIndexData();
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+//                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
+//                intent.putExtra("id", totalList.get(position - 1).getId());
+//                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -162,13 +166,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
             @Override
             public void onImageClick(int postion, View imageView) {
                 if (homeCycleBean != null && homeCycleBean.size() != 0) {
-                   /* if (!TextUtils.isEmpty(homeCycleBean.get(postion % homeCycleBean.size()).getUrl())) {
-                        Intent i_web = new Intent(context, WebActivity.class);
-                        i_web.putExtra("type", WebActivity.WEBTYPE_BANNER);
-                        i_web.putExtra("url", homeCycleBean.get(postion % homeCycleBean.size()).getUrl());
-                        i_web.putExtra("title", homeCycleBean.get(postion % homeCycleBean.size()).getDescription());
-                        getActivity().startActivity(i_web);
-                    }*/
                 }
             }
         });
@@ -177,31 +174,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         mViewPager.addView(cycleAdapter);
     }
 
-    /**
-     * 请求精品房源数据
-     */
-    private void initHotProductData() {
-//        if (!TextUtils.isEmpty(productIndexBean.getBulletin().getTopic())) {
-//            tv_fragment_product_notice.setText(productIndexBean.getBulletin().getTopic());
-//        }
-
-        myAdapter = new BoutiqueHouseAdapter(context, list);
-        myListView.setAdapter(myAdapter);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
-            }
-        });
-        setListViewHeightBasedOnChildren(getActivity(), myListView, 0);
-    }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_hot_house:  // 最热房源
-                intent = new Intent(context, HouseDetailActivity.class);
+                intent = new Intent(context, HotHouseListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
@@ -244,23 +221,41 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         }
     }
 
-    // 请求精品房源数据
-    private void requestBoutiqueHouseData() {
-//        HtmlRequest.getBoutiqueHouseData(context, new BaseRequester.OnRequestListener() {
-//            @Override
-//            public void onRequestFinished(BaseParams params) {
-//                if (params != null) {
-//                    productIndexBean = (ResultProductIndexBean) params.result;
-//                    if (productIndexBean != null) {
-//                        if (list != null) {
-//                            list.clear();
-//                        }
-//                        list.addAll(productIndexBean.getList());
-//                        initHotProductData();
-//                    }
-//                }
-//            }
-//        });
+    // 获取首页数据
+    private void requestHomeIndexData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+//        param.put("page", currentPage + "");
+
+        HtmlRequest.getHomeData(context, param, new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(context, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    upDate(listView);
+                    return;
+                }
+
+                HomeIndex2B data = (HomeIndex2B) params.result;
+                tv_home_notice.setText(data.getTitle());
+                MouldList<HomeIndex3B> everyList = data.getList();
+                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                }
+
+                if (currentPage == 1) {
+                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 ,这两种情况之前的数据都清掉
+                    totalList.clear();
+                }
+                totalList.addAll(everyList);
+
+                //刷新数据
+                myAdapter.notifyDataSetChanged();
+
+                upDate(listView);
+
+            }
+
+        });
     }
 
     // 请求轮播图数据
@@ -282,5 +277,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
 
     @Override
     public void onImageClick(int postion, View imageView) {
+    }
+
+    private void upDate(final PullToRefreshListView listView) {
+        listView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listView.onRefreshComplete();
+            }
+        }, 1000);
     }
 }

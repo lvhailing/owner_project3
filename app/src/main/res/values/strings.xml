@@ -103,6 +103,7 @@
     <string name="withdraw_confirm_input">请输入转出金额</string>
     <string name="withdraw_input_verify">请输入短信验证码</string>
     <string name="withdraw_button">申请提现</string>
+    <string name="withdraw_message">确认提现后预计在5个工作日内到账！</string>
 
     <!-- 手势密码 -->
     <string name="setup_gesture_code">设置手势密码</string>
