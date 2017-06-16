@@ -31,6 +31,7 @@ import com.haidehui.uitls.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -209,7 +210,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     //检查版本更新
     private void requestData() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("type", "android");
         HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
             @Override
@@ -267,7 +268,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setSelect(2);
                 break;
             case R.id.ll_tab_mine:  // 我的
-                PreferenceUtil.setLogin(true);
+                PreferenceUtil.setLogin(false);
                 if(PreferenceUtil.isLogin()){
                     setSelect(3);
                 }else{

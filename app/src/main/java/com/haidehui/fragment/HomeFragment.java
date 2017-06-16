@@ -39,6 +39,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -264,7 +265,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
 
     // 请求轮播图数据
     private void requestCycleIndex() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("params", "params");
         HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override

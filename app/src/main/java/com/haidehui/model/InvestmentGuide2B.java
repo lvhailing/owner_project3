@@ -9,7 +9,6 @@ import com.haidehui.network.types.MouldList;
  */
 public class InvestmentGuide2B implements IMouldType {
     private MouldList<InvestmentGuide3B> list;
-    private String msg;
     private int count;
 
     public MouldList<InvestmentGuide3B> getList() {
@@ -18,14 +17,6 @@ public class InvestmentGuide2B implements IMouldType {
 
     public void setList(MouldList<InvestmentGuide3B> list) {
         this.list = list;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 
     public int getCount() {

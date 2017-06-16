@@ -21,6 +21,7 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -167,7 +168,7 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
     }
 
     private void requestSMS() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("mobile", "");
         param.put("busiType", Urls.REGISTER);
         param.put("token", token);

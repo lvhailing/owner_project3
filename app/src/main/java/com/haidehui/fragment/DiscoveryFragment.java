@@ -28,6 +28,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -212,7 +213,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
 
     // 请求轮播图数据
     private void requestCycleIndex() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("params", "params");
         HtmlRequest.getDiscoveryCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override

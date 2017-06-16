@@ -23,6 +23,7 @@ import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -109,10 +110,11 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void requestData() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
         param.put("userId", "17021511395798036131");
         param.put("page", "1");
+
         HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
             @Override
@@ -135,13 +137,14 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
 
     private void delete(final int position, String id) {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
 //        param.put("userId", "17021511395798036131");
 //        param.put("id", id);
 
-        param.put("userId", "17030215570956997221");
+
         param.put("validateCode", "5457845");
+        param.put("userId", "17030215570956997221");
         param.put("realName", "zhang");
         param.put("idNo", "112554541545");
         param.put("bankName", "建设");

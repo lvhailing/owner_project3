@@ -22,6 +22,7 @@ import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -120,7 +121,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void requestSMS() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
 
 //        param.put("userId", "17030215570956997221");
@@ -161,16 +162,16 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
 
     private void addBankCard() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
 
-        param.put("userId", "17030215570956997221");
-        param.put("validateCode", verifyCode);
-        param.put("realName", realName);
-        param.put("idNo", idCard);
-        param.put("bankName", bankName);
         param.put("bankAddress", bankAddress);
         param.put("bankCardNum", bankNum);
+        param.put("bankName", bankName);
+        param.put("idNo", idCard);
+        param.put("realName", realName);
+        param.put("userId", "17030215570956997221");
+        param.put("validateCode", verifyCode);
 
         HtmlRequest.addBankCard(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
 

@@ -49,7 +49,6 @@ public class InvestmentGuideAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.i("aa", "投资指南："+list);
         Holder holder = null;
         if (convertView == null) {
             holder = new Holder();
@@ -65,7 +64,9 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         //加载左侧图片
         ImageLoader.getInstance().displayImage(list.get(position).getPicture(), holder.iv_guide_photo, options);
 
-        holder.tv_guide_title.setText(list.get(position).getTitile());
+//        holder.tv_guide_title.setText(list.get(position).getTitile());
+        String titile = list.get(position).getTitile();
+        Log.i("fff", "标题："+titile);
 //        holder.tv_guide_detail .setText(list.get(position).getGraphicDetails());
         return convertView;
     }

@@ -12,6 +12,7 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.uitls.PreferenceUtil;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -26,7 +27,7 @@ public class UserLoadout {
 	}
 
 	public void requestData() {
-		Map<String, Object> param = new HashMap<>();
+		LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 		param.put("token", token);
 		HtmlRequest.loginoff(context,param, new BaseRequester.OnRequestListener() {
 

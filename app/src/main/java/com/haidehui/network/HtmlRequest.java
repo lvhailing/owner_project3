@@ -26,13 +26,33 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class HtmlRequest extends BaseRequester {
 
     public static String getResult(Map<String, Object> param) {
         Gson gson = new Gson();
-        String md5 = MD5.stringToMD5(gson.toJson(param));
+        String str_md5 = gson.toJson(param);
+        String md5 = MD5.stringToMD5(str_md5);
+        String result = null;
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", md5);
+            map.put("data", param);
+            String encrypt = gson.toJson(map);
+            result = DESUtil.encrypt(encrypt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    public static String getResultLinked(LinkedHashMap<String, Object> param) {
+        Gson gson = new Gson();
+        String str_md5 = gson.toJson(param);
+        String md5 = MD5.stringToMD5(str_md5);
         String result = null;
         try {
             Map<String, Object> map = new HashMap<>();
@@ -61,6 +81,21 @@ public class HtmlRequest extends BaseRequester {
         return result;
     }
 
+    public static String getResultNoEncryptLinked(LinkedHashMap<String, Object> param) {
+        Gson gson = new Gson();
+        String md5 = MD5.stringToMD5(gson.toJson(param));
+        String result = null;
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", md5);
+            map.put("data", param);
+            result = gson.toJson(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     /**
      * 发送手机短信
      *
@@ -68,7 +103,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void sentSMS(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void sentSMS(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_SMS;
 
@@ -119,7 +154,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void getMyBankList(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void getMyBankList(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_GETBANKLIST;
 
@@ -171,7 +206,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void deleteBankList(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void deleteBankList(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_DELETEBANKLIST;
 
@@ -223,8 +258,8 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void addBankCard(final Context context, Map<String, Object> param, OnRequestListener listener) {
-        final String data = getResult(param);
+    public static void addBankCard(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResultLinked(param);
         final String url = Urls.URL_ADDBANKLIST;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
@@ -275,7 +310,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void sentMessageInfo(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void sentMessageInfo(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_MESSAGE_INFO;
 
@@ -325,7 +360,7 @@ public class HtmlRequest extends BaseRequester {
      * @param context  上下文
      * @param listener 监听事件
      */
-    public static void loginoff(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void loginoff(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_LOGINOFF;
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
@@ -366,7 +401,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener 监听
      * @return 返回数据
      */
-    public static void getCycleIndex(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void getCycleIndex(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_HOME_ADVERTISE;
 
@@ -413,7 +448,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener 监听
      * @return 返回数据
      */
-    public static void getDiscoveryCycleIndex(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void getDiscoveryCycleIndex(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_DISCOVERY_ADVERTISE;
 
@@ -459,7 +494,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getInvestmentGuideListData(final Context context, Map<String, Object> param, OnRequestListener listener) {
+    public static void getInvestmentGuideListData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_INVESTMENTGUIDE_LIST;
 
@@ -568,7 +603,7 @@ public class HtmlRequest extends BaseRequester {
     }
 
 
-    public static void checkVersion(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+    public static void checkVersion(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_CHECKVERSION;
 //        final String data = HtmlLoadUtil.checkVersion(type);
@@ -619,7 +654,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getMineData(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+    public static void getMineData(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_COMMISSION_LIST;
 
@@ -663,7 +698,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getAccountBookData(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+    public static void getAccountBookData(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_COMMISSION_LIST;
 
@@ -707,7 +742,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getCommissionList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+    public static void getCommissionList(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_COMMISSION_LIST;
 
@@ -751,7 +786,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getAwardList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+    public static void getAwardList(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_AWARD_LIST;
 
@@ -795,7 +830,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getWithdrawList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+    public static void getWithdrawList(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_WITHDRAW_LIST;
 

@@ -61,6 +61,9 @@ public class Urls {
      */
     public static final String URL_ADDBANKLIST = EC_HOST
             + "bankcard/add";
+//
+//   public static final String URL_ADDBANKLIST = EC_HOST
+//            + "investmentguide/list";
 
 
     /**

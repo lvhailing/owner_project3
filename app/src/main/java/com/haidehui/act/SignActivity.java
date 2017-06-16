@@ -25,6 +25,7 @@ import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -173,7 +174,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void requestSMS() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("mobile", mobile);
         param.put("busiType", Urls.REGISTER);
         param.put("token", token);

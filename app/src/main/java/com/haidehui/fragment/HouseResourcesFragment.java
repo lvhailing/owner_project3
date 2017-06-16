@@ -24,6 +24,7 @@ import com.haidehui.network.HtmlRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -422,7 +423,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     //我的主页面数据
     private void requestData() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("type", "android");
         HtmlRequest.getMineData(context, param, new BaseRequester.OnRequestListener() {
             @Override

@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -114,7 +115,7 @@ public class MessageInfoActivity extends BaseActivity{
     }
 
     private void requestData() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("mobile", "");
         param.put("busiType", Urls.REGISTER);
         param.put("token", token);

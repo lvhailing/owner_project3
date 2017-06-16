@@ -34,6 +34,7 @@ import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -214,7 +215,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void requestData() {
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("userId", "17021511395798036131");
         HtmlRequest.getAccountBookData(this, param, new BaseRequester.OnRequestListener() {
                     @Override
@@ -235,7 +236,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
         tv_total_give.setText(data.getTotalCommission());
     }
      private void requestCommissionList() {  // 获取佣金收益列表数据
-        Map<String, Object> param = new HashMap<>();
+         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("userId", "17021511395798036131");
 
         try {
@@ -258,7 +259,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
         }
     }
     private void requestAwardList() {  // 获取活动奖励列表数据
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("userId", "17021511395798036131");
 
         try {
@@ -281,7 +282,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
         }
     }
     private void requestWithDrawList() {  // 获取提现记录列表数据
-        Map<String, Object> param = new HashMap<>();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("userId", "17021511395798036131");
 
         try {
