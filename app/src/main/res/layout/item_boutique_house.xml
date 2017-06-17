@@ -18,23 +18,24 @@
 
     <RelativeLayout
         android:id="@+id/rl_house_info"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
 
         <ImageView
             android:id="@+id/iv_boutique_house"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="112dp"
+            android:layout_height="77dp"
+            android:layout_margin="12dp"
             android:layout_centerVertical="true"
-            android:scaleType="centerInside"
-            android:src="@mipmap/img_normal"/>
+            android:scaleType="fitXY"
+            android:background="@mipmap/img_normal"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dip"
             android:layout_toRightOf="@id/iv_boutique_house"
             android:orientation="vertical">
 
@@ -45,29 +46,26 @@
                 android:ellipsize="end"
                 android:maxLength="12"
                 android:maxLines="1"
-                android:padding="5dp"
                 android:text="帕诺拉普吉岛豪华海景公寓"
-                android:textSize="14sp"/>
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tv_house_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:padding="5dp"
+                android:layout_marginTop="12dp"
                 android:text="3卧1卫/100-125㎡"
-                android:textColor="@color/gray_dark"
-                android:textSize="14.0sp"/>
+                android:textColor="@color/txt_light_gray"
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tv_house_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:padding="5dp"
+                android:layout_marginTop="12dp"
                 android:text="80-112.5万元"
-                android:textColor="@color/gray_dark"
-                android:textSize="14.0sp"/>
+                android:textColor="@color/txt_orange"
+                android:textSize="14sp"/>
         </LinearLayout>
     </RelativeLayout>
 

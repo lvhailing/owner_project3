@@ -18,10 +18,16 @@ import com.haidehui.adapter.MyAdapter;
 import com.haidehui.fragment.EssentialInfoFragment;
 import com.haidehui.fragment.PurchaseCostFragment;
 import com.haidehui.fragment.PurchaseFlowFragment;
+import com.haidehui.model.HouseDetail2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.photo_preview.PhotoPreviewAc;
 import com.haidehui.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * 房源详情
@@ -42,6 +48,11 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private PurchaseCostFragment purchaseCostFragment; // 购房费用
     private PurchaseFlowFragment purchaseFlowFragment; // 购房流程
     private ImageView iv_phone;
+    private String hid; // 房源编号
+    private HouseDetail2B houseDetail;
+    private ArrayList<String>  houseImg; // 房源图片列表
+    private TextView tv_house_detail_price,tv_house_detail_area,tv_house_detail_house_type,tv_house_detail_commission_rate; // 价格，面积，居室类型，佣金比例
+    private TextView tv_house_detail_address; // 地址
 
 
     @Override
@@ -78,13 +89,19 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+        hid = getIntent().getStringExtra("hid");
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-//        id = getIntent().getStringExtra("id");
         vp = (ViewPager) findViewById(R.id.vp);
         tv_house_name = (TextView) findViewById(R.id.tv_house_name);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
+        tv_house_detail_price = (TextView) findViewById(R.id.tv_house_detail_price);
+        tv_house_detail_area = (TextView) findViewById(R.id.tv_house_detail_area);
+        tv_house_detail_house_type = (TextView) findViewById(R.id.tv_house_detail_house_type);
+        tv_house_detail_commission_rate = (TextView) findViewById(R.id.tv_house_detail_commission_rate);
+        tv_house_detail_address = (TextView) findViewById(R.id.tv_house_detail_address);
+
         rl_house_detail_addr = (RelativeLayout) findViewById(R.id.rl_house_detail_addr);
         btn_essential_info = (Button) findViewById(R.id.btn_essential_info);
         btn_purchase_cost = (Button) findViewById(R.id.btn_purchase_cost);
@@ -102,29 +119,14 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         btn_purchase_flow.setOnClickListener(this);
         iv_phone.setOnClickListener(this);
 
-        list = new ArrayList<>();
-        list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
-        list.add("http://www.mincoder.com/assets/images/avatar.jpg");
-        list.add("http://pic.58pic.com/58pic/12/74/05/99C58PICYck.jpg");
-        list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
-        list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
+//        list = new ArrayList<>();
+//        list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
+//        list.add("http://www.mincoder.com/assets/images/avatar.jpg");
+//        list.add("http://pic.58pic.com/58pic/12/74/05/99C58PICYck.jpg");
+//        list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
+//        list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
 
-        mAdapter = new MyAdapter(mContext, list);
-        vp.setAdapter(mAdapter);
-        mAdapter.setOnImageListener(new MyAdapter.ImageViewListener() {
-            @Override
-            public void onImageClick(int postion) {
-                Intent intent = new Intent(mContext, PhotoPreviewAc.class);
-                intent.putStringArrayListExtra("urls", list);
-                intent.putExtra("currentPos", postion);
-                startActivity(intent);
-            }
-        });
-//        vp.setOffscreenPageLimit(5);
-        vp.setOnPageChangeListener(new MyOnPageChangeListener());
-        vp.setCurrentItem(currentPos);
 
-        updateNum();
     }
 
     private void initData() {
@@ -145,11 +147,38 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void updateNum() {
-        tv_vp_page.setText(currentPos + 1 + "/" + list.size());
+        tv_vp_page.setText(currentPos + 1 + "/" + houseImg.size());
     }
 
 
     private void setView() {
+        houseImg = houseDetail.getHouseImg();
+        mAdapter = new MyAdapter(mContext, houseImg);
+        vp.setAdapter(mAdapter);
+        mAdapter.setOnImageListener(new MyAdapter.ImageViewListener() {
+            @Override
+            public void onImageClick(int postion) {
+                Intent intent = new Intent(mContext, PhotoPreviewAc.class);
+                intent.putStringArrayListExtra("urls", houseImg);
+                intent.putExtra("currentPos", postion);
+                startActivity(intent);
+            }
+        });
+//        vp.setOffscreenPageLimit(5);
+        vp.setOnPageChangeListener(new MyOnPageChangeListener());
+        vp.setCurrentItem(currentPos);
+
+        updateNum();
+
+        tv_house_name.setText(houseDetail.getName());
+        tv_house_detail_price.setText(houseDetail.getPrice()+"万元");
+        tv_house_detail_area.setText(houseDetail.getArea()+"㎡");
+        tv_house_detail_house_type.setText(houseDetail.getHouseType());
+        tv_house_detail_commission_rate.setText(houseDetail.getCommissionRate());
+        tv_house_detail_address.setText(houseDetail.getLocation());
+
+
+
         //加载图片
 //        ImageLoader.getInstance().displayImage(detail.getGolfPhoto(), iv_detail_photo);
 
@@ -217,17 +246,20 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void requestDetailData() {  // 获取最热房源详情页的数据
-//        HtmlRequest.getGolfDetail(this, id, new BaseRequester.OnRequestListener() {
-//            @Override
-//            public void onRequestFinished(BaseParams params) {
-//                if (params != null) {
-//                    golf2B = (GolfDetail2B) params.result;
-//                    detail = golf2B.getGolf();
-//                    if (detail != null) {
-//                        setView();
-//                    }
-//                }
-//            }
-//        });
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("hid",hid);
+        param.put("userId", "17021511395798036131");
+
+        HtmlRequest.getHouseDetailData(this, param, new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params != null) {
+                    houseDetail = (HouseDetail2B) params.result;
+                    if (houseDetail != null) {
+                        setView();
+                    }
+                }
+            }
+        });
     }
 }

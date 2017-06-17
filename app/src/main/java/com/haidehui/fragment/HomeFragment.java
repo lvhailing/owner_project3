@@ -36,6 +36,7 @@ import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ViewUtils;
+import com.haidehui.widget.MyListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
     private DisplayImageOptions options;
     private CycleAdapter cycleAdapter;//自定义viewPager
-    private PullToRefreshListView listView; // 精品房源推荐列表
+    private MyListView myListView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter;
     private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
     private Context context;
@@ -61,8 +62,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private LinearLayout ll_home_notice; // 公告布局
     private TextView tv_home_notice; // 公告标题
     private Intent intent;
-    private MouldList<HomeIndex3B> totalList = new MouldList<>();
-    private int currentPage = 1;    //当前页
+//    private MouldList<HomeIndex3B> totalList = new MouldList<>();
+    private MouldList<HomeIndex3B> BoutiqueHouseList = new MouldList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,9 +114,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         tv_customer_service = (TextView) mView.findViewById(R.id.tv_customer_service);
         tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
         ll_home_notice = (LinearLayout) mView.findViewById(R.id.ll_home_notice);
-        listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
-        //PullToRefreshListView  上滑加载更多及下拉刷新
-        ViewUtils.slideAndDropDown(listView);
+        myListView = (MyListView) mView.findViewById(R.id.lv);
 
         tv_hot_house.setOnClickListener(this);
         tv_oversea_project.setOnClickListener(this);
@@ -129,24 +128,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
 
         requestCycleIndex();
 
-        myAdapter = new BoutiqueHouseAdapter(context, totalList);
-        listView.setAdapter(myAdapter);
+//        myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
+//        myListView.setAdapter(myAdapter);
         requestHomeIndexData();
 
-        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                if (refreshView.isHeaderShown()) {
-                    //下拉刷新
-                    currentPage = 1;
-                } else {
-                    //上划加载下一页
-                    currentPage++;
-                }
-                requestHomeIndexData();
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 //                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
@@ -224,35 +210,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     // 获取首页数据
     private void requestHomeIndexData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-//        param.put("page", currentPage + "");
 
         HtmlRequest.getHomeData(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {
                     Toast.makeText(context, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                    upDate(listView);
                     return;
                 }
 
                 HomeIndex2B data = (HomeIndex2B) params.result;
                 tv_home_notice.setText(data.getTitle());
-                MouldList<HomeIndex3B> everyList = data.getList();
-                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                BoutiqueHouseList = data.getList();
+                if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
+                    myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
+                    myListView.setAdapter(myAdapter);
+
+                    //刷新数据
+//                    myAdapter.notifyDataSetChanged();
                 }
-
-                if (currentPage == 1) {
-                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 ,这两种情况之前的数据都清掉
-                    totalList.clear();
-                }
-                totalList.addAll(everyList);
-
-                //刷新数据
-                myAdapter.notifyDataSetChanged();
-
-                upDate(listView);
-
             }
 
         });
@@ -279,12 +255,4 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     public void onImageClick(int postion, View imageView) {
     }
 
-    private void upDate(final PullToRefreshListView listView) {
-        listView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                listView.onRefreshComplete();
-            }
-        }, 1000);
-    }
 }

@@ -68,6 +68,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_house_detail_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -117,6 +118,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_house_detail_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -176,6 +178,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_house_detail_house_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -225,6 +228,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_house_detail_commission_rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"

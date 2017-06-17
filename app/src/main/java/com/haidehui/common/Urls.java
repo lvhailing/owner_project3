@@ -11,7 +11,7 @@ public class Urls {
     public static final String URL_DSL = "http://192.168.1.106:9999/overseasProperty-app/";
 
     //张亚磊
-    public static final String URL_ZYL = "http://192.168.1.193:9999/overseas-app";
+    public static final String URL_ZYL = "http://192.168.1.193:9999/overseas-app/";
 
     // 邢玉洁
     public static final String URL_XYJ = "http://192.168.1.125:9999/overseas-app/";
@@ -103,6 +103,9 @@ public class Urls {
 
     //最热房源列表
     public static final String URL_INDEX_HOTLIST = EC_HOST + "index/hotlist";
+
+    // 房源详情
+    public static final String URL_HOUSE_DETAIL = EC_HOST + "house/detail";
 
     // 首页--轮播图
     public static final String URL_HOME_ADVERTISE = EC_HOST + "home/advertise";

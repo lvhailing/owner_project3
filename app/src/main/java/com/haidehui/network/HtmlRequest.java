@@ -12,6 +12,7 @@ import com.haidehui.model.AccountBookWithdraw1B;
 import com.haidehui.model.AccountBookWithdraw2B;
 import com.haidehui.model.HomeIndex1B;
 import com.haidehui.model.HotHouse1B;
+import com.haidehui.model.HouseDetail1B;
 import com.haidehui.model.InvestmentGuide1B;
 import com.haidehui.model.ProductRoadshow1B;
 import com.haidehui.model.ResultCheckVersionBean;
@@ -63,6 +64,7 @@ public class HtmlRequest extends BaseRequester {
             map.put("data", param);
             String encrypt = gson.toJson(map);
             result = DESUtil.encrypt(encrypt);
+            Log.i("www", "入参页码是：" + encrypt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -333,7 +335,7 @@ public class HtmlRequest extends BaseRequester {
                 client.post(url, entity);
                 String result = (String) client.getResult();
 
-                if (isCancelled()||result == null) {
+                if (isCancelled() || result == null) {
                     return null;
                 }
                 try {
@@ -342,10 +344,10 @@ public class HtmlRequest extends BaseRequester {
                     ResultWithdrawInfoBean b = json.fromJson(data, ResultWithdrawInfoBean.class);
                     return b.getData();
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     return null;
-                }finally {
+                } finally {
 
                 }
 
@@ -361,7 +363,7 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
-     *  确认提现
+     * 确认提现
      *
      * @param context
      * @param listener
@@ -386,7 +388,7 @@ public class HtmlRequest extends BaseRequester {
                 client.post(url, entity);
                 String result = (String) client.getResult();
 
-                if (isCancelled()||result == null) {
+                if (isCancelled() || result == null) {
                     return null;
                 }
                 try {
@@ -395,10 +397,10 @@ public class HtmlRequest extends BaseRequester {
                     ResultWithdrawInfoBean b = json.fromJson(data, ResultWithdrawInfoBean.class);
                     return b.getData();
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     return null;
-                }finally {
+                } finally {
 
                 }
 
@@ -603,7 +605,7 @@ public class HtmlRequest extends BaseRequester {
 
     // 首页-- 最热房源列表数据
     public static void getHotHouseData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
-        final String data = getResult(param);
+        final String data = getResultLinked(param);
         final String url = Urls.URL_INDEX_HOTLIST;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
@@ -627,6 +629,49 @@ public class HtmlRequest extends BaseRequester {
 
                     Gson gson = new Gson();
                     HotHouse1B b = gson.fromJson(result, HotHouse1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
+
+    // 房源详情页数据
+    public static void getHouseDetailData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResultLinked(param);
+        final String url = Urls.URL_HOUSE_DETAIL;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    result = DESUtil.decrypt(result);
+                    Log.i("hh", "房源详情:" + result);
+
+                    Gson gson = new Gson();
+                    HouseDetail1B b = gson.fromJson(result, HouseDetail1B.class);
                     return b.getData();
                 } catch (Exception e) {
                     e.printStackTrace();

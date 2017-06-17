@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 
 /**
- *  首页-- 最热房源列表
+ * 首页-- 最热房源列表
  */
 public class HotHouseListActivity extends BaseActivity implements View.OnClickListener {
     private PullToRefreshListView listView;
@@ -47,10 +48,7 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-                .setCenterText(getResources().getString(R.string.title_hot_house))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_hot_house)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -89,16 +87,17 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
                 } else {
                     //上划加载下一页
                     currentPage++;
+//                    Log.i("www", "当前页：" + currentPage++);
                 }
                 requestListData();
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // item 点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(mContext, HouseDetailActivity.class);
-                intent.putExtra("id", totalList.get(position - 1).getHid());
+                intent.putExtra("hid", totalList.get(position - 1).getHid());
                 startActivity(intent);
             }
         });
@@ -112,7 +111,7 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
 
     private void requestListData() {  // 获取最热房源列表数据
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("currentPage", currentPage + "");
+        param.put("page", currentPage + "");
 
         try {
             HtmlRequest.getHotHouseData(mContext, param, new BaseRequester.OnRequestListener() {
@@ -156,7 +155,6 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
             e.printStackTrace();
         }
     }
-
 
 
 }
