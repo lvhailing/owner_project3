@@ -104,8 +104,14 @@ public class Urls {
     //最热房源列表
     public static final String URL_INDEX_HOTLIST = EC_HOST + "index/hotlist";
 
+    //海外项目列表
+    public static final String URL_PROJECT_LIST = EC_HOST + "project/list";
+
     // 房源详情
     public static final String URL_HOUSE_DETAIL = EC_HOST + "house/detail";
+
+    // 海外项目详情
+    public static final String URL_PROJECT_DETAIL = EC_HOST + "project/detail";
 
     // 首页--轮播图
     public static final String URL_HOME_ADVERTISE = EC_HOST + "home/advertise";

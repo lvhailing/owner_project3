@@ -5,21 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.model.OverseaProject3B;
+import com.haidehui.model.OverseaProjectList3B;
 import com.haidehui.network.types.MouldList;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import static com.haidehui.uitls.ImageLoaderManager.options;
+
 // 最热房源 Adapter
 public class OverseaProjectAdapter extends BaseAdapter {
-    private MouldList<OverseaProject3B> list;
+    private MouldList<OverseaProjectList3B> list;
     private Context context;
     private LayoutInflater inflater;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public OverseaProjectAdapter(Context context, MouldList<OverseaProject3B> list) {
+    public OverseaProjectAdapter(Context context, MouldList<OverseaProjectList3B> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -46,17 +49,29 @@ public class OverseaProjectAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new Holder();
             convertView = inflater.inflate(R.layout.item_oversea_project, null);
-//            holder.tv_hot_product_content_title = (TextView) convertView.findViewById(R.id.tv_hot_product_content_title);
+            holder.iv_oversea_house = (ImageView) convertView.findViewById(R.id.iv_oversea_house);
+            holder.tv_oversea_name = (TextView) convertView.findViewById(R.id.tv_oversea_name);
+            holder.tv_oversea_name = (TextView) convertView.findViewById(R.id.tv_oversea_name);
+            holder.tv_oversea_price = (TextView) convertView.findViewById(R.id.tv_oversea_price);
+            holder.tv_oversea_area = (TextView) convertView.findViewById(R.id.tv_oversea_area);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
 
+        //加载图片
+        ImageLoader.getInstance().displayImage(list.get(position).getPath(), holder.iv_oversea_house, options);
+
+        holder.tv_oversea_name.setText(list.get(position).getName());
+        holder.tv_oversea_price.setText(list.get(position).getPrice());
+        holder.tv_oversea_area.setText(list.get(position).getArea());
         return convertView;
     }
 
     class Holder {
-        TextView tv_hot_product_content_Third_two;
-
+        ImageView iv_oversea_house;
+        TextView tv_oversea_name;
+        TextView tv_oversea_price;
+        TextView tv_oversea_area;
     }
 }

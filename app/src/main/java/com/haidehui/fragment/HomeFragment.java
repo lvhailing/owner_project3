@@ -11,23 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.act.HotHouseListActivity;
-import com.haidehui.act.HouseDetailActivity;
-import com.haidehui.act.OverseaProjectDetailActivity;
+import com.haidehui.act.OverseaProjectListActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.CycleAdapter;
-import com.haidehui.adapter.InvestmentGuideAdapter;
-import com.haidehui.model.BoutiqueHouse2B;
 import com.haidehui.model.HomeIndex2B;
 import com.haidehui.model.HomeIndex3B;
-import com.haidehui.model.InvestmentGuide2B;
-import com.haidehui.model.InvestmentGuide3B;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -35,10 +28,7 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
-import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.MyListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -168,7 +158,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
                 startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
-                intent = new Intent(context, OverseaProjectDetailActivity.class);
+                intent = new Intent(context, OverseaProjectListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_customer_service: // 我的客服

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.model.HouseDetail2B;
 
 /**
  * 底部导航---产品
@@ -31,7 +32,6 @@ public class EssentialInfoFragment extends Fragment {
             mView = inflater.inflate(R.layout.fragment_essential_info, container, false);
             try {
                 initView(mView);
-                initData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,7 +63,15 @@ public class EssentialInfoFragment extends Fragment {
 
     }
 
-    private void initData() {
+    public void refreshLayoutInfo(HouseDetail2B data) {
+        tv_house_name.setText(data.getName());
+        tv_house_function.setText(data.getFunction());
+        tv_house_type.setText(data.getHouseType());
+        tv_decoration_standard.setText(data.getDecorateStandard());
+        tv_house_year.setText(data.getTime());
+        tv_house_floor.setText(data.getStory());
+        tv_property_fee.setText(data.getPropertyFee());
+        tv_house_description.setText(data.getHouseDesc());
     }
 
 

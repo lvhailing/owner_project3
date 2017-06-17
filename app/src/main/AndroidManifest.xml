@@ -153,7 +153,7 @@
             android:name=".act.HotHouseListActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.OverseaProjectActivity"
+            android:name=".act.OverseaProjectListActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".act.OverseaProjectDetailActivity"

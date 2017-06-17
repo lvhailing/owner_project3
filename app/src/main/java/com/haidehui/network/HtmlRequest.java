@@ -14,6 +14,8 @@ import com.haidehui.model.HomeIndex1B;
 import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.HouseDetail1B;
 import com.haidehui.model.InvestmentGuide1B;
+import com.haidehui.model.OverseaProjectDetail1B;
+import com.haidehui.model.OverseaProjectList1B;
 import com.haidehui.model.ProductRoadshow1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
@@ -645,6 +647,48 @@ public class HtmlRequest extends BaseRequester {
 
         });
     }
+    // 首页-- 海外项目列表数据
+    public static void getOverseaListData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResultLinked(param);
+        final String url = Urls.URL_PROJECT_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    result = DESUtil.decrypt(result);
+                    Log.i("hh", "海外项目列表数据:" + result);
+
+                    Gson gson = new Gson();
+                    OverseaProjectList1B b = gson.fromJson(result, OverseaProjectList1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
 
     // 房源详情页数据
     public static void getHouseDetailData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
@@ -672,6 +716,49 @@ public class HtmlRequest extends BaseRequester {
 
                     Gson gson = new Gson();
                     HouseDetail1B b = gson.fromJson(result, HouseDetail1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
+
+    // 海外项目详情页数据
+    public static void getOverseaDetailData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResultLinked(param);
+        final String url = Urls.URL_PROJECT_DETAIL;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    result = DESUtil.decrypt(result);
+                    Log.i("hh", "海外项目详情:" + result);
+
+                    Gson gson = new Gson();
+                    OverseaProjectDetail1B b = gson.fromJson(result, OverseaProjectDetail1B.class);
                     return b.getData();
                 } catch (Exception e) {
                     e.printStackTrace();
