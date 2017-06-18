@@ -33,7 +33,6 @@ import java.util.LinkedHashMap;
  */
 public class HouseDetailActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager vp;
-    private int currentPos;
     private TextView tv_vp_page;
     private ImageView image;
     private ArrayList<ImageView> imageList;
@@ -49,9 +48,10 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private ImageView iv_phone;
     private String hid; // 房源编号
     private HouseDetail2B houseDetail;
-    private ArrayList<String> houseImg; // 房源图片列表
+    private ArrayList<String> houseImgList; // 房源图片列表
     private TextView tv_house_detail_price, tv_house_detail_area, tv_house_detail_house_type, tv_house_detail_commission_rate; // 价格，面积，居室类型，佣金比例
     private TextView tv_house_detail_address; // 地址
+    private Intent intent;
 
 
     @Override
@@ -131,44 +131,16 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         requestDetailData();
     }
 
-    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
-        public void onPageScrollStateChanged(int arg0) {
-        }
-
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
-
-        public void onPageSelected(int position) {
-            currentPos = position;
-            updateNum();
-        }
-    }
-
-    private void updateNum() {
-        tv_vp_page.setText(currentPos + 1 + "/" + houseImg.size());
-    }
-
-
     private void setView() {
-        houseImg = houseDetail.getHouseImg();
-        if (houseImg != null && houseImg.size() != 0) {
-        mAdapter = new HouseDetailAdapter(mContext, houseImg);
-        vp.setAdapter(mAdapter);
-        }
-        mAdapter.setOnImageListener(new HouseDetailAdapter.ImageViewListener() {
-            @Override
-            public void onImageClick(int postion) {
-                Intent intent = new Intent(mContext, PhotoPreviewAc.class);
-                intent.putStringArrayListExtra("urls", houseImg);
-                intent.putExtra("currentPos", postion);
-                startActivity(intent);
-            }
-        });
-//        vp.setOffscreenPageLimit(5);
-        vp.setOnPageChangeListener(new MyOnPageChangeListener());
-        vp.setCurrentItem(currentPos);
+        houseImgList = houseDetail.getHouseImg();
+        if (houseImgList != null && houseImgList.size() > 0) {
+            mAdapter = new HouseDetailAdapter(mContext, houseImgList);
+            vp.setAdapter(mAdapter);
 
-        updateNum();
+            vp.setOnPageChangeListener(new MyOnPageChangeListener());
+
+            updateNum(0);
+        }
 
         tv_house_name.setText(houseDetail.getName());
         tv_house_detail_price.setText(houseDetail.getPrice() + "万元");
@@ -184,6 +156,27 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
     }
 
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        public void onPageSelected(int position) {
+            updateNum(position);
+
+            Intent intent = new Intent(mContext, PhotoPreviewAc.class);
+            intent.putStringArrayListExtra("urls", houseImgList);
+            intent.putExtra("currentPos", position);
+            startActivity(intent);
+        }
+    }
+
+    private void updateNum(int currentPos) {
+        tv_vp_page.setText(currentPos + 1 + "/" + houseImgList.size());
+    }
+
     @Override
     public void onClick(View v) {
         resetBtnTextAnaBg();
@@ -191,9 +184,11 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         FragmentTransaction transaction = manager.beginTransaction();
         switch (v.getId()) {
             case R.id.rl_house_detail_addr:   // 地址点击监听
-//                Intent intent = new Intent(mContext, SubBookingGolfActivity.class);
-//                intent.putExtra("id", id);
-//                startActivity(intent);
+                intent = new Intent(mContext, PhotoPreviewAc.class);
+                ArrayList<String> locationImgs = new ArrayList<>();
+                locationImgs.add(houseDetail.getLocationImg());
+                intent.putStringArrayListExtra("urls", locationImgs);
+                startActivity(intent);
                 break;
             case R.id.btn_essential_info:  // 基本信息
                 btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
@@ -221,7 +216,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 transaction.commit();
                 break;
             case R.id.iv_phone:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + getString(R.string.adviser_phone_num));
                 intent.setData(data);
                 startActivity(intent);
@@ -269,4 +264,5 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
+
 }

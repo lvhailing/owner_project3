@@ -6,10 +6,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.haidehui.common.Urls;
 import com.haidehui.model.AccountBookAward1B;
-import com.haidehui.model.AccountBookAward3B;
 import com.haidehui.model.AccountBookCommission1B;
 import com.haidehui.model.AccountBookWithdraw1B;
-import com.haidehui.model.AccountBookWithdraw2B;
 import com.haidehui.model.HomeIndex1B;
 import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.HouseDetail1B;
@@ -57,9 +55,10 @@ public class HtmlRequest extends BaseRequester {
 
     public static String getResultLinked(LinkedHashMap<String, Object> param) {
         Gson gson = new Gson();
+        //pai排序
+
         String str_md5 = gson.toJson(param);
-        String md5 = MD5.stringToMD5(str_md5);
-        String result = null;
+        String md5 = MD5.stringToMD5(str_md5);      String result = null;
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("check", md5);

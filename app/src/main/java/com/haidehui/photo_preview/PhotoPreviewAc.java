@@ -37,9 +37,7 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-                .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
             @Override
             public void onMenu(int id) {
             }
@@ -64,14 +62,16 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         iv_back.setOnClickListener(this);
 
         urls = getIntent().getStringArrayListExtra("urls");
-        currentPos = getIntent().getIntExtra("currentPos", 0);
+        currentPos = getIntent().getIntExtra("currentPos", -1);
 
         //设置适配器
         previewAdapter = new PreviewAdapter(urls);
 //        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(previewAdapter);
         mViewPager.addOnPageChangeListener(pageChangeListener);
-        mViewPager.setCurrentItem(currentPos);
+        if (currentPos != -1) {
+            mViewPager.setCurrentItem(currentPos);
+        }
 
         updateNum();
     }
@@ -93,7 +93,9 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
     };
 
     private void updateNum() {
-        tv_num.setText((currentPos + 1) + "/" + urls.size());
+        if (currentPos != -1) {
+            tv_num.setText((currentPos + 1) + "/" + urls.size());
+        }
     }
 
     @Override

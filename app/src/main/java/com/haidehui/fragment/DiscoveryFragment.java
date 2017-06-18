@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -27,22 +26,18 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * 底部导航---发现模块
  */
-public class DiscoveryFragment extends Fragment implements View.OnClickListener, CycleAdapter.ImageCycleViewListener {
+public class DiscoveryFragment extends Fragment implements View.OnClickListener {
     private View mView;
     private LinearLayout mViewPager; //顶部轮播图
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
     private DisplayImageOptions options;
     private CycleAdapter cycleAdapter;//自定义viewPager
-    private ScrollView scrollView;
     private Context context;
-    //    private ResultProductIndexBean productIndexBean;
     private MouldList<ResultCycleIndex2B> cycleBean;
     private Intent intent;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
@@ -175,18 +170,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
     private void requestData() {
         cycleAdapter = new CycleAdapter(context, cycleBean, options);
         cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
-        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
-            @Override
-            public void onImageClick(int postion, View imageView) {
-                /*if (cycleBean != null && cycleBean.size() != 0) {
-                    if (!TextUtils.isEmpty(cycleBean.get(postion % cycleBean.size()).getPicture())) {
-                        Intent i_web = new Intent(context, WebActivity.class);
-                        i_web.putExtra("url", cycleBean.get(postion % cycleBean.size()).getPicture());
-                        getActivity().startActivity(i_web);
-                    }
-                }*/
-            }
-        });
         cycleAdapter.setCycle(true);
         cycleAdapter.startRoll();
         mViewPager.addView(cycleAdapter);
@@ -228,7 +211,4 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener,
         });
     }
 
-    @Override
-    public void onImageClick(int postion, View imageView) {
-    }
 }

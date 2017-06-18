@@ -16,8 +16,6 @@ import static com.haidehui.uitls.ImageLoaderManager.options;
 public class HouseDetailAdapter extends PagerAdapter {
     private final Context context;
     private List<String> urls = null;
-    private ImageViewListener mImageViewListener;
-    private ImageView imageView;
 
     public HouseDetailAdapter(Context context, List<String> urls) {
         this.context = context;
@@ -40,14 +38,6 @@ public class HouseDetailAdapter extends PagerAdapter {
         String uri = urls.get(position);
         ImageLoader.getInstance().displayImage(uri, iv, options);
 
-        if (mImageViewListener != null) {
-            iv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mImageViewListener.onImageClick(position);
-                }
-            });
-        }
         iv.setScaleType(ImageView.ScaleType.FIT_XY);
         container.addView(iv);
         return iv;
@@ -56,21 +46,5 @@ public class HouseDetailAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-    }
-
-    /**
-     * @param listener 点击事件的回调
-     */
-
-    public void setOnImageListener(ImageViewListener listener) {
-        this.mImageViewListener = listener;
-    }
-
-    /**
-     * 轮播图点击事件的回调接口
-     */
-    public interface ImageViewListener {
-
-        void onImageClick(int postion);
     }
 }
