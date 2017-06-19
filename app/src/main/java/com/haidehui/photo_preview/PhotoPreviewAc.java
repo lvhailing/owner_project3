@@ -66,14 +66,13 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
 
         //设置适配器
         previewAdapter = new PreviewAdapter(urls);
-//        mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setAdapter(previewAdapter);
         mViewPager.addOnPageChangeListener(pageChangeListener);
         if (currentPos != -1) {
             mViewPager.setCurrentItem(currentPos);
         }
+        mViewPager.setAdapter(previewAdapter);
 
-        updateNum();
+        updateNum(0);
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -83,8 +82,7 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
 
         @Override
         public void onPageSelected(int position) {
-            currentPos = position;
-            updateNum();
+            updateNum(position);
         }
 
         @Override
@@ -92,9 +90,9 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         }
     };
 
-    private void updateNum() {
+    private void updateNum(int currentPos) {
         if (currentPos != -1) {
-            tv_num.setText((currentPos + 1) + "/" + urls.size());
+            tv_num.setText(currentPos+ "/" + urls.size());
         }
     }
 

@@ -25,7 +25,7 @@ public class PreviewAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return urls.size();
+        return urls == null ? 0 : urls.size();
     }
 
     @Override

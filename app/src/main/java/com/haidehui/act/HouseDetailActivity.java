@@ -135,6 +135,16 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         houseImgList = houseDetail.getHouseImg();
         if (houseImgList != null && houseImgList.size() > 0) {
             mAdapter = new HouseDetailAdapter(mContext, houseImgList);
+            mAdapter.setOnImageListener(new HouseDetailAdapter.ImageViewListener() {
+                @Override
+                public void onImageClick(int postion) {
+                    Intent intent = new Intent(mContext, PhotoPreviewAc.class);
+                    intent.putStringArrayListExtra("urls", list);
+                    intent.putExtra("currentPos", postion);
+                    startActivity(intent);
+                }
+            });
+
             vp.setAdapter(mAdapter);
 
             vp.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -151,9 +161,6 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
         essentialInfoFragment.refreshLayoutInfo(houseDetail);
 
-        //加载图片
-//        ImageLoader.getInstance().displayImage(detail.getGolfPhoto(), iv_detail_photo);
-
     }
 
     private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -165,11 +172,6 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
         public void onPageSelected(int position) {
             updateNum(position);
-
-            Intent intent = new Intent(mContext, PhotoPreviewAc.class);
-            intent.putStringArrayListExtra("urls", houseImgList);
-            intent.putExtra("currentPos", position);
-            startActivity(intent);
         }
     }
 
@@ -247,7 +249,10 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void requestDetailData() {  // 获取最热房源详情页的数据
+    /**
+     *   获取最热房源详情页的数据
+     */
+    private void requestDetailData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("hid", hid);
         param.put("userId", "17021511395798036131");
