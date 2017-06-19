@@ -63,9 +63,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private String function = "";
     private String type = "";
     private MouldList<HouseList3B> totalList = new MouldList<>();
-    private int currentPage = 1;    //当前页
     private PullToRefreshListView listView;
     private HouseResourceListAdapter mAdapter;
+    private int currentPage = 1;    //当前页
+    private String houseCatagory; // 类型
+    private String houseFunction; // 功能
+    private String housePrice = "1"; // 价格
 
 
     @Override
@@ -168,6 +171,9 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     private void initData() {
+        houseCatagory = ""; //首次默认"" ，代表全部类型
+        houseFunction = ""; //首次默认"" ，代表全部功能
+
         mAdapter = new HouseResourceListAdapter(context, totalList);
         listView.setAdapter(mAdapter);
 
@@ -199,7 +205,6 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     @Override
     public void onResume() {
-//        requestData();
         super.onResume();
 
     }
@@ -335,22 +340,22 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
 
                 break;
-            case R.id.tv1:  // 类型：公寓
+            case R.id.tv1:  // 类型：公寓（flat）
                 clickTypeItem(tv1, "gy");
                 break;
-            case R.id.tv2: // 类型：商铺
+            case R.id.tv2: // 类型：商铺（shops）
                 clickTypeItem(tv2, "sp");
                 break;
-            case R.id.tv3:  // 类型： 别墅
+            case R.id.tv3:  // 类型： 别墅（villa）
                 clickTypeItem(tv3, "bs");
                 break;
-            case R.id.tv4:  // 类型：学区
+            case R.id.tv4:  // 类型：学区（schoolDistrict）
                 clickTypeItem(tv4, "xq");
                 break;
-            case R.id.tv5: // 类型：土地
+            case R.id.tv5: // 类型：土地（land）
                 clickTypeItem(tv5, "td");
                 break;
-            case R.id.tv6:  // 类型： 庄园
+            case R.id.tv6:  // 类型： 庄园（manor）
                 clickTypeItem(tv6, "zy");
                 break;
             case R.id.btn_type_reset:  // 类型： 重置
@@ -359,19 +364,40 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             case R.id.btn_type_sure:  // 类型： 确定
 
                 break;
-            case R.id.tv1_func:  // 功能：投资
+            case R.id.tv_1:  // 价格： 不限（1）
+
+                break;
+            case R.id.tv_2:  // 价格：50万元以下（2）
+
+                break;
+            case R.id.tv_3:  // 价格： 50-100万元（3）
+
+                break;
+            case R.id.tv_4:  // 价格： 100-200万元（4）
+
+                break;
+            case R.id.tv_5:  // 价格： 200-500万元（5）
+
+                break;
+            case R.id.tv_6:  // 价格： 500-1000万元（6）
+
+                break;
+            case R.id.tv_7:  // 价格： 1000万元以上（7）
+
+                break;
+            case R.id.tv1_func:  // 功能：投资（investment）
                 clickFunctionItem(tv1_func, "touzi");
                 break;
-            case R.id.tv2_func:  // 功能：自住
+            case R.id.tv2_func:  // 功能：自住（selfOccupation）
                 clickFunctionItem(tv2_func, "zizhu");
                 break;
-            case R.id.tv3_func:  // 功能：度假
+            case R.id.tv3_func:  // 功能：度假（holiday）
                 clickFunctionItem(tv3_func, "dj");
                 break;
-            case R.id.tv4_func:  // 功能：海景
+            case R.id.tv4_func:  // 功能：海景（seascape）
                 clickFunctionItem(tv4_func, "hj");
                 break;
-            case R.id.tv5_func:  // 功能：移民
+            case R.id.tv5_func:  // 功能：移民（immigrant）
                 clickFunctionItem(tv5_func, "ym");
                 break;
             case R.id.btn_func_reset:  // 功能： 重置
@@ -461,8 +487,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage);
         param.put("housePrice", "1");
-        param.put("houseFunction", "");
-        param.put("houseCatagory", "");
+        param.put("houseFunction", houseFunction);
+        param.put("houseCatagory", houseCatagory);
         HtmlRequest.getHouseList(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
