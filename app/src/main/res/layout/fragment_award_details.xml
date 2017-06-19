@@ -1,0 +1,13 @@
+<com.handmark.pulltorefresh.library.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lv_award"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:divider="@color/gray_light"
+    android:scrollbars="none"
+    android:dividerHeight="5dp"
+    android:listSelector="#00000000"
+    ptr:ptrAnimationStyle="flip"
+    ptr:ptrMode="both" />

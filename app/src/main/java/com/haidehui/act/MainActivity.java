@@ -40,7 +40,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FragmentPagerAdapter mAdapter;
     private static final String TYPE = "android";
 
-
     private LinearLayout ll_tab_home;    //资产
     private LinearLayout ll_tab_house_resources;    //产品
     private LinearLayout ll_tab_discovery;    //服务
@@ -132,7 +131,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void initTopTitle() {
         title = (TitleBar) findViewById(R.id.rl_title);
         title.setVisibility(View.GONE);
-
     }
 
     private void initView() {
@@ -268,12 +266,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setSelect(2);
                 break;
             case R.id.ll_tab_mine:  // 我的
-                PreferenceUtil.setLogin(false);
-                if(PreferenceUtil.isLogin()){
+                PreferenceUtil.setLogin(true);
+                if (PreferenceUtil.isLogin()) {
                     setSelect(3);
-                }else{
-
-                    Intent i_login = new Intent(this,LoginActivity.class);
+                } else {
+                    Intent i_login = new Intent(this, LoginActivity.class);
                     startActivity(i_login);
 
                 }
@@ -288,11 +285,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitBy2Click(); // 调用双击退出函数
+            exitBy2Click();
         }
         return false;
     }
 
+    // 双击退出函数
     private void exitBy2Click() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastTime < 2000) {

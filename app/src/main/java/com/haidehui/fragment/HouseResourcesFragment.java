@@ -4,23 +4,34 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.OverseaProjectDetailActivity;
+import com.haidehui.adapter.HouseResourceListAdapter;
+import com.haidehui.model.HouseList2B;
+import com.haidehui.model.HouseList3B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.ViewUtils;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +62,10 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private List<String> types = new ArrayList<>();
     private String function = "";
     private String type = "";
+    private MouldList<HouseList3B> totalList = new MouldList<>();
+    private int currentPage = 1;    //当前页
+    private PullToRefreshListView listView;
+    private HouseResourceListAdapter mAdapter;
 
 
     @Override
@@ -59,6 +74,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             mView = inflater.inflate(R.layout.fragment_house_resources, container, false);
             try {
                 initView(mView);
+                initData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -79,6 +95,11 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         iv_select_type = (ImageView) mView.findViewById(R.id.iv_select_type);
         iv_select_price = (ImageView) mView.findViewById(R.id.iv_select_price);
         iv_select_function = (ImageView) mView.findViewById(R.id.iv_select_function);
+        listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
+
+        //PullToRefreshListView  上滑加载更多及下拉刷新
+        ViewUtils.slideAndDropDown(listView);
+
         v_hidden = mView.findViewById(R.id.v_hidden);
         ll_hidden_type = (LinearLayout) mView.findViewById(R.id.ll_hidden_type);
         ll_hidden_price = (LinearLayout) mView.findViewById(R.id.ll_hidden_price);
@@ -146,23 +167,39 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (getActivity() != null) {
-                requestData();
+    private void initData() {
+        mAdapter = new HouseResourceListAdapter(context, totalList);
+        listView.setAdapter(mAdapter);
+
+        requestGetHouseList();
+
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                if (refreshView.isHeaderShown()) {
+                    //下拉刷新
+                    currentPage = 1;
+                } else {
+                    //上划加载下一页
+                    currentPage++;
+                }
+                requestGetHouseList();
             }
+        });
 
-        } else {
-
-        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+//                Intent intent = new Intent(context, OverseaProjectDetailActivity.class);
+//                intent.putExtra("hid", totalList.get(position - 1).getHid());
+//                startActivity(intent);
+            }
+        });
 
     }
 
     @Override
     public void onResume() {
-        requestData();
+//        requestData();
         super.onResume();
 
     }
@@ -374,12 +411,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     // 类型里的重置按钮点击时调的方法
     private void clickTypeBtnReset() {
         types.clear();
-       changTextColorAndBg(tv1);
-       changTextColorAndBg(tv2);
-       changTextColorAndBg(tv3);
-       changTextColorAndBg(tv4);
-       changTextColorAndBg(tv5);
-       changTextColorAndBg(tv6);
+        changTextColorAndBg(tv1);
+        changTextColorAndBg(tv2);
+        changTextColorAndBg(tv3);
+        changTextColorAndBg(tv4);
+        changTextColorAndBg(tv5);
+        changTextColorAndBg(tv6);
     }
 
     // 功能里的每个按钮被选时调的方法
@@ -420,22 +457,50 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         tv.setBackgroundResource(R.drawable.shape_center_gray_white);
     }
 
-
-    //我的主页面数据
-    private void requestData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("type", "android");
-        HtmlRequest.getMineData(context, param, new BaseRequester.OnRequestListener() {
+    private void requestGetHouseList() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("page", currentPage);
+        param.put("housePrice", "1");
+        param.put("houseFunction", "");
+        param.put("houseCatagory", "");
+        HtmlRequest.getHouseList(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
-                if (params.result != null) {
-
-
-                } else {
+                if (params.result == null) {
                     Toast.makeText(context, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    listView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listView.onRefreshComplete();
+                        }
+                    }, 1000);
+                    return;
                 }
+
+                HouseList2B data = (HouseList2B) params.result;
+                MouldList<HouseList3B> everyList = data.getList();
+                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                }
+
+                if (currentPage == 1) {
+                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                    totalList.clear();
+                }
+                totalList.addAll(everyList);
+
+                //刷新数据
+                mAdapter.notifyDataSetChanged();
+
+                listView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        listView.onRefreshComplete();
+                    }
+                }, 1000);
             }
         });
+
     }
 
 }

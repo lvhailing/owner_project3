@@ -268,6 +268,7 @@
                 android:src="@mipmap/arrow" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/rl_mine_mybankcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -299,6 +300,7 @@
                 android:src="@mipmap/arrow" />
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/rl_mine_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

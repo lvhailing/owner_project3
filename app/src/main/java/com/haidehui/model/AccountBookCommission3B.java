@@ -8,7 +8,7 @@ public class AccountBookCommission3B implements IMouldType {
 	private String id;
 	private String projectName;
 	private String rewardAmount;
-	private String rewardStatus;
+	private String rewardType;
 
 	public String getCreateTime() {
 		return createTime;
@@ -42,11 +42,11 @@ public class AccountBookCommission3B implements IMouldType {
 		this.rewardAmount = rewardAmount;
 	}
 
-	public String getRewardStatus() {
-		return rewardStatus;
+	public String getRewardType() {
+		return rewardType;
 	}
 
-	public void setRewardStatus(String rewardStatus) {
-		this.rewardStatus = rewardStatus;
+	public void setRewardType(String rewardType) {
+		this.rewardType = rewardType;
 	}
 }

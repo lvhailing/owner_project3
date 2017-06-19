@@ -4,22 +4,31 @@ package com.haidehui.bean;
 import com.haidehui.network.types.IMouldType;
 
 public class ResultCustomerInfolistBean implements IMouldType {
-	private String name;
-	private String phone;
+	private String id;
+	private String customerName;
+	private String customerPhone;
 
-	public String getName() {
-		return name;
+	public String getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getCustomerPhone() {
+		return customerPhone;
+	}
+
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
 	}
 }

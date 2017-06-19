@@ -36,12 +36,10 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_vp_page;
     private ImageView image;
     private ArrayList<ImageView> imageList;
-    private ArrayList<String> list;
     private TextView tv_house_name;
     private HouseDetailAdapter mAdapter;
     private RelativeLayout rl_house_detail_addr; // 地址布局
     private Button btn_essential_info, btn_purchase_cost, btn_purchase_flow; // 基本信息、购房费用、购房流程
-    //    private FragmentTransaction transaction;
     private EssentialInfoFragment essentialInfoFragment; // 购房基本信息
     private PurchaseCostFragment purchaseCostFragment; // 购房费用
     private PurchaseFlowFragment purchaseFlowFragment; // 购房流程
@@ -105,8 +103,8 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         btn_purchase_flow = (Button) findViewById(R.id.btn_purchase_flow);
         iv_phone = (ImageView) findViewById(R.id.iv_phone);
 
-        btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
-        btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
+        // “基本信息”按钮首次进来时默认是选中状态
+        initBtnEssentialInfoColor();
         essentialInfoFragment = new EssentialInfoFragment();
         transaction.replace(R.id.fragment_container, essentialInfoFragment);
         transaction.commit();
@@ -117,18 +115,116 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         btn_purchase_flow.setOnClickListener(this);
         iv_phone.setOnClickListener(this);
 
-//        list = new ArrayList<>();
-//        list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
-//        list.add("http://www.mincoder.com/assets/images/avatar.jpg");
-//        list.add("http://pic.58pic.com/58pic/12/74/05/99C58PICYck.jpg");
-//        list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
-//        list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
+    }
 
-
+    private void initBtnEssentialInfoColor() {
+        btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
+        btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
     }
 
     private void initData() {
         requestDetailData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initBtnEssentialInfoColor();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        resetBtnTextAnaBg();
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        switch (v.getId()) {
+            case R.id.rl_house_detail_addr:   // 地址点击监听
+                intent = new Intent(mContext, PhotoPreviewAc.class);
+                ArrayList<String> locationImgs = new ArrayList<>();
+                locationImgs.add(houseDetail.getLocationImg());
+                intent.putStringArrayListExtra("urls", locationImgs);
+                startActivity(intent);
+                break;
+            case R.id.btn_essential_info:  // 基本信息
+                initBtnEssentialInfoColor();
+                hideFragment(transaction);
+                essentialInfoFragment = new EssentialInfoFragment();
+                transaction.replace(R.id.fragment_container, essentialInfoFragment);
+                transaction.commit();
+
+                break;
+            case R.id.btn_purchase_cost:  // 购房费用
+                btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
+                btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
+                hideFragment(transaction);
+                purchaseCostFragment = new PurchaseCostFragment();
+                transaction.replace(R.id.fragment_container, purchaseCostFragment);
+                transaction.commit();
+                break;
+            case R.id.btn_purchase_flow:  // 购房流程
+                btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
+                btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
+                hideFragment(transaction);
+                purchaseFlowFragment = new PurchaseFlowFragment();
+                transaction.replace(R.id.fragment_container, purchaseFlowFragment);
+                transaction.commit();
+                break;
+            case R.id.iv_phone:
+                intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + getString(R.string.adviser_phone_num));
+                intent.setData(data);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    /**
+     * 设置“基本信息”、“购房费用”、“购房流程”等按钮的文字及背景的默认颜色
+     */
+    private void resetBtnTextAnaBg() {
+        btn_essential_info.setTextColor(Color.parseColor("#b3b3b3"));
+        btn_purchase_cost.setTextColor(Color.parseColor("#b3b3b3"));
+        btn_purchase_flow.setTextColor(Color.parseColor("#b3b3b3"));
+
+        btn_essential_info.setBackgroundResource(R.drawable.shape_center_gray_white);
+        btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_gray_white);
+        btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_gray_white);
+    }
+
+    // 去除所有的Fragment
+    private void hideFragment(FragmentTransaction transaction) {
+        if (essentialInfoFragment != null) {
+            transaction.remove(essentialInfoFragment);
+        }
+        if (purchaseCostFragment != null) {
+            transaction.remove(purchaseCostFragment);
+        }
+        if (purchaseFlowFragment != null) {
+            transaction.remove(purchaseFlowFragment);
+        }
+    }
+
+    /**
+     * 获取最热房源详情页的数据
+     */
+    private void requestDetailData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("hid", hid);
+        param.put("userId", "17021511395798036131");
+
+        HtmlRequest.getHouseDetailData(this, param, new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params != null) {
+                    houseDetail = (HouseDetail2B) params.result;
+                    if (houseDetail != null) {
+                        setView();
+                    }
+                }
+            }
+        });
     }
 
     private void setView() {
@@ -139,7 +235,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void onImageClick(int postion) {
                     Intent intent = new Intent(mContext, PhotoPreviewAc.class);
-                    intent.putStringArrayListExtra("urls", list);
+                    intent.putStringArrayListExtra("urls", houseImgList);
                     intent.putExtra("currentPos", postion);
                     startActivity(intent);
                 }
@@ -179,95 +275,5 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         tv_vp_page.setText(currentPos + 1 + "/" + houseImgList.size());
     }
 
-    @Override
-    public void onClick(View v) {
-        resetBtnTextAnaBg();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        switch (v.getId()) {
-            case R.id.rl_house_detail_addr:   // 地址点击监听
-                intent = new Intent(mContext, PhotoPreviewAc.class);
-                ArrayList<String> locationImgs = new ArrayList<>();
-                locationImgs.add(houseDetail.getLocationImg());
-                intent.putStringArrayListExtra("urls", locationImgs);
-                startActivity(intent);
-                break;
-            case R.id.btn_essential_info:  // 基本信息
-                btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
-                btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
-                hideFragment(transaction);
-                essentialInfoFragment = new EssentialInfoFragment();
-                transaction.replace(R.id.fragment_container, essentialInfoFragment);
-                transaction.commit();
-
-                break;
-            case R.id.btn_purchase_cost:  // 购房费用
-                btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
-                btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
-                hideFragment(transaction);
-                purchaseCostFragment = new PurchaseCostFragment();
-                transaction.replace(R.id.fragment_container, purchaseCostFragment);
-                transaction.commit();
-                break;
-            case R.id.btn_purchase_flow:  // 购房流程
-                btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
-                btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
-                hideFragment(transaction);
-                purchaseFlowFragment = new PurchaseFlowFragment();
-                transaction.replace(R.id.fragment_container, purchaseFlowFragment);
-                transaction.commit();
-                break;
-            case R.id.iv_phone:
-                intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + getString(R.string.adviser_phone_num));
-                intent.setData(data);
-                startActivity(intent);
-                break;
-        }
-    }
-
-    private void resetBtnTextAnaBg() {
-        btn_essential_info.setTextColor(Color.parseColor("#b3b3b3"));
-        btn_purchase_cost.setTextColor(Color.parseColor("#b3b3b3"));
-        btn_purchase_flow.setTextColor(Color.parseColor("#b3b3b3"));
-
-        btn_essential_info.setBackgroundResource(R.drawable.shape_center_gray_white);
-        btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_gray_white);
-        btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_gray_white);
-    }
-
-    // 去除所有的Fragment
-    private void hideFragment(FragmentTransaction transaction) {
-        if (essentialInfoFragment != null) {
-            transaction.remove(essentialInfoFragment);
-        }
-        if (purchaseCostFragment != null) {
-            transaction.remove(purchaseCostFragment);
-        }
-        if (purchaseFlowFragment != null) {
-            transaction.remove(purchaseFlowFragment);
-        }
-    }
-
-    /**
-     *   获取最热房源详情页的数据
-     */
-    private void requestDetailData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("hid", hid);
-        param.put("userId", "17021511395798036131");
-
-        HtmlRequest.getHouseDetailData(this, param, new BaseRequester.OnRequestListener() {
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                if (params != null) {
-                    houseDetail = (HouseDetail2B) params.result;
-                    if (houseDetail != null) {
-                        setView();
-                    }
-                }
-            }
-        });
-    }
 
 }

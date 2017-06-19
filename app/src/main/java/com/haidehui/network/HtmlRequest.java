@@ -8,9 +8,12 @@ import com.haidehui.common.Urls;
 import com.haidehui.model.AccountBookAward1B;
 import com.haidehui.model.AccountBookCommission1B;
 import com.haidehui.model.AccountBookWithdraw1B;
+import com.haidehui.model.CommissionDetails1B;
+import com.haidehui.model.CustomerInfo1B;
 import com.haidehui.model.HomeIndex1B;
 import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.HouseDetail1B;
+import com.haidehui.model.HouseList1B;
 import com.haidehui.model.InvestmentGuide1B;
 import com.haidehui.model.OverseaProjectDetail1B;
 import com.haidehui.model.OverseaProjectList1B;
@@ -20,6 +23,7 @@ import com.haidehui.model.ResultCycleIndexContent1B;
 import com.haidehui.model.ResultLoginOffBean;
 import com.haidehui.model.ResultMyBankListBean;
 import com.haidehui.model.ResultSentSMSBean;
+import com.haidehui.model.WithDrawDetails1B;
 import com.haidehui.model.ResultWithdrawInfoBean;
 import com.haidehui.network.http.SimpleHttpClient;
 import com.haidehui.uitls.DESUtil;
@@ -29,21 +33,48 @@ import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class HtmlRequest extends BaseRequester {
 
+    /**
+     * 对入参进行升序排列
+     *
+     * @param map 无序的入参
+     * @return （升序：如：a,b,c....）排序后的入参
+     */
+    public static Map<String, Object> sortMap(Map<String, Object> map) {
+        if (map == null) {
+            return new HashMap<>();
+        } else if (map.isEmpty()) {
+            return map;
+        }
+
+        Map<String, Object> sortMap = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                return s.compareTo(t1);
+            }
+        });
+        sortMap.putAll(map);
+
+        return sortMap;
+    }
+
     public static String getResult(Map<String, Object> param) {
         Gson gson = new Gson();
-        String str_md5 = gson.toJson(param);
+        Map<String, Object> sortMap = sortMap(param);
+        String str_md5 = gson.toJson(sortMap);
         String md5 = MD5.stringToMD5(str_md5);
         String result = null;
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("check", md5);
-            map.put("data", param);
+            map.put("data", sortMap);
             String encrypt = gson.toJson(map);
             result = DESUtil.encrypt(encrypt);
         } catch (Exception e) {
@@ -55,17 +86,15 @@ public class HtmlRequest extends BaseRequester {
 
     public static String getResultLinked(LinkedHashMap<String, Object> param) {
         Gson gson = new Gson();
-        //pai排序
-
         String str_md5 = gson.toJson(param);
-        String md5 = MD5.stringToMD5(str_md5);      String result = null;
+        String md5 = MD5.stringToMD5(str_md5);
+        String result = null;
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("check", md5);
             map.put("data", param);
             String encrypt = gson.toJson(map);
             result = DESUtil.encrypt(encrypt);
-            Log.i("www", "入参页码是：" + encrypt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -535,7 +564,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页轮播图:" + data);
+//                    Log.i("hh", "首页轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -584,7 +613,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页数据:" + data);
+//                    Log.i("hh", "首页数据:" + data);
 
                     Gson gson = new Gson();
                     HomeIndex1B b = gson.fromJson(data, HomeIndex1B.class);
@@ -626,7 +655,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-                    Log.i("hh", "最热房源列表数据:" + result);
+//                    Log.i("hh", "最热房源列表数据:" + result);
 
                     Gson gson = new Gson();
                     HotHouse1B b = gson.fromJson(result, HotHouse1B.class);
@@ -646,6 +675,7 @@ public class HtmlRequest extends BaseRequester {
 
         });
     }
+
     // 首页-- 海外项目列表数据
     public static void getOverseaListData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResultLinked(param);
@@ -668,7 +698,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-                    Log.i("hh", "海外项目列表数据:" + result);
+//                    Log.i("hh", "海外项目列表数据:" + result);
 
                     Gson gson = new Gson();
                     OverseaProjectList1B b = gson.fromJson(result, OverseaProjectList1B.class);
@@ -711,7 +741,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-                    Log.i("hh", "房源详情:" + result);
+//                    Log.i("hh", "房源详情:" + result);
 
                     Gson gson = new Gson();
                     HouseDetail1B b = gson.fromJson(result, HouseDetail1B.class);
@@ -754,7 +784,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-                    Log.i("hh", "海外项目详情:" + result);
+//                    Log.i("hh", "海外项目详情:" + result);
 
                     Gson gson = new Gson();
                     OverseaProjectDetail1B b = gson.fromJson(result, OverseaProjectDetail1B.class);
@@ -775,6 +805,48 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
+    // 房源-- 房源列表数据
+    public static void getHouseList(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_HOUSE_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    result = DESUtil.decrypt(result);
+                    Log.i("hh", "房源列表列表数据:" + result);
+
+                    Gson gson = new Gson();
+                    HouseList1B b = gson.fromJson(result, HouseList1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
 
     /**
      * 发现-- 获取轮播图
@@ -1186,5 +1258,136 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+    /**
+     * 客户信息列表
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getCustomerInfoList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CUSTOMER_INFO_LIST;
 
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    CustomerInfo1B b = gson.fromJson(data, CustomerInfo1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 佣金收益详情
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getCommissionDetails(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_COMMISSION_DETAILS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    CommissionDetails1B b = gson.fromJson(data, CommissionDetails1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 提现记录详情
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getWithDrawDetails(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_WITHDRAW_DETAILS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    WithDrawDetails1B b = gson.fromJson(data, WithDrawDetails1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
 }

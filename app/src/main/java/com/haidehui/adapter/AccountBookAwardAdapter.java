@@ -64,13 +64,13 @@ public class AccountBookAwardAdapter extends BaseAdapter {
 		holder.item_money.setText(bean.getRewardAmount());
 		holder.item_time.setText(bean.getCreateTime());
 		if (bean.getRewardStatus().equals("init")){
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
-			holder.item_status.setText("未激活");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));
-		}else{
 			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.txt_vertical_line));
-			holder.item_status.setText("已完成");
+			holder.item_status.setText("已发放");
 			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.txt_vertical_line));
+		}else{
+			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
+			holder.item_status.setText("已完成");
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));
 		}
 		return convertView;
 	}

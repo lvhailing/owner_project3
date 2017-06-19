@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     private LinearLayout ll_home_notice; // 公告布局
     private TextView tv_home_notice; // 公告标题
     private Intent intent;
-//    private MouldList<HomeIndex3B> totalList = new MouldList<>();
     private MouldList<HomeIndex3B> BoutiqueHouseList = new MouldList<>();
 
     @Override
@@ -80,22 +79,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
 //        requestBoutiqueHouseData();
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-//            requestBoutiqueHouseData();
-//            scrollView.smoothScrollTo(0, 0);
-        } else {
-
-        }
-    }
 
     private void initView(View mView) {
         context = getActivity();
-//        productIndexBean = new ResultProductIndexBean();
         homeCycleBean = new MouldList<ResultCycleIndex2B>();
-//        list = new MouldList<BoutiqueHouse2B>();
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
@@ -118,8 +105,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
 
         requestCycleIndex();
 
-//        myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
-//        myListView.setAdapter(myAdapter);
         requestHomeIndexData();
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
@@ -197,7 +182,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
         }
     }
 
-    // 获取首页数据
+    /**
+     *  获取首页数据
+     */
     private void requestHomeIndexData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
@@ -215,16 +202,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
                 if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
                     myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
                     myListView.setAdapter(myAdapter);
-
-                    //刷新数据
-//                    myAdapter.notifyDataSetChanged();
                 }
             }
 
         });
     }
 
-    // 请求轮播图数据
+    /**
+     *  请求轮播图数据
+     */
     private void requestCycleIndex() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("params", "params");

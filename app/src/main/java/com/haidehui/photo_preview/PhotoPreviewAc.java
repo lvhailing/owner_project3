@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
-    private ImageView iv_back;
+    private ImageView iv_close;
     private TextView tv_num;
 
     private ArrayList<String> urls = new ArrayList<>();
@@ -55,11 +55,11 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
     }
 
     private void initUI() {
-        iv_back = (ImageView) findViewById(R.id.iv_back);
+        iv_close = (ImageView) findViewById(R.id.iv_close);
         mViewPager = (ViewPager) findViewById(R.id.vp);
         tv_num = (TextView) findViewById(R.id.tv_num);
 
-        iv_back.setOnClickListener(this);
+        iv_close.setOnClickListener(this);
 
         urls = getIntent().getStringArrayListExtra("urls");
         currentPos = getIntent().getIntExtra("currentPos", -1);
@@ -72,7 +72,9 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         }
         mViewPager.setAdapter(previewAdapter);
 
-        updateNum(0);
+        if (currentPos != -1) {
+            updateNum(0);
+        }
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -92,7 +94,9 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
 
     private void updateNum(int currentPos) {
         if (currentPos != -1) {
-            tv_num.setText(currentPos+ "/" + urls.size());
+            tv_num.setText(currentPos + 1 + "/" + urls.size());
+        } else {
+            iv_close.setVisibility(View.GONE);
         }
     }
 
@@ -106,7 +110,7 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_close:
                 finish();
                 break;
         }

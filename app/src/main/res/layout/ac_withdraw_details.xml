@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:scrollbars="none">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +22,7 @@
             <TextView
                 android:layout_toRightOf="@+id/tv_commission_info"
                 android:layout_below="@+id/tv_commission_info"
-                android:id="@+id/tv_commission"
+                android:id="@+id/tv_cashNum"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/bg_btn_orange"
@@ -50,6 +52,7 @@
                 android:textColor="@color/gray_dark" />
 
             <TextView
+                android:id="@+id/tv_cashStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -71,6 +74,7 @@
                 android:textColor="@color/gray_dark" />
 
             <TextView
+                android:id="@+id/tv_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -96,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="4"
+                android:text="银行卡"
                 android:textColor="@color/gray_dark" />
         </LinearLayout>
         <LinearLayout
@@ -113,6 +118,7 @@
                 android:textColor="@color/gray_dark" />
 
             <TextView
+                android:id="@+id/tv_account"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -134,6 +140,7 @@
                 android:textColor="@color/gray_dark" />
 
             <TextView
+                android:id="@+id/tv_crateTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -142,4 +149,31 @@
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/layout_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red2"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/white"
+            android:text="客户信息无效，请您提交真实的客户信息！"/>
+
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_delete"/>
+    </RelativeLayout>
+    </FrameLayout>

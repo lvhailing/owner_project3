@@ -155,22 +155,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_login:
-//                String username = et_login_phone.getText().toString();
-//                String password = et_login_password.getText().toString();
-//                UserLogin.getInstance()
-//                        .userlogining(LoginActivity.this, username, password, "");
 
-//                Intent i_message = new Intent(this,MessageActivity.class);          //      消息页面
-//                startActivity(i_message);
+                String username = et_login_phone.getText().toString();
+                String password = et_login_password.getText().toString();
+                UserLogin.getInstance()
+                        .userlogining(LoginActivity.this, username, password, "");
 
-//                Intent i_setting = new Intent(this,SettingActivity.class);          //  设置页面
-//                startActivity(i_setting);
 
-//                Intent i_mybank = new Intent(this,MyBankActivity.class);          //  我的银行卡
-//                startActivity(i_mybank);
 
-                Intent i_withdraw = new Intent(this,WithdrawActivity.class);          //  提现
-                startActivity(i_withdraw);
                 break;
 
             case R.id.tv_login_forget_password:

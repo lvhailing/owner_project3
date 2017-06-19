@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/gray_light"
     android:paddingBottom="10dp">
-
-
-  <ScrollView
-      android:id="@+id/scrollview"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scrollbars="none">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="35dp"
             android:text="- - -"
             android:textSize="30sp"
             android:textColor="@color/white"/>
@@ -76,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="35dp"
             android:layout_marginBottom="10dp">
 
             <LinearLayout
@@ -161,53 +154,12 @@
             android:gravity="center"
             android:text="提现记录"/>
     </LinearLayout>
-    <com.haidehui.widget.MyListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/lv_commission"
+    <RelativeLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="57dp"
-        android:divider="@color/gray_light"
-        android:scrollbars="none"
-        android:dividerHeight="5dp"
-        android:listSelector="#00000000"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="disabled" />
-    <com.haidehui.widget.MyListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/lv_award"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="57dp"
-        android:divider="@color/gray_light"
-        android:scrollbars="none"
-        android:visibility="gone"
-        android:dividerHeight="5dp"
-        android:listSelector="#00000000"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="disabled" />
-    <com.haidehui.widget.MyListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/lv_withdraw"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="57dp"
-        android:divider="@color/gray_light"
-        android:scrollbars="none"
-        android:visibility="gone"
-        android:dividerHeight="5dp"
-        android:listSelector="#00000000"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="disabled" />
+        android:layout_height="wrap_content"/>
 
     </LinearLayout>
-</ScrollView>
     <Button
         android:id="@+id/btn_withdraw"
         android:layout_width="match_parent"

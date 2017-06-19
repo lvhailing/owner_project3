@@ -52,8 +52,8 @@ public class CustomerInfoAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		holder.item_name.setText(bean.getName());
-		holder.item_phone.setText(bean.getPhone());
+		holder.item_name.setText(bean.getCustomerName());
+		holder.item_phone.setText(bean.getCustomerPhone());
 		return convertView;
 	}
 

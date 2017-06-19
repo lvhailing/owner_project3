@@ -1,20 +1,24 @@
 package com.haidehui.act;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.HouseDetailAdapter;
+import com.haidehui.adapter.RelatedHouseAdapter;
 import com.haidehui.model.OverseaProjectDetail2B;
+import com.haidehui.model.OverseaProjectDetail3B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.network.types.MouldList;
+import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -48,8 +52,11 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private LinearLayout ll_pro_house_photos, ll_support_facilities, ll_geographic_location; // 项目居室，配套设施，地理位置等布局
     private TextView tv_project_des, tv_support_facilities_desc, tv_geographic_location_desc; // 项目居室，配套设施，地理位置等的描述
     private String pid;
-    private OverseaProjectDetail2B OverseaProjectDetail;
+    private OverseaProjectDetail2B overseaProjectDetail;
     private ArrayList<String> houseTypeImgList;
+    private MyListView myListView;
+    private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
+    private RelatedHouseAdapter myAdapter;
 
 
     @Override
@@ -84,8 +91,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     }
 
     private void initView() {
-
         pid = getIntent().getStringExtra("pid");
+
         iv_oversea_detail = (ImageView) findViewById(R.id.iv_oversea_detail);
         iv_project_click = (ImageView) findViewById(R.id.iv_project_click);
         iv_support_facilities_click = (ImageView) findViewById(R.id.iv_support_facilities_click);
@@ -106,7 +113,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         ll_pro_house_photos = (LinearLayout) findViewById(R.id.ll_pro_house_photos);
         ll_support_facilities = (LinearLayout) findViewById(R.id.ll_support_facilities);
         ll_geographic_location = (LinearLayout) findViewById(R.id.ll_geographic_location);
-
+        myListView = (MyListView) findViewById(R.id.lv);
 
         vp = (ViewPager) findViewById(R.id.vp);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
@@ -115,18 +122,18 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         iv_support_facilities_click.setOnClickListener(this);
         iv_geographic_location_click.setOnClickListener(this);
 
-//        list = new ArrayList<>();
-//        list.add("http://pic17.nipic.com/20111022/6322714_173008780359_2.jpg");
-//        list.add("http://www.mincoder.com/assets/images/avatar.jpg");
-//        list.add("http://pic.58pic.com/58pic/12/74/05/99C58PICYck.jpg");
-//        list.add("http://f12.baidu.com/it/u=89957531,1663631515&fm=76");
-//        list.add("http://f10.baidu.com/it/u=1304563494,724196614&fm=76");
-
-
     }
 
     private void initData() {
         requestDetailData();
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+//                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
+//                intent.putExtra("id", totalList.get(position - 1).getId());
+//                startActivity(intent);
+            }
+        });
     }
 
     private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -149,24 +156,21 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
     private void setView() {
         //加载图片
-        ImageLoader.getInstance().displayImage(OverseaProjectDetail.getProjectImg(), iv_oversea_detail);
+        ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
 
-        tv_pro_house_name.setText(OverseaProjectDetail.getName());
-        tv_pro_house_price.setText(OverseaProjectDetail.getPrice());
-        tv_pro_house_area.setText(OverseaProjectDetail.getArea());
-        tv_pro_position.setText(OverseaProjectDetail.getLocation());
-        tv_pro_type.setText(OverseaProjectDetail.getCategory());
-        tv_pro_count.setText(OverseaProjectDetail.getTotal());
-        tv_pro_decoration_standard.setText(OverseaProjectDetail.getDecorateStandard());
-        tv_pro_house_desc.setText(OverseaProjectDetail.getProjectDesc());
-        tv_project_des.setText(OverseaProjectDetail.getHouseType());
-//        tv_support_facilities_desc.setText(OverseaProjectDetail.getSupportFacility());
-//        tv_geographic_location_desc.setText(OverseaProjectDetail.getGeographyLocation());
+        tv_pro_house_name.setText(overseaProjectDetail.getName());
+        tv_pro_house_price.setText(overseaProjectDetail.getPrice());
+        tv_pro_house_area.setText(overseaProjectDetail.getArea());
+        tv_pro_position.setText(overseaProjectDetail.getLocation());
+        tv_pro_type.setText(overseaProjectDetail.getCategory());
+        tv_pro_count.setText(overseaProjectDetail.getTotal());
+        tv_pro_decoration_standard.setText(overseaProjectDetail.getDecorateStandard());
+        tv_pro_house_desc.setText(overseaProjectDetail.getProjectDesc());
 
-        houseTypeImgList = OverseaProjectDetail.getHouseTypeImg();
+
+        houseTypeImgList = overseaProjectDetail.getHouseTypeImg();
         mAdapter = new HouseDetailAdapter(mContext, houseTypeImgList);
         vp.setAdapter(mAdapter);
-//        vp.setOffscreenPageLimit(5);
         vp.setOnPageChangeListener(new MyOnPageChangeListener());
         vp.setCurrentItem(currentPos);
 
@@ -180,7 +184,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.iv_project_click:   // 项目居室
                 if (!isShow) {
                     ll_pro_house_photos.setVisibility(View.VISIBLE);
-                    tv_project_des.setText("");
+                    tv_project_des.setText(overseaProjectDetail.getHouseType());
                     iv_project_click.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShow = true;
                 } else {
@@ -192,7 +196,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.iv_support_facilities_click:  // 配套设施
                 if (!isShow) {
                     ll_support_facilities.setVisibility(View.VISIBLE);
-                    tv_support_facilities_desc.setText(OverseaProjectDetail.getSupportFacility());
+                    tv_support_facilities_desc.setText(overseaProjectDetail.getSupportFacility());
                     iv_support_facilities_click.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShow = true;
                 } else {
@@ -204,7 +208,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.iv_geographic_location_click:  // 地理位置
                 if (!isShow) {
                     ll_geographic_location.setVisibility(View.VISIBLE);
-                    tv_geographic_location_desc.setText(OverseaProjectDetail.getGeographyLocation());
+                    tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
                     iv_geographic_location_click.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShow = true;
                 } else {
@@ -213,19 +217,13 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                     iv_geographic_location_click.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }
                 break;
-            case R.id.btn_purchase_flow:  // 购房流程
-                break;
-            case R.id.iv_phone:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + getString(R.string.adviser_phone_num));
-                intent.setData(data);
-                startActivity(intent);
-                break;
         }
     }
 
-
-    private void requestDetailData() {  // 获取海外项目详情页的数据
+    /**
+     * 获取海外项目详情页的数据
+     */
+    private void requestDetailData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("pid", pid);
 
@@ -233,8 +231,13 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
-                    OverseaProjectDetail = (OverseaProjectDetail2B) params.result;
-                    if (OverseaProjectDetail != null) {
+                    overseaProjectDetail = (OverseaProjectDetail2B) params.result;
+                    if (overseaProjectDetail != null) {
+                        relatedhouseList = overseaProjectDetail.getList();
+                        if (relatedhouseList != null && relatedhouseList.size() > 0) {
+                            myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);
+                            myListView.setAdapter(myAdapter);
+                        }
                         setView();
                     }
                 }

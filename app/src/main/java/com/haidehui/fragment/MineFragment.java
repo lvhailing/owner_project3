@@ -16,9 +16,12 @@ import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.CustomerFollowActivity;
 import com.haidehui.act.CustomerInfoActivity;
+import com.haidehui.act.MessageActivity;
+import com.haidehui.act.MyBankActivity;
 import com.haidehui.act.MyInfoActivity;
 import com.haidehui.act.PartnerIdentifyActivity;
 import com.haidehui.act.RenGouStatusActivity;
+import com.haidehui.act.SettingActivity;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -41,6 +44,8 @@ public class MineFragment extends Fragment implements OnClickListener {
     private TextView tv_rengou_state;
     private RelativeLayout layout_indentify;
     private RelativeLayout layout_account_book;
+    private RelativeLayout rl_mine_mybankcard;      //  我的银行卡
+    private RelativeLayout rl_mine_setting;         //  设置
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
@@ -72,6 +77,10 @@ public class MineFragment extends Fragment implements OnClickListener {
         tv_rengou_state= (TextView) mView.findViewById(R.id.tv_rengou_state);
         layout_indentify= (RelativeLayout) mView.findViewById(R.id.layout_identify);
         layout_account_book=(RelativeLayout) mView.findViewById(R.id.layout_account_book);
+        rl_mine_mybankcard=(RelativeLayout) mView.findViewById(R.id.rl_mine_mybankcard);
+        rl_mine_setting=(RelativeLayout) mView.findViewById(R.id.rl_mine_setting);
+
+
     }
     private void initData() {
         layout_email.setOnClickListener(this);
@@ -81,6 +90,8 @@ public class MineFragment extends Fragment implements OnClickListener {
         tv_rengou_state.setOnClickListener(this);
         layout_indentify.setOnClickListener(this);
         layout_account_book.setOnClickListener(this);
+        rl_mine_mybankcard.setOnClickListener(this);
+        rl_mine_setting.setOnClickListener(this);
 
     }
     @Override
@@ -88,7 +99,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if(getActivity()!=null){
-                requestData();
+//                requestData();
             }
 
         } else {
@@ -98,14 +109,17 @@ public class MineFragment extends Fragment implements OnClickListener {
     }
     @Override
     public void onResume() {
-        requestData();
+//        requestData();
         super.onResume();
 
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_email://跳转邮件
+            case R.id.layout_email://   跳转邮件
+
+                Intent i_message = new Intent(context,MessageActivity.class);          //      消息页面
+                startActivity(i_message);
 
                 break;
             case R.id.layout_my_info://跳转我的信息
@@ -132,6 +146,19 @@ public class MineFragment extends Fragment implements OnClickListener {
             case R.id.layout_account_book://跳转我的账本
                 Intent i_account_book = new Intent(context, AccountBookActivity.class);
                 startActivity(i_account_book);
+                break;
+            case R.id.rl_mine_mybankcard:       //      我的银行卡
+
+                Intent i_mybank = new Intent(context,MyBankActivity.class);          //  我的银行卡
+                startActivity(i_mybank);
+
+                break;
+
+            case R.id.rl_mine_setting:
+
+                Intent i_setting = new Intent(context,SettingActivity.class);          //  设置页面
+                startActivity(i_setting);
+
                 break;
 
             default:

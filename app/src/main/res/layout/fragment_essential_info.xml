@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="素林4号帽子街苏林海滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="素林4号帽子街苏林海滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="素林4号帽子街苏林海滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -140,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -163,7 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -186,7 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="滩附近"
+            android:text=""
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>

@@ -107,7 +107,7 @@
                     android:ellipsize="end"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:text="滩附近"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -135,7 +135,7 @@
                     android:ellipsize="end"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:text="独栋别墅"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -163,7 +163,7 @@
                     android:ellipsize="end"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:text="83套"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -191,7 +191,7 @@
                     android:ellipsize="end"
                     android:maxLength="20"
                     android:maxLines="1"
-                    android:text="滩附近"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -220,7 +220,7 @@
                     android:ellipsize="end"
                     android:maxLength="80"
                     android:maxLines="3"
-                    android:text="滩附近"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -281,7 +281,7 @@
                     android:maxLines="1"
                     android:paddingBottom="12dp"
                     android:paddingTop="12dp"
-                    android:text="项目居室"
+                    android:text=""
                     android:textColor="@color/txt_light_gray"
                     android:textSize="13sp"/>
 
@@ -445,7 +445,13 @@
             android:textColor="@color/txt_black"
             android:textSize="16sp"/>
 
-        <!--列表待写-->
+        <!--相关房源列表-->
+        <com.haidehui.widget.MyListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="#00000000"/>
 
     </LinearLayout>
 

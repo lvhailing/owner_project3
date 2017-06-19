@@ -20,7 +20,7 @@ public class Urls {
     public static final String URL_BB = "http://192.168.1.138:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_BB;
+    private static String EC_HOST = URL_ZYL;
 
     /**
      * 登出
@@ -101,10 +101,13 @@ public class Urls {
     //首页
     public static final String URL_INDEX = EC_HOST + "index";
 
-    //最热房源列表
+    // 首页--轮播图
+    public static final String URL_HOME_ADVERTISE = EC_HOST + "home/advertise";
+
+    // 首页--最热房源列表
     public static final String URL_INDEX_HOTLIST = EC_HOST + "index/hotlist";
 
-    //海外项目列表
+    // 首页--海外项目列表
     public static final String URL_PROJECT_LIST = EC_HOST + "project/list";
 
     // 房源详情
@@ -113,8 +116,8 @@ public class Urls {
     // 海外项目详情
     public static final String URL_PROJECT_DETAIL = EC_HOST + "project/detail";
 
-    // 首页--轮播图
-    public static final String URL_HOME_ADVERTISE = EC_HOST + "home/advertise";
+    // 房源
+    public static final String URL_HOUSE_LIST = EC_HOST + "house/list";
 
     // 发现-- 轮播图
     public static final String URL_DISCOVERY_ADVERTISE = EC_HOST + "discovery/advertise";
@@ -139,5 +142,17 @@ public class Urls {
 
     //提现列表
     public static final String URL_WITHDRAW_LIST = EC_HOST + "account/withdrawcash/list";
+
+    //客户信息列表
+    public static final String URL_CUSTOMER_INFO_LIST = EC_HOST + "account/withdrawcash/list";
+
+    //佣金收益详情
+    public static final String URL_COMMISSION_DETAILS = EC_HOST + "account/userrewardrecord/commission/view";
+
+    //提现记录详情
+    public static final String URL_WITHDRAW_DETAILS = EC_HOST + "account/userrewardrecord/withdrawcash/view";
+
+
+
 
 }
