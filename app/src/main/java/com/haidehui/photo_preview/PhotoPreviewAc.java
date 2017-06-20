@@ -73,7 +73,7 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         mViewPager.setAdapter(previewAdapter);
 
         if (currentPos != -1) {
-            updateNum(0);
+            updateNum(currentPos);
         }
     }
 

@@ -50,6 +50,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_house_detail_price, tv_house_detail_area, tv_house_detail_house_type, tv_house_detail_commission_rate; // 价格，面积，居室类型，佣金比例
     private TextView tv_house_detail_address; // 地址
     private Intent intent;
+//    private int currentPage;
 
 
     @Override
@@ -267,7 +268,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         public void onPageSelected(int position) {
-
+//            currentPage = position;
             updateNum(position);
         }
     }
