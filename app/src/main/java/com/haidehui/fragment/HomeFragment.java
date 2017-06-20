@@ -38,7 +38,7 @@ import java.util.LinkedHashMap;
 /**
  * 底部导航---首页
  */
-public class HomeFragment extends Fragment implements View.OnClickListener, CycleAdapter.ImageCycleViewListener {
+public class HomeFragment extends Fragment implements View.OnClickListener{
     private View mView;
     private LinearLayout mViewPager; //顶部轮播图
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
@@ -101,7 +101,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.bg_home_carousel_figure_normal)
+                .showImageOnFail(R.mipmap.bg_home_carousel_figure_normal).resetViewBeforeLoading(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
         requestCycleIndex();
 
@@ -225,10 +227,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Cycl
                 requestData();
             }
         });
-    }
-
-    @Override
-    public void onImageClick(int postion, View imageView) {
     }
 
 }

@@ -25,6 +25,7 @@ public class WebActivity extends Activity implements View.OnClickListener {
     private String type = null;
     private String url = null;
     public static final String WEBTYPE_INVESTMENT_GUIDE_DETAILS = "investment_guide_details"; // 投资指南详情
+    public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
 
     public String title;
     private TextView tv_web_title;
@@ -71,7 +72,9 @@ public class WebActivity extends Activity implements View.OnClickListener {
         if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
             url = Urls.URL_INVESTMENTGUIDE_DETAIL + getIntent().getExtras().getString("id");
             tv_web_title.setText(getIntent().getExtras().getString("title"));
-
+        } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
+            url = Urls.URL_ROADSHOWVIDEO_VIEW + getIntent().getExtras().getString("id");
+            tv_web_title.setText(getIntent().getExtras().getString("title"));
         }
 
 

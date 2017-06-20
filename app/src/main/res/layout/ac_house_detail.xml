@@ -37,6 +37,8 @@
                     android:id="@+id/tv_house_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="14sp"/>
@@ -54,9 +56,9 @@
 
         <LinearLayout
             android:id="@+id/ll_house_info"
-            android:layout_below="@id/rl_top_carousel_figure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/rl_top_carousel_figure"
             android:background="@color/white"
             android:orientation="horizontal">
 
@@ -72,6 +74,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:maxLength="25"
+                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -122,6 +126,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:maxLength="25"
+                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -153,10 +159,10 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_below="@id/ll_house_info"
             android:id="@+id/iv_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/ll_house_info"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:scaleType="fitXY"
@@ -164,9 +170,9 @@
 
         <LinearLayout
             android:id="@+id/ll_house_info2"
-            android:layout_below="@id/iv_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/iv_line"
             android:background="@color/white"
             android:orientation="horizontal">
 
@@ -182,6 +188,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:maxLength="25"
+                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -232,6 +240,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:maxLength="25"
+                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -264,16 +274,16 @@
 
         <View
             android:id="@+id/v_line1"
-            android:layout_below="@id/ll_house_info2"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_below="@id/ll_house_info2"
             android:background="@color/bg_line"/>
 
         <RelativeLayout
-            android:layout_below="@id/v_line1"
             android:id="@+id/rl_house_detail_addr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/v_line1"
             android:background="@color/white"
             android:paddingBottom="12dp"
             android:paddingLeft="12dp"
@@ -289,10 +299,11 @@
 
             <TextView
                 android:id="@+id/tv_house_detail_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="11dp"
+                android:layout_marginRight="28dp"
                 android:layout_toRightOf="@id/iv_addr"
                 android:text=""
                 android:textColor="@color/gray_dark"
@@ -306,17 +317,17 @@
         </RelativeLayout>
 
         <View
-            android:layout_below="@id/rl_house_detail_addr"
             android:id="@+id/v_line2"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_below="@id/rl_house_detail_addr"
             android:background="@color/bg_line"/>
 
         <LinearLayout
             android:id="@+id/ll_btns"
-            android:layout_below="@id/v_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/v_line2"
             android:orientation="horizontal"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
@@ -341,19 +352,19 @@
         </LinearLayout>
 
         <FrameLayout
-            android:layout_below="@id/ll_btns"
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/ll_btns"
             android:layout_marginTop="3dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_alignParentBottom="true"
+            android:background="@color/bg_btn_orange"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:background="@color/bg_btn_orange">
+            android:paddingRight="12dp">
 
             <ImageView
                 android:id="@+id/iv_photo"
@@ -363,11 +374,11 @@
                 android:src="@mipmap/icon_house_detail_adviser"/>
 
             <TextView
-                android:layout_toRightOf="@id/iv_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_photo"
                 android:text="置业顾问"
                 android:textColor="@color/white"
                 android:textSize="14sp"

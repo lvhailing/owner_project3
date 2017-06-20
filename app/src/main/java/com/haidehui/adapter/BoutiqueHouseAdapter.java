@@ -18,8 +18,6 @@ import static com.haidehui.uitls.ImageLoaderManager.options;
 
 // 首页--精品房源 Adapter
 public class BoutiqueHouseAdapter extends BaseAdapter {
-
-    private static final String tag = "recommendProductAdapter";
     private MouldList<HomeIndex3B> list;
     private Context context;
     private LayoutInflater inflater;

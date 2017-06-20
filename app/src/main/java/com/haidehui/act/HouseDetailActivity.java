@@ -267,6 +267,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         public void onPageSelected(int position) {
+
             updateNum(position);
         }
     }

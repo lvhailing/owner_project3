@@ -87,7 +87,6 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
                 } else {
                     //上划加载下一页
                     currentPage++;
-//                    Log.i("www", "当前页：" + currentPage++);
                 }
                 requestListData();
             }
@@ -109,8 +108,11 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    private void requestListData() {  // 获取最热房源列表数据
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+    /**
+     *  获取最热房源列表数据
+     */
+    private void requestListData() {
+        HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
 
         try {

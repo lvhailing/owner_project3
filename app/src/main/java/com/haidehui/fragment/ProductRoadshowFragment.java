@@ -1,5 +1,6 @@
 package com.haidehui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.WebActivity;
 import com.haidehui.adapter.ProductRoadShowAdapter;
 import com.haidehui.model.ProductRoadshow2B;
 import com.haidehui.model.ProductRoadshow3B;
@@ -82,9 +84,11 @@ public class ProductRoadshowFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
-//                intent.putExtra("id", totalList.get(position - 1).getId());
-//                startActivity(intent);
+                Intent i_web = new Intent(getActivity(), WebActivity.class);
+                i_web.putExtra("type", WebActivity.WEBTYPE_ROADSHOW_DETAILS);
+                i_web.putExtra("id", totalList.get(position - 1).getId());
+                i_web.putExtra("title", "产品路演详情");
+                startActivity(i_web);
             }
         });
 

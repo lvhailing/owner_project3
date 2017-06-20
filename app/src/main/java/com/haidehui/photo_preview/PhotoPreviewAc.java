@@ -95,8 +95,9 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
     private void updateNum(int currentPos) {
         if (currentPos != -1) {
             tv_num.setText(currentPos + 1 + "/" + urls.size());
+            iv_close.setVisibility(View.VISIBLE);
         } else {
-            iv_close.setVisibility(View.GONE);
+            iv_close.setVisibility(View.INVISIBLE);
         }
     }
 

@@ -20,7 +20,7 @@ public class Urls {
     public static final String URL_BB = "http://192.168.1.138:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_ZYL;
+    private static String EC_HOST = URL_XYJ;
 
     /**
      * 登出
@@ -138,10 +138,13 @@ public class Urls {
     public static final String URL_INVESTMENTGUIDE_LIST = EC_HOST + "investmentguide/list";
 
     // 发现-- 投资指南详情
-    public static final String URL_INVESTMENTGUIDE_DETAIL = EC_HOST + "investmentGuide/detail/";
+    public static final String URL_INVESTMENTGUIDE_DETAIL = EC_HOST + "investmentguide/detail/";
 
     // 发现-- 路演列表
     public static final String URL_ROADSHOWVIDEO_LIST = EC_HOST + "roadshowvideo/list";
+
+    // 发现-- 路演详情
+    public static final String URL_ROADSHOWVIDEO_VIEW = EC_HOST + "roadshowvideo/view/";
 
     //意见反馈
     public static final String URL_ADVICE = EC_HOST + "problem/reply/save";

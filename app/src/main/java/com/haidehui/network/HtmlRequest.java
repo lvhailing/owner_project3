@@ -762,8 +762,8 @@ public class HtmlRequest extends BaseRequester {
     }
 
     // 首页-- 最热房源列表数据
-    public static void getHotHouseData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
-        final String data = getResultLinked(param);
+    public static void getHotHouseData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
         final String url = Urls.URL_INDEX_HOTLIST;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {

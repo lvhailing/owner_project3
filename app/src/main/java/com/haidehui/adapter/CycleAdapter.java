@@ -145,7 +145,8 @@ public class CycleAdapter extends ViewPager {
     @SuppressLint("NewApi")
     @SuppressWarnings("deprecation")
     private void getNetImage() {
-        int ids[] = {R.drawable.banner_one, R.drawable.banner_two, R.drawable.banner_three, R.drawable.banner_four};
+//        int ids[] = {R.drawable.banner_one, R.drawable.banner_two, R.drawable.banner_three, R.drawable.banner_four};
+        int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal};
 
         imageViews = new ArrayList<ImageView>();
         /*
@@ -255,7 +256,7 @@ public class CycleAdapter extends ViewPager {
             } else {
                 view.setBackgroundResource(R.drawable.dot_normal);
             }
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(12, 12);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(22, 22);
             layoutParams.setMargins(8, 0, 8, 0);
             mLinearLayout.addView(view, layoutParams);
             dotList.add(view);

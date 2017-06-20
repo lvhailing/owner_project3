@@ -26,6 +26,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="21dp"
+            android:visibility="invisible"
             android:scaleType="center"
             android:src="@mipmap/icon_colse1"/>
     </RelativeLayout>
