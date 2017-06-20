@@ -4,9 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.OverseaProjectDetailActivity;
 import com.haidehui.adapter.HouseResourceListAdapter;
 import com.haidehui.model.HouseList2B;
 import com.haidehui.model.HouseList3B;
@@ -35,9 +34,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 底部导航--房源模块
@@ -60,8 +57,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private int currentFlag;  //当前选择哪个按钮  1、类型按钮  2、价格按钮  3、功能按钮
     private List<String> functions = new ArrayList<>();
     private List<String> types = new ArrayList<>();
-    private String function = "";
-    private String type = "";
+    private String functionSelected = "";
+    private String typeSelected = "";
     private MouldList<HouseList3B> totalList = new MouldList<>();
     private PullToRefreshListView listView;
     private HouseResourceListAdapter mAdapter;
@@ -274,6 +271,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 break;
             case R.id.rl_house_resources_price:  // 价格
                 if (isOpened) {
+                    tv_1.setTextColor(getResources().getColor(R.color.txt_orange));
                     //动画是开启状态
                     if (currentFlag == 2) {
                         //价格处于展开状态，则需关闭动画，且箭头置成向下
@@ -341,69 +339,145 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
                 break;
             case R.id.tv1:  // 类型：公寓（flat）
-                clickTypeItem(tv1, "gy");
+                clickTypeItem(tv1, "flat");
                 break;
             case R.id.tv2: // 类型：商铺（shops）
-                clickTypeItem(tv2, "sp");
+                clickTypeItem(tv2, "shops");
                 break;
             case R.id.tv3:  // 类型： 别墅（villa）
-                clickTypeItem(tv3, "bs");
+                clickTypeItem(tv3, "villa");
                 break;
             case R.id.tv4:  // 类型：学区（schoolDistrict）
-                clickTypeItem(tv4, "xq");
+                clickTypeItem(tv4, "schoolDistrict");
                 break;
             case R.id.tv5: // 类型：土地（land）
-                clickTypeItem(tv5, "td");
+                clickTypeItem(tv5, "land");
                 break;
             case R.id.tv6:  // 类型： 庄园（manor）
-                clickTypeItem(tv6, "zy");
+                clickTypeItem(tv6, "manor");
                 break;
             case R.id.btn_type_reset:  // 类型： 重置
                 clickTypeBtnReset();
+
+                houseCatagory = ""; //首次默认"" ，代表全部类型
+//                requestGetHouseList();
                 break;
             case R.id.btn_type_sure:  // 类型： 确定
+                if (!TextUtils.isEmpty(typeSelected)) {
+                    btn_type_sure.setEnabled(true);
+                    houseCatagory = typeSelected;
+                    requestGetHouseList();
+                } else {
+                    btn_type_sure.setEnabled(false);
+                    houseCatagory = "";
+                }
+                //类型处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_type);
+
 
                 break;
             case R.id.tv_1:  // 价格： 不限（1）
-
+                resetPriceItemColor();
+                tv_1.setTextColor(getResources().getColor(R.color.txt_orange));
+                housePrice = "1";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_2:  // 价格：50万元以下（2）
+                resetPriceItemColor();
+                tv_2.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                housePrice = "2";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_3:  // 价格： 50-100万元（3）
+                resetPriceItemColor();
+                tv_3.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                housePrice = "3";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_4:  // 价格： 100-200万元（4）
+                resetPriceItemColor();
+                tv_4.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                housePrice = "4";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_5:  // 价格： 200-500万元（5）
+                resetPriceItemColor();
+                tv_5.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                housePrice = "5";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_6:  // 价格： 500-1000万元（6）
+                resetPriceItemColor();
+                tv_6.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                housePrice = "6";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_7:  // 价格： 1000万元以上（7）
+                resetPriceItemColor();
+                tv_7.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                housePrice = "7";
+                requestGetHouseList();
+                //价格处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_price);
                 break;
             case R.id.tv1_func:  // 功能：投资（investment）
-                clickFunctionItem(tv1_func, "touzi");
+                clickFunctionItem(tv1_func, "investment");
                 break;
             case R.id.tv2_func:  // 功能：自住（selfOccupation）
-                clickFunctionItem(tv2_func, "zizhu");
+                clickFunctionItem(tv2_func, "selfOccupation");
                 break;
             case R.id.tv3_func:  // 功能：度假（holiday）
-                clickFunctionItem(tv3_func, "dj");
+                clickFunctionItem(tv3_func, "holiday");
                 break;
             case R.id.tv4_func:  // 功能：海景（seascape）
-                clickFunctionItem(tv4_func, "hj");
+                clickFunctionItem(tv4_func, "seascape");
                 break;
             case R.id.tv5_func:  // 功能：移民（immigrant）
-                clickFunctionItem(tv5_func, "ym");
+                clickFunctionItem(tv5_func, "immigrant");
                 break;
             case R.id.btn_func_reset:  // 功能： 重置
                 clickFunctionBtnReset();
+
+                houseFunction = ""; //首次默认"" ，代表全部功能
                 break;
             case R.id.btn_func_sure:  // 功能： 确定
+                if (!TextUtils.isEmpty(functionSelected)) {
+                    btn_func_sure.setEnabled(true);
+                    houseFunction = functionSelected;
+                    requestGetHouseList();
+                } else {
+                    btn_func_sure.setEnabled(false);
+                    houseFunction = ""; //首次默认"" ，代表全部功能
+                }
+                //功能处于展开状态，则需关闭动画，且箭头置成向下
+                iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);
+                closeShopping(ll_hidden_function);
 
                 break;
 
@@ -412,7 +486,11 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         }
     }
 
-    // 类型里的每个按钮被选时调的方法
+    /**
+     *   类型里的每个按钮被选时调的方法
+     * @param tv
+     * @param item
+     */
     private void clickTypeItem(TextView tv, String item) {
         if (types.contains(item)) {
             //添加过
@@ -430,11 +508,27 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             sb.append(str);
             sb.append(",");
         }
-        String strResult = sb.toString();
-        type = strResult.substring(0, strResult.length());
+        String strResultType = sb.toString();
+        typeSelected = strResultType.substring(0, strResultType.length());
     }
 
-    // 类型里的重置按钮点击时调的方法
+    /**
+     *   价格里的item被选时调的方法
+     *
+     */
+    private void resetPriceItemColor() {
+        tv_1.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_2.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_3.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_4.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_5.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_6.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_7.setTextColor(getResources().getColor(R.color.txt_black));
+    }
+
+    /**
+     *  类型里的重置按钮点击时调的方法
+     */
     private void clickTypeBtnReset() {
         types.clear();
         changTextColorAndBg(tv1);
@@ -445,7 +539,11 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         changTextColorAndBg(tv6);
     }
 
-    // 功能里的每个按钮被选时调的方法
+    /**
+     *   功能里的每个按钮被选时调的方法
+     * @param tv
+     * @param item
+     */
     private void clickFunctionItem(TextView tv, String item) {
         if (functions.contains(item)) {
             //添加过
@@ -464,10 +562,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             sb.append(",");
         }
         String strResult = sb.toString();
-        function = strResult.substring(0, strResult.length());
+        functionSelected = strResult.substring(0, strResult.length());
     }
 
-    // 功能里的重置按钮点击时调的方法
+    /**
+     *  功能里的重置按钮点击时调的方法
+     */
     private void clickFunctionBtnReset() {
         functions.clear();
         changTextColorAndBg(tv1_func);
@@ -477,16 +577,22 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         changTextColorAndBg(tv5_func);
     }
 
-    // 重置textView 的颜色和背景
+    /**
+     *  重置textView 的颜色和背景
+     * @param tv
+     */
     private void changTextColorAndBg(TextView tv) {
         tv.setTextColor(getResources().getColor(R.color.txt_black));
         tv.setBackgroundResource(R.drawable.shape_center_gray_white);
     }
 
+    /**
+     * 获取房源列表数据
+     */
     private void requestGetHouseList() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage);
-        param.put("housePrice", "1");
+        param.put("housePrice", housePrice);
         param.put("houseFunction", houseFunction);
         param.put("houseCatagory", houseCatagory);
         HtmlRequest.getHouseList(context, param, new BaseRequester.OnRequestListener() {

@@ -53,7 +53,7 @@ public class RecommendRecordActivity extends BaseActivity{
         tv_recommend_friends.setText("推荐好友8位");
 
 
-        test();
+//        test();
         RecommendRecordAdapter recordAdapter = new RecommendRecordAdapter(context,list);
 
         lv_recommend_record.setAdapter(recordAdapter);
@@ -83,18 +83,18 @@ public class RecommendRecordActivity extends BaseActivity{
         });
     }
 
-    public void test(){
-        list = new MouldList<ResultMessageContentBean>();
-        for(int i=0;i<10;i++){
-            ResultMessageContentBean b = new ResultMessageContentBean();
-            b.setName("haha"+i);
-            b.setDate("一级"+i);
-            b.setNum("100"+i);
-            list.add(b);
-
-        }
-
-    }
+//    public void test(){
+//        list = new MouldList<ResultMessageContentBean>();
+//        for(int i=0;i<10;i++){
+//            ResultMessageContentBean b = new ResultMessageContentBean();
+//            b.setName("haha"+i);
+//            b.setDate("一级"+i);
+//            b.setNum("100"+i);
+//            list.add(b);
+//
+//        }
+//
+//    }
 
     @Override
     protected void onStart() {

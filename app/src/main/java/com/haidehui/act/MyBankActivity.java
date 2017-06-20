@@ -46,14 +46,67 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
         initTopTitle();
         initView();
 
-
     }
 
     public void initData(){
-
 //        test();
         requestData();
+    }
 
+    private void requestData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("page", "1");
+        param.put("userId", "17021511395798036131");
+        HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultMyBankListContentBean b = (ResultMyBankListContentBean) params.result;
+                if (b != null) {
+                    list = b.getList();
+                    bankAdapter = new MyBankAdapter(context,list);
+                    lv_mybank.setAdapter(bankAdapter);
+
+                } else {
+                    Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void delete(final int position, String id) {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("id", id);
+        param.put("userId", "17021511395798036131");
+        HtmlRequest.deleteBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if(b.getFlag().equals("true")){
+                        list.remove(position);
+                        bankAdapter.notifyDataSetChanged();
+                    }
+                    Toast.makeText(MyBankActivity.this, b.getMessage(),
+                            Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+
+    public void initView(){
+
+        context = this;
+        list = new MouldList<ResultMyBankListContentItemBean>();
+        lv_mybank = (ListView) findViewById(R.id.lv_mybank);
 
         View view = View.inflate(MyBankActivity.this, R.layout.ac_mybank_item_button, null);
         view.findViewById(R.id.rl_mybank_add).setOnClickListener(new View.OnClickListener() {
@@ -68,7 +121,6 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
             }
         });
         lv_mybank.addFooterView(view);// 为listview添加footview
-
 
         lv_mybank.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             private View delview;
@@ -104,72 +156,6 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
                 return true;
             }
         });
-
-
-
-    }
-
-    private void requestData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-
-        param.put("page", "1");
-        param.put("userId", "17021511395798036131");
-
-        HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
-
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                ResultMyBankListContentBean b = (ResultMyBankListContentBean) params.result;
-                if (b != null) {
-                    list = b.getList();
-                    bankAdapter = new MyBankAdapter(context,list);
-
-                    lv_mybank.setAdapter(bankAdapter);
-
-
-                } else {
-                    Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-
-    private void delete(final int position, String id) {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-
-        param.put("id", id);
-        param.put("userId", "17021511395798036131");
-
-        HtmlRequest.deleteBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
-
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
-                if (b != null) {
-                    if(b.getFlag().equals("true")){
-                        list.remove(position);
-                        bankAdapter.notifyDataSetChanged();
-                    }
-                    Toast.makeText(MyBankActivity.this, b.getMessage(),
-                            Toast.LENGTH_LONG).show();
-
-                } else {
-                    Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-
-    public void initView(){
-
-        context = this;
-        list = new MouldList<ResultMyBankListContentItemBean>();
-        lv_mybank = (ListView) findViewById(R.id.lv_mybank);
-
 
 
     }

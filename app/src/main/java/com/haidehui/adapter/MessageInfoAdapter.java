@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.model.ResultMessageContentBean;
+import com.haidehui.model.ResultMessageItemContentBean;
 import com.haidehui.network.types.MouldList;
 
 /**
@@ -18,10 +19,10 @@ import com.haidehui.network.types.MouldList;
 public class MessageInfoAdapter extends BaseAdapter{
 
     private Context context;
-    private MouldList<ResultMessageContentBean> list;
+    private MouldList<ResultMessageItemContentBean> list;
     private LayoutInflater inflater;
 
-    public MessageInfoAdapter(Context context, MouldList<ResultMessageContentBean> list) {
+    public MessageInfoAdapter(Context context, MouldList<ResultMessageItemContentBean> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -57,9 +58,9 @@ public class MessageInfoAdapter extends BaseAdapter{
             holder = (Holder) view.getTag();
         }
 
-        holder.tv_message_info_item_name.setText(list.get(i).getName());
-        holder.tv_message_info_item_num.setText(list.get(i).getNum());
-        holder.tv_message_info_item_date.setText(list.get(i).getDate());
+        holder.tv_message_info_item_name.setText(list.get(i).getTitle());
+        holder.tv_message_info_item_num.setText(list.get(i).getBulletinId());
+        holder.tv_message_info_item_date.setText(list.get(i).getCreateTime());
 
 
         return view;

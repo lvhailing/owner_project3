@@ -57,9 +57,9 @@ public class RecommendRecordAdapter extends BaseAdapter{
             holder = (Holder) view.getTag();
         }
 
-        holder.tv_recommend_record_friend.setText(list.get(i).getName());
-        holder.tv_recommend_record_level.setText(list.get(i).getDate());
-        holder.tv_recommend_record_account.setText(list.get(i).getNum());
+//        holder.tv_recommend_record_friend.setText(list.get(i).getName());
+//        holder.tv_recommend_record_level.setText(list.get(i).getDate());
+//        holder.tv_recommend_record_account.setText(list.get(i).getNum());
 
         return view;
     }

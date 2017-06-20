@@ -84,7 +84,7 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@mipmap/img_add_bank_idcard"
+            android:src="@mipmap/img_sign_real_name_user"
             android:background="@color/bg_white"
             android:padding="8dip"
             />
@@ -115,7 +115,8 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@mipmap/img_sign_real_name_user"
+
+            android:src="@mipmap/img_add_bank_idcard"
             android:background="@color/bg_white"
             android:padding="8dip"
             />

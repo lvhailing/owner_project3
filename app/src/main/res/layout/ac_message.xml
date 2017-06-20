@@ -45,14 +45,14 @@
             android:id="@+id/tv_message_info_num"
             android:layout_width="20dip"
             android:layout_height="20dip"
-            android:text="111"
+            android:text="11"
             android:background="@drawable/shape_circle_orange_red"
             android:layout_toLeftOf="@id/iv_messgae_info_arrow"
             android:layout_centerVertical="true"
             android:textColor="@color/txt_white"
             android:gravity="center"
             android:maxLines="1"
-            android:textSize="8dip"
+            android:textSize="16dip"
             />
 
     </RelativeLayout>
@@ -103,6 +103,7 @@
             android:textColor="@color/txt_white"
             android:gravity="center"
             android:singleLine="true"
+            android:textSize="16dip"
             />
 
     </RelativeLayout>
@@ -153,6 +154,7 @@
             android:textColor="@color/txt_white"
             android:gravity="center"
             android:maxLines="1"
+            android:textSize="16dip"
             />
 
     </RelativeLayout>

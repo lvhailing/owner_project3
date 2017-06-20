@@ -638,18 +638,6 @@ public class StringUtil {
     }
 
     /**
-     * 验证string是否保存小数点两位数
-     *
-     * @param str
-     * @return
-     */
-    public static boolean isDoubleForTwoNumber(String str) {
-
-        return str.matches("^[0-9]+(.[0-9]{1,2})?$");
-
-    }
-
-    /**
      * 验证string是否是正确的数字格式
      *
      * @param value

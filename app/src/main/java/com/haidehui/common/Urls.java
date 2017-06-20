@@ -28,9 +28,19 @@ public class Urls {
     public static final String URL_LOGINOFF = EC_HOST + "account/user/logoff";
 
     /**
-     * 收支消息列表
+     * 获取消息主页信息
      */
-    public static final String URL_MESSAGE_INFO = EC_HOST + "";
+    public static final String URL_MESSAGEINFO = EC_HOST + "message/getUnreadCount";
+
+    /**
+     * 公告消息列表
+     */
+    public static final String URL_MESSAGE_NOTICE = EC_HOST + "message/bulletin/list";
+
+    /**
+     * 收支消息列表（账本）
+     */
+    public static final String URL_MESSAGE_INFO_LIST = EC_HOST + "user/message/list";
 
     /**
      * 登陆
@@ -55,6 +65,8 @@ public class Urls {
      * 添加银行卡
      */
     public static final String URL_ADDBANKLIST = EC_HOST + "bankcard/add";
+
+
 
     /**
      * 获取确认提现信息
@@ -124,6 +136,9 @@ public class Urls {
 
     // 发现-- 投资指南列表
     public static final String URL_INVESTMENTGUIDE_LIST = EC_HOST + "investmentguide/list";
+
+    // 发现-- 投资指南详情
+    public static final String URL_INVESTMENTGUIDE_DETAIL = EC_HOST + "investmentGuide/detail/";
 
     // 发现-- 路演列表
     public static final String URL_ROADSHOWVIDEO_LIST = EC_HOST + "roadshowvideo/list";

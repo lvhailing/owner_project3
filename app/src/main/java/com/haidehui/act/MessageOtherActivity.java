@@ -12,6 +12,7 @@ import com.haidehui.adapter.MessageInfoAdapter;
 import com.haidehui.adapter.MessageOtherAdapter;
 import com.haidehui.common.Urls;
 import com.haidehui.model.ResultMessageContentBean;
+import com.haidehui.model.ResultMessageItemContentBean;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -31,7 +32,7 @@ import java.util.Map;
 public class MessageOtherActivity extends BaseActivity{
 
     private PullToRefreshListView listview_message_other;
-    private MouldList<ResultMessageContentBean> list;
+    private MouldList<ResultMessageItemContentBean> list;
     private Context context;
     private ViewSwitcher vs_messgae_other;
     private int page = 1;
@@ -48,7 +49,7 @@ public class MessageOtherActivity extends BaseActivity{
 
     public void initView(){
 
-        list = new MouldList<ResultMessageContentBean>();
+        list = new MouldList<ResultMessageItemContentBean>();
         context = this;
         listview_message_other = (PullToRefreshListView) findViewById(R.id.listview_message_other);
         vs_messgae_other = (ViewSwitcher) findViewById(R.id.vs_messgae_other);
@@ -189,15 +190,15 @@ public class MessageOtherActivity extends BaseActivity{
 
     public void test(){
 
-        list = new MouldList<ResultMessageContentBean>();
-        for(int i=0;i<10;i++){
-            ResultMessageContentBean b = new ResultMessageContentBean();
-            b.setName("置业顾问认证"+i);
-            b.setDate("2012-5-"+i);
-            b.setNum("+20"+i+".00");
-            list.add(b);
-
-        }
+//        list = new MouldList<ResultMessageContentBean>();
+//        for(int i=0;i<10;i++){
+//            ResultMessageContentBean b = new ResultMessageContentBean();
+//            b.setName("置业顾问认证"+i);
+//            b.setDate("2012-5-"+i);
+//            b.setNum("+20"+i+".00");
+//            list.add(b);
+//
+//        }
 
     }
 
