@@ -69,12 +69,10 @@ public class PhotoPreviewAc extends BaseActivity implements View.OnClickListener
         mViewPager.addOnPageChangeListener(pageChangeListener);
         if (currentPos != -1) {
             mViewPager.setCurrentItem(currentPos);
+            updateNum(currentPos);
         }
         mViewPager.setAdapter(previewAdapter);
 
-        if (currentPos != -1) {
-            updateNum(currentPos);
-        }
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
