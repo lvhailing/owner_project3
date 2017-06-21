@@ -2,6 +2,7 @@ package com.haidehui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,36 +12,36 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.haidehui.R;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.types.MouldList;
-import com.haidehui.photo_preview.fresco.ImageLoader;
 import com.haidehui.widget.FixedSpeedScroller;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * 轮播图 自定义的ViewPager
  */
 public class CycleAdapter extends ViewPager {
     private static final String tag = " CycleAdapter ";
-    private List<SimpleDraweeView> imageViews;//存放imgView的集合
+    private List<ImageView> imageViews;//存放imgView的集合
     private Context context;
     private List<View> dotList = new ArrayList<View>();
     private int lastPosition = 0;
     private ImageCycleViewListener mImageCycleViewListener;
     private LinearLayout mLinearLayout;
     private FixedSpeedScroller mScroller = null;
+    private DisplayImageOptions options;
     private MyPagerAdapter mpAdapter;
     private boolean isCycle = false;
     private MouldList<ResultCycleIndex2B> images; //用于保存后台返回的图片的集合
-    //    private DisplayImageOptions options;
-//    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private ImageLoader imageLoader = ImageLoader.getInstance();
     private int currentItem = 0;
     private int imgaeNum = 0;
     private Handler handler = new Handler() {
@@ -71,7 +72,7 @@ public class CycleAdapter extends ViewPager {
 
         ;
     };
-    private SimpleDraweeView imageView;
+    private ImageView imageView;
 
     /**
      * @param context 构造函数
@@ -80,12 +81,9 @@ public class CycleAdapter extends ViewPager {
         super(context);
         this.context = context;
         this.images = images;
-//        this.options = options;
+        this.options = options;
 
         controlViewPagerSpeed();
-
-        initDot();
-
         this.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -150,7 +148,7 @@ public class CycleAdapter extends ViewPager {
 //        int ids[] = {R.drawable.banner_one, R.drawable.banner_two, R.drawable.banner_three, R.drawable.banner_four};
         int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal};
 
-        imageViews = new ArrayList<>();
+        imageViews = new ArrayList<ImageView>();
         /*
          * for(int i=0;i<ids.length;i++){ imageView = new ImageView(context);
 		 * imageView.setBackgroundResource(ids[i]);
@@ -166,7 +164,7 @@ public class CycleAdapter extends ViewPager {
         if (images.size() < 3) {
             for (int k = 0; k < 4; k++) {
                 for (int i = 0; i < images.size(); i++) {
-                    imageView = new SimpleDraweeView(context);
+                    imageView = new ImageView(context);
                     // imageView.setBackground(new
                     // BitmapDrawable(images.get(i).getBitmap()));
                     imageViews.add(imageView);
@@ -176,7 +174,7 @@ public class CycleAdapter extends ViewPager {
 
         if (imageViews.size() == 0) {
             for (int i = 0; i < ids.length; i++) {
-                imageView = new SimpleDraweeView(context);
+                imageView = new ImageView(context);
                 imageView.setBackgroundResource(ids[i]);
                 imageViews.add(imageView);
             }
@@ -189,6 +187,7 @@ public class CycleAdapter extends ViewPager {
 
     public void setOnImageListener(ImageCycleViewListener listener) {
         this.mImageCycleViewListener = listener;
+        initDot();
     }
 
     /**
@@ -312,43 +311,42 @@ public class CycleAdapter extends ViewPager {
                 // Log.e(tag, "instantiateItem="+images.get(position).getPicture());
                 // Log.e(tag, "instantiateItem="+imageViews.get(position));
 
-                ImageLoader.getInstance().loadImageLocalOrNet(iv, images.get(position % images.size()).getPicture());
-//                imageLoader.displayImage(images.get(position % images.size()).getPicture(), iv, options, new SimpleImageLoadingListener() {
-//
-//                    public void onLoadingStarted(String imageUri, View view) {
-//                        // Message msg = new Message();
-//                        // msg.what = 1;
-//                        // myHandler.sendMessage(msg);
-//                    }
-//
-//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                        String message = null;
-//
-//                        switch (failReason.getType()) {
-//                            case IO_ERROR:
-//                                message = "Input/Output error";
-//                                break;
-//                            case DECODING_ERROR:
-//                                message = "Image can't be decoded";
-//                                break;
-//                            case NETWORK_DENIED:
-//                                message = "Downloads are denied";
-//                                break;
-//                            case OUT_OF_MEMORY:
-//                                message = "Out Of Memory error";
-//                                break;
-//                            case UNKNOWN:
-//                                message = "Unknown error";
-//                                break;
-//                        }
-////                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-//
-//                    }
-//
-//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                        // Log.e(tag, "imageUri=="+imageUri);
-//                    }
-//                });
+                imageLoader.displayImage(images.get(position % images.size()).getPicture(), iv, options, new SimpleImageLoadingListener() {
+
+                    public void onLoadingStarted(String imageUri, View view) {
+                        // Message msg = new Message();
+                        // msg.what = 1;
+                        // myHandler.sendMessage(msg);
+                    }
+
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        String message = null;
+
+                        switch (failReason.getType()) {
+                            case IO_ERROR:
+                                message = "Input/Output error";
+                                break;
+                            case DECODING_ERROR:
+                                message = "Image can't be decoded";
+                                break;
+                            case NETWORK_DENIED:
+                                message = "Downloads are denied";
+                                break;
+                            case OUT_OF_MEMORY:
+                                message = "Out Of Memory error";
+                                break;
+                            case UNKNOWN:
+                                message = "Unknown error";
+                                break;
+                        }
+//                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        // Log.e(tag, "imageUri=="+imageUri);
+                    }
+                });
 
             } else {
                 if (imageViews.size() > 0) {
