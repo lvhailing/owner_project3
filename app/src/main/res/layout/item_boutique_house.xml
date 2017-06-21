@@ -10,12 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/bg_gray_gray"/>
-
     <RelativeLayout
         android:id="@+id/rl_house_info"
         android:layout_width="match_parent"
@@ -71,6 +65,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/bg_gray_gray"/>
+        android:background="@color/bg_line"/>
 </LinearLayout>

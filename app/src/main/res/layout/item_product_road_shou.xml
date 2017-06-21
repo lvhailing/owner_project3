@@ -27,7 +27,7 @@
             android:maxLines="1"
             android:text=""
             android:textColor="@color/txt_black"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <ImageView
             android:id="@+id/iv_product_road_show"
@@ -49,7 +49,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="发布日期："
-                android:textColor="@color/txt_black"
+                android:textColor="@color/txt_light_gray"
                 android:textSize="13sp"/>
 
             <TextView
@@ -60,7 +60,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="演讲嘉宾："
-                android:textColor="@color/txt_black"
+                android:textColor="@color/txt_light_gray"
                 android:textSize="13sp"/>
         </RelativeLayout>
     </LinearLayout>

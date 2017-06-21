@@ -18,8 +18,6 @@ import static com.haidehui.uitls.ImageLoaderManager.options;
 
 // 发现-- 投资指南列表 Adapter
 public class ProductRoadShowAdapter extends BaseAdapter {
-
-    private static final String tag = "recommendProductAdapter";
     private MouldList<ProductRoadshow3B> list;
     private Context context;
     private LayoutInflater inflater;
