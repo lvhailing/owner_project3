@@ -11,6 +11,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.haidehui.R;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.types.MouldList;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class CycleAdapter extends ViewPager {
     private static final String tag = " CycleAdapter ";
-    private List<ImageView> imageViews;//存放imgView的集合
+    private List<SimpleDraweeView> imageViews;//存放imgView的集合
     private Context context;
     private List<View> dotList = new ArrayList<View>();
     private int lastPosition = 0;
@@ -70,7 +71,7 @@ public class CycleAdapter extends ViewPager {
 
         ;
     };
-    private ImageView imageView;
+    private SimpleDraweeView imageView;
 
     /**
      * @param context 构造函数
@@ -149,7 +150,7 @@ public class CycleAdapter extends ViewPager {
 //        int ids[] = {R.drawable.banner_one, R.drawable.banner_two, R.drawable.banner_three, R.drawable.banner_four};
         int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal};
 
-        imageViews = new ArrayList<ImageView>();
+        imageViews = new ArrayList<>();
         /*
          * for(int i=0;i<ids.length;i++){ imageView = new ImageView(context);
 		 * imageView.setBackgroundResource(ids[i]);
@@ -165,7 +166,7 @@ public class CycleAdapter extends ViewPager {
         if (images.size() < 3) {
             for (int k = 0; k < 4; k++) {
                 for (int i = 0; i < images.size(); i++) {
-                    imageView = new ImageView(context);
+                    imageView = new SimpleDraweeView(context);
                     // imageView.setBackground(new
                     // BitmapDrawable(images.get(i).getBitmap()));
                     imageViews.add(imageView);
@@ -175,7 +176,7 @@ public class CycleAdapter extends ViewPager {
 
         if (imageViews.size() == 0) {
             for (int i = 0; i < ids.length; i++) {
-                imageView = new ImageView(context);
+                imageView = new SimpleDraweeView(context);
                 imageView.setBackgroundResource(ids[i]);
                 imageViews.add(imageView);
             }
