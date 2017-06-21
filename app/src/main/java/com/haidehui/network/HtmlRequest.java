@@ -1129,7 +1129,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "首页轮播图:" + data);
+                    Log.i("hh", "首页轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -1441,7 +1441,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "发现轮播图:" + data);
+                    Log.i("hh", "发现轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);

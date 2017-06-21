@@ -1,5 +1,6 @@
 package com.haidehui.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -129,9 +130,10 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
-//                intent.putExtra("id", totalList.get(position - 1).getId());
-//                startActivity(intent);
+                Intent intent = new Intent(mContext, HouseDetailActivity.class);
+                intent.putExtra("hid", relatedhouseList.get(position).getHid());
+                startActivity(intent);
+
             }
         });
     }

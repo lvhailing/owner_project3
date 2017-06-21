@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.HouseDetailActivity;
 import com.haidehui.adapter.HouseResourceListAdapter;
 import com.haidehui.model.HouseList2B;
 import com.haidehui.model.HouseList3B;
@@ -66,6 +68,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private String houseCatagory; // 类型
     private String houseFunction; // 功能
     private String housePrice = "1"; // 价格
+    private MouldList<HouseList3B> everyList;
 
 
     @Override
@@ -192,9 +195,9 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Intent intent = new Intent(context, OverseaProjectDetailActivity.class);
-//                intent.putExtra("hid", totalList.get(position - 1).getHid());
-//                startActivity(intent);
+                Intent intent = new Intent(context, HouseDetailActivity.class);
+                intent.putExtra("hid", everyList.get(position-1).getHid());
+                startActivity(intent);
             }
         });
 
@@ -487,7 +490,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     /**
-     *   类型里的每个按钮被选时调的方法
+     * 类型里的每个按钮被选时调的方法
+     *
      * @param tv
      * @param item
      */
@@ -513,8 +517,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     /**
-     *   价格里的item被选时调的方法
-     *
+     * 价格里的item被选时调的方法
      */
     private void resetPriceItemColor() {
         tv_1.setTextColor(getResources().getColor(R.color.txt_black));
@@ -527,7 +530,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     /**
-     *  类型里的重置按钮点击时调的方法
+     * 类型里的重置按钮点击时调的方法
      */
     private void clickTypeBtnReset() {
         types.clear();
@@ -540,7 +543,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     /**
-     *   功能里的每个按钮被选时调的方法
+     * 功能里的每个按钮被选时调的方法
+     *
      * @param tv
      * @param item
      */
@@ -566,7 +570,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     /**
-     *  功能里的重置按钮点击时调的方法
+     * 功能里的重置按钮点击时调的方法
      */
     private void clickFunctionBtnReset() {
         functions.clear();
@@ -578,7 +582,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     }
 
     /**
-     *  重置textView 的颜色和背景
+     * 重置textView 的颜色和背景
+     *
      * @param tv
      */
     private void changTextColorAndBg(TextView tv) {
@@ -610,7 +615,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 }
 
                 HouseList2B data = (HouseList2B) params.result;
-                MouldList<HouseList3B> everyList = data.getList();
+                everyList = data.getList();
                 if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
                     Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
                 }

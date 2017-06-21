@@ -170,6 +170,13 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     private void requestData() {
         cycleAdapter = new CycleAdapter(context, cycleBean, options);
         cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
+        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
+            @Override
+            public void onImageClick(int postion, View imageView) {
+                if (cycleBean != null && cycleBean.size() != 0) {
+                }
+            }
+        });
         cycleAdapter.setCycle(true);
         cycleAdapter.startRoll();
         mViewPager.addView(cycleAdapter);

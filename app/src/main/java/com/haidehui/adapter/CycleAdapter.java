@@ -161,7 +161,7 @@ public class CycleAdapter extends ViewPager {
             imgaeNum = images.size();
         }
 
-        if (images.size() < 3) {
+        if (images.size() < 5) {
             for (int k = 0; k < 4; k++) {
                 for (int i = 0; i < images.size(); i++) {
                     imageView = new ImageView(context);
