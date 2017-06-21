@@ -1,5 +1,6 @@
 package com.haidehui.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -8,7 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.net.UserLoadout;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
+
+import java.util.LinkedHashMap;
 
 /**
  * 修改密码
@@ -102,7 +110,6 @@ public class SettingChangePasswordActivity extends BaseActivity{
             }
         });
 
-
     }
 
     private void initTopTitle() {
@@ -126,11 +133,45 @@ public class SettingChangePasswordActivity extends BaseActivity{
             @Override
             public void onAction(int id) {
 
-                Toast.makeText(SettingChangePasswordActivity.this,"////************",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SettingChangePasswordActivity.this,"////************",Toast.LENGTH_SHORT).show();
 //                Intent i_second = new Intent(SettingChangePasswordActivity.this,SettingChangePhoneSecondActivity.class);
 //                startActivity(i_second);
+                changePassword();
 
+            }
+        });
+    }
 
+    private void changePassword() {
+
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("newPassword", newPassword);
+        param.put("password", oldPassword);
+        param.put("userId", userId);
+        HtmlRequest.changePassword(SettingChangePasswordActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if(b.getFlag().equals("true")){
+                        Toast.makeText(SettingChangePasswordActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+//                        UserLoadout out = new UserLoadout(SettingChangePasswordActivity.this,userId);
+//                        out.requestData();
+                        Intent i_login = new Intent(SettingChangePasswordActivity.this, LoginActivity.class);
+                        startActivity(i_login);
+                        finish();
+                    }else{
+                        Toast.makeText(SettingChangePasswordActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(SettingChangePasswordActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -159,7 +200,6 @@ public class SettingChangePasswordActivity extends BaseActivity{
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
     public void checkButton(String str1,String str2,String str3){
         if(TextUtils.isEmpty(str1)){

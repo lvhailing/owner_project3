@@ -19,16 +19,16 @@ import java.util.Map;
 public class UserLoadout {
 
 	private Context context;
-	private String token;
+	private String userId;
 
-	public UserLoadout(Context context,String token) {
+	public UserLoadout(Context context,String userId) {
 		this.context = context;
-		this.token = token;
+		this.userId = userId;
 	}
 
 	public void requestData() {
 		LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-		param.put("token", token);
+		param.put("userId", userId);
 		HtmlRequest.loginoff(context,param, new BaseRequester.OnRequestListener() {
 
 			@Override

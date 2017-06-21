@@ -27,6 +27,8 @@ public class CommissionDetails2B implements IMouldType {
     private String commissionRate;
     private String serviceFee;
     private String actualCommiRepayed;
+    private String commissionAmountReal;
+
 
     public String getCommiStatus() {
         return commiStatus;
@@ -202,5 +204,13 @@ public class CommissionDetails2B implements IMouldType {
 
     public void setActualCommiRepayed(String actualCommiRepayed) {
         this.actualCommiRepayed = actualCommiRepayed;
+    }
+
+    public String getCommissionAmountReal() {
+        return commissionAmountReal;
+    }
+
+    public void setCommissionAmountReal(String commissionAmountReal) {
+        this.commissionAmountReal = commissionAmountReal;
     }
 }

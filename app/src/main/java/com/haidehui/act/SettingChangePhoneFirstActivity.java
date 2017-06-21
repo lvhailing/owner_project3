@@ -9,7 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.common.Urls;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
+
+import java.util.LinkedHashMap;
 
 /**
  * 修改手机——验证登录密码
@@ -19,6 +26,7 @@ public class SettingChangePhoneFirstActivity extends BaseActivity{
 
     private EditText et_change_password;
     private TitleBar title;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +35,45 @@ public class SettingChangePhoneFirstActivity extends BaseActivity{
         initTopTitle();
         initView();
 
+
+    }
+
+    public void initData(){
+        changePasswordFirst();
+
+    }
+
+    private void changePasswordFirst() {
+
+
+        password = et_change_password.getText().toString();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("userId", userId);
+        param.put("password", password);
+        HtmlRequest.changePhone(SettingChangePhoneFirstActivity.this, param,new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
+                        Intent i_second = new Intent(SettingChangePhoneFirstActivity.this,SettingChangePhoneSecondActivity.class);
+                        startActivity(i_second);
+                        finish();
+                    } else {
+
+                        Toast.makeText(SettingChangePhoneFirstActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(SettingChangePhoneFirstActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void initView(){
-
         et_change_password = (EditText) findViewById(R.id.et_change_password);
 
 
@@ -80,8 +123,8 @@ public class SettingChangePhoneFirstActivity extends BaseActivity{
             public void onAction(int id) {
 
 //                Toast.makeText(SettingChangePhoneFirstActivity.this,"////************",Toast.LENGTH_SHORT).show();
-                Intent i_second = new Intent(SettingChangePhoneFirstActivity.this,SettingChangePhoneSecondActivity.class);
-                startActivity(i_second);
+                initData();
+
 
 
             }

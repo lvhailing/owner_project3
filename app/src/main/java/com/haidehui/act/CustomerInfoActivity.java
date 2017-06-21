@@ -9,14 +9,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.adapter.AccountBookCommissionAdapter;
 import com.haidehui.adapter.CustomerInfoAdapter;
-import com.haidehui.bean.ResultCustomerInfolistBean;
 import com.haidehui.dialog.BasicDialog;
-import com.haidehui.model.AccountBookCommission2B;
 import com.haidehui.model.CustomerInfo2B;
-import com.haidehui.model.HotHouse2B;
-import com.haidehui.model.HotHouse3B;
+import com.haidehui.model.CustomerInfo3B;
+import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -28,7 +25,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 
 /**
@@ -37,10 +33,11 @@ import java.util.Map;
 public class CustomerInfoActivity extends BaseActivity implements View.OnClickListener {
     private PullToRefreshListView lv_customer_info;
     private CustomerInfoAdapter adapter;
-    private MouldList<ResultCustomerInfolistBean> totalList;
+    private MouldList<CustomerInfo3B> totalList=new MouldList<>();
     private int currentPage = 1;    //当前页
     private Button btn_submit;
     private static int mDelId = 0;
+    private String customerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +74,6 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
         btn_submit= (Button) findViewById(R.id.btn_submit);
-        totalList = new MouldList<ResultCustomerInfolistBean>();
-
 
         lv_customer_info = (PullToRefreshListView) findViewById(R.id.lv_customer_info);
         //PullToRefreshListView  上滑加载更多及下拉刷新
@@ -90,7 +85,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
                 Intent intent = new Intent(CustomerInfoActivity.this, CustomerDetailsActivity.class);
-                //              intent.putExtra("id", productBeanlist.get(position - 1).getId());
+                intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
                 startActivity(intent);
             }
         });
@@ -99,6 +94,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(CustomerInfoActivity.this, "长按啦啦啦", Toast.LENGTH_LONG).show();
                 mDelId = position - 1;
+                customerId=totalList.get(position-1).getCustomerId();
                 showDialog();
                 return true;
             }
@@ -121,9 +117,15 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         btn_submit.setOnClickListener(this);
         adapter = new CustomerInfoAdapter(CustomerInfoActivity.this, totalList);
         lv_customer_info.setAdapter(adapter);
-        requestListData();
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestListData();
+    }
+
     protected void showDialog() {
         BasicDialog dialog=new BasicDialog(this, new BasicDialog.OnBasicChanged() {
             @Override
@@ -145,6 +147,8 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         if (size > 0) {
             totalList.remove(mDelId);
             adapter.notifyDataSetChanged();
+
+            deleteData(customerId);
         }
     }
     @Override
@@ -162,8 +166,8 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
      */
     private void requestListData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("userId", "17021511395798036131");
         param.put("page", currentPage + "");
+        param.put("userId", "17021318005814472279");
 
         try {
             HtmlRequest.getCustomerInfoList(mContext, param, new BaseRequester.OnRequestListener() {
@@ -181,7 +185,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
                     }
 
                     CustomerInfo2B data = (CustomerInfo2B) params.result;
-                    MouldList<ResultCustomerInfolistBean> everyList = data.getList();
+                    MouldList<CustomerInfo3B> everyList = data.getList();
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
                         Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                     }
@@ -206,6 +210,26 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteData(String customerId) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("customerId", customerId);
+        param.put("userId", "17021318005814472279");
+        HtmlRequest.deleteCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                        if ("true".equals(data.getFlag())) {
+                            Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+        );
     }
 
     @Override

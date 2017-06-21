@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.CommissionDetailsActivity;
 import com.haidehui.adapter.AccountBookAwardAdapter;
 import com.haidehui.model.AccountBookAward2B;
 import com.haidehui.model.AccountBookAward3B;
@@ -23,7 +22,7 @@ import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-
+import com.haidehui.act.AwardDetailsActivity;
 import java.util.LinkedHashMap;
 
 /**
@@ -80,8 +79,8 @@ public class AwardDetailsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
-                Intent intent = new Intent(getActivity(), CommissionDetailsActivity.class);
-                intent.putExtra("id", awardList.get(position).getId());
+                Intent intent = new Intent(context,AwardDetailsActivity.class);
+                intent.putExtra("id", awardList.get(position-1).getId());
                 startActivity(intent);
 
             }

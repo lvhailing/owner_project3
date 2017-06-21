@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.model.ResultMessageContentBean;
+import com.haidehui.model.ResultRecommendRecordItemContentBean;
 import com.haidehui.network.types.MouldList;
 
 /**
@@ -17,11 +18,11 @@ import com.haidehui.network.types.MouldList;
  */
 public class RecommendRecordAdapter extends BaseAdapter{
 
-    private MouldList<ResultMessageContentBean> list;
+    private MouldList<ResultRecommendRecordItemContentBean> list;
     private Context context;
     private LayoutInflater inflater;
 
-    public RecommendRecordAdapter(Context context,MouldList<ResultMessageContentBean> list) {
+    public RecommendRecordAdapter(Context context,MouldList<ResultRecommendRecordItemContentBean> list) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -57,9 +58,9 @@ public class RecommendRecordAdapter extends BaseAdapter{
             holder = (Holder) view.getTag();
         }
 
-//        holder.tv_recommend_record_friend.setText(list.get(i).getName());
-//        holder.tv_recommend_record_level.setText(list.get(i).getDate());
-//        holder.tv_recommend_record_account.setText(list.get(i).getNum());
+        holder.tv_recommend_record_friend.setText(list.get(i).getMobile());
+        holder.tv_recommend_record_level.setText(list.get(i).getUserLevel());
+        holder.tv_recommend_record_account.setText(list.get(i).getRewardAmount());
 
         return view;
     }

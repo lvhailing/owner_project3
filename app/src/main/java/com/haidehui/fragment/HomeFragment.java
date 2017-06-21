@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.act.HotHouseListActivity;
+import com.haidehui.act.HouseDetailActivity;
 import com.haidehui.act.OverseaProjectListActivity;
+import com.haidehui.act.WebActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.CycleAdapter;
+import com.haidehui.common.Urls;
 import com.haidehui.model.HomeIndex2B;
 import com.haidehui.model.HomeIndex3B;
 import com.haidehui.model.ResultCycleIndex2B;
@@ -33,12 +36,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
  * 底部导航---首页
  */
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener {
     private View mView;
     private LinearLayout mViewPager; //顶部轮播图
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
@@ -53,6 +57,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private TextView tv_home_notice; // 公告标题
     private Intent intent;
     private MouldList<HomeIndex3B> BoutiqueHouseList = new MouldList<>();
+    private HomeIndex2B homeIndexData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,20 +106,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.bg_home_carousel_figure_normal)
-                .showImageOnFail(R.mipmap.bg_home_carousel_figure_normal).resetViewBeforeLoading(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.bg_home_carousel_figure_normal).showImageOnFail(R.mipmap.bg_home_carousel_figure_normal).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
-        requestCycleIndex();
+        requestCycleIndex(); // 请求轮图数据
 
-        requestHomeIndexData();
+        requestHomeIndexData(); // 请求首页数据
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Intent intent = new Intent(LinerListActivity.this, LinerDetailActivity.class);
-//                intent.putExtra("id", totalList.get(position - 1).getId());
-//                startActivity(intent);
+                Intent intent = new Intent(context, HouseDetailActivity.class);
+                intent.putExtra("hid", BoutiqueHouseList.get(position).getHid());
+                startActivity(intent);
             }
         });
     }
@@ -162,30 +165,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     e.printStackTrace();
                 }
 
-                /*if (productIndexBean != null) {
-                    Intent i_web = new Intent(context, WebActivity.class);
-                    i_web.putExtra("type", WebActivity.WEBTYPE_NOTICE_DETAILS);
-                    i_web.putExtra("id", productIndexBean.getBulletin().getId());
-                    i_web.putExtra("title", "详情");
-                    i_web.putExtra("uid", userId);
-                    startActivity(i_web);
-                }*/
+                intent = new Intent(context, WebActivity.class);
+                intent.putExtra("type", WebActivity.WEBTYPE_NOTICE);
+                intent.putExtra("title", getResources().getString(R.string.message_notice_detail));
+                intent.putExtra("url", Urls.URL_NOTICEDETAIL + homeIndexData.getBid()/* + "&userId=" + userId*/);
+                startActivity(intent);
+
                 break;
-            case R.id.tv_home_notice:
-               /* if (productIndexBean != null) {
-                    Intent i_web = new Intent(context, WebActivity.class);
-                    i_web.putExtra("type", WebActivity.WEBTYPE_NOTICE_DETAILS);
-                    i_web.putExtra("id", productIndexBean.getBulletin().getId());
-                    i_web.putExtra("title", "详情");
-                    startActivity(i_web);
-                }*/
+            case R.id.tv_home_notice: // 公告的点击监听
+               /* String userId = null;
+                try {
+                    userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+*/
+                intent = new Intent(context, WebActivity.class);
+                intent.putExtra("type", WebActivity.WEBTYPE_NOTICE);
+                intent.putExtra("title", getResources().getString(R.string.message_notice_detail));
+                intent.putExtra("url", Urls.URL_NOTICEDETAIL + homeIndexData.getBid()/* + "&userId=" + userId*/);
+                startActivity(intent);
 
                 break;
         }
     }
 
     /**
-     *  获取首页数据
+     * 获取首页数据
      */
     private void requestHomeIndexData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
@@ -198,9 +204,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     return;
                 }
 
-                HomeIndex2B data = (HomeIndex2B) params.result;
-                tv_home_notice.setText(data.getTitle());
-                BoutiqueHouseList = data.getList();
+                homeIndexData = (HomeIndex2B) params.result;
+                tv_home_notice.setText(homeIndexData.getTitle());
+                BoutiqueHouseList = homeIndexData.getList();
                 if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
                     myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
                     myListView.setAdapter(myAdapter);
@@ -211,10 +217,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     /**
-     *  请求轮播图数据
+     * 请求轮播图数据
      */
     private void requestCycleIndex() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("params", "params");
         HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override

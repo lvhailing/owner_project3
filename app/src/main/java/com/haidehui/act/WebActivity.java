@@ -26,6 +26,9 @@ public class WebActivity extends Activity implements View.OnClickListener {
     private String url = null;
     public static final String WEBTYPE_INVESTMENT_GUIDE_DETAILS = "investment_guide_details"; // 投资指南详情
     public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
+    public static final String WEBTYPE_NOTICE = "noticedetail "; // 公告详情
+    public static final String WEBTYPE_SERVICE_AGREEMENT = "service_agreement "; // 服务协议
+    public static final String WEBTYPE_ABOUT_US = "about_us "; // 关于我们
 
     public String title;
     private TextView tv_web_title;
@@ -75,6 +78,13 @@ public class WebActivity extends Activity implements View.OnClickListener {
         } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
             url = Urls.URL_ROADSHOWVIDEO_VIEW + getIntent().getExtras().getString("id");
             tv_web_title.setText(getIntent().getExtras().getString("title"));
+        }else if (type.equals(WEBTYPE_NOTICE)) { // 公告详情
+            tv_web_title.setText(getIntent().getExtras().getString("title"));
+        } else if (type.equals(WEBTYPE_SERVICE_AGREEMENT)) {
+            tv_web_title.setText(getIntent().getExtras().getString("title"));
+        }else if (type.equals(WEBTYPE_ABOUT_US)) {
+            tv_web_title.setText(getIntent().getExtras().getString("title"));
+
         }
 
 

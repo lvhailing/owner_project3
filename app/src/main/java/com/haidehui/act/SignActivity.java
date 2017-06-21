@@ -83,6 +83,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
         btn_sign = (Button) findViewById(R.id.btn_sign);
 
         signup_web.setOnClickListener(this);
+        btn_sign.setOnClickListener(this);
         tv_sign_get_verify_code.setOnClickListener(this);
         btn_sign.setClickable(false);
 
@@ -151,7 +152,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
         switch (view.getId()){
 
             case R.id.btn_sign:         //      立即注册
-
+                signup();
                 break;
 
             case R.id.signup_web:       //  海德汇协议
@@ -159,9 +160,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.tv_sign_get_verify_code:          //  获取验证码
 
-//                requestSMS();
-                smsflag = true;
-                startThread();
+                requestSMS();
+//                smsflag = true;
+//                startThread();
                 break;
 
             default:
@@ -175,9 +176,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
 
     private void requestSMS() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("mobile", mobile);
+
         param.put("busiType", Urls.REGISTER);
-        param.put("token", token);
+        param.put("mobile", mobile);
 
         HtmlRequest.sentSMS(SignActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -203,6 +204,40 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     }
                 });
     }
+
+    private void signup() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("mobile", mobile);
+        param.put("validateCode", verifyCode);
+        param.put("password", password);
+        param.put("realName", realName);
+        param.put("parentRecommendCode", recommendation);
+
+        HtmlRequest.signup(SignActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if(b.getFlag().equals("true")){
+                        Toast.makeText(SignActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                        finish();
+                    }else{
+                        Toast.makeText(SignActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(SignActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 
     private void startThread() {
         if (smsflag) {
@@ -286,6 +321,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
                     btn_sign.setClickable(false);
                 }else{
+                    mobile = et_sign_phone.getText().toString();
                     verifyCode = et_sign_verify_code.getText().toString();
                     password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
@@ -321,6 +357,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     btn_sign.setClickable(false);
                 }else{
                     mobile = et_sign_phone.getText().toString();
+                    verifyCode = et_sign_verify_code.getText().toString();
                     password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
 
@@ -356,6 +393,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                 }else{
                     verifyCode = et_sign_verify_code.getText().toString();
                     mobile = et_sign_phone.getText().toString();
+                    password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
 
                     if(!signup_checkbox.isChecked()){
@@ -390,6 +428,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     verifyCode = et_sign_verify_code.getText().toString();
                     password = et_sign_password.getText().toString();
                     mobile = et_sign_phone.getText().toString();
+                    realName = et_sign_real_name.getText().toString();
                     if(!signup_checkbox.isChecked()){
                         btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
                         btn_sign.setClickable(false);

@@ -11,17 +11,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.model.ResultUserLoginContentBean;
 import com.haidehui.net.UserLogin;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.TitleBar;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * 用户登录
  * Created by hasee on 2017/6/6.
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener,Observer {
 
     private EditText et_login_phone;        //  用户名
     private EditText et_login_password;     //  密码
@@ -29,7 +35,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private TextView tv_login_forget_password;      //  忘记密码
     private TextView tv_login_sign;     //  注册
     private LinearLayout ll_login_phone_service;        //  客服电话
-
+    private ResultUserLoginContentBean bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void initView(){
+
+//        bean = new ResultUserLoginContentBean();
         et_login_phone = (EditText) findViewById(R.id.et_login_phone);
         et_login_password = (EditText) findViewById(R.id.et_login_password);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -134,6 +142,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
+        UserLogin.getInstance().addObserver(this);
     }
 
     @Override
@@ -149,6 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        UserLogin.getInstance().deleteObserver(this);
     }
 
     @Override
@@ -160,8 +170,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 String password = et_login_password.getText().toString();
                 UserLogin.getInstance()
                         .userlogining(LoginActivity.this, username, password, "");
-
-
 
                 break;
 
@@ -194,4 +202,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }
 
     }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        bean = (ResultUserLoginContentBean) data;
+        if (bean != null) {
+            if (Boolean.parseBoolean(bean.getFlag())) {
+                finish();
+                PreferenceUtil.setGestureChose(false);
+                PreferenceUtil.setGesturePwd("");
+            } else {
+                Toast.makeText(LoginActivity.this, bean.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 }

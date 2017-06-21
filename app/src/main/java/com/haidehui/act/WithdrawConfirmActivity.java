@@ -193,7 +193,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
     private void getWithdrawInfo() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         HtmlRequest.getWithdrawInfo(WithdrawConfirmActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -225,7 +225,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         param.put("bankName", bankName);
         param.put("cashNum", amount);
         param.put("realName", realName);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         param.put("validateCode", verifyCode);
 
         HtmlRequest.WithdrawConfirm(WithdrawConfirmActivity.this, param,new BaseRequester.OnRequestListener() {
@@ -274,7 +274,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
         param.put("busiType", Urls.WITHDRAW);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         HtmlRequest.sentSMS(WithdrawConfirmActivity.this, param,new BaseRequester.OnRequestListener() {
 

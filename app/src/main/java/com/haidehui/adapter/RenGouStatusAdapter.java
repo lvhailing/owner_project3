@@ -9,15 +9,16 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.bean.ResultRenGouStatuslistBean;
+import com.haidehui.model.RenGou3B;
 import com.haidehui.network.types.MouldList;
 
 public class RenGouStatusAdapter extends BaseAdapter {
 	private Context mContext;
-	private MouldList<ResultRenGouStatuslistBean> list;
+	private MouldList<RenGou3B> list;
 	private LayoutInflater inflater;
 
 
-	public RenGouStatusAdapter(Context context, MouldList<ResultRenGouStatuslistBean> list) {
+	public RenGouStatusAdapter(Context context, MouldList<RenGou3B> list) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
@@ -40,7 +41,7 @@ public class RenGouStatusAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ResultRenGouStatuslistBean bean = list.get(position);
+		RenGou3B bean = list.get(position);
 		Holder holder = null;
 		if (convertView == null) {
 			holder = new Holder();
@@ -53,9 +54,9 @@ public class RenGouStatusAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		holder.item_project.setText(bean.getProject());
-		holder.item_name.setText(bean.getName());
-		holder.item_money.setText(bean.getMoney());
+		holder.item_project.setText(bean.getProjectName());
+		holder.item_name.setText(bean.getCustomerName());
+		holder.item_money.setText(bean.getDownpaymentAmount()+"元");
 		return convertView;
 	}
 

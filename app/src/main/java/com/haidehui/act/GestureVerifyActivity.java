@@ -42,9 +42,6 @@ import java.util.Observer;
  */
 public class GestureVerifyActivity extends BaseActivity implements
 		View.OnClickListener, Observer {
-	private TextView txtTitle;
-	private TextView txtMessage;
-	private ImageView imgBack;
 	private TextView mTextTip;
 	private FrameLayout mGestureContainer;
 	private GestureContentView mGestureContentView;
@@ -63,10 +60,11 @@ public class GestureVerifyActivity extends BaseActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		baseSetContentView(R.layout.activity_gesture_verify);
-		initTopTitle();
+
 		from = getIntent().getExtras().getString("from");
 		titleName = getIntent().getStringExtra("title");
 		message= getIntent().getStringExtra("message");
+		initTopTitle();
 		initView();
 	}
 	@Override
@@ -77,14 +75,27 @@ public class GestureVerifyActivity extends BaseActivity implements
 	}
 	private void initTopTitle() {
 		TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-		title.setVisibility(View.GONE);
+		title.setTitle(getResources().getString(R.string.title_null))
+				.setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+				.setCenterText(titleName)
+				.showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+
+			@Override
+			public void onMenu(int id) {
+			}
+
+			@Override
+			public void onBack() {
+				finish();
+			}
+
+			@Override
+			public void onAction(int id) {
+
+			}
+		});
 	}
 	private void initView() {
-		txtTitle= (TextView) findViewById(R.id.id_txt_title_verify);
-		txtMessage= (TextView) findViewById(R.id.text_title_message);
-		txtTitle.setText(titleName);
-		imgBack= (ImageView) findViewById(R.id.id_img_back);
-		imgBack.setOnClickListener(this);
 		mTextTip = (TextView) findViewById(R.id.text_title_message);
 		mTextTip.setText(message);
 		mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
@@ -112,7 +123,6 @@ public class GestureVerifyActivity extends BaseActivity implements
 			mTextForget.setText("忘记手势密码");
 			mTextForget.setOnClickListener(this);
 		}else if(from.equals(Urls.ACTIVITY_SPLASH)){
-			imgBack.setVisibility(View.GONE);
 			mTextForget.setText("忘记手势密码");
 			mTextForget.setOnClickListener(this);
 			mTextOther.setOnClickListener(this);
@@ -268,10 +278,11 @@ public class GestureVerifyActivity extends BaseActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case R.id.id_img_back:
+			/*case R.id.id_img_back:
 				finish();
-				break;
+				break;*/
 			case R.id.text_forget_gesture:
+
 				if(from.equals(Urls.ACTIVITY_SPLASH)){
 					VerifyPassWordDialog dialog_phone = new VerifyPassWordDialog(GestureVerifyActivity.this, new VerifyPassWordDialog.OnVerifyPW() {
 						@Override
@@ -301,16 +312,12 @@ public class GestureVerifyActivity extends BaseActivity implements
 					dialog_phone.show();
 					break;
 				}
-
-
-
-
 				CheckVersionDialog dialog = new CheckVersionDialog(GestureVerifyActivity.this,
 						new CheckVersionDialog.OnCheckVersion() {
 
 							@Override
 							public void onConfim() {
-								UserLoadout out = new UserLoadout(GestureVerifyActivity.this,token);
+								UserLoadout out = new UserLoadout(GestureVerifyActivity.this,userId);
 								out.requestData();
 							}
 
@@ -320,6 +327,7 @@ public class GestureVerifyActivity extends BaseActivity implements
 							}
 						},"忘记手势密码，需要重新登录并设置手势密码","false");
 				dialog.show();
+
 				break;
 			case R.id.text_other_account:
 				Intent i_login=new Intent(this,LoginActivity.class);

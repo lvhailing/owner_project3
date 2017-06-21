@@ -40,7 +40,7 @@
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/img_add_folow"/>
+            android:src="@mipmap/img_intro"/>
 
     </RelativeLayout>
     <LinearLayout

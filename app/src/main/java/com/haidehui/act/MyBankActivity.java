@@ -56,7 +56,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", "1");
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
             @Override
@@ -79,7 +79,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
         param.put("id", id);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         HtmlRequest.deleteBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
             @Override

@@ -12,7 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.common.Urls;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
+
+import java.util.LinkedHashMap;
 
 /**
  * 意见反馈
@@ -23,6 +30,7 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
     private EditText advice_edt;        //
     private TextView tv_advice_call_phone;      //
     private TitleBar title;
+    private String content = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +63,50 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onAction(int id) {
 
-                Toast.makeText(AdviceActivity.this,"////************",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AdviceActivity.this,"////************",Toast.LENGTH_SHORT).show();
 //                Intent i_second = new Intent(AdviceActivity.this,SettingChangePhoneSecondActivity.class);
 //                startActivity(i_second);
-
+                requestData();
 
             }
         });
     }
+
+    private void requestData() {
+
+        content = advice_edt.getText().toString();
+
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("content", content);
+        param.put("userId", userId);
+
+        HtmlRequest.advice(AdviceActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
+
+                        Toast.makeText(AdviceActivity.this,
+                                b.getMsg(), Toast.LENGTH_LONG)
+                                .show();
+                        finish();
+                    } else {
+
+                        Toast.makeText(AdviceActivity.this,
+                                b.getMsg(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(AdviceActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 
     public void initView(){
 

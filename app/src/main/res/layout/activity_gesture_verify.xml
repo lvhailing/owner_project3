@@ -4,30 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@color/bg_white" >
 
-    <RelativeLayout
-        android:id="@+id/id_account_txt_title"
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:background="@color/bg_white">
-
-        <ImageView
-            android:id="@+id/id_img_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:padding="5dp"/>
-        <TextView
-            android:id="@+id/id_txt_title_verify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </RelativeLayout>
     <ImageView
-        android:layout_below="@+id/id_account_txt_title"
         android:id="@+id/id_lines"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
@@ -44,9 +21,12 @@
             android:id="@+id/text_title_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10.0dip"
+            android:layout_marginTop="30.0dip"
             android:gravity="center_horizontal"
-            android:textColor="@color/white" />
+            android:textColor="@color/txt_gray"
+            android:textSize="18sp"
+
+            />
     </LinearLayout>
 
     <FrameLayout
@@ -79,7 +59,7 @@
                 android:gravity="center"
                 android:text="@string/forget_gesture_code"
                 android:textColor="#ffe7e7e6"
-                android:textSize="14.0sp" />
+                android:textSize="16.0sp" />
 
             <TextView
                 android:id="@+id/text_other_account"
@@ -89,7 +69,9 @@
                 android:gravity="center"
                 android:text="@string/use_other_account_login"
                 android:textColor="#ffe7e7e6"
-                android:textSize="14.0sp" />
+                android:textSize="14.0sp"
+                android:visibility="gone"
+                />
         </LinearLayout>
 
     </RelativeLayout>

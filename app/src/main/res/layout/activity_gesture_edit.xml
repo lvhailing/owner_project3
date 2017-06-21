@@ -3,45 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/bg_white" >
-    <RelativeLayout
-        android:id="@+id/id_account_txt_title"
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:background="@color/bg_white">
 
-        <ImageView
-            android:id="@+id/text_cancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:padding="5dp"/>
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设置手势密码"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </RelativeLayout>
-    <ImageView
-        android:layout_below="@+id/id_account_txt_title"
-        android:id="@+id/id_lines"
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="@color/white"/>
+
     <TextView
-        android:layout_below="@+id/id_lines"
         android:id="@+id/text_tip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30.0dip"
+        android:layout_marginTop="50.0dip"
         android:gravity="center_horizontal"
         android:text="请画出手势密码"
-        android:textColor="@color/white"
-        android:textSize="16.0sp" />
+        android:textColor="@color/txt_gray"
+        android:textSize="18.0sp" />
 
     <FrameLayout
         android:id="@+id/gesture_container"
@@ -69,7 +41,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:textSize="16.0sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/txt_gray"
+                android:text="@string/set_gesture_pattern_jump"
+                />
 
             <TextView
                 android:id="@+id/text_arrow"
@@ -77,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text=">"
-                android:textColor="@color/white"
+                android:textColor="@color/txt_gray"
                 android:textSize="20sp"
                 android:layout_toRightOf="@id/text_reset"
                 android:layout_gravity="bottom" />

@@ -1,21 +1,19 @@
 package com.haidehui.model;
 
 
-import com.haidehui.bean.ResultCustomerInfolistBean;
 import com.haidehui.network.types.IMouldType;
 import com.haidehui.network.types.MouldList;
 
 public class CustomerInfo2B implements IMouldType {
-    private MouldList<ResultCustomerInfolistBean> list;
-    private String userInfoId;
+    private MouldList<CustomerInfo3B> list;
     private String flag;
     private String msg;
 
-    public MouldList<ResultCustomerInfolistBean> getList() {
+    public MouldList<CustomerInfo3B> getList() {
         return list;
     }
 
-    public void setList(MouldList<ResultCustomerInfolistBean> list) {
+    public void setList(MouldList<CustomerInfo3B> list) {
         this.list = list;
     }
 
@@ -35,11 +33,4 @@ public class CustomerInfo2B implements IMouldType {
         this.msg = msg;
     }
 
-    public String getUserInfoId() {
-        return userInfoId;
-    }
-
-    public void setUserInfoId(String userInfoId) {
-        this.userInfoId = userInfoId;
-    }
 }

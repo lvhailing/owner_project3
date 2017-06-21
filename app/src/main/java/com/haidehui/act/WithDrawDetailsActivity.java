@@ -31,6 +31,7 @@ public class WithDrawDetailsActivity extends BaseActivity implements View.OnClic
     private RelativeLayout layout_delete;
     private TextView tv_remark;
     private ImageView img_delete;
+    private String messageId;
 
 
     @Override
@@ -70,7 +71,7 @@ public class WithDrawDetailsActivity extends BaseActivity implements View.OnClic
 
     private void initView() {
         tv_cashNum= (TextView) findViewById(R.id.tv_cashNum);
-        tv_cashStatus= (TextView) findViewById(R.id.tv_cashNum);
+        tv_cashStatus= (TextView) findViewById(R.id.tv_cashStatus);
         tv_id= (TextView) findViewById(R.id.tv_id);
         tv_account= (TextView) findViewById(R.id.tv_account);
         tv_crateTime= (TextView) findViewById(R.id.tv_crateTime);
@@ -84,13 +85,15 @@ public class WithDrawDetailsActivity extends BaseActivity implements View.OnClic
     private void initData() {
         img_delete.setOnClickListener(this);
         id=getIntent().getStringExtra("id");
+        messageId=getIntent().getStringExtra("messageId");
         requestData();
     }
 
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("id", id);
-        param.put("userId", "17021511395798036131");
+        param.put("messageId", messageId);
+        param.put("userId", userId);
         HtmlRequest.getWithDrawDetails(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
@@ -105,7 +108,7 @@ public class WithDrawDetailsActivity extends BaseActivity implements View.OnClic
         );
     }
     private void setData(WithDrawDetails2B data) {
-        tv_cashNum.setText(data.getCashNum());
+        tv_cashNum.setText("+"+data.getCashNum());
         if (data.getCashStatus().equals("checking")){
             tv_cashStatus.setText("审核中");
         }else if (data.getCashStatus().equals("paying")){
@@ -119,7 +122,7 @@ public class WithDrawDetailsActivity extends BaseActivity implements View.OnClic
             tv_cashStatus.setText("佣金已发放");
         }
         tv_id.setText(data.getId());
-        tv_account.setText("");
+        tv_account.setText(data.getRealName()+"\n"+data.getIdNo()+"\n"+data.getBankName()+"\n"+data.getBankCardNum());
         tv_crateTime.setText(data.getCrateTime());
 
     }

@@ -28,10 +28,16 @@ import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.dialog.SelectAddressDialog;
+import com.haidehui.model.PartnerIdentify2B;
+import com.haidehui.model.SubmitPartnerIdentify2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.http.AsyncHttpClient;
 import com.haidehui.network.http.AsyncHttpResponseHandler;
 import com.haidehui.network.http.RequestParams;
-import com.haidehui.uitls.AlipayBase64;
+import com.haidehui.photo_preview.PhotoPreviewAc;
+import com.haidehui.photo_preview.PhotoPreviewAcForOne;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.widget.TitleBar;
 
@@ -45,25 +51,33 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import android.text.TextUtils;
+import com.haidehui.common.Urls;
+import com.haidehui.uitls.StringUtil;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 /**
  *  事业合伙人认证
  */
 public class PartnerIdentifyActivity extends BaseActivity implements View.OnClickListener {
-    private TextView tv_name;
-    private EditText edt_phone;
-    private TextView tv_address_left;
+    private TextView tv_realName;
+    private TextView tv_mobile;
     private RelativeLayout layout_address;
-    private TextView tv_address;
-    private EditText edt_location;
+    private TextView tv_workProvince;
+    private EditText edt_workUnit;
     private EditText edt_email;
+    private EditText edt_idNo;
     private RelativeLayout layout_identity_card;
     private ImageView img_identity_card;
     private RelativeLayout layout_card;
     private ImageView img_card;
-    private Button btn_state;
-    private TextView tv_hint;
+    private Button btn_submit;
+    private TextView tv_remark;
     private RelativeLayout layout_delete;
     private ImageView img_delete;
 
@@ -105,6 +119,11 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
     private static final String TAG = "PartnerIdentifyActivity";
 
+    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private DisplayImageOptions options;
+
+    private ArrayList<String> list;
+    private PartnerIdentify2B data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +134,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         initTopTitle();
         initView();
         initData();
+        requestData();
     }
 
     private void initTopTitle() {
@@ -142,69 +162,140 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        tv_name= (TextView) findViewById(R.id.tv_name);
-        edt_phone= (EditText) findViewById(R.id.edt_phone);
-        tv_address_left= (TextView) findViewById(R.id.tv_address_left);
+        tv_realName= (TextView) findViewById(R.id.tv_realName);
+        tv_mobile= (TextView) findViewById(R.id.tv_mobile);
         layout_address= (RelativeLayout) findViewById(R.id.layout_address);
-        tv_address= (TextView) findViewById(R.id.tv_address);
-        edt_location= (EditText) findViewById(R.id.edt_location);
+        tv_workProvince= (TextView) findViewById(R.id.tv_workProvince);
+        edt_workUnit= (EditText) findViewById(R.id.edt_workUnit);
         edt_email= (EditText) findViewById(R.id.edt_email);
+        edt_idNo=(EditText) findViewById(R.id.edt_idNo);
         layout_identity_card= (RelativeLayout) findViewById(R.id.layout_identity_card);
         img_identity_card= (ImageView) findViewById(R.id.img_identity_card);
         layout_card= (RelativeLayout) findViewById(R.id.layout_card);
         img_card= (ImageView) findViewById(R.id.img_card);
-        btn_state= (Button) findViewById(R.id.btn_state);
-        tv_hint= (TextView) findViewById(R.id.tv_hint);
+        btn_submit= (Button) findViewById(R.id.btn_submit);
+        tv_remark= (TextView) findViewById(R.id.tv_remark);
         layout_delete=(RelativeLayout) findViewById(R.id.layout_delete);
         img_delete= (ImageView) findViewById(R.id.img_delete);
 
 
     }
     private void initData() {
+        options = new DisplayImageOptions.Builder()
+                .showImageForEmptyUri(R.mipmap.img_default_picture)
+                .showImageOnFail(R.mipmap.img_default_picture)
+                .resetViewBeforeLoading(true).cacheOnDisc(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
+                .displayer(new FadeInBitmapDisplayer(300)).build();
         layout_address.setOnClickListener(this);
         layout_identity_card.setOnClickListener(this);
         layout_card.setOnClickListener(this);
-        btn_state.setOnClickListener(this);
+        btn_submit.setOnClickListener(this);
         img_delete.setOnClickListener(this);
+        img_identity_card.setOnClickListener(this);
+        img_card.setOnClickListener(this);
     }
-/*
-    private void requestList() {
 
-        try {
-            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        HtmlRequest.getAddressList(AddressManageActivity.this, userId, token,
-                new BaseRequester.OnRequestListener() {
+    /**
+     * 获取之前的数据
+     */
+    private void requestData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("userId", "17021511395798036131");
+        HtmlRequest.getPartnerIdentify(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
-                        if (params.result != null) {
-                            ResultAddressManageContentBean data = (ResultAddressManageContentBean) params.result;
-                            if (data.getAddressList().size() == 0) {
-                                vs_inviterecord_switch.setDisplayedChild(1);
-                            } else {
-                                addressList.clear();
-                                addressList.addAll(data.getAddressList());
-                                adapter.notifyDataSetChanged();
-                                lv_address_manage.getRefreshableView()
-                                        .smoothScrollToPositionFromTop(0,
-                                                80, 100);
-                                lv_address_manage.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        lv_address_manage.onRefreshComplete();
-                                    }
-                                }, 1000);
-                            }
-                        } else {
-                            vs_inviterecord_switch.setDisplayedChild(1);
-                            Toast.makeText(AddressManageActivity.this, "加载失败，请确认网络通畅",
-                                    Toast.LENGTH_LONG).show();
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
                         }
+                        data = (PartnerIdentify2B) params.result;
+                        setData(data);
                     }
-                });
-    }*/
+
+                }
+        );
+    }
+
+    private void setData(PartnerIdentify2B data) {
+        tv_realName.setText(data.getRealName());
+        tv_mobile.setText(data.getMobile());
+        if (!TextUtils.isEmpty(data.getWorkProvince())){
+            tv_workProvince.setText(data.getWorkProvince());
+        }
+        if (!TextUtils.isEmpty(data.getWorkProvince())){
+            tv_workProvince.setText(data.getWorkProvince());
+        }
+        if (!TextUtils.isEmpty(data.getWorkUnit())){
+            edt_workUnit.setText(data.getWorkUnit());
+        }
+        if (!TextUtils.isEmpty(data.getEmail())){
+            edt_email.setText(data.getEmail());
+        }
+        if (!TextUtils.isEmpty(data.getIdNo())){
+            edt_idNo.setText(data.getIdNo());
+        }
+
+        String idCardUrl = data.getIdcardFront();
+        String cardUrl = data.getBusiCardPhoto();
+        if (!TextUtils.isEmpty(idCardUrl)){
+            isID=true;
+            imageLoader.displayImage(idCardUrl, img_identity_card,
+                    options);
+        }
+        if (!TextUtils.isEmpty(cardUrl)){
+            isCard=true;
+            imageLoader.displayImage(cardUrl, img_card,
+                    options);
+        }
+
+        if (!TextUtils.isEmpty(data.getCheckStatus())){
+            if ("submit".equals(data.getCheckStatus())){//待认证(提交认证信息待审核)  submit状态 所填内容不能编辑
+                layout_delete.setVisibility(View.VISIBLE);
+                tv_remark.setText("认证审核中，请您耐心等待我们的反馈！");
+
+                layout_address.setClickable(false);
+                edt_workUnit.setFocusable(false);
+                edt_email.setFocusable(false);
+                edt_idNo.setFocusable(false);
+                layout_identity_card.setClickable(false);
+                layout_card.setClickable(false);
+                img_identity_card.setClickable(true);
+                img_card.setClickable(true);
+                btn_submit.setClickable(false);
+                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
+
+
+
+            }else if ("success".equals(data.getCheckStatus())){//success状态  已认证置灰  不能编辑  身份证照片可以看
+
+                layout_address.setClickable(false);
+                edt_workUnit.setFocusable(false);
+                edt_email.setFocusable(false);
+                edt_idNo.setFocusable(false);
+                layout_identity_card.setClickable(false);
+                layout_card.setClickable(false);
+                img_identity_card.setClickable(true);
+                img_card.setClickable(true);
+                btn_submit.setClickable(false);
+                btn_submit.setText("已认证");
+                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
+
+
+            }else if ("fail".equals(data.getCheckStatus())){//内容可以编辑  身份证照片变成 可照相状态 提交认证可以点
+                edt_workUnit.requestFocusFromTouch();
+                edt_email.requestFocusFromTouch();
+                edt_idNo.requestFocusFromTouch();
+                layout_identity_card.setClickable(false);
+                layout_card.setClickable(false);
+                img_identity_card.setClickable(true);
+                img_card.setClickable(true);
+
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -212,7 +303,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 SelectAddressDialog dialog=new SelectAddressDialog(this, new SelectAddressDialog.OnExitChanged() {
                     @Override
                     public void onConfim(String selectText) {
-                        tv_address.setText(selectText);
+                        tv_workProvince.setText(selectText);
       //                  selectInfo=selectText.split("-");
                     }
 
@@ -231,13 +322,112 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 photoType = 2;
                 setPhoto();
                 break;
-            case R.id.btn_state:
+            case R.id.img_identity_card:
+                list = new ArrayList<>();
+                list.add(data.getIdcardFront());
+                Intent i_identify = new Intent(mContext, PhotoPreviewAcForOne.class);
+                i_identify.putStringArrayListExtra("urls", list);
+                i_identify.putExtra("currentPos", 0);
+                startActivity(i_identify);
+
+                break;
+            case R.id.img_card:
+                list = new ArrayList<>();
+                list.add(data.getBusiCardPhoto());
+                Intent i_card = new Intent(mContext, PhotoPreviewAcForOne.class);
+                i_card.putStringArrayListExtra("urls", list);
+                i_card.putExtra("currentPos", 0);
+                startActivity(i_card);
+                break;
+            case R.id.btn_submit:
+                String workProvince=tv_workProvince.getText().toString();
+                String workUnit=edt_workUnit.getText().toString();
+                String email=edt_email.getText().toString();
+                String idNo=edt_idNo.getText().toString();
+                if (!TextUtils.isEmpty(workProvince)){
+                    if (!TextUtils.isEmpty(workUnit)){
+                        if (!TextUtils.isEmpty(email)){
+                            if (!TextUtils.isEmpty(idNo)){
+                                if (StringUtil.personIdValidation(idNo)){
+                                    if (isID == false) {
+                                        Toast.makeText(PartnerIdentifyActivity.this,"请上传身份证正面", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    if (isCard== false) {
+                                        Toast.makeText(PartnerIdentifyActivity.this,"请上传名片", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    requestSubmitData(email,idNo,"17021511395798036131",workProvince,workUnit);
+                                }else{
+                                    Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
+                                    edt_idNo.requestFocusFromTouch();
+                                }
+
+                            }else{
+                                Toast.makeText(mContext, "请输入您的身份证号", Toast.LENGTH_LONG).show();
+                                edt_idNo.requestFocusFromTouch();
+                            }
+
+                        }else{
+                            Toast.makeText(mContext, "请输入您的邮箱", Toast.LENGTH_LONG).show();
+                            edt_email.requestFocusFromTouch();
+                        }
+
+                    }else{
+                        Toast.makeText(mContext, "请输入工作单位", Toast.LENGTH_LONG).show();
+                        edt_workUnit.requestFocusFromTouch();
+                    }
+
+                }else{
+                    Toast.makeText(mContext, "请选择所在地", Toast.LENGTH_LONG).show();
+                }
 
                 break;
             case R.id.img_delete:
                 layout_delete.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    /**
+     * 提交认证数据
+     */
+    private void requestSubmitData(String email,String idNo,String userId,String workProvince,String workUnit) {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("email", email);
+        param.put("idNo", idNo);
+        param.put("userId", userId);
+        param.put("workProvince", workProvince);
+        param.put("workUnit", workUnit);
+
+        HtmlRequest.submitPartnerIdentify(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        SubmitPartnerIdentify2B data = (SubmitPartnerIdentify2B) params.result;
+                            if ("true".equals(data.getFlag())){
+                                Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
+                                layout_delete.setVisibility(View.VISIBLE);
+                                tv_remark.setText("认证审核中，请您耐心等待我们的反馈！");
+
+                                layout_address.setClickable(false);
+                                edt_workUnit.setFocusable(false);
+                                edt_email.setFocusable(false);
+                                edt_idNo.setFocusable(false);
+                                layout_identity_card.setClickable(false);
+                                layout_card.setClickable(false);
+                                img_identity_card.setClickable(true);
+                                img_card.setClickable(true);
+                                btn_submit.setClickable(false);
+                                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
+                            }
+                    }
+                }
+        );
     }
     private void setPhoto() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -519,47 +709,35 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
 
         try {
-            String uploadType = "";
+            String idNoName = "";
+            String busiName = "";
+            String photoTypeStr = "";
             if (photoType == 1) {
-                uploadType = "identityFile";
+                idNoName = "iscardFrount.jpg";
+                photoTypeStr="idNoPhoto";
             } else if (photoType == 2) {
-                uploadType = "identityFile";
-
-            } else if (photoType == 3) {
-                uploadType = "identityFile";
-            } else if (photoType == 4) {
-                uploadType = "otherFile";
-            }
-            String fileName = "";
-            String fileType = "";
-            if (photoType == 1) {
-                fileName = "sfzzm.jpg";
-                fileType="idCardF1";
-            } else if (photoType == 2) {
-                fileName = "sfzfm.jpg";
-                fileType="idCardF2";
-            } else if (photoType == 3) {
-                fileName = "withIdCard.jpg";
-                fileType="withIdCard";
-            } else if (photoType == 4) {
-                fileName = "diploma.jpg";
-                fileType="diploma";
+                busiName = "busiCardPhoto.jpg";
+                photoTypeStr="cardPhoto";
             }
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            params.add("photo", img);
-            params.add("uploadType", uploadType);
-            params.add("fileName", fileName);
-            params.add("fileType", fileType);
-//          String url = ApplicationConsts.URL_ELITE_UPLOAD+"?token="+ AlipayBase64.encode(token.getBytes("utf-8"));
-            String url=null;
+            if (photoType==1){
+                params.add("photo", img);
+                params.add("name", idNoName);
+            } else if (photoType == 2) {
+                params.add("photo", img);
+                params.add("name", busiName);
+            }
+            params.add("id", "17021511395798036131");
+            params.add("photoType", photoTypeStr);
+            String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers,
                                       String content) {
                     super.onSuccess(statusCode, headers, content);
                     try {
-                        String data = DESUtil.decrypt(content);
+
 					/*	ResultUploadListBean bean = json.fromJson(data,
 								ResultUploadListBean.class);
 						ResultUploadListContentBean contentBean = bean

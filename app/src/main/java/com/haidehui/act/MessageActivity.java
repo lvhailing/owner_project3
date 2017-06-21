@@ -25,7 +25,7 @@ import java.util.LinkedHashMap;
 public class MessageActivity extends BaseActivity implements View.OnClickListener {
 
 
-    private RelativeLayout rl_messgae_info;     //  收支消息
+    private RelativeLayout rl_messgae_info;     //  收支消息(账本消息)
     private RelativeLayout rl_messgae_notice;       //  公告通知
     private RelativeLayout rl_messgae_other;        //  其他
     private TextView tv_message_info_num;       //  收支消息数量
@@ -96,7 +96,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         HtmlRequest.getMessageInfo(MessageActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -118,7 +118,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
         tv_message_info_num.setText(bean.getCountNum());
         tv_message_notice_num.setText(bean.getBulletNum());
-        tv_message_other_num.setText(bean.getCountNum());
+        tv_message_other_num.setText(bean.getOthersNum());
 
     }
 

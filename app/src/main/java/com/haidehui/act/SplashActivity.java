@@ -98,6 +98,11 @@ public class SplashActivity extends FragmentActivity {
 		iv.setVisibility(View.VISIBLE);
 		mViewPager.setVisibility(View.GONE);
 		iv.setBackgroundResource(R.mipmap.splash);
+
+		//	设置状态
+//		PreferenceUtil.setLogin(true);
+//		PreferenceUtil.setGestureChose(true);
+
 		mHandler = new MyHandler();
 		mRunnable = new MyRunnable();
 		mThread = new Thread(mRunnable);
@@ -160,9 +165,8 @@ public class SplashActivity extends FragmentActivity {
 					Intent i = new Intent(SplashActivity.this,
 						GestureVerifyActivity.class);
 					i.putExtra("from", Urls.ACTIVITY_SPLASH);
-					i.putExtra("pushBean",pushBean);
-					i.putExtra("title","手势密码登录");
-					i.putExtra("message","请画出手势密码解锁");
+					i.putExtra("title",getResources().getString(R.string.gesture_edit_title));
+					i.putExtra("message","手势密码");
 					startActivity(i);
 					finish();
 				}else{

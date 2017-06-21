@@ -22,6 +22,7 @@ public class BaseActivity extends FragmentActivity {
     public BaseActivity mContext;   //Activity 上下文
     public String userId = null;
     public String token = null;
+    public String phone = null;
     public CustomProgressDialog dialog;
 
     @Override
@@ -35,6 +36,7 @@ public class BaseActivity extends FragmentActivity {
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
             token = DESUtil.decrypt(PreferenceUtil.getToken());
+            phone = DESUtil.decrypt(PreferenceUtil.getPhone());
         } catch (Exception e) {
             e.printStackTrace();
         }

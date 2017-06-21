@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -90,9 +91,11 @@ public class MessageNoticeActivity extends BaseActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
-
-
+                Intent i_help = new Intent(context, WebActivity.class);
+                i_help.putExtra("type", WebActivity.WEBTYPE_NOTICE);
+                i_help.putExtra("title", getResources().getString(R.string.message_notice_detail));
+                i_help.putExtra("url", Urls.URL_NOTICEDETAIL+list.get(i).getBulletinId()+"&userId="+userId);
+                startActivity(i_help);
 
             }
         });
@@ -126,7 +129,7 @@ public class MessageNoticeActivity extends BaseActivity{
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", page);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         cachePage_pro = page;
         HtmlRequest.getMessageNotice(MessageNoticeActivity.this, param,new BaseRequester.OnRequestListener() {
 

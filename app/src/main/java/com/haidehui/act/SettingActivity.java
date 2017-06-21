@@ -8,7 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.common.Urls;
 import com.haidehui.dialog.VerifyPassWordDialog;
+import com.haidehui.net.UserLoadout;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.widget.TitleBar;
@@ -25,7 +27,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private ImageButton ib_setting_gesture;             //  手势密码
     private RelativeLayout rl_setting_change_gesture_password;     //  修改手势密码
     private RelativeLayout rl_setting_change_password;     //  修改登录密码
-    private RelativeLayout rl_setting_service_agreement;     //  服务条款
+    private RelativeLayout rl_setting_service_agreement;     //  服务协议
+
     private RelativeLayout rl_setting_privacy_agreement;     //  隐私协议
     private RelativeLayout rl_setting_advice;     //  意见反馈
     private RelativeLayout rl_setting_invite;     //  推荐朋友
@@ -150,7 +153,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.rl_setting_change_phone:
 
                 Intent i_change_phone = new Intent(this,SettingChangePhoneFirstActivity.class);
-
                 startActivity(i_change_phone);
 
                 break;
@@ -163,52 +165,30 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     PreferenceUtil.setGestureChose(false);
 
                 }else{
-                    ib_setting_gesture.setImageResource(R.mipmap.img_set_on);
-                    rl_setting_change_gesture_password.setVisibility(View.VISIBLE);
-                    PreferenceUtil.setGestureChose(true);
-//            imgGestureSwitch.setVisibility(View.GONE);
+
+                    Intent i = new Intent(this,
+                            GestureEditActivity.class);
+                    i.putExtra("from", Urls.ACTIVITY_GESEDIT);
+                    i.putExtra("title",getResources().getString(R.string.setup_gesture_code));
+                    i.putExtra("message",getResources().getString(R.string.setup_gesture_pattern));
+                    startActivityForResult(i, 1000);
+
+//                    ib_setting_gesture.setImageResource(R.mipmap.img_set_on);
+//                    rl_setting_change_gesture_password.setVisibility(View.VISIBLE);
+//                    PreferenceUtil.setGestureChose(true);
+
                 }
-
-                /*if(PreferenceUtil.isGestureChose()){
-
-                    VerifyPassWordDialog dialog_gesture = new VerifyPassWordDialog(SettingActivity.this, new VerifyPassWordDialog.OnVerifyPW() {
-                        @Override
-                        public void onConfirm(String input) {
-
-//                            requestData(input,"gesrure");
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    },"请输入登录密码");
-                    dialog_gesture.show();
-
-
-					*//*Intent i = new Intent(this,
-							GestureVerifyActivity.class);
-					i.putExtra("from", ApplicationConsts.ACTIVITY_ACCOUNT);
-					i.putExtra("title","手势密码登录");
-					i.putExtra("message","请画出手势密码解锁");
-					startActivityForResult(i, 1000);*//*
-                }else{
-//                    Intent i = new Intent(this,
-//                            GestureEditActivity.class);
-//                    i.putExtra("comeflag", 4);
-//                    i.putExtra("title", R.string.setup_gesture_code);
-//                    i.putExtra("skip","skip_from_account");
-//                    startActivity(i);
-
-                }*/
-                PreferenceUtil.setFirstLogin(true);
-
 
                 break;
 
             case R.id.rl_setting_change_gesture_password:       //  修改手势密码
 
+                Intent i = new Intent(SettingActivity.this,
+                        GestureVerifyActivity.class);
+                i.putExtra("from", Urls.ACTIVITY_CHANGE_GESTURE);
+                i.putExtra("title",getResources().getString(R.string.title_changegesture));
+                i.putExtra("message",getResources().getString(R.string.set_gesture_pattern_old));
+                startActivityForResult(i, 1001);
 
                 break;
 
@@ -221,14 +201,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.rl_setting_service_agreement:     // 服务协议
-
                 Intent i_service = new Intent(SettingActivity.this,WebActivity.class);
-
+                i_service.putExtra("type", WebActivity.WEBTYPE_SERVICE_AGREEMENT);
+                i_service.putExtra("title", getResources().getString(R.string.setting_service_agreement));
+                i_service.putExtra("url", Urls.URL_SERVICE_AGREEMENT );
                 startActivity(i_service);
 
                 break;
 
-            case R.id.rl_setting_privacy_agreement:     //  隐私协议
+            case R.id.rl_setting_privacy_agreement:     //  隐私协议        （作废）
 
                 Intent i_privacy = new Intent(SettingActivity.this,WebActivity.class);
 
@@ -253,7 +234,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.rl_setting_about:     //  关于我们
                 Intent i_about = new Intent(SettingActivity.this,AboutActivity.class);
-
+                i_about.putExtra("type", WebActivity.WEBTYPE_ABOUT_US);
+                i_about.putExtra("title", getResources().getString(R.string.setting_about));
+                i_about.putExtra("url", Urls.URL_ABOUT_US );
                 startActivity(i_about);
                 break;
 
@@ -264,6 +247,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.tv_setting_logout:
 
+                UserLoadout out = new UserLoadout(SettingActivity.this,userId);
+                out.requestData();
+                finish();
 
                 break;
 

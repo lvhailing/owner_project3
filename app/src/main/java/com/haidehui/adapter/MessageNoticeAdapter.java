@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -53,6 +54,7 @@ public class MessageNoticeAdapter extends BaseAdapter{
             holder.tv_message_notice_item_name = (TextView) view.findViewById(R.id.tv_message_notice_item_name);
             holder.tv_message_notice_item_time = (TextView) view.findViewById(R.id.tv_message_notice_item_time);
             holder.tv_message_notice_item_content = (TextView) view.findViewById(R.id.tv_message_notice_item_content);
+            holder.iv_message_notice_isread = (ImageView) view.findViewById(R.id.iv_message_notice_isread);
             view.setTag(holder);
         }else{
             holder = (Holder) view.getTag();
@@ -62,6 +64,13 @@ public class MessageNoticeAdapter extends BaseAdapter{
         holder.tv_message_notice_item_time.setText(list.get(i).getSendTime());
         holder.tv_message_notice_item_content.setText(list.get(i).getDescription());
 
+        if(list.get(i).getReadState().equals("yes")){
+            holder.iv_message_notice_isread.setVisibility(View.GONE);
+        }else if(list.get(i).getReadState().equals("no")){
+            holder.iv_message_notice_isread.setVisibility(View.VISIBLE);
+        }else{
+            holder.iv_message_notice_isread.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -70,6 +79,7 @@ public class MessageNoticeAdapter extends BaseAdapter{
         private TextView tv_message_notice_item_name;
         private TextView tv_message_notice_item_time;
         private TextView tv_message_notice_item_content;
+        private ImageView iv_message_notice_isread;
 
 
     }

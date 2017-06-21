@@ -24,6 +24,12 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.haidehui.R;
 import com.haidehui.common.Urls;
+import com.haidehui.model.ResultRecommendInfoContentBean;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.net.UserLoadout;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
 
 import java.io.File;
@@ -32,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import cn.sharesdk.framework.Platform;
@@ -61,6 +68,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     private String way;
     private Context context;
 
+    private ResultRecommendInfoContentBean bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +88,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     public void initView(){
 
         context = this;
+        bean = new ResultRecommendInfoContentBean();
 
         tv_recommend_all_friend = (TextView) findViewById(R.id.tv_recommend_all_friend);
         tv_recommend_all_acount = (TextView) findViewById(R.id.tv_recommend_all_acount);
@@ -97,12 +106,14 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
     public void initData(){
 
-        setView();
-
+        getRecommendData();
 
     }
 
     public void setView(){
+
+        tv_recommend_all_friend.setText(bean.getTotal()+"位朋友为我赚取了");
+        tv_recommend_all_acount.setText("￥"+bean.getTotalAmount()+"元");
 
         StringBuffer randomNum = new StringBuffer();
         for (int i = 0; i < 6; i++) {
@@ -115,6 +126,29 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
         createQRImage(iv_recommend_invite_code, "www.baidu.com", bitmap);
 
+    }
+
+    private void getRecommendData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("userId", userId);
+
+        HtmlRequest.getRecommendInfo(RecommendActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                bean = (ResultRecommendInfoContentBean) params.result;
+                if (bean != null) {
+                    recommendCode = bean.getRecommendCode();
+
+                    setView();
+
+                } else {
+                    Toast.makeText(RecommendActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void initTopTitle() {

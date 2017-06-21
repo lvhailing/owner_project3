@@ -4,25 +4,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.adapter.CustomerFollowAdapter;
-import com.haidehui.bean.ResultCustomerFollowlistBean;
 import com.haidehui.dialog.BasicDialog;
+import com.haidehui.model.SubmitCustomer2B;
+import com.haidehui.model.Tracking2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 /**
  *  我的 --- 客户跟踪
  */
 public class CustomerFollowActivity extends BaseActivity implements View.OnClickListener {
-    private PullToRefreshListView lv_customer_follow;
+    private PullToRefreshListView lv;
     private CustomerFollowAdapter adapter;
-    private MouldList<ResultCustomerFollowlistBean> infoList;
+    private MouldList<Tracking2B> totalList=new MouldList<>();
     private static int mDelId = 0;
+    private int currentPage = 1;    //当前页
+    private String customerId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,37 +70,42 @@ public class CustomerFollowActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
-        infoList = new MouldList<ResultCustomerFollowlistBean>();
-        for (int i=0;i<10;i++){
-            ResultCustomerFollowlistBean bean=new ResultCustomerFollowlistBean();
-            if (i%2==0){
-                bean.setName("moumoumoumou111111111"+i);
-                bean.setTime("2017-06-01 12:34");
-            }else{
-                bean.setName("moumoumoumou222222222"+i);
-                bean.setTime("2017-06-01 11:22");
-            }
-            infoList.add(bean);
-        }
 
+        lv = (PullToRefreshListView) findViewById(R.id.lv);
+        //PullToRefreshListView  上滑加载更多及下拉刷新
+        ViewUtils.slideAndDropDown(lv);
 
-        lv_customer_follow = (PullToRefreshListView) findViewById(R.id.lv_customer_follow);
-        lv_customer_follow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
                 Intent intent = new Intent(CustomerFollowActivity.this, CustomerFollowDetailsActivity.class);
+                intent.putExtra("customerId",totalList.get(position-1).getCustomerId());
                 startActivity(intent);
             }
         });
-        lv_customer_follow.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(CustomerFollowActivity.this, "长按啦啦啦", Toast.LENGTH_LONG).show();
                 mDelId = position - 1;
+                customerId=totalList.get(position-1).getCustomerId();
                 showDialog();
                 return true;
+            }
+        });
+
+        lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                if (refreshView.isHeaderShown()) {
+                    //下拉刷新
+                    currentPage = 1;
+                } else {
+                    //上划加载下一页
+                    currentPage++;
+                }
+                requestListData();
             }
         });
 
@@ -110,89 +127,50 @@ public class CustomerFollowActivity extends BaseActivity implements View.OnClick
      * 删除Item
      */
     private void deleteItem() {
-        int size = infoList.size();
+        int size = totalList.size();
         if (size > 0) {
-            infoList.remove(mDelId);
+            totalList.remove(mDelId);
             adapter.notifyDataSetChanged();
+
+            deleteData(customerId);
+
         }
     }
     private void initData() {
-        adapter = new CustomerFollowAdapter(CustomerFollowActivity.this, infoList);
-        lv_customer_follow.setAdapter(adapter);
-//        requestList();
+        adapter = new CustomerFollowAdapter(CustomerFollowActivity.this, totalList);
+        lv.setAdapter(adapter);
 
     }
-    /**
-     * 请求信息列表
-     *//*
-    private void requestList() {
-
-        try {
-            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        HtmlRequest.getAddressList(AddressManageActivity.this, userId, token,
-                new BaseRequester.OnRequestListener() {
-                    @Override
-                    public void onRequestFinished(BaseParams params) {
-                        if (params.result != null) {
-                            ResultAddressManageContentBean data = (ResultAddressManageContentBean) params.result;
-                            if (data.getAddressList().size() == 0) {
-                                vs_inviterecord_switch.setDisplayedChild(1);
-                            } else {
-                                addressList.clear();
-                                addressList.addAll(data.getAddressList());
-                                adapter.notifyDataSetChanged();
-                                lv_address_manage.getRefreshableView()
-                                        .smoothScrollToPositionFromTop(0,
-                                                80, 100);
-                                lv_address_manage.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        lv_address_manage.onRefreshComplete();
-                                    }
-                                }, 1000);
-                            }
-                        } else {
-                            vs_inviterecord_switch.setDisplayedChild(1);
-                            Toast.makeText(AddressManageActivity.this, "加载失败，请确认网络通畅",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }*/
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_submit:
-                Intent intent = new Intent(this, SubmitCustomerInfoActivity.class);
-                startActivityForResult(intent, 1000);
-                break;
-        }
+    protected void onResume() {
+        super.onResume();
+        requestListData();
     }
 
-
-    /* private void requestListData() {  // 获取最热房源列表数据
-        Map<String, Object> param = new HashMap<>();
-        param.put("currentPage", currentPage + "");
+    /**
+     * 请求列表数据
+     */
+    private void requestListData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("page", currentPage + "");
+        param.put("userId", "17021318005814472279");
 
         try {
-            HtmlRequest.getHotHouseData(mContext, param, new BaseRequester.OnRequestListener() {
+            HtmlRequest.getTrackingList(mContext, param, new BaseRequester.OnRequestListener() {
                 @Override
                 public void onRequestFinished(BaseParams params) {
+                    if (params.result == null) {
                         Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                        listView.postDelayed(new Runnable() {
+                        lv.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                listView.onRefreshComplete();
+                                lv.onRefreshComplete();
                             }
                         }, 1000);
                         return;
                     }
 
-                    HotHouse2B data = (HotHouse2B) params.result;
-                    MouldList<HotHouse3B> everyList = data.getList();
+                    MouldList<Tracking2B> everyList = (MouldList<Tracking2B>) params.result;
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
                         Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                     }
@@ -204,12 +182,12 @@ public class CustomerFollowActivity extends BaseActivity implements View.OnClick
                     totalList.addAll(everyList);
 
                     //刷新数据
-                    mAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
 
-                    listView.postDelayed(new Runnable() {
+                    lv.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            listView.onRefreshComplete();
+                            lv.onRefreshComplete();
                         }
                     }, 1000);
                 }
@@ -217,7 +195,36 @@ public class CustomerFollowActivity extends BaseActivity implements View.OnClick
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
+
+    private void deleteData(String customerId) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("customerId", customerId);
+        param.put("userId", "17021318005814472279");
+        HtmlRequest.deleteCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                        if ("true".equals(data.getFlag())) {
+                            Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+        );
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+        }
+    }
+
 
 
 

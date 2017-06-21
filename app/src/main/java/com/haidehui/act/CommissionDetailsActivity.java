@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
  */
 public class CommissionDetailsActivity extends BaseActivity implements View.OnClickListener {
     private String id;
+    private TextView tv_commission;
     private TextView tv_commiStatus;
     private TextView tv_serialNumber;
     private TextView tv_tradeNum;
@@ -50,6 +51,8 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
     private LinearLayout layout_emergencyName;
     private LinearLayout layout_emergencyMobile;
     private LinearLayout layout_serviceFee;
+
+    private String messageId;
 
     @Override
 
@@ -87,6 +90,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void initView() {
+        tv_commission= (TextView) findViewById(R.id.tv_commission);
         tv_commiStatus= (TextView) findViewById(R.id.tv_commiStatus);
         tv_serialNumber= (TextView) findViewById(R.id.tv_serialNumber);
         tv_tradeNum= (TextView) findViewById(R.id.tv_tradeNum);
@@ -117,11 +121,13 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
 
     private void initData() {
         id=getIntent().getStringExtra("id");
+        messageId=getIntent().getStringExtra("messageId");
         requestData();
     }
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("id", id);
+        param.put("messageId", messageId);
         param.put("userId", "17021511395798036131");
         HtmlRequest.getCommissionDetails(this, param, new BaseRequester.OnRequestListener() {
                     @Override
@@ -137,8 +143,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         );
     }
     private void setData(CommissionDetails2B data) {
-        //缺少佣金收益
-
+        tv_commission.setText("+"+data.getCommissionAmountReal());
         tv_commiStatus.setText("结佣完成");
         tv_serialNumber.setText(data.getSerialNumber());
         tv_tradeNum.setText(data.getTradeNum());
@@ -162,23 +167,23 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         tv_isCommitData.setText(data.getIsCommitData());
         tv_commissionAmountTotal.setText(data.getCommissionAmountTotal()+"元");
         tv_commissionRate.setText(data.getCommissionRate()+"%");
-        tv_actualCommiRepayed.setText(data.getActualCommiRepayed()+"元");
+        tv_actualCommiRepayed.setText(data.getCommissionAmountReal()+"元");
 
         if(!TextUtils.isEmpty(data.getEmergencyName())){
             tv_emergencyName.setText(data.getEmergencyName());
         }else{
-            layout_emergencyName.setVisibility(View.GONE);
+            tv_emergencyName.setText("--");
         }
 
         if(!TextUtils.isEmpty(data.getEmergencyMobile())){
             tv_emergencyMobile.setText(data.getEmergencyMobile());
         }else{
-            layout_emergencyMobile.setVisibility(View.GONE);
+            tv_emergencyMobile.setText("--");
         }
         if(!TextUtils.isEmpty(data.getServiceFee())){
             tv_serviceFee.setText(data.getServiceFee()+"元");
         }else{
-            layout_serviceFee.setVisibility(View.GONE);
+            tv_serviceFee.setText("--");
         }
 
 

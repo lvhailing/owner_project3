@@ -60,7 +60,23 @@ public class PreferenceUtil {
 	public static void setToken(String userId) {
 		getUserSharedPreferences().edit().putString("token", userId).commit();
 	}
+	/**
+	 * 获取身份证号
+	 *
+	 * @return
+	 */
+	public static String getIdNo() {
+		return getUserSharedPreferences().getString("idno", "");
+	}
 
+	/**
+	 * 设置身份证号
+	 *
+	 * @param idNo
+	 */
+	public static void setIdNo(String idNo) {
+		getUserSharedPreferences().edit().putString("idno", idNo).commit();
+	}
 
 	/**
 	 * 是否首次进入应用

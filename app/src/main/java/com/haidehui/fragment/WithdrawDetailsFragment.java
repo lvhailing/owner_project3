@@ -12,11 +12,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.CommissionDetailsActivity;
-import com.haidehui.adapter.AccountBookCommissionAdapter;
+import com.haidehui.act.WithDrawDetailsActivity;
 import com.haidehui.adapter.AccountBookWithdrawAdapter;
-import com.haidehui.model.AccountBookCommission2B;
-import com.haidehui.model.AccountBookCommission3B;
 import com.haidehui.model.AccountBookWithDraw3B;
 import com.haidehui.model.AccountBookWithdraw2B;
 import com.haidehui.network.BaseParams;
@@ -83,8 +80,8 @@ public class WithdrawDetailsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int position,
                                     long id) {
-                Intent intent = new Intent(getActivity(), CommissionDetailsActivity.class);
-                intent.putExtra("id", withdrawlist.get(position).getId());
+                Intent intent = new Intent(getActivity(), WithDrawDetailsActivity.class);
+                intent.putExtra("id", withdrawlist.get(position-1).getId());
                 startActivity(intent);
 
             }

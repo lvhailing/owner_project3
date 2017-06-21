@@ -8,16 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.bean.ResultCustomerInfolistBean;
+import com.haidehui.model.CustomerInfo3B;
 import com.haidehui.network.types.MouldList;
 
 public class CustomerInfoAdapter extends BaseAdapter {
 	private Context mContext;
-	private MouldList<ResultCustomerInfolistBean> list;
+	private MouldList<CustomerInfo3B> list;
 	private LayoutInflater inflater;
 
 
-	public CustomerInfoAdapter(Context context, MouldList<ResultCustomerInfolistBean> list) {
+	public CustomerInfoAdapter(Context context, MouldList<CustomerInfo3B> list) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
@@ -40,7 +40,7 @@ public class CustomerInfoAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ResultCustomerInfolistBean bean = list.get(position);
+		CustomerInfo3B bean = list.get(position);
 		Holder holder = null;
 		if (convertView == null) {
 			holder = new Holder();

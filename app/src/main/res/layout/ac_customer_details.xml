@@ -187,7 +187,7 @@
                     android:textColor="@color/gray_dark" />
 
                 <TextView
-                    android:id="@+id/tv_house_type"
+                    android:id="@+id/tv_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
@@ -236,6 +236,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingTop="15dp"
+            android:visibility="gone"
             android:paddingBottom="15dp"
             android:paddingRight="10dp"
             android:textColor="@color/white"

@@ -23,12 +23,12 @@ public class ResultMessageItemContentBean implements IMouldType{
      * 账本消息
      */
     private String busiPriv;        //
-    private String busiType;        //
-    private String content;         //
-    private String createTime;      //
+    private String busiType;        //  类型'withdrawCash'提现  , 'registerCash'下载奖励 , 'commissionOver'佣金收益,' awardredemption'活动奖励
+    private String content;         //  金额
+    private String createTime;      //  时间
     private String id;          //
-    private String status;      //
-    private String topic;      //
+    private String status;      //  是否已读状态 unread未读   read已读
+    private String topic;      //   类型名称
 
 
     public String getBusiPriv() {

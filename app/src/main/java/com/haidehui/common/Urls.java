@@ -19,13 +19,16 @@ public class Urls {
     // 张殿洋
     public static final String URL_BB = "http://192.168.1.138:9999/overseas-app/";
 
+    // 冯艳敏
+    public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
+
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_XYJ;
+    private static String EC_HOST = URL_BB;
 
     /**
      * 登出
      */
-    public static final String URL_LOGINOFF = EC_HOST + "account/user/logoff";
+    public static final String URL_LOGINOFF = EC_HOST + "account/logoff";
 
     /**
      * 获取消息主页信息
@@ -46,12 +49,44 @@ public class Urls {
      * 登陆
      */
 
-    public static final String URL_LOGIN = EC_HOST + "android/user/login";
+    public static final String URL_LOGIN = EC_HOST + "android/login";
     /**
      * 发送手机短信
      */
     public static final String URL_SMS = EC_HOST + "user/mobile/send/verifycode";
+    /**
+     * 意见反馈
+     */
+    public static final String URL_ADAVICE = EC_HOST + "problemFeedback/save";
+    /**
+     * 找回密码
+     */
+    public static final String URL_FINDPASSWORD = EC_HOST + "password/find";
+    /**
+     * 修改手机号
+     */
+    public static final String URL_CHANGEPHONE = EC_HOST + "account/user/password/valid";
 
+    /**
+     * 修改手机号三
+     */
+    public static final String URL_CHANGEPHONE_THIRD = EC_HOST + "account/mobile/verify";
+    /**
+     * 注册
+     */
+    public static final String URL_SIGNUP = EC_HOST + "android/register";
+    /**
+     * 修改登录密码
+     */
+    public static final String URL_CHANGEPASSWORD = EC_HOST + "account/password/modify";
+    /**
+     * 获取推荐主页信息
+     */
+    public static final String URL_GETRECOMMENDINFO = EC_HOST + "account/recommendAppTo";
+    /**
+     * 获取邀请记录信息
+     */
+    public static final String URL_GETRECOMMEND_RECORD = EC_HOST + "account/recommendList";
     /**
      * 我的银行卡
      */
@@ -65,6 +100,18 @@ public class Urls {
      * 添加银行卡
      */
     public static final String URL_ADDBANKLIST = EC_HOST + "bankcard/add";
+
+    /**
+     * 公告详情
+     */
+    public static final String URL_NOTICEDETAIL = EC_HOST + "message/bulletin/detail?bulletinId=";
+
+    // 设置--服务协议
+    public static final String URL_SERVICE_AGREEMENT = EC_HOST + "service/agreement";
+
+
+    // 设置--关于我们
+    public static final String URL_ABOUT_US = EC_HOST + "about/us";
 
 
 
@@ -162,15 +209,45 @@ public class Urls {
     public static final String URL_WITHDRAW_LIST = EC_HOST + "account/withdrawcash/list";
 
     //客户信息列表
-    public static final String URL_CUSTOMER_INFO_LIST = EC_HOST + "account/withdrawcash/list";
+    public static final String URL_CUSTOMER_INFO_LIST = EC_HOST + "account/trade/customer/list";
 
     //佣金收益详情
     public static final String URL_COMMISSION_DETAILS = EC_HOST + "account/userrewardrecord/commission/view";
 
     //提现记录详情
-    public static final String URL_WITHDRAW_DETAILS = EC_HOST + "account/userrewardrecord/withdrawcash/view";
+    public static final String URL_WITHDRAW_DETAILS = EC_HOST + "withdrawcash/view";
 
+    //活动奖励详情
+    public static final String URL_AWARD_DETAILS = EC_HOST + "account/userrewardrecord/reward/view";
 
+    //置业顾问认证
+    public static final String URL_PARTNER_IDENTIFY = EC_HOST + "account/user/checkInfo";
 
+    //提交置业顾问认证
+    public static final String URL_SUBMIT_PARTNER_IDENTIFY = EC_HOST + "account/user/checkInfoSubmit";
+
+    //上传图片（事业合伙人认证）
+    public static final String URL_SUBMIT_PHOTO = EC_HOST + "android/account/photo/upload";
+
+    //客户信息详情
+    public static final String URL_CUSTOMER_INFO_DETAILS = EC_HOST + "account/trade/customer/detail";
+
+    //新增客户信息
+    public static final String URL_ADD_CUSTOMER_INFO = EC_HOST + "account/trade/customer/add/save";
+
+    //删除客户信息
+    public static final String URL_DELETE_CUSTOMER_INFO = EC_HOST + "account/trade/customer/delete";
+
+    //认购列表
+    public static final String URL_GET_RENGOU = EC_HOST + "account/trade/subscribe/list";
+
+    //认购详情
+    public static final String URL_GET_RENGOU_DETAILS = EC_HOST + "account/trade/subscribe/detail";
+
+    //客户跟踪列表
+    public static final String URL_TRACKING_LIST = EC_HOST + "account/trade/customers/tracking/list";
+
+    //客户跟踪详情
+    public static final String URL_TRACKING_DETAILS = EC_HOST + "account/trade/customer/tracking";
 
 }

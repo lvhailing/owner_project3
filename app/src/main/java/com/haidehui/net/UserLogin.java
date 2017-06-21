@@ -2,6 +2,7 @@ package com.haidehui.net;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -42,7 +43,7 @@ public class UserLogin extends Observable {
 		return instance;
 	}
 
-	public void userlogining(final Context context, final String username,
+	public void userlogining(final Context context, final String mobile,
 			final String password, String token) {
 		AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
 		// asyncHttpClient.addHeader("x-client-version",
@@ -63,10 +64,8 @@ public class UserLogin extends Observable {
 	    String appid = settings.getString("channelId","");
 
 		Map<String, Object> param = new HashMap<>();
-		param.put("username", username);
+		param.put("mobile", mobile);
 		param.put("password", password);
-		param.put("", "");
-		param.put("appid", appid);
 
 		String data = HtmlRequest.getResult(param);
 		PersistentCookieStore myCookieStore = new PersistentCookieStore(context);
@@ -115,17 +114,25 @@ public class UserLogin extends Observable {
 							if (Boolean.parseBoolean(b.getData().getFlag())) {
 								try {
 									PreferenceUtil.setAutoLoginAccount(DESUtil
-											.encrypt(username));
+											.encrypt(mobile));
 									PreferenceUtil.setAutoLoginPwd(DESUtil
 											.encrypt(password));
 									PreferenceUtil.setPhone(DESUtil.encrypt(b
-											.getData().getPhone()));
+											.getData().getMobile()));
 									PreferenceUtil.setUserId(DESUtil.encrypt(b
 											.getData().getUserId()));
-//									PreferenceUtil.setUserNickName(b.getData()
-//											.getNickName());
-									PreferenceUtil.setToken(DESUtil.encrypt(b
-											.getData().getToken()));
+									if(!TextUtils.isEmpty(b.getData()
+											.getRealName())){
+										PreferenceUtil.setUserRealName(DESUtil.encrypt(b.getData()
+												.getRealName()));
+									}
+
+									if(!TextUtils.isEmpty(b
+											.getData().getIdNo())){
+										PreferenceUtil.setIdNo(DESUtil.encrypt(b
+												.getData().getIdNo()));
+									}
+
 									PreferenceUtil.setLogin(true);
 								} catch (Exception e) {
 									e.printStackTrace();
@@ -146,6 +153,7 @@ public class UserLogin extends Observable {
 							PreferenceUtil.setCookie("");
 						}
 						notifyObservers(b.getData());
+
 					}
 
 					@Override

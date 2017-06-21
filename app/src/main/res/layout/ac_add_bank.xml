@@ -65,7 +65,7 @@
         android:id="@+id/tv_add_bank_phone_mes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="请输入135****4545收到的短信验证码"
+        android:text=""
         android:layout_marginLeft="15dip"
         android:layout_marginTop="10dip"
         android:layout_marginBottom="15dip"
@@ -88,8 +88,8 @@
             android:background="@color/bg_white"
             android:padding="8dip"
             />
-        <EditText
-            android:id="@+id/et_add_bank_real_name"
+        <TextView
+            android:id="@+id/tv_add_bank_real_name"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="5"
@@ -101,6 +101,7 @@
             android:maxLength="10"
             android:maxLines="1"
             android:singleLine="true"
+            android:gravity="center_vertical"
             />
 
 
@@ -120,8 +121,8 @@
             android:background="@color/bg_white"
             android:padding="8dip"
             />
-        <EditText
-            android:id="@+id/et_add_bank_idcard"
+        <TextView
+            android:id="@+id/tv_add_bank_idcard"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="5"
@@ -133,6 +134,7 @@
             android:maxLength="20"
             android:maxLines="1"
             android:singleLine="true"
+            android:gravity="center_vertical"
             />
 
 

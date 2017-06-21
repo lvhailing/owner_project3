@@ -8,13 +8,20 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.adapter.CustomerFollowDetailsAdapter;
 import com.haidehui.bean.ResultCustomerFollowDetailslistBean;
+import com.haidehui.model.CustomerDetails2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
+
+import java.util.HashMap;
 
 
 /**
@@ -25,6 +32,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private CustomerFollowDetailsAdapter adapter;
     private MouldList<ResultCustomerFollowDetailslistBean> detailsList;
     private ScrollView scrollview;
+    private String customerId;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +81,9 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         });
     }
     private void initData() {
+        customerId=getIntent().getStringExtra("customerId");
+
+        requestData();
         test();
         adapter = new CustomerFollowDetailsAdapter(CustomerFollowDetailsActivity.this, detailsList, new CustomerFollowDetailsAdapter.OnEditListener() {
             @Override
@@ -126,6 +137,24 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
             bean.setIsChecked(checkStr[i]);
             detailsList.add(bean);
         }
+    }
+
+    private void requestData() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("customerId", customerId);
+        param.put("userId", "17021318005814472279");
+        HtmlRequest.getTrackingDetails(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        CustomerDetails2B data = (CustomerDetails2B) params.result;
+//                        setData(data);
+                    }
+                }
+        );
     }
     @Override
     public void onClick(View v) {

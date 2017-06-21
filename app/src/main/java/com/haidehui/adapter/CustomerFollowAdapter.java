@@ -6,18 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.haidehui.R;
-import com.haidehui.bean.ResultCustomerFollowlistBean;
+import com.haidehui.model.Tracking2B;
 import com.haidehui.network.types.MouldList;
 
 public class CustomerFollowAdapter extends BaseAdapter {
 	private Context mContext;
-	private MouldList<ResultCustomerFollowlistBean> list;
+	private MouldList<Tracking2B> list;
 	private LayoutInflater inflater;
 
 
-	public CustomerFollowAdapter(Context context, MouldList<ResultCustomerFollowlistBean> list) {
+	public CustomerFollowAdapter(Context context, MouldList<Tracking2B> list) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
@@ -25,7 +26,7 @@ public class CustomerFollowAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return list.size();
+		return list==null? 0 : list.size();
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class CustomerFollowAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ResultCustomerFollowlistBean bean = list.get(position);
+		Log.i("aaa","集合数量："+list.size());
 		Holder holder = null;
 		if (convertView == null) {
 			holder = new Holder();
@@ -52,8 +53,9 @@ public class CustomerFollowAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		holder.item_name.setText(bean.getName());
-		holder.item_time.setText(bean.getTime());
+		Tracking2B bean = list.get(position);
+		holder.item_name.setText(bean.getCustomerName());
+		holder.item_time.setText(bean.getEditTime());
 		return convertView;
 	}
 

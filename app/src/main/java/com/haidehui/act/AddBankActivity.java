@@ -19,8 +19,11 @@ import com.haidehui.model.ResultSentSMSContentBean;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.IdCardCheckUtils;
 import com.haidehui.uitls.NumUtils;
+import com.haidehui.uitls.PreferenceUtil;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 
@@ -37,8 +40,8 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
     private TextView tv_add_bank_get_verify_code;       //  获取验证码
     private EditText et_add_bank_verify_code;           //  验证码
     private TextView tv_add_bank_phone_mes;             //
-    private EditText et_add_bank_real_name;         //  真实姓名
-    private EditText et_add_bank_idcard;            //  身份证号码
+    private TextView tv_add_bank_real_name;         //  真实姓名
+    private TextView tv_add_bank_idcard;            //  身份证号码
     private EditText et_bank_name;          //  银行卡名称
     private EditText et_bank_address;       //  开户行所在地
     private EditText et_bank_num;           //  银行卡号
@@ -70,7 +73,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
     public void initData(){
 
-        tv_add_bank_phone_mes.setText("请输入135****4545收到的短信验证码");
+        tv_add_bank_phone_mes.setText("请输入"+ StringUtil.replaceSubString(phone)+"收到的短信验证码");
 
 //        verifyCode = et_add_bank_verify_code.getText().toString();
 //        realName = et_add_bank_real_name.getText().toString();
@@ -86,8 +89,8 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
         tv_add_bank_get_verify_code = (TextView) findViewById(R.id.tv_add_bank_get_verify_code);
         et_add_bank_verify_code = (EditText) findViewById(R.id.et_add_bank_verify_code);
         tv_add_bank_phone_mes = (TextView) findViewById(R.id.tv_add_bank_phone_mes);
-        et_add_bank_real_name = (EditText) findViewById(R.id.et_add_bank_real_name);
-        et_add_bank_idcard = (EditText) findViewById(R.id.et_add_bank_idcard);
+        tv_add_bank_real_name = (TextView) findViewById(R.id.tv_add_bank_real_name);
+        tv_add_bank_idcard = (TextView) findViewById(R.id.tv_add_bank_idcard);
         et_bank_name = (EditText) findViewById(R.id.et_bank_name);
         et_bank_address = (EditText) findViewById(R.id.et_bank_address);
         et_bank_num = (EditText) findViewById(R.id.et_bank_num);
@@ -98,6 +101,15 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
         mHandler = new MyHandler();
         btnString = getResources().getString(R.string.sign_getsms_again);
+
+        try {
+
+            realName = DESUtil.decrypt(PreferenceUtil.getUserRealName());
+            idCard = DESUtil.decrypt(PreferenceUtil.getIdNo());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         checkNull();
 
@@ -130,7 +142,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
         param.put("busiType", Urls.ADDBANKCARD);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
 
         HtmlRequest.sentSMS(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
@@ -167,7 +179,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
         param.put("bankName", bankName);
         param.put("idNo", idCard);
         param.put("realName", realName);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         param.put("validateCode", verifyCode);
 
         HtmlRequest.addBankCard(AddBankActivity.this, param,new BaseRequester.OnRequestListener() {
@@ -232,15 +244,15 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.btn_add_bankcard:
 
-                if(IdCardCheckUtils.isIdCard(idCard)){
-                    if(NumUtils.isBankCardNum(bankNum)){
+//                if(IdCardCheckUtils.isIdCard(idCard)){
+                    if(NumUtils.checkBankCard(bankNum)){
                         addBankCard();
                     }else{
                         Toast.makeText(context,"请输入正确银行卡号",Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(context,"请输入正确身份证号码",Toast.LENGTH_SHORT).show();
-                }
+//                }else{
+//                    Toast.makeText(context,"请输入正确身份证号码",Toast.LENGTH_SHORT).show();
+//                }
 
 
                 break;
@@ -333,8 +345,8 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             public void afterTextChanged(Editable editable) {
 
                 verifyCode = et_add_bank_verify_code.getText().toString().trim();
-                realName = et_add_bank_real_name.getText().toString().trim();
-                idCard = et_add_bank_idcard.getText().toString().trim();
+//                realName = et_add_bank_real_name.getText().toString().trim();
+//                idCard = et_add_bank_idcard.getText().toString().trim();
                 bankName = et_bank_name.getText().toString().trim();
                 bankAddress = et_bank_address.getText().toString().trim();
                 bankNum = et_bank_num.getText().toString().trim();
@@ -347,56 +359,56 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
         });
 
         //  监听真实姓名的事件
-        et_add_bank_real_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                verifyCode = et_add_bank_verify_code.getText().toString().trim();
-                realName = et_add_bank_real_name.getText().toString().trim();
-                idCard = et_add_bank_idcard.getText().toString().trim();
-                bankName = et_bank_name.getText().toString().trim();
-                bankAddress = et_bank_address.getText().toString().trim();
-                bankNum = et_bank_num.getText().toString().trim();
-
-                ViewUtils.setButton(verifyCode,editable.toString(),idCard,bankName,bankAddress,bankNum,btn_add_bankcard);
-
-            }
-        });
-
-        //  监听身份证的事件
-        et_add_bank_idcard.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                verifyCode = et_add_bank_verify_code.getText().toString().trim();
-                realName = et_add_bank_real_name.getText().toString().trim();
-                idCard = et_add_bank_idcard.getText().toString().trim();
-                bankName = et_bank_name.getText().toString().trim();
-                bankAddress = et_bank_address.getText().toString().trim();
-                bankNum = et_bank_num.getText().toString().trim();
-
-                ViewUtils.setButton(verifyCode,realName,editable.toString(),bankName,bankAddress,bankNum,btn_add_bankcard);
-            }
-        });
+//        et_add_bank_real_name.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//                verifyCode = et_add_bank_verify_code.getText().toString().trim();
+//                realName = et_add_bank_real_name.getText().toString().trim();
+//                idCard = et_add_bank_idcard.getText().toString().trim();
+//                bankName = et_bank_name.getText().toString().trim();
+//                bankAddress = et_bank_address.getText().toString().trim();
+//                bankNum = et_bank_num.getText().toString().trim();
+//
+//                ViewUtils.setButton(verifyCode,editable.toString(),idCard,bankName,bankAddress,bankNum,btn_add_bankcard);
+//
+//            }
+//        });
+//
+//        //  监听身份证的事件
+//        et_add_bank_idcard.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                verifyCode = et_add_bank_verify_code.getText().toString().trim();
+//                realName = et_add_bank_real_name.getText().toString().trim();
+//                idCard = et_add_bank_idcard.getText().toString().trim();
+//                bankName = et_bank_name.getText().toString().trim();
+//                bankAddress = et_bank_address.getText().toString().trim();
+//                bankNum = et_bank_num.getText().toString().trim();
+//
+//                ViewUtils.setButton(verifyCode,realName,editable.toString(),bankName,bankAddress,bankNum,btn_add_bankcard);
+//            }
+//        });
         //  监听银行名称的事件
         et_bank_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -412,8 +424,8 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable editable) {
                 verifyCode = et_add_bank_verify_code.getText().toString().trim();
-                realName = et_add_bank_real_name.getText().toString().trim();
-                idCard = et_add_bank_idcard.getText().toString().trim();
+//                realName = et_add_bank_real_name.getText().toString().trim();
+//                idCard = et_add_bank_idcard.getText().toString().trim();
                 bankName = et_bank_name.getText().toString().trim();
                 bankAddress = et_bank_address.getText().toString().trim();
                 bankNum = et_bank_num.getText().toString().trim();
@@ -436,8 +448,8 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable editable) {
                 verifyCode = et_add_bank_verify_code.getText().toString().trim();
-                realName = et_add_bank_real_name.getText().toString().trim();
-                idCard = et_add_bank_idcard.getText().toString().trim();
+//                realName = et_add_bank_real_name.getText().toString().trim();
+//                idCard = et_add_bank_idcard.getText().toString().trim();
                 bankName = et_bank_name.getText().toString().trim();
                 bankAddress = et_bank_address.getText().toString().trim();
                 bankNum = et_bank_num.getText().toString().trim();
@@ -460,8 +472,8 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void afterTextChanged(Editable editable) {
                 verifyCode = et_add_bank_verify_code.getText().toString().trim();
-                realName = et_add_bank_real_name.getText().toString().trim();
-                idCard = et_add_bank_idcard.getText().toString().trim();
+//                realName = et_add_bank_real_name.getText().toString().trim();
+//                idCard = et_add_bank_idcard.getText().toString().trim();
                 bankName = et_bank_name.getText().toString().trim();
                 bankAddress = et_bank_address.getText().toString().trim();
                 bankNum = et_bank_num.getText().toString().trim();

@@ -1,19 +1,19 @@
-package com.haidehui.bean;
+package com.haidehui.model;
 
 
 import com.haidehui.network.types.IMouldType;
 
-public class ResultCustomerInfolistBean implements IMouldType {
-	private String id;
+public class CustomerInfo3B implements IMouldType {
+	private String customerId;
 	private String customerName;
 	private String customerPhone;
 
-	public String getId() {
-		return id;
+	public String getCustomerId() {
+		return customerId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getCustomerName() {

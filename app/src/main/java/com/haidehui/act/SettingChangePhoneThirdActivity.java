@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.haidehui.R;
 import com.haidehui.common.Urls;
 import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.net.UserLoadout;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -40,6 +42,11 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
     private String btnString;
     private TitleBar title;
 
+    private String mobile = "";
+    private String validateCode;
+
+    private TextView tv_change_phone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +66,58 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
 
     }
 
+    private void request() {
+
+        validateCode = et_change_phone_verify_code.getText().toString();
+
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+
+        param.put("userId", userId);
+        param.put("newMobile", mobile);
+        param.put("validateCode", validateCode);
+
+        HtmlRequest.changePhoneThird(SettingChangePhoneThirdActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
+
+                        Toast.makeText(SettingChangePhoneThirdActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+//                        UserLoadout out = new UserLoadout(SettingChangePhoneThirdActivity.this,userId);
+//                        out.requestData();
+                        Intent i_login = new Intent(SettingChangePhoneThirdActivity.this, LoginActivity.class);
+                        startActivity(i_login);
+                        finish();
+
+                    } else {
+                        Toast.makeText(SettingChangePhoneThirdActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(SettingChangePhoneThirdActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 
     public void initView(){
 
         mHandler = new MyHandler();
         btnString = getResources().getString(R.string.sign_getsms_again);
+        mobile = getIntent().getStringExtra("mobile");
 
         tv_change_phone_get_verify_code = (TextView) findViewById(R.id.tv_change_phone_get_verify_code);
         et_change_phone_verify_code = (EditText) findViewById(R.id.et_change_phone_verify_code);
+        tv_change_phone = (TextView) findViewById(R.id.tv_change_phone);
+
+        tv_change_phone.setText(mobile);
 
         tv_change_phone_get_verify_code.setOnClickListener(this);
 
@@ -114,7 +165,9 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
 
             @Override
             public void onAction(int id) {
-                Toast.makeText(SettingChangePhoneThirdActivity.this,"////************",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SettingChangePhoneThirdActivity.this,"////************",Toast.LENGTH_SHORT).show();
+
+                request();
             }
         });
     }
@@ -151,9 +204,9 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
         switch (view.getId()){
 
             case R.id.tv_change_phone_get_verify_code:
-//                requestSMS();
-                smsflag = true;
-                startThread();
+                requestSMS();
+//                smsflag = true;
+//                startThread();
 
                 break;
 

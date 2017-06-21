@@ -10,25 +10,35 @@ import com.haidehui.common.Urls;
 import com.haidehui.model.AccountBookAward1B;
 import com.haidehui.model.AccountBookCommission1B;
 import com.haidehui.model.AccountBookWithdraw1B;
+import com.haidehui.model.AwardDetails1B;
 import com.haidehui.model.CommissionDetails1B;
+import com.haidehui.model.CustomerDetails1B;
 import com.haidehui.model.CustomerInfo1B;
 import com.haidehui.model.HomeIndex1B;
 import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.HouseDetail1B;
 import com.haidehui.model.HouseList1B;
 import com.haidehui.model.InvestmentGuide1B;
+import com.haidehui.model.PartnerIdentify1B;
 import com.haidehui.model.OverseaProjectDetail1B;
 import com.haidehui.model.OverseaProjectList1B;
 import com.haidehui.model.ProductRoadshow1B;
+import com.haidehui.model.RenGou1B;
+import com.haidehui.model.RenGouDetails1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
 import com.haidehui.model.ResultLoginOffBean;
 import com.haidehui.model.ResultMessageBean;
 import com.haidehui.model.ResultMessageInfoBean;
 import com.haidehui.model.ResultMyBankListBean;
+import com.haidehui.model.ResultRecommendInfoBean;
+import com.haidehui.model.ResultRecommendRecordBean;
 import com.haidehui.model.ResultSentSMSBean;
-import com.haidehui.model.WithDrawDetails1B;
 import com.haidehui.model.ResultWithdrawInfoBean;
+import com.haidehui.model.SubmitCustomer1B;
+import com.haidehui.model.SubmitPartnerIdentify1B;
+import com.haidehui.model.Tracking1B;
+import com.haidehui.model.WithDrawDetails1B;
 import com.haidehui.network.http.SimpleHttpClient;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.MD5;
@@ -109,13 +119,14 @@ public class HtmlRequest extends BaseRequester {
 
     public static String getResultLinked(LinkedHashMap<String, Object> param) {
         Gson gson = new Gson();
-        String str_md5 = gson.toJson(param);
+        Map<String, Object> sortMap = sortMap(param);
+        String str_md5 = gson.toJson(sortMap);
         String md5 = MD5.stringToMD5(str_md5);
         String result = null;
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("check", md5);
-            map.put("data", param);
+            map.put("data", sortMap);
             String encrypt = gson.toJson(map);
             result = DESUtil.encrypt(encrypt);
         } catch (Exception e) {
@@ -186,6 +197,424 @@ public class HtmlRequest extends BaseRequester {
                     Gson json = new Gson();
                     String data = DESUtil.decrypt(result);
                     ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 意见反馈
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void advice(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ADAVICE;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 找回密码
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void findPassword(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_FINDPASSWORD;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+
+    /**
+     * 修改手机号一
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void changePhone(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CHANGEPHONE;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 修改手机号三
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void changePhoneThird(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CHANGEPHONE_THIRD;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 注册
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void signup(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_SIGNUP;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 修改登录密码
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void changePassword(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CHANGEPASSWORD;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+
+    /**
+     * 获取推荐主页信息
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void getRecommendInfo(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_GETRECOMMENDINFO;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultRecommendInfoBean b = json.fromJson(data, ResultRecommendInfoBean.class);
+                    return b.getData();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                } finally {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 获取邀请记录信息
+     *
+     * @param context
+     * @param listener
+     * @return
+     */
+    public static void getRecommendRecord(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_GETRECOMMEND_RECORD;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    Gson json = new Gson();
+                    String data = DESUtil.decrypt(result);
+                    ResultRecommendRecordBean b = json.fromJson(data, ResultRecommendRecordBean.class);
                     return b.getData();
 
                 } catch (Exception e) {
@@ -646,12 +1075,20 @@ public class HtmlRequest extends BaseRequester {
                 String result = (String) client.getResult();
                 Gson json = new Gson();
 
-
-                if (isCancelled() || result == null) {
+                String data = null;
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    data = DESUtil.decrypt(result);
+                    ResultLoginOffBean b = json.fromJson(data, ResultLoginOffBean.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
                     return null;
                 }
-                ResultLoginOffBean b = json.fromJson(result, ResultLoginOffBean.class);
-                return b.getData();
+
+
             }
 
             @Override
@@ -670,7 +1107,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener 监听
      * @return 返回数据
      */
-    public static void getCycleIndex(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void getCycleIndex(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_HOME_ADVERTISE;
 
@@ -983,7 +1420,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener 监听
      * @return 返回数据
      */
-    public static void getDiscoveryCycleIndex(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void getDiscoveryCycleIndex(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_DISCOVERY_ADVERTISE;
 
@@ -1482,6 +1919,446 @@ public class HtmlRequest extends BaseRequester {
 
             }
 
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 活动奖励详情详情
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getAwardDetails(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_AWARD_DETAILS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    AwardDetails1B b = gson.fromJson(data, AwardDetails1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 获取   置业顾问认证
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getPartnerIdentify(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_PARTNER_IDENTIFY;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    PartnerIdentify1B b = gson.fromJson(data, PartnerIdentify1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 提交  置业顾问认证
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void submitPartnerIdentify(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_SUBMIT_PARTNER_IDENTIFY;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    SubmitPartnerIdentify1B b = gson.fromJson(data, SubmitPartnerIdentify1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 客户信息详情
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getCustomerInFoDetails(final Context context, HashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_CUSTOMER_INFO_DETAILS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    CustomerDetails1B b = gson.fromJson(data, CustomerDetails1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 新增客户信息
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getAddCustomerInFo(final Context context, HashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ADD_CUSTOMER_INFO;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 删除客户信息
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void deleteCustomerInFo(final Context context, HashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_DELETE_CUSTOMER_INFO;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 删除客户信息
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getRenGouState(final Context context, HashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_GET_RENGOU;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    RenGou1B b = gson.fromJson(data, RenGou1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 认购详情
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getRenGouDetails(final Context context, LinkedHashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_GET_RENGOU_DETAILS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    RenGouDetails1B b = gson.fromJson(data, RenGouDetails1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 客户跟踪列表
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getTrackingList(final Context context, Map<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_TRACKING_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    Tracking1B b = gson.fromJson(data, Tracking1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+    /**
+     * 客户跟踪详情
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getTrackingDetails(final Context context, HashMap<String, Object> param/*String type*/, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_TRACKING_DETAILS;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    CustomerDetails1B b = gson.fromJson(data, CustomerDetails1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;

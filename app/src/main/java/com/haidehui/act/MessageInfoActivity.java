@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,7 +47,7 @@ public class MessageInfoActivity extends BaseActivity{
         baseSetContentView(R.layout.ac_message_info);
         initTopTitle();
         initView();
-        initData();
+
     }
 
     public void initData(){
@@ -99,7 +100,39 @@ public class MessageInfoActivity extends BaseActivity{
         listview_message_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(list.get(i-1).getBusiType().equals("withdrawCash")){       //  提现
 
+                    Intent intent = new Intent(context, WithDrawDetailsActivity.class);
+                    intent.putExtra("messageId", list.get(i-1).getId());
+                    intent.putExtra("id", list.get(i-1).getBusiPriv());
+                    startActivity(intent);
+
+                }else if(list.get(i-1).getBusiType().equals("registerCash")){     //  下载奖励详情
+
+
+                    Intent intent = new Intent(context,AwardDetailsActivity.class);
+                    intent.putExtra("messageId", list.get(i-1).getId());
+                    intent.putExtra("id", list.get(i-1).getBusiPriv());
+                    startActivity(intent);
+
+
+                }else if(list.get(i-1).getBusiType().equals("commissionOver")){     //  佣金收益
+
+                    Intent intent = new Intent(context, CommissionDetailsActivity.class);
+                    intent.putExtra("messageId", list.get(i-1).getId());
+                    intent.putExtra("id", list.get(i-1).getBusiPriv());
+                    startActivity(intent);
+
+                }else if(list.get(i-1).getBusiType().equals("awardredemption")){        //  活动奖励
+
+                    Intent intent = new Intent(context,AwardDetailsActivity.class);
+                    intent.putExtra("messageId", list.get(i-1).getId());
+                    intent.putExtra("id", list.get(i-1).getBusiPriv());
+                    startActivity(intent);
+
+                }else{
+
+                }
 
             }
         });
@@ -144,7 +177,7 @@ public class MessageInfoActivity extends BaseActivity{
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", page);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         cachePage_pro = page;
         HtmlRequest.sentMessageInfo(MessageInfoActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -198,6 +231,7 @@ public class MessageInfoActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

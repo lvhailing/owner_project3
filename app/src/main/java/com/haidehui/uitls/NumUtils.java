@@ -38,7 +38,7 @@ public class NumUtils {
 
      */
 
-    public static boolean matchLuhn(String cardNo) {
+    public static boolean checkBankCard(String cardNo) {
 
         int[] cardNoArr = new int[cardNo.length()];
         for (int i=0; i<cardNo.length(); i++) {

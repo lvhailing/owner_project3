@@ -53,7 +53,7 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 	private static final int ACCOUNTACT = 4;
 
 	private int comeFlag = LOGINACT;
-	private int titleName;
+	private String titleName;
 	private String tomain = null;
 	private String skip;
 	private String back_from_splah;
@@ -64,42 +64,50 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		baseSetContentView(R.layout.activity_gesture_edit);
-		initTopTitle();
+
 		Intent i = getIntent();
 		comeFlag = i.getExtras().getInt("comeflag");
-		titleName = getIntent().getExtras().getInt("title");
+		titleName = getIntent().getStringExtra("title");
 		tomain = getIntent().getStringExtra("tomain");
 		skip=getIntent().getStringExtra("skip");
 		back_from_splah=getIntent().getStringExtra("back_from_splah");
 		back_from_change_gesture=getIntent().getStringExtra("back_from_change_gesture");
 //		System.out.println("titleName"+titleName);
+		initTopTitle();
 		setUpViews();
 		setUpListeners();
 
-		/*if(netHint_2!=null){
-			netHint_2.setVisibility(View.GONE);
-			llContent.setVisibility(View.VISIBLE);
-		}
-		netFail_2 = false;*/
 	}
 	private void initTopTitle() {
 		TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-		title.setVisibility(View.GONE);
+		title.setTitle(getResources().getString(R.string.title_null))
+				.setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+				.setCenterText(titleName)
+				.showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+
+			@Override
+			public void onMenu(int id) {
+			}
+
+			@Override
+			public void onBack() {
+				finish();
+			}
+
+			@Override
+			public void onAction(int id) {
+
+			}
+		});
 	}
 	private void setUpViews() {
-		mTextTitle = (TextView) findViewById(R.id.text_title);
-		mTextCancel = (ImageView) findViewById(R.id.text_cancel);
 		mTextReset = (TextView) findViewById(R.id.text_reset);
 		mTextArrow = (TextView) findViewById(R.id.text_arrow);
-		mTextCancel.setOnClickListener(this);
 		mTextReset.setClickable(false);
-		mTextArrow.setVisibility(View.GONE);
-		if (skip!=null){
-			mTextCancel.setVisibility(View.VISIBLE);
-		}else{
-			mTextCancel.setVisibility(View.GONE);
-		}
+		mTextArrow.setVisibility(View.VISIBLE);
 //		mTextReset.setVisibility(View.GONE);
+		mTextReset
+				.setText(getString(R.string.set_gesture_pattern_jump));
 		// mLockIndicator = (LockIndicator) findViewById(R.id.lock_indicator);
 		mTextTip = (TextView) findViewById(R.id.text_tip);
 		mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
@@ -123,7 +131,8 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 							mTextReset.setVisibility(View.VISIBLE);
 							mTextReset
 									.setText(getString(R.string.reset_gesture_code));
-							mTextTip.setText("请重复手势密码");
+
+							mTextTip.setText(getString(R.string.setup_gesture_pattern_again));
 						} else {
 							if (inputCode.equals(mFirstPassword)) {
 								mGestureContentView.clearDrawlineState(0L);
@@ -143,6 +152,7 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 										Intent i_splash = new Intent();
 										i_splash.setClass(GestureEditActivity.this,
 												MainActivity.class);
+										PreferenceUtil.setGestureChose(true);
 										Toast.makeText(GestureEditActivity.this, "设置成功", Toast.LENGTH_LONG).show();
 										startActivity(i_splash);
 										finish();
@@ -247,7 +257,7 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			 case R.id.text_cancel:
+			 /*case R.id.text_cancel:
 			 if(comeFlag==1){
 				 Intent iMain = new Intent(GestureEditActivity.this,
 						 MainActivity.class);
@@ -267,7 +277,7 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 			 }else{
 				 this.finish();
 			 }
-			 break;
+			 break;*/
 			case R.id.text_reset:
 				if(mIsFirstInput){
 					Intent iMain = new Intent(GestureEditActivity.this,
@@ -296,11 +306,11 @@ public class GestureEditActivity extends BaseActivity implements OnClickListener
 				}else{
 					mIsFirstInput = true;
 					mTextReset.setClickable(true);
-				    mTextReset.setVisibility(View.GONE);
-					mTextArrow.setVisibility(View.GONE);
+				    mTextReset.setVisibility(View.VISIBLE);
+					mTextArrow.setVisibility(View.VISIBLE);
 					mTextReset
 							.setText(getString(R.string.set_gesture_pattern_jump));
-					mTextTip.setText("请画出手势密码");
+					mTextTip.setText(getResources().getString(R.string.setup_gesture_pattern));
 
 				}
 				// updateCodeList("");

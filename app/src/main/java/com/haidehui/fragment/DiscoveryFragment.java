@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -39,7 +40,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     private CycleAdapter cycleAdapter;//自定义viewPager
     private Context context;
     private MouldList<ResultCycleIndex2B> cycleBean;
-    private Intent intent;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
     private ViewPager vp;
     private View v_line; // 投资指南，产品路演下的下划线
@@ -158,7 +158,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.banner_one).showImageOnFail(R.drawable.banner_one).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.bg_home_carousel_figure_normal).showImageOnFail(R.mipmap.bg_home_carousel_figure_normal).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
         requestCycleIndex();
     }
@@ -196,7 +196,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
 
     // 请求轮播图数据
     private void requestCycleIndex() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("params", "params");
         HtmlRequest.getDiscoveryCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override

@@ -141,7 +141,7 @@ public class WithdrawActivity extends BaseActivity{
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
         param.put("page", "1");
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         HtmlRequest.getMyBankList(WithdrawActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -168,7 +168,7 @@ public class WithdrawActivity extends BaseActivity{
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
         param.put("id", id);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         HtmlRequest.deleteBankList(WithdrawActivity.this, param,new BaseRequester.OnRequestListener() {
 

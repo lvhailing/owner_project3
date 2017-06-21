@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -142,18 +143,20 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
 
-            case R.id.btn_sign:         //      立即注册
+            case R.id.btn_findpassword:         //      密码重置
+
+                findpassword();
 
                 break;
 
             case R.id.signup_web:       //  海德汇协议
 
                 break;
-            case R.id.tv_sign_get_verify_code:          //  获取验证码
+            case R.id.tv_findpassword_get_verify_code:          //  获取验证码
 
-//                requestSMS();
-                smsflag = true;
-                startThread();
+                requestSMS();
+//                smsflag = true;
+//                startThread();
                 break;
 
             default:
@@ -169,7 +172,6 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("mobile", mobile);
         param.put("busiType", Urls.LOGINRET);
-        param.put("token", token);
 
         HtmlRequest.sentSMS(FindPasswordActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -195,6 +197,36 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                     }
                 });
     }
+
+    private void findpassword() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("mobile", mobile);
+        param.put("newPassword", password);
+        param.put("validateCode", verifyCode);
+
+        HtmlRequest.findPassword(FindPasswordActivity.this, param,new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
+                        Intent i_login = new Intent(FindPasswordActivity.this, LoginActivity.class);
+                        startActivity(i_login);
+                        finish();
+                    } else {
+                        Toast.makeText(FindPasswordActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(FindPasswordActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 
     private void startThread() {
         if (smsflag) {
@@ -278,6 +310,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                     btn_findpassword.setBackgroundResource(R.drawable.shape_center_gray);
                     btn_findpassword.setClickable(false);
                 }else{
+                    mobile = et_findpassword_phone.getText().toString();
                     verifyCode = et_findpassword_verify_code.getText().toString();
                     password = et_findpassword_password.getText().toString();
                     password_again = et_findpassword_password_again.getText().toString();
@@ -307,7 +340,9 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                     btn_findpassword.setBackgroundResource(R.drawable.shape_center_gray);
                     btn_findpassword.setClickable(false);
                 }else{
+
                     mobile = et_findpassword_phone.getText().toString();
+                    verifyCode = et_findpassword_verify_code.getText().toString();
                     password = et_findpassword_password.getText().toString();
                     password_again = et_findpassword_password_again.getText().toString();
 
@@ -338,6 +373,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                 }else{
                     mobile = et_findpassword_phone.getText().toString();
                     verifyCode = et_findpassword_verify_code.getText().toString();
+                    password = et_findpassword_password.getText().toString();
                     password_again = et_findpassword_password_again.getText().toString();
 
                     ViewUtils.setButton(mobile,verifyCode,password_again,btn_findpassword);
@@ -367,6 +403,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                     mobile = et_findpassword_phone.getText().toString();
                     verifyCode = et_findpassword_verify_code.getText().toString();
                     password = et_findpassword_password.getText().toString();
+                    password_again = et_findpassword_password_again.getText().toString();
                     ViewUtils.setButton(mobile,verifyCode,password,btn_findpassword);
 
                 }
@@ -374,7 +411,5 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         });
 
     }
-
-
 
 }

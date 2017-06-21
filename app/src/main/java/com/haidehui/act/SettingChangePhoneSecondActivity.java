@@ -10,7 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.common.Urls;
+import com.haidehui.model.ResultSentSMSContentBean;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.PreferenceUtil;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
+
+import java.util.LinkedHashMap;
 
 /**
  * 修改手机——修改手机号
@@ -21,6 +30,7 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
     private TextView tv_change_phone;       //  当前手机号
     private EditText et_change_phone;       //  新手机号
     private TitleBar title;
+    private String mobile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,7 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
         tv_change_phone = (TextView) findViewById(R.id.tv_change_phone);
         et_change_phone = (EditText) findViewById(R.id.et_change_phone);
 
+        tv_change_phone.setText(StringUtil.replaceSubStringIdNo(phone));
 
         et_change_phone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -60,6 +71,36 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
 
     }
 
+    private void request() {
+
+        mobile = et_change_phone.getText().toString();
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("busiType", Urls.MOBILEEDIT);
+        param.put("mobile", mobile);
+        HtmlRequest.sentSMS(SettingChangePhoneSecondActivity.this, param,new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
+                if (b != null) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
+
+                        Intent i_third = new Intent(SettingChangePhoneSecondActivity.this,SettingChangePhoneThirdActivity.class);
+                        i_third.putExtra("mobile",mobile);
+                        startActivity(i_third);
+//                        finish();
+                    } else {
+                        Toast.makeText(SettingChangePhoneSecondActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(SettingChangePhoneSecondActivity.this, "加载失败，请确认网络通畅",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     private void initTopTitle() {
         title = (TitleBar) findViewById(R.id.rl_title);
         title.setTitle(getResources().getString(R.string.title_null))
@@ -82,8 +123,8 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
             public void onAction(int id) {
 
 //                Toast.makeText(SettingChangePhoneSecondActivity.this,"////************",Toast.LENGTH_SHORT).show();
-                Intent i_third = new Intent(SettingChangePhoneSecondActivity.this,SettingChangePhoneThirdActivity.class);
-                startActivity(i_third);
+
+                request();
 
             }
         });

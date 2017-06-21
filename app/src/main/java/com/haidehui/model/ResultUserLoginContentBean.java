@@ -5,21 +5,49 @@ import com.haidehui.network.types.IMouldType;
 
 public class ResultUserLoginContentBean implements IMouldType {
 
-	private String flag;
-	private String message;
-	private String userId;
+	private String flag;		//		true/false,true为登录成功，false为登录失败
+	private String message;		//		登录返回信息
+	private String userId;		//	用户ID
+	private String mobile;		//	手机号
+	private String realName;		//	真实姓名
+	private String idNo;		//	身份证号（没认证，身份证是空）
+	private String checkStatus;		//	认证状态：init未认证（注册后未填写认证信息）	submit待认证(提交认证信息待审核)	success - 认证成功(后台审核通过)	fail - 认证失败(后台审核未通过)
+
 	private String nickName;
 	private String phone;
 	private String openAccountStatus;
 	private String token;
 
-	public ResultUserLoginContentBean(String flag, String message, String userId, String nickName, String phone, String openAccountStatus) {
-		this.flag = flag;
-		this.message = message;
-		this.userId = userId;
-		this.nickName = nickName;
-		this.phone = phone;
-		this.openAccountStatus = openAccountStatus;
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getIdNo() {
+		return idNo;
+	}
+
+	public void setIdNo(String idNo) {
+		this.idNo = idNo;
+	}
+
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
 	}
 
 	public String getToken() {
@@ -43,14 +71,7 @@ public class ResultUserLoginContentBean implements IMouldType {
 	// setMessage(message);
 	// }
 	// {flag=true, message=, nickName=aaaasw, userId=14120415074007298439}
-	public ResultUserLoginContentBean(String flag, String message,
-			String userId, String nickName, String phone) {
-		setFlag(flag);
-		setMessage(message);
-		setUserId(userId);
-		setNickName(nickName);
-		setPhone(phone);
-	}
+
 
 	public String getPhone() {
 		return phone;
