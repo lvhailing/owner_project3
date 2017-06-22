@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.common.Urls;
 import com.haidehui.dialog.SelectAddressDialog;
 import com.haidehui.model.PartnerIdentify2B;
 import com.haidehui.model.SubmitPartnerIdentify2B;
@@ -36,10 +38,13 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.http.AsyncHttpClient;
 import com.haidehui.network.http.AsyncHttpResponseHandler;
 import com.haidehui.network.http.RequestParams;
-import com.haidehui.photo_preview.PhotoPreviewAc;
 import com.haidehui.photo_preview.PhotoPreviewAcForOne;
-import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import org.apache.http.Header;
 
@@ -53,13 +58,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import android.text.TextUtils;
-import com.haidehui.common.Urls;
-import com.haidehui.uitls.StringUtil;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.haidehui.widget.SelectPhotoDialog;
 
 /**
  *  事业合伙人认证
@@ -251,7 +250,12 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         }
 
         if (!TextUtils.isEmpty(data.getCheckStatus())){
-            if ("submit".equals(data.getCheckStatus())){//待认证(提交认证信息待审核)  submit状态 所填内容不能编辑
+            if ("init".equals(data.getCheckStatus())){
+
+                img_identity_card.setClickable(false);
+                img_card.setClickable(false);
+
+            }else if ("submit".equals(data.getCheckStatus())){//待认证(提交认证信息待审核)  submit状态 所填内容不能编辑
                 layout_delete.setVisibility(View.VISIBLE);
                 tv_remark.setText("认证审核中，请您耐心等待我们的反馈！");
 
@@ -287,10 +291,10 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 edt_workUnit.requestFocusFromTouch();
                 edt_email.requestFocusFromTouch();
                 edt_idNo.requestFocusFromTouch();
-                layout_identity_card.setClickable(false);
-                layout_card.setClickable(false);
-                img_identity_card.setClickable(true);
-                img_card.setClickable(true);
+                layout_identity_card.setClickable(true);
+                layout_card.setClickable(true);
+                img_identity_card.setClickable(false);
+                img_card.setClickable(false);
 
             }
         }
@@ -304,7 +308,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void onConfim(String selectText) {
                         tv_workProvince.setText(selectText);
-      //                  selectInfo=selectText.split("-");
                     }
 
                     @Override
@@ -316,11 +319,11 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.layout_identity_card:
                 photoType = 1;
-                setPhoto();
+                selectPhoto();
                 break;
             case R.id.layout_card:
                 photoType = 2;
-                setPhoto();
+                selectPhoto();
                 break;
             case R.id.img_identity_card:
                 list = new ArrayList<>();
@@ -429,37 +432,25 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 }
         );
     }
-    private void setPhoto() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("选择图片");
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+    private void selectPhoto() {
+        SelectPhotoDialog mDialog = new SelectPhotoDialog(this,new SelectPhotoDialog.OnSelectPhotoChanged() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setPositiveButton("相机", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-				/*Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-				startActivityForResult(intent, CAMERA_REQUEST_CODE);*/
-
-                takePhoto();
-            }
-        });
-        builder.setNeutralButton("相册", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-				/*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-				intent.setType("image*//*");
-				startActivityForResult(intent, GALLERY_REQUEST_CODE);*/
+            public void onAlbum() {//相册
 
                 pickPhoto();
             }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
 
+            @Override
+            public void onCamera() {//相机
+
+                takePhoto();
+            }
+
+        });
+        mDialog.show();
     }
+
+
     /**
      * 拍照获取图片
      */
@@ -737,28 +728,12 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                                       String content) {
                     super.onSuccess(statusCode, headers, content);
                     try {
-
-					/*	ResultUploadListBean bean = json.fromJson(data,
-								ResultUploadListBean.class);
-						ResultUploadListContentBean contentBean = bean
-								.getData();
-						if (photoType == 1) {
-							sfzzmFileName = contentBean.getTmpFileName();
-						} else if (photoType == 2) {
-							sfzfmFileName = contentBean.getTmpFileName();
-						} else if (photoType == 3) {
-							cardFileName = contentBean.getTmpFileName();
-						} else if (photoType == 4) {
-							dkptFileName = contentBean.getTmpFileName();
-						} else if (photoType == 5) {
-							qzyFileName = contentBean.getTmpFileName();
-						}*/
+                        mthread = new Thread(myRunnable);
+                        mthread.start();
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    mthread = new Thread(myRunnable);
-                    mthread.start();
 
                 }
 

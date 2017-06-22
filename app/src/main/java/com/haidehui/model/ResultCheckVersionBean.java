@@ -1,41 +1,44 @@
 package com.haidehui.model;
 
-public class ResultCheckVersionBean {
-    private String check;
-    private String code;
-    private VersionMo data;
-    private String msg;
 
-    public String getCheck() {
-        return check;
-    }
+import com.haidehui.network.types.IMouldType;
 
-    public void setCheck(String check) {
-        this.check = check;
-    }
+public class ResultCheckVersionBean implements IMouldType {
+	private String check;
+	private String code;
+	private ResultCheckVersionContentBean data;
+	private String msg;
 
-    public String getCode() {
-        return code;
-    }
+	public String getCheck() {
+		return check;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public void setCheck(String check) {
+		this.check = check;
+	}
 
-    public VersionMo getData() {
-        return data;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setData(VersionMo data) {
-        this.data = data;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public String getMsg() {
-        return msg;
-    }
+	public ResultCheckVersionContentBean getData() {
+		return data;
+	}
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+	public void setData(ResultCheckVersionContentBean data) {
+		this.data = data;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
 }

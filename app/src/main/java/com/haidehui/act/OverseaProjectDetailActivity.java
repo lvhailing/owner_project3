@@ -58,6 +58,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private MyListView myListView;
     private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
     private RelatedHouseAdapter myAdapter;
+    private TextView tv_no_house; // 相关房源没数据时显示的提示语
 
 
     @Override
@@ -110,6 +111,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         tv_project_des = (TextView) findViewById(R.id.tv_project_des);
         tv_support_facilities_desc = (TextView) findViewById(R.id.tv_support_facilities_desc);
         tv_geographic_location_desc = (TextView) findViewById(R.id.tv_geographic_location_desc);
+        tv_no_house = (TextView) findViewById(R.id.tv_no_house);
 
         ll_pro_house_photos = (LinearLayout) findViewById(R.id.ll_pro_house_photos);
         ll_support_facilities = (LinearLayout) findViewById(R.id.ll_support_facilities);
@@ -157,7 +159,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
 
     private void setView() {
-        //加载图片
+        //加载顶部图片
         ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
 
         tv_pro_house_name.setText(overseaProjectDetail.getName());
@@ -239,6 +241,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                         if (relatedhouseList != null && relatedhouseList.size() > 0) {
                             myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);
                             myListView.setAdapter(myAdapter);
+                        }else {
+                            tv_no_house.setVisibility(View.VISIBLE);
                         }
                         setView();
                     }

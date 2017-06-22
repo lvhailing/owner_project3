@@ -161,6 +161,8 @@ public class SettingChangePasswordActivity extends BaseActivity{
 //                        UserLoadout out = new UserLoadout(SettingChangePasswordActivity.this,userId);
 //                        out.requestData();
                         Intent i_login = new Intent(SettingChangePasswordActivity.this, LoginActivity.class);
+//                        i_login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        i_login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i_login);
                         finish();
                     }else{

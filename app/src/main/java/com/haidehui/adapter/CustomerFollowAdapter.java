@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.util.Log;
 
 import com.haidehui.R;
 import com.haidehui.model.Tracking2B;
@@ -41,7 +40,7 @@ public class CustomerFollowAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		Log.i("aaa","集合数量："+list.size());
+		Tracking2B bean = list.get(position);
 		Holder holder = null;
 		if (convertView == null) {
 			holder = new Holder();
@@ -53,7 +52,6 @@ public class CustomerFollowAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		Tracking2B bean = list.get(position);
 		holder.item_name.setText(bean.getCustomerName());
 		holder.item_time.setText(bean.getEditTime());
 		return convertView;

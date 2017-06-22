@@ -55,6 +55,10 @@ public class Urls {
      */
     public static final String URL_SMS = EC_HOST + "user/mobile/send/verifycode";
     /**
+     * 版本更新
+     */
+    public static final String URL_VERSION_CHECK = EC_HOST + "version/check";
+    /**
      * 意见反馈
      */
     public static final String URL_ADAVICE = EC_HOST + "problemFeedback/save";
@@ -106,6 +110,11 @@ public class Urls {
      */
     public static final String URL_NOTICEDETAIL = EC_HOST + "message/bulletin/detail?bulletinId=";
 
+    /**
+     * 其他消息详情
+     */
+    public static final String URL_OTHERDETAIL = EC_HOST + "message/others/";
+
     // 设置--服务协议
     public static final String URL_SERVICE_AGREEMENT = EC_HOST + "service/agreement";
 
@@ -140,7 +149,7 @@ public class Urls {
 
     public static final String ADDBANKCARD = "bankCardBind";       //  添加银行卡
 
-    public static final String WITHDRAW = "withdrawCash";       //  提现
+    public static final String WITHDRAW = "withdrawCashNum";       //  提现
 
 
     // */ 手势密码点的状态
@@ -249,5 +258,15 @@ public class Urls {
 
     //客户跟踪详情
     public static final String URL_TRACKING_DETAILS = EC_HOST + "account/trade/customer/tracking";
+
+    //新增客户跟踪
+    public static final String URL_SUBMIT_TRACKING = EC_HOST + "account/trade/customer/tracking/save";
+
+    //获取我的信息
+    public static final String URL_MINE_DATA = EC_HOST + "account/userInfo";
+
+    //保存姓名
+    public static final String URL_SAVE_NAME = EC_HOST + "account/realName/modify";
+
 
 }

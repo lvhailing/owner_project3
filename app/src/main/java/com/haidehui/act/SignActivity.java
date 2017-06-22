@@ -325,7 +325,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     verifyCode = et_sign_verify_code.getText().toString();
                     password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
-
+                    recommendation = et_sign_recommendation.getText().toString();
                     if(!signup_checkbox.isChecked()){
                         btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
                         btn_sign.setClickable(false);
@@ -360,7 +360,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     verifyCode = et_sign_verify_code.getText().toString();
                     password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
-
+                    recommendation = et_sign_recommendation.getText().toString();
                     if(!signup_checkbox.isChecked()){
                         btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
                         btn_sign.setClickable(false);
@@ -395,7 +395,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     mobile = et_sign_phone.getText().toString();
                     password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
-
+                    recommendation = et_sign_recommendation.getText().toString();
                     if(!signup_checkbox.isChecked()){
                         btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
                         btn_sign.setClickable(false);
@@ -429,6 +429,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     password = et_sign_password.getText().toString();
                     mobile = et_sign_phone.getText().toString();
                     realName = et_sign_real_name.getText().toString();
+                    recommendation = et_sign_recommendation.getText().toString();
                     if(!signup_checkbox.isChecked()){
                         btn_sign.setBackgroundResource(R.drawable.shape_center_gray);
                         btn_sign.setClickable(false);
@@ -453,7 +454,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     verifyCode = et_sign_verify_code.getText().toString();
                     password = et_sign_password.getText().toString();
                     realName = et_sign_real_name.getText().toString();
-
+                    recommendation = et_sign_recommendation.getText().toString();
                     ViewUtils.setButton(mobile,verifyCode,password,realName,btn_sign);
                 }
             }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -52,14 +53,21 @@ public class MessageOtherAdapter extends BaseAdapter{
             view = inflater.inflate(R.layout.ac_message_other_item,null);
             holder.tv_message_other_item_name = (TextView) view.findViewById(R.id.tv_message_other_item_name);
             holder.tv_message_other_item_date = (TextView) view.findViewById(R.id.tv_message_other_item_date);
+            holder.iv_message_other_isread = (ImageView) view.findViewById(R.id.iv_message_other_isread);
             view.setTag(holder);
         }else{
             holder = (Holder) view.getTag();
         }
 
-        holder.tv_message_other_item_name.setText(list.get(i).getDescription());
-        holder.tv_message_other_item_date.setText(list.get(i).getDescription());
-
+        holder.tv_message_other_item_name.setText(list.get(i).getTopic());
+        holder.tv_message_other_item_date.setText(list.get(i).getCreateTime());
+        if(list.get(i).getStatus().equals("read")){
+            holder.iv_message_other_isread.setVisibility(View.GONE);
+        }else if(list.get(i).getStatus().equals("unread")){
+            holder.iv_message_other_isread.setVisibility(View.VISIBLE);
+        }else{
+            holder.iv_message_other_isread.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -67,6 +75,7 @@ public class MessageOtherAdapter extends BaseAdapter{
     class Holder{
         private TextView tv_message_other_item_name;
         private TextView tv_message_other_item_date;
+        private ImageView iv_message_other_isread;
 
 
     }

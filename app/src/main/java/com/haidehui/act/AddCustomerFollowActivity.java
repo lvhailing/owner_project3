@@ -5,17 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.adapter.AddCustomerFollowAdapter;
 import com.haidehui.adapter.CustomerFollowDetailsAdapter;
 import com.haidehui.bean.ResultCustomerFollowDetailslistBean;
+import com.haidehui.model.SubmitCustomer2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
+
+import java.util.HashMap;
 
 
 /**
@@ -23,9 +31,12 @@ import com.haidehui.widget.TitleBar;
  */
 public class AddCustomerFollowActivity extends BaseActivity implements View.OnClickListener {
     private MyListView lv_follow_detail;
-    private AddCustomerFollowAdapter adapter;
+    private CustomerFollowDetailsAdapter adapter;
     private MouldList<ResultCustomerFollowDetailslistBean> detailsList;
     private ScrollView scrollview;
+    private Button btn_save;
+
+    private String[] resultStr=new String[12];
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,7 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
 
     private void initView() {
         scrollview= (ScrollView) findViewById(R.id.scrollview);
+        btn_save= (Button) findViewById(R.id.btn_save);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
         lv_follow_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -74,8 +86,9 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
         });
     }
     private void initData() {
-        test();
-        adapter = new AddCustomerFollowAdapter(AddCustomerFollowActivity.this, detailsList, new AddCustomerFollowAdapter.OnEditListener() {
+        btn_save.setOnClickListener(this);
+        put();
+        adapter = new CustomerFollowDetailsAdapter(AddCustomerFollowActivity.this, detailsList, new CustomerFollowDetailsAdapter.OnEditListener() {
             @Override
             public void onCheckBox(int position, boolean isChecked) {
                 if (isChecked) {
@@ -88,10 +101,9 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
         lv_follow_detail.setAdapter(adapter);
         setListViewHeightBasedOnChildren(AddCustomerFollowActivity.this, lv_follow_detail, 0);
         scrollview.smoothScrollTo(0, 0);
-//        requestAddressList();
 
     }
-    private void test() {
+    private void put() {
         detailsList = new MouldList<ResultCustomerFollowDetailslistBean>();
         String[] detailsStr = new String[]{
                 "已电话联络客户，简单介绍项目",
@@ -108,19 +120,20 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
                 "转介绍客户成功"
         };
         String[] checkStr = new String[]{
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no",
-                "no"
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false",
+                "false"
         };
+        resultStr=checkStr;
         for (int i=0 ;i<detailsStr.length;i++ ){
             ResultCustomerFollowDetailslistBean bean=new ResultCustomerFollowDetailslistBean();
             bean.setDetails(detailsStr[i]);
@@ -128,10 +141,48 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
             detailsList.add(bean);
         }
     }
+    /**
+     * 新增客户跟踪
+     */
+    private void submitData(String[] resultStr) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("customerId", "");
+        param.put("userId", "17021318005814472279");
+        param.put("telephoneContactedAndIntroductionProject", resultStr[0]);
+        param.put("projectMaterialsAndAnsweredQuestion", resultStr[1]);
+        param.put("interviewedAndDetailedIntroductionProject", resultStr[2]);
+        param.put("productPromotionAndDeepUnderstanding", resultStr[3]);
+        param.put("revisitCustomerAndAnsweredQuestion", resultStr[4]);
+        param.put("confirmCondoTourPlan", resultStr[5]);
+        param.put("fullPaymentFrontmoneyAndSelectedRoomNum", resultStr[6]);
+        param.put("officalSignature", resultStr[7]);
+        param.put("fullPaymentDownpayment", resultStr[8]);
+        param.put("recommendOtherCustomers", resultStr[9]);
+        param.put("contactedOtherCustomers", resultStr[10]);
+        param.put("recommendOtherCustomersSuccess", resultStr[11]);
+
+        HtmlRequest.submitTracking(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                        if ("true".equals(data.getFlag())) {
+                            Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+                }
+        );
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.btn_save:
+                submitData(resultStr);
+                break;
         }
     }
     /**

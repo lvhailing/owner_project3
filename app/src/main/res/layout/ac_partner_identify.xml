@@ -94,6 +94,9 @@
                 android:layout_toLeftOf="@+id/img_address"
                 android:textColor="@color/gray_dark"
                 android:layout_marginRight="5dp"
+                android:maxEms="12"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:textSize="16sp"/>
 
             <ImageView

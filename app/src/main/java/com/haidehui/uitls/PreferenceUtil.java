@@ -77,6 +77,23 @@ public class PreferenceUtil {
 	public static void setIdNo(String idNo) {
 		getUserSharedPreferences().edit().putString("idno", idNo).commit();
 	}
+	/**
+	 * 获取认证状态
+	 *
+	 * @return
+	 */
+	public static String getCheckStatus() {
+		return getUserSharedPreferences().getString("checkStatus", "");
+	}
+
+	/**
+	 * 设置认证状态
+	 *
+	 * @param checkStatus
+	 */
+	public static void setCheckStatus(String checkStatus) {
+		getUserSharedPreferences().edit().putString("checkStatus", checkStatus).commit();
+	}
 
 	/**
 	 * 是否首次进入应用

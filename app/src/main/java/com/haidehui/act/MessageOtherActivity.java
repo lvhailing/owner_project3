@@ -1,10 +1,12 @@
 package com.haidehui.act;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
@@ -34,10 +36,11 @@ public class MessageOtherActivity extends BaseActivity{
     private PullToRefreshListView listview_message_other;
     private MouldList<ResultMessageItemContentBean> list;
     private Context context;
-    private ViewSwitcher vs_messgae_other;
+//    private ViewSwitcher vs_messgae_other;
     private int page = 1;
     private int cachePage_pro = page;
     private MessageOtherAdapter otherAdapter;
+    private ResultMessageContentBean infoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +48,11 @@ public class MessageOtherActivity extends BaseActivity{
         baseSetContentView(R.layout.ac_message_other);
         initTopTitle();
         initView();
+
     }
 
-    public void initView(){
-
-        list = new MouldList<ResultMessageItemContentBean>();
-        context = this;
-        listview_message_other = (PullToRefreshListView) findViewById(R.id.listview_message_other);
-        vs_messgae_other = (ViewSwitcher) findViewById(R.id.vs_messgae_other);
-        vs_messgae_other.setDisplayedChild(0);
-        test();
+    public void initData(){
+        requestData();
         otherAdapter = new MessageOtherAdapter(context,list);
         listview_message_other.setAdapter(otherAdapter);
 
@@ -83,12 +81,28 @@ public class MessageOtherActivity extends BaseActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
+                Intent i_help = new Intent(context, WebActivity.class);
+                i_help.putExtra("type", WebActivity.WEBTYPE_NOTICE);
+                i_help.putExtra("title", getResources().getString(R.string.message_other_detail));
+                i_help.putExtra("url", Urls.URL_OTHERDETAIL+list.get(i-1).getId());
+                startActivity(i_help);
 
 
 
             }
         });
+    }
+
+    public void initView(){
+
+        list = new MouldList<ResultMessageItemContentBean>();
+        infoBean = new ResultMessageContentBean();
+        context = this;
+        listview_message_other = (PullToRefreshListView) findViewById(R.id.listview_message_other);
+//        vs_messgae_other = (ViewSwitcher) findViewById(R.id.vs_messgae_other);
+//        vs_messgae_other.setDisplayedChild(0);
+//        test();
+
 
 
     }
@@ -118,43 +132,47 @@ public class MessageOtherActivity extends BaseActivity{
 
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("mobile", "");
-        param.put("busiType", Urls.REGISTER);
-        param.put("token", token);
-
+        param.put("messageType", "others");
+        param.put("page", page);
+//        param.put("userId", userId);
+        param.put("userId", "17021511395798036131");
+        cachePage_pro = page;
         HtmlRequest.sentMessageInfo(MessageOtherActivity.this, param,new BaseRequester.OnRequestListener() {
 
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        ResultMessageContentBean infoBean = (ResultMessageContentBean)params.result;
-//                        funds = infoBean.getFunds();
+                        infoBean = (ResultMessageContentBean)params.result;
+//                        list = infoBean.getList();
 //                        setView();
 
-//                        if (infoBean.getFunds().size() == 0 && page!=1 ) {
-//                            Toast.makeText(context, "已经到最后一页",
-//                                    Toast.LENGTH_SHORT).show();
-//                            page = cachePage_pro - 1;
-//                            infoAdapter.notifyDataSetChanged();
-//                            listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
-//                            listview_message_info.onRefreshComplete();
-//                        }else if (infoBean.getFunds().size() == 0&&page==1){
+                        if (infoBean.getList().size() == 0 && page!=1 ) {
+                            Toast.makeText(context, "已经到最后一页",
+                                    Toast.LENGTH_SHORT).show();
+                            page = cachePage_pro - 1;
+                            otherAdapter.notifyDataSetChanged();
+                            listview_message_other.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                            listview_message_other.onRefreshComplete();
+                        }else if (infoBean.getList().size() == 0&&page==1){
 //                            vs_messgae_info.setDisplayedChild(1);
-//                        }else {
-//                            // layout.addView(btnLayout);
-//                            list.clear();
-//                            list.addAll(infoBean.getFunds());
-//                            infoAdapter.notifyDataSetChanged();
-////									lv_info_repayplan.getRefreshableView().smoothScrollToPositionFromTop(5, 0);
-//                            listview_message_info.postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    listview_message_info.onRefreshComplete();
-//                                }
-//                            }, 1000);
-//                            listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
-//                        }
+                        }else {
+                            // layout.addView(btnLayout);
+                            list.clear();
+                            list.addAll(infoBean.getList());
+                            otherAdapter.notifyDataSetChanged();
+//									lv_info_repayplan.getRefreshableView().smoothScrollToPositionFromTop(5, 0);
+                            listview_message_other.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listview_message_other.onRefreshComplete();
+                                }
+                            }, 1000);
+                            listview_message_other.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                        }
+
+
+
 
                     }
 
@@ -171,6 +189,7 @@ public class MessageOtherActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

@@ -90,7 +90,7 @@ public class CycleAdapter extends ViewPager {
                 int index;
                 if (dotList.size() != 0) {
                     index = position % dotList.size();
-                    dotList.get(index).setBackgroundResource(R.drawable.dot_focus);
+                    dotList.get(index).setBackgroundResource(R.drawable.dot_focus_red);
                     dotList.get(lastPosition).setBackgroundResource(R.drawable.dot_normal);
                     lastPosition = index;
                 } else {
@@ -213,7 +213,7 @@ public class CycleAdapter extends ViewPager {
         }
         this.setCurrentItem(currentItem);
         if (dotList.size() > 0) {
-            dotList.get(0).setBackgroundResource(R.drawable.dot_focus);
+            dotList.get(0).setBackgroundResource(R.drawable.dot_focus_red);
         }
         if (isCycle) {
             handler.sendEmptyMessageDelayed(0, 3000);
@@ -252,11 +252,11 @@ public class CycleAdapter extends ViewPager {
 
             View view = new View(context);
             if (i == 0) {
-                view.setBackgroundResource(R.drawable.dot_focus);
+                view.setBackgroundResource(R.drawable.dot_focus_red);
             } else {
                 view.setBackgroundResource(R.drawable.dot_normal);
             }
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(22, 22);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(14, 14);
             layoutParams.setMargins(8, 0, 8, 0);
             mLinearLayout.addView(view, layoutParams);
             dotList.add(view);

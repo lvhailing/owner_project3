@@ -133,6 +133,12 @@ public class UserLogin extends Observable {
 												.getData().getIdNo()));
 									}
 
+									if(!TextUtils.isEmpty(b
+											.getData().getCheckStatus())){
+										PreferenceUtil.setCheckStatus(DESUtil.encrypt(b
+												.getData().getCheckStatus()));
+									}
+
 									PreferenceUtil.setLogin(true);
 								} catch (Exception e) {
 									e.printStackTrace();

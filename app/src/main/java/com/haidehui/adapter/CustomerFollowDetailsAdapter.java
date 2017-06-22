@@ -30,7 +30,7 @@ public class CustomerFollowDetailsAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return list.size();
+		return list==null?0:list.size();
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class CustomerFollowDetailsAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ResultCustomerFollowDetailslistBean bean = list.get(position);
+		final ResultCustomerFollowDetailslistBean bean = list.get(position);
 		Holder holder = null;
 		if (convertView == null) {
 			holder = new Holder();
@@ -58,7 +58,7 @@ public class CustomerFollowDetailsAdapter extends BaseAdapter {
 			holder = (Holder) convertView.getTag();
 		}
 		holder.tv_details.setText(bean.getDetails());
-		if (bean.getIsChecked().equals("yes")) {
+		if (bean.getIsChecked().equals("true")) {
 			holder.checkbox.setButtonDrawable(R.mipmap.img_follow_checked);
 		} else {
 			holder.checkbox.setButtonDrawable(R.mipmap.img_follow_uncheck);
@@ -66,17 +66,14 @@ public class CustomerFollowDetailsAdapter extends BaseAdapter {
 		holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				/*if (position == 0 && list.get(position).getDefaultAddress().equals("yes")) {
-					if (!isChecked) {
-						buttonView.setButtonDrawable(R.drawable.select_address);
-					}
+				if (isChecked) {
+					buttonView.setButtonDrawable(R.mipmap.img_follow_checked);
 				} else {
-					if (isChecked) {
-						buttonView.setClickable(true);
+					buttonView.setButtonDrawable(R.mipmap.img_follow_uncheck);
+				}
 						listener.onCheckBox(position, isChecked);
-					}
-				}*/
 			}
+
 		});
 		return convertView;
 	}

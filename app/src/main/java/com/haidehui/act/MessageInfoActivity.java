@@ -18,6 +18,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -176,8 +177,10 @@ public class MessageInfoActivity extends BaseActivity{
 
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("messageType", "count");
         param.put("page", page);
-        param.put("userId", userId);
+//        param.put("userId", userId);
+        param.put("userId", "17021511395798036131");
         cachePage_pro = page;
         HtmlRequest.sentMessageInfo(MessageInfoActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -212,8 +215,6 @@ public class MessageInfoActivity extends BaseActivity{
                             }, 1000);
                             listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
                         }
-
-
 
 
                     }

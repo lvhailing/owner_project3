@@ -40,7 +40,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
         initTopTitle();
         initView();
-        initData();
+
 
 
 
@@ -131,6 +131,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

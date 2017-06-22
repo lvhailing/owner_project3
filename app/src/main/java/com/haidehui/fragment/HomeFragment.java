@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private MouldList<ResultCycleIndex2B> homeCycleBean;
     private LinearLayout ll_home_notice; // 公告布局
     private TextView tv_home_notice; // 公告标题
+    private TextView tv_no_house; // 精品房源无数据时显示的提示语
     private Intent intent;
     private MouldList<HomeIndex3B> BoutiqueHouseList = new MouldList<>();
     private HomeIndex2B homeIndexData;
@@ -96,6 +97,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_customer_service = (TextView) mView.findViewById(R.id.tv_customer_service);
         tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
         ll_home_notice = (LinearLayout) mView.findViewById(R.id.ll_home_notice);
+        tv_no_house = (TextView) mView.findViewById(R.id.tv_no_house);
         myListView = (MyListView) mView.findViewById(R.id.lv);
 
         tv_hot_house.setOnClickListener(this);
@@ -210,6 +212,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
                     myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
                     myListView.setAdapter(myAdapter);
+                } else {
+                    tv_no_house.setVisibility(View.VISIBLE);
                 }
             }
 

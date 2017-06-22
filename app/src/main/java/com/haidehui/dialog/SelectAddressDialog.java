@@ -123,7 +123,7 @@ public class SelectAddressDialog extends Dialog implements
 
 		@Override
 		public void onClick(View v) {
-			onExitChanged.onConfim(mCurrentProvince + "-" + mCurrentCity + "-" + mCurrentDistrict);
+			onExitChanged.onConfim(mCurrentProvince + "-" + mCurrentCity);
 			onDismiss();
 		}
 

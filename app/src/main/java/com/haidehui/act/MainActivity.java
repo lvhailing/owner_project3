@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,17 +19,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.common.MyApplication;
+import com.haidehui.dialog.CheckVersionDialog;
 import com.haidehui.fragment.DiscoveryFragment;
 import com.haidehui.fragment.HomeFragment;
 import com.haidehui.fragment.HouseResourcesFragment;
 import com.haidehui.fragment.MineFragment;
+import com.haidehui.model.ResultCheckVersionContentBean;
 import com.haidehui.model.VersionMo;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.service.AppUpgradeService;
+import com.haidehui.uitls.SystemInfo;
 import com.haidehui.widget.TitleBar;
 import com.haidehui.uitls.PreferenceUtil;
 
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -61,6 +69,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private DiscoveryFragment tab_discovery; //发现
     private MineFragment tab_mine; //我的
     private TitleBar title;
+
+    private File destDir = null;
+    private File destFile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +175,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-//        requestData();
+        requestData();
+
     }
 
     private void setTab(int pos) {
@@ -207,22 +219,77 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     //检查版本更新
-//    private void requestData() {
-//        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-//        param.put("type", "android");
-//        HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
-//            @Override
-//            public void onRequestFinished(BaseParams params) {
-//                if (params.result != null) {
-//                    final VersionMo b = (VersionMo) params.result;
-//                    //后台版本为已停运、未上线，不做处理
-//                    if (!TextUtils.isEmpty(b.getVersion())) {
-//                        Toast.makeText(mContext, "new version" + b.getVersion(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//        });
-//    }
+    private void requestData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("type", "android");
+        HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result != null) {
+                    final ResultCheckVersionContentBean b = (ResultCheckVersionContentBean) params.result;
+                        if (!b.getVersion().equals(SystemInfo.sVersionName)) {
+
+                            CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this,
+                                    new CheckVersionDialog.OnCheckVersion() {
+
+                                        @Override
+                                        public void onConfim() {
+                                            Intent updateIntent = new Intent(
+                                                    MainActivity.this,
+                                                    AppUpgradeService.class);
+                                            updateIntent
+                                                    .putExtra(
+                                                            "titleId",
+                                                            R.string.app_chinesename);
+                                            updateIntent
+                                                    .putExtra(
+                                                            "downloadUrl",
+                                                            // "http://114.113.238.90:40080/upload/app/vjinke.apk");
+//																ApplicationConsts.EC_HOST
+//																		+ b.getUrl()
+                                                            b.getUrl());
+                                            MainActivity.this.startService(updateIntent);
+                                        }
+
+                                        @Override
+                                        public void onCancel() {
+
+                                        }
+                                    }, "发现新版本,是否更新",b.getForcedUpgrade());
+                            dialog.setCancelable(false);
+
+                            dialog.show();
+                        } else {
+                            if (Environment
+                                    .getExternalStorageState()
+                                    .equals(android.os.Environment.MEDIA_MOUNTED)) {
+                                if (destDir == null) {
+                                    destDir = new File(
+                                            Environment
+                                                    .getExternalStorageDirectory()
+                                                    .getPath()
+                                                    + MyApplication.mDownloadPath);
+                                }
+                                if (destDir.exists() || destDir.mkdirs()) {
+                                    destFile = new File(
+                                            destDir.getPath()
+                                                    + "/"
+                                                    + URLEncoder
+                                                    .encode("http://114.113.238.90:40080/upload/app/vjinke.apk"));
+                                    if (destFile.exists()
+                                            && destFile.isFile()
+                                            && checkApkFile(destFile
+                                            .getPath())) {
+                                        destFile.delete();
+                                    }
+                                }
+                            }
+                        }
+
+                }
+            }
+        });
+    }
 
     private boolean isAppInstalled(String uri) {
         PackageManager pm = getPackageManager();

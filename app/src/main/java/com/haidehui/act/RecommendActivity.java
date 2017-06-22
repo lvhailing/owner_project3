@@ -139,7 +139,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             public void onRequestFinished(BaseParams params) {
                 bean = (ResultRecommendInfoContentBean) params.result;
                 if (bean != null) {
-                    recommendCode = bean.getRecommendCode();
+//                    recommendCode = bean.getRecommendCode();
 
                     setView();
 

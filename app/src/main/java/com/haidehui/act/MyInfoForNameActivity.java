@@ -5,9 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.model.SubmitCustomer2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
+
+import java.util.HashMap;
+import android.text.TextUtils;
 
 
 /**
@@ -16,7 +24,7 @@ import com.haidehui.widget.TitleBar;
 public class MyInfoForNameActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name;
     private Button btn_save;
-    private String name;
+    private String realName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +60,11 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
-        name=getIntent().getStringExtra("name");
+        realName=getIntent().getStringExtra("realName");
         edt_name= (EditText) findViewById(R.id.edt_name);
         btn_save= (Button) findViewById(R.id.btn_save);
 
-        edt_name.setText(name);
+        edt_name.setText(realName);
         edt_name.requestFocusFromTouch();
     }
 
@@ -68,61 +76,42 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_save:
-                Intent intent =new Intent(this,MyInfoActivity.class);
-                intent.putExtra("name",edt_name.getText().toString());
-                setResult(2000,intent);
-                finish();
+                String name=edt_name.getText().toString();
+                if (TextUtils.isEmpty(name)){
+                    saveData(realName);
+                }else{
+                    saveData(name);
+                }
                 break;
         }
     }
+    /**
+     * 保存姓名
+     */
+    private void saveData(final String nameStr) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("realName", nameStr);
+        param.put("userId", "17021318005814472279");
 
-   /* private void requestListData() {  // 获取最热房源列表数据
-        Map<String, Object> param = new HashMap<>();
-        param.put("currentPage", currentPage + "");
-
-        try {
-            HtmlRequest.getHotHouseData(mContext, param, new BaseRequester.OnRequestListener() {
-                @Override
-                public void onRequestFinished(BaseParams params) {
-                    if (params.result == null) {
-                        Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                        listView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                listView.onRefreshComplete();
-                            }
-                        }, 1000);
-                        return;
-                    }
-
-                    HotHouse2B data = (HotHouse2B) params.result;
-                    MouldList<HotHouse3B> everyList = data.getList();
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    mAdapter.notifyDataSetChanged();
-
-                    listView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            listView.onRefreshComplete();
+        HtmlRequest.saveName(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
                         }
-                    }, 1000);
+                        SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                        if ("true".equals(data.getFlag())) {
+
+                            Intent intent =new Intent(mContext,MyInfoActivity.class);
+                            intent.putExtra("realName",nameStr);
+                            setResult(2000,intent);
+                            finish();
+                        }
+                    }
                 }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        );
     }
 
-*/
 
 }

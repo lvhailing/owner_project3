@@ -27,13 +27,12 @@
                 android:layout_height="wrap_content"
                 android:text="客户姓名"/>
             <TextView
-                android:id="@+id/tv_commission"
+                android:id="@+id/tv_customerName"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/gray_d"
                 android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"
-                android:text="+552200.00"/>
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
         <TextView
@@ -52,12 +51,12 @@
                 android:layout_height="wrap_content"
                 android:text="联系电话"/>
             <TextView
+                android:id="@+id/tv_customerPhone"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/gray_d"
                 android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"
-                android:text="1350000001"/>
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
         <TextView
@@ -80,7 +79,7 @@
     </LinearLayout>
     </ScrollView>
     <Button
-        android:id="@+id/btn_withdraw"
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginLeft="15dp"

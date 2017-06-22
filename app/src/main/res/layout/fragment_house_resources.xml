@@ -166,9 +166,7 @@
                 <TextView
                     android:id="@+id/tv1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
                     android:gravity="center"
@@ -179,9 +177,7 @@
                 <TextView
                     android:id="@+id/tv2"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -193,9 +189,7 @@
                 <TextView
                     android:id="@+id/tv3"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -214,15 +208,12 @@
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="20dp"
-                android:visibility="visible">
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/tv4"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
                     android:gravity="center"
@@ -233,9 +224,7 @@
                 <TextView
                     android:id="@+id/tv5"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -247,9 +236,7 @@
                 <TextView
                     android:id="@+id/tv6"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -402,9 +389,7 @@
                 <TextView
                     android:id="@+id/tv1_func"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
                     android:gravity="center"
@@ -415,9 +400,7 @@
                 <TextView
                     android:id="@+id/tv2_func"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -429,9 +412,7 @@
                 <TextView
                     android:id="@+id/tv3_func"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -455,9 +436,7 @@
                 <TextView
                     android:id="@+id/tv4_func"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
                     android:gravity="center"
@@ -468,9 +447,7 @@
                 <TextView
                     android:id="@+id/tv5_func"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -482,7 +459,7 @@
                 <TextView
                     android:id="@+id/tv6_func"
                     android:layout_width="0dp"
-                    android:layout_height="28dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_center_gray_white"
@@ -536,6 +513,19 @@
             </LinearLayout>
 
         </LinearLayout>
+
+       <!-- 无数据时显示的提示语-->
+        <TextView
+            android:id="@+id/tv_no_house"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="暂无匹配房源，敬请期待..."
+            android:textColor="@color/txt_light_gray"
+            android:textSize="16sp"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>

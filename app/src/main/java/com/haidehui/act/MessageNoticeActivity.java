@@ -47,21 +47,10 @@ public class MessageNoticeActivity extends BaseActivity{
         baseSetContentView(R.layout.ac_message_notice);
         initTopTitle();
         initView();
+        initData();
     }
 
-    public void initView(){
-
-        list = new MouldList<ResultMessageItemContentBean>();
-        context = this;
-        listview_message_notice = (PullToRefreshListView) findViewById(R.id.listview_message_notice);
-//        vs_messgae_notice = (ViewSwitcher) findViewById(R.id.vs_messgae_notice);
-//        vs_messgae_notice.setDisplayedChild(0);
-
-//        test();
-
-
-
-        noticeAdapter = new MessageNoticeAdapter(context,list);
+    public void initData(){
 
         requestData();
 
@@ -94,11 +83,28 @@ public class MessageNoticeActivity extends BaseActivity{
                 Intent i_help = new Intent(context, WebActivity.class);
                 i_help.putExtra("type", WebActivity.WEBTYPE_NOTICE);
                 i_help.putExtra("title", getResources().getString(R.string.message_notice_detail));
-                i_help.putExtra("url", Urls.URL_NOTICEDETAIL+list.get(i).getBulletinId()+"&userId="+userId);
+                i_help.putExtra("url", Urls.URL_NOTICEDETAIL+list.get(i-1).getBulletinId()+"&userId="+userId);
                 startActivity(i_help);
 
             }
         });
+    }
+
+    public void initView(){
+
+        list = new MouldList<ResultMessageItemContentBean>();
+        context = this;
+        listview_message_notice = (PullToRefreshListView) findViewById(R.id.listview_message_notice);
+//        vs_messgae_notice = (ViewSwitcher) findViewById(R.id.vs_messgae_notice);
+//        vs_messgae_notice.setDisplayedChild(0);
+
+//        test();
+
+
+
+        noticeAdapter = new MessageNoticeAdapter(context,list);
+
+
 
 
     }
@@ -179,6 +185,7 @@ public class MessageNoticeActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

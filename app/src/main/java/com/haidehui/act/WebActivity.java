@@ -26,7 +26,7 @@ public class WebActivity extends Activity implements View.OnClickListener {
     private String url = null;
     public static final String WEBTYPE_INVESTMENT_GUIDE_DETAILS = "investment_guide_details"; // 投资指南详情
     public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
-    public static final String WEBTYPE_NOTICE = "noticedetail "; // 公告详情
+    public static final String WEBTYPE_NOTICE = "noticedetail "; // 公告详情/其他消息详情
     public static final String WEBTYPE_SERVICE_AGREEMENT = "service_agreement "; // 服务协议
     public static final String WEBTYPE_ABOUT_US = "about_us "; // 关于我们
 

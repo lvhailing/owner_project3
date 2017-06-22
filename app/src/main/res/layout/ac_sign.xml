@@ -195,8 +195,8 @@
 
         <CheckBox
             android:id="@+id/signup_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="18dip"
+            android:layout_height="18dip"
             android:layout_gravity="center_vertical"
             android:background="@drawable/checkbox_signup"
             android:checked="true"

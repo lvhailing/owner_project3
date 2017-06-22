@@ -128,11 +128,24 @@
             android:layout_alignParentBottom="true"
             android:background="@color/bg_gray_gray"/>
 
+        <!--相精品房源列表-->
         <com.haidehui.widget.MyListView
             android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
             android:listSelector="#00000000"/>
+
+        <TextView
+            android:id="@+id/tv_no_house"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="暂无精品房源推荐，敬请期待..."
+            android:textColor="@color/txt_light_gray"
+            android:textSize="16sp"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

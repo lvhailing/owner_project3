@@ -50,6 +50,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     public void initView(){
 
+        PreferenceUtil.setAutoLoginPwd("");
+        PreferenceUtil.setLogin(false);
+        PreferenceUtil.setPhone("");
+        PreferenceUtil.setUserId("");
+        PreferenceUtil.setUserNickName("");
+        PreferenceUtil.setCookie("");
+        PreferenceUtil.setToken("");
+
 //        bean = new ResultUserLoginContentBean();
         et_login_phone = (EditText) findViewById(R.id.et_login_phone);
         et_login_password = (EditText) findViewById(R.id.et_login_password);

@@ -235,7 +235,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
             <RelativeLayout
@@ -260,7 +260,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
             <LinearLayout
@@ -326,7 +326,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
             <RelativeLayout
@@ -351,7 +351,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
             <LinearLayout
@@ -386,7 +386,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
             <RelativeLayout
@@ -411,7 +411,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
             <LinearLayout
@@ -453,6 +453,17 @@
             android:divider="@null"
             android:listSelector="#00000000"/>
 
+        <TextView
+            android:id="@+id/tv_no_house"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="暂无相关房源，敬请期待..."
+            android:textColor="@color/txt_light_gray"
+            android:textSize="16sp"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </ScrollView>

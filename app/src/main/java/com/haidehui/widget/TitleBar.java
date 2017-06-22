@@ -329,7 +329,9 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             throw new RuntimeException("action container is full,limit is 2");
         }
         child = new TextView(mContext);
-        child.setPadding(10, 0, 10, 0);
+        int p_left = ViewUtils.dip2px(mContext, 15);
+        int p_top = ViewUtils.dip2px(mContext, 5);
+        child.setPadding(p_left, p_top, p_left, p_top);
         child.setGravity(Gravity.CENTER);
         if (text.length() >= 3) {
             child.setTextSize(14);
@@ -354,10 +356,13 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         child.setBackgroundResource(background);
         child.setOnClickListener(this);
         child.setClickable(false);
-        // int w = ViewUtils.dip2px(mContext, 56);
+         int l = ViewUtils.dip2px(mContext, 0);
+         int t = ViewUtils.dip2px(mContext, 12);
+         int r = ViewUtils.dip2px(mContext, 20);
+         int b = ViewUtils.dip2px(mContext, 12);
 //        child.setVisibility(ishow);
-        LinearLayout.LayoutParams LayoutParams_l = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        LayoutParams_l.setMargins(0, 25, 35, 25);
+        LinearLayout.LayoutParams LayoutParams_l = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams_l.setMargins(l, t, r, b);
         actions.addView(child, LayoutParams_l);
         return TitleBar.this;
     }

@@ -11,11 +11,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -24,11 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.common.Urls;
 import com.haidehui.network.http.AsyncHttpClient;
 import com.haidehui.network.http.AsyncHttpResponseHandler;
 import com.haidehui.network.http.RequestParams;
-import com.haidehui.uitls.DESUtil;
-import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.CircularImage;
 import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.widget.TitleBar;
@@ -43,6 +44,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -53,7 +57,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private CircularImage img_photo;
     private RelativeLayout layout_name;
     private TextView tv_name;
-    private String name;
+    private String realName;
+    private String headPhoto;
 
     /**
      * 表示选择的是相册--2
@@ -68,12 +73,17 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private MyHandler mHandler;
     private Thread mthread;
 
+
     /**
      * 图片保存SD卡位置
      */
     private final static String IMG_PATH = Environment
             .getExternalStorageDirectory() + "/haidehui/imgs/";
-
+    /**
+     * 图片保存SD卡位置
+     */
+    private final static String IMG_PATH_TWO = Environment
+            .getExternalStorageDirectory() + "/haidehui/imgs2/";
 
     /***
      * 使用照相机拍照获取图片
@@ -129,12 +139,89 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        name=getIntent().getStringExtra("name");
+        realName=getIntent().getStringExtra("realName");
+        headPhoto=getIntent().getStringExtra("headPhoto");
         layout_photo= (RelativeLayout) findViewById(R.id.layout_photo);
         img_photo= (CircularImage) findViewById(R.id.img_photo);
         layout_name= (RelativeLayout) findViewById(R.id.layout_name);
         tv_name= (TextView) findViewById(R.id.tv_name);
-        tv_name.setText(name);
+        tv_name.setText(realName);
+        if (!TextUtils.isEmpty(headPhoto)) {
+            new ImageViewService().execute(headPhoto);
+        } else {
+            img_photo.setImageDrawable(getResources()
+                    .getDrawable(R.mipmap.user_icon));
+        }
+
+
+    }
+    /**
+     * 获取网落图片资源
+     *
+     *
+     * @return
+     */
+    class ImageViewService extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            Bitmap data = getImageBitmap(params[0]);
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                img_photo.setImageBitmap(result);
+                saveBitmap2(result);
+            } else {
+                img_photo.setImageDrawable(getResources().getDrawable(
+                        R.mipmap.user_icon));
+            }
+        }
+
+    }
+    private Bitmap getImageBitmap(String url) {
+        URL imgUrl = null;
+        Bitmap bitmap = null;
+        try {
+            imgUrl = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) imgUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+    private Uri saveBitmap2(Bitmap bm) {
+        File tmpDir = new File(IMG_PATH_TWO);
+        if (!tmpDir.exists()) {
+            tmpDir.mkdirs();
+        }
+        File img = new File(IMG_PATH_TWO + "Test.png");
+        try {
+            FileOutputStream fos = new FileOutputStream(img);
+            bm.compress(Bitmap.CompressFormat.PNG, 70, fos);
+            fos.flush();
+            fos.close();
+            return Uri.fromFile(img);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     private void initData() {
@@ -145,46 +232,33 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.layout_photo:
-                setPhoto();
+                selectPhoto();
                 break;
             case R.id.layout_name:
                 Intent intent = new Intent(this, MyInfoForNameActivity.class);
-                intent.putExtra("name",name);
+                intent.putExtra("realName",realName);
                 startActivityForResult(intent,1000);
                 break;
         }
     }
-    private void setPhoto() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("选择图片");
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+    private void selectPhoto() {
+        SelectPhotoDialog mDialog = new SelectPhotoDialog(this,new SelectPhotoDialog.OnSelectPhotoChanged() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.setPositiveButton("相机", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-				/*Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-				startActivityForResult(intent, CAMERA_REQUEST_CODE);*/
-
-                takePhoto();
-            }
-        });
-        builder.setNeutralButton("相册", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-				/*Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-				intent.setType("image*//*");
-				startActivityForResult(intent, GALLERY_REQUEST_CODE);*/
+            public void onAlbum() {//相册
 
                 pickPhoto();
             }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
 
+            @Override
+            public void onCamera() {//相机
+
+                takePhoto();
+            }
+
+        });
+        mDialog.show();
     }
+
     /**
      * 拍照获取图片
      */
@@ -275,7 +349,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             newZoomImage = zoomImage(bm, 600, 300);
 //			sendImage(newZoomImage);
         }else if(requestCode==1000 && resultCode==2000){
-           String nameData= data.getStringExtra("name");
+           String nameData= data.getStringExtra("realName");
             tv_name.setText(nameData);
 
         }
@@ -438,43 +512,24 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
 
         try {
-            String fileName = "touxiang.jpg";
-            String fileType="";
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.add("photo", img);
-            params.add("fileName", fileName);
-            params.add("fileType", fileType);
-//          String url = ApplicationConsts.URL_ELITE_UPLOAD+"?token="+ AlipayBase64.encode(token.getBytes("utf-8"));
-            String url=null;
+            params.add("name", "headPhoto.jpg");
+            params.add("id", "17021511395798036131");
+            params.add("photoType", "headPhoto");
+            String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers,
                                       String content) {
                     super.onSuccess(statusCode, headers, content);
                     try {
-                        String data = DESUtil.decrypt(content);
-					/*	ResultUploadListBean bean = json.fromJson(data,
-								ResultUploadListBean.class);
-						ResultUploadListContentBean contentBean = bean
-								.getData();
-						if (photoType == 1) {
-							sfzzmFileName = contentBean.getTmpFileName();
-						} else if (photoType == 2) {
-							sfzfmFileName = contentBean.getTmpFileName();
-						} else if (photoType == 3) {
-							cardFileName = contentBean.getTmpFileName();
-						} else if (photoType == 4) {
-							dkptFileName = contentBean.getTmpFileName();
-						} else if (photoType == 5) {
-							qzyFileName = contentBean.getTmpFileName();
-						}*/
-
+                        mthread = new Thread(myRunnable);
+                        mthread.start();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    mthread = new Thread(myRunnable);
-                    mthread.start();
 
                 }
 
@@ -537,52 +592,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
 
     }
-    /* private void requestListData() {  // 获取最热房源列表数据
-        Map<String, Object> param = new HashMap<>();
-        param.put("currentPage", currentPage + "");
-
-        try {
-            HtmlRequest.getHotHouseData(mContext, param, new BaseRequester.OnRequestListener() {
-                @Override
-                public void onRequestFinished(BaseParams params) {
-                    if (params.result == null) {
-                        Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                        listView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                listView.onRefreshComplete();
-                            }
-                        }, 1000);
-                        return;
-                    }
-
-                    HotHouse2B data = (HotHouse2B) params.result;
-                    MouldList<HotHouse3B> everyList = data.getList();
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    mAdapter.notifyDataSetChanged();
-
-                    listView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            listView.onRefreshComplete();
-                        }
-                    }, 1000);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
 
 
