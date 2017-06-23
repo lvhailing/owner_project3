@@ -2,7 +2,7 @@
 <RelativeLayout android:layout_gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView android:id="@+id/loadingIv"
-        android:background="@anim/frame_loading"
+        android:background="@drawable/frame_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"/>

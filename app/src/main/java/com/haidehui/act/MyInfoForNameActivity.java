@@ -91,7 +91,7 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     private void saveData(final String nameStr) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("realName", nameStr);
-        param.put("userId", "17021318005814472279");
+        param.put("userId", userId);
 
         HtmlRequest.saveName(this, param, new BaseRequester.OnRequestListener() {
                     @Override

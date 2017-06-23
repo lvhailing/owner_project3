@@ -15,11 +15,14 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 
@@ -109,9 +112,15 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
     }
 
     private void requestListData() {  // 获取海外项目列表数据
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        String userId = null;
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         try {
             HtmlRequest.getOverseaListData(mContext, param, new BaseRequester.OnRequestListener() {

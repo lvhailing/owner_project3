@@ -1210,7 +1210,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener 监听
      * @return 返回数据
      */
-    public static void getHomeData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void getHomeData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_INDEX;
 
@@ -1296,8 +1296,8 @@ public class HtmlRequest extends BaseRequester {
     }
 
     // 首页-- 海外项目列表数据
-    public static void getOverseaListData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
-        final String data = getResultLinked(param);
+    public static void getOverseaListData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
         final String url = Urls.URL_PROJECT_LIST;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
@@ -1339,8 +1339,8 @@ public class HtmlRequest extends BaseRequester {
     }
 
     // 房源详情页数据
-    public static void getHouseDetailData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
-        final String data = getResultLinked(param);
+    public static void getHouseDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
         final String url = Urls.URL_HOUSE_DETAIL;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
@@ -1382,8 +1382,8 @@ public class HtmlRequest extends BaseRequester {
     }
 
     // 海外项目详情页数据
-    public static void getOverseaDetailData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
-        final String data = getResultLinked(param);
+    public static void getOverseaDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
         final String url = Urls.URL_PROJECT_DETAIL;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
@@ -1522,7 +1522,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getInvestmentGuideListData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void getInvestmentGuideListData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_INVESTMENTGUIDE_LIST;
 
@@ -1571,7 +1571,7 @@ public class HtmlRequest extends BaseRequester {
      * @param param
      * @param listener
      */
-    public static void getRoadShowListData(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void getRoadShowListData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_ROADSHOWVIDEO_LIST;
 
@@ -1641,6 +1641,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+//                    Log.i("hh", "我的数据：" + data);
                     Gson gson = new Gson();
                     MineData1B b = gson.fromJson(data, MineData1B.class);
                     return b.getData();

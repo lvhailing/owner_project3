@@ -169,7 +169,7 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
         param.put("houseProject", houseProject);
         param.put("roomNumber", roomNumber);
         param.put("totalPrice", totalPrice);
-        param.put("userId", "17021318005814472279");
+        param.put("userId", userId);
 
         HtmlRequest.getAddCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
                     @Override

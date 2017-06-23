@@ -20,11 +20,13 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
+import com.haidehui.uitls.PreferenceUtil;
 
 /**
  *  认购状态--- 已认购
@@ -36,6 +38,7 @@ public class SubcribeFragment extends Fragment {
     private MouldList<RenGou3B> totalList= new MouldList<>();
     private RenGouStatusAdapter adapter;
     private int currentPage = 1;    //当前页
+    private String userId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,10 +105,17 @@ public class SubcribeFragment extends Fragment {
 
     }
     private void requestList() {
+
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
         param.put("status", "subscribe");
-        param.put("userId", "17021318005814472279");
+        param.put("userId",userId);
 
         try {
             HtmlRequest.getRenGouState(getActivity(), param, new BaseRequester.OnRequestListener() {

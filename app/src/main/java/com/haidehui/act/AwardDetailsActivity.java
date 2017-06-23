@@ -90,7 +90,7 @@ public class AwardDetailsActivity extends BaseActivity implements View.OnClickLi
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("id", id);
         param.put("messageId", messageId);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         HtmlRequest.getAwardDetails(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {

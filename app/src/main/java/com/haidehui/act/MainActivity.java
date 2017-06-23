@@ -175,8 +175,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initData() {
-        requestData();
-
+        requestData(); //检查版本更新
     }
 
     private void setTab(int pos) {

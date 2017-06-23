@@ -45,7 +45,7 @@ public class BaseActivity extends FragmentActivity {
     public void baseSetContentView(int layoutResId) {
         LinearLayout llContent = (LinearLayout) findViewById(R.id.content);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        dialog = new CustomProgressDialog(this, "", R.anim.frame_loading);
+        dialog = new CustomProgressDialog(this, "", R.drawable.frame_loading);
         View v = inflater.inflate(layoutResId, null);
         llContent.addView(v);
     }

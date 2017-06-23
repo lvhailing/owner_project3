@@ -64,7 +64,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
     private final static String CACHE = "/dafuweng/imgs";
     private int QR_WIDTH = 360, QR_HEIGHT = 360;
-    private String recommendCode = "AAAAAAAA";              //  邀请码
+    private String recommendCode = "";              //  邀请码
     private String way;
     private Context context;
 
@@ -114,6 +114,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
         tv_recommend_all_friend.setText(bean.getTotal()+"位朋友为我赚取了");
         tv_recommend_all_acount.setText("￥"+bean.getTotalAmount()+"元");
+        tv_recommend_mycode.setText("我的推荐码："+recommendCode);
 
         StringBuffer randomNum = new StringBuffer();
         for (int i = 0; i < 6; i++) {
@@ -139,7 +140,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             public void onRequestFinished(BaseParams params) {
                 bean = (ResultRecommendInfoContentBean) params.result;
                 if (bean != null) {
-//                    recommendCode = bean.getRecommendCode();
+                    recommendCode = bean.getRecommendCode();
 
                     setView();
 

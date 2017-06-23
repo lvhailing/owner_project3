@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -24,6 +25,7 @@ import com.haidehui.widget.TitleBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -59,6 +61,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
     private RelatedHouseAdapter myAdapter;
     private TextView tv_no_house; // 相关房源没数据时显示的提示语
+
+    private RelativeLayout rl_pro_house,rl_pro_facilities,rl_pro_geographic_location; // 项目居室，配套设施，地理位置布局
 
 
     @Override
@@ -100,6 +104,11 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         iv_support_facilities_click = (ImageView) findViewById(R.id.iv_support_facilities_click);
         iv_geographic_location_click = (ImageView) findViewById(R.id.iv_geographic_location_click);
 
+        rl_pro_house = (RelativeLayout) findViewById(R.id.rl_pro_house);
+        rl_pro_facilities = (RelativeLayout) findViewById(R.id.rl_pro_facilities);
+        rl_pro_geographic_location = (RelativeLayout) findViewById(R.id.rl_pro_geographic_location);
+
+
         tv_pro_house_name = (TextView) findViewById(R.id.tv_pro_house_name);
         tv_pro_house_price = (TextView) findViewById(R.id.tv_pro_house_price);
         tv_pro_house_area = (TextView) findViewById(R.id.tv_pro_house_area);
@@ -121,10 +130,12 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         vp = (ViewPager) findViewById(R.id.vp);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
 
-        iv_project_click.setOnClickListener(this);
-        iv_support_facilities_click.setOnClickListener(this);
-        iv_geographic_location_click.setOnClickListener(this);
-
+//        iv_project_click.setOnClickListener(this);
+//        iv_support_facilities_click.setOnClickListener(this);
+//        iv_geographic_location_click.setOnClickListener(this);
+        rl_pro_house.setOnClickListener(this);
+        rl_pro_facilities.setOnClickListener(this);
+        rl_pro_geographic_location.setOnClickListener(this);
     }
 
     private void initData() {
@@ -185,7 +196,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_project_click:   // 项目居室
+            case R.id.rl_pro_house:   // 项目居室
                 if (!isShow) {
                     ll_pro_house_photos.setVisibility(View.VISIBLE);
                     tv_project_des.setText(overseaProjectDetail.getHouseType());
@@ -197,7 +208,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                     iv_project_click.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }
                 break;
-            case R.id.iv_support_facilities_click:  // 配套设施
+            case R.id.rl_pro_facilities:  // 配套设施
                 if (!isShow) {
                     ll_support_facilities.setVisibility(View.VISIBLE);
                     tv_support_facilities_desc.setText(overseaProjectDetail.getSupportFacility());
@@ -209,7 +220,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                     iv_support_facilities_click.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }
                 break;
-            case R.id.iv_geographic_location_click:  // 地理位置
+            case R.id.rl_pro_geographic_location:  // 地理位置
                 if (!isShow) {
                     ll_geographic_location.setVisibility(View.VISIBLE);
                     tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
@@ -228,7 +239,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
      * 获取海外项目详情页的数据
      */
     private void requestDetailData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("pid", pid);
 
         HtmlRequest.getOverseaDetailData(this, param, new BaseRequester.OnRequestListener() {
@@ -241,7 +252,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                         if (relatedhouseList != null && relatedhouseList.size() > 0) {
                             myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);
                             myListView.setAdapter(myAdapter);
-                        }else {
+                        } else {
                             tv_no_house.setVisibility(View.VISIBLE);
                         }
                         setView();

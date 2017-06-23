@@ -150,7 +150,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     private void deleteData(String customerId) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
-        param.put("userId", "17021318005814472279");
+        param.put("userId", userId);
         HtmlRequest.deleteCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
@@ -177,7 +177,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     private void requestListData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", currentPage + "");
-        param.put("userId", "17021318005814472279");
+        param.put("userId", userId);
 
         try {
             HtmlRequest.getTrackingList(mContext, param, new BaseRequester.OnRequestListener() {

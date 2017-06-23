@@ -63,7 +63,7 @@
                     android:id="@+id/tv_recommend_mycode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的推荐码：RFHSIJIA54"
+                    android:text="我的推荐码："
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dip"
                     android:textColor="@color/txt_gray"

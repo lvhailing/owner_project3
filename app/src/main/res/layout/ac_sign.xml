@@ -238,7 +238,7 @@
         android:layout_height="110dip"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:src="@drawable/a"
+        android:src="@mipmap/img_regsiter"
         android:scaleType="fitXY"
         android:layout_marginTop="25dip"
         />

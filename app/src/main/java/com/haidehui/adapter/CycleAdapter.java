@@ -256,7 +256,7 @@ public class CycleAdapter extends ViewPager {
             } else {
                 view.setBackgroundResource(R.drawable.dot_normal);
             }
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(14, 14);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(18, 18);
             layoutParams.setMargins(8, 0, 8, 0);
             mLinearLayout.addView(view, layoutParams);
             dotList.add(view);

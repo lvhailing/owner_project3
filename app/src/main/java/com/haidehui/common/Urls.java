@@ -3,7 +3,11 @@ package com.haidehui.common;
 
 public class Urls {
     //测试环境
-    public static String URL_DEBUG = "http://192.168.1.86:82/";
+    public static String URL_DEBUG = "http://192.168.1.34:83/";
+
+    // 外网测试环境
+    public static String URL_OUTER_NET_DEBUG = "http://123.126.102.219:21083/";
+
     // 正式环境IP
     public static String URL_OFFICIAL = "https://jdhapp.cf360.com/";
 
@@ -23,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_BB;
+    private static String EC_HOST = URL_DEBUG;
 
     /**
      * 登出
@@ -123,18 +127,15 @@ public class Urls {
     public static final String URL_ABOUT_US = EC_HOST + "about/us";
 
 
-
     /**
      * 获取确认提现信息
      */
-    public static final String URL_GETWITHDRAWINFO = EC_HOST
-            + "account/withdrawcash/cashnum";
+    public static final String URL_GETWITHDRAWINFO = EC_HOST + "account/withdrawcash/cashnum";
 
     /**
      * 确认提现
      */
-    public static final String URL_WITHDRAWCONFIRM = EC_HOST
-            + "withdrawcash/add";
+    public static final String URL_WITHDRAWCONFIRM = EC_HOST + "withdrawcash/add";
 
     /**
      * 短信类型

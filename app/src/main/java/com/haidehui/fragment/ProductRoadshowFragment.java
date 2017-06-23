@@ -24,6 +24,7 @@ import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 
@@ -96,8 +97,9 @@ public class ProductRoadshowFragment extends Fragment {
 
     // 获取路演列表数据
     private void requestRoadShowListData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
+
         HtmlRequest.getRoadShowListData(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {

@@ -47,7 +47,6 @@
                 android:layout_marginBottom="2dip"
                 android:textColor="@color/txt_gray_d"
                 android:textSize="15sp"
-
                 android:drawablePadding="5dip"
                 />
             <ImageView

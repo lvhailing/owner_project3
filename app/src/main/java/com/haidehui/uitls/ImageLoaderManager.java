@@ -21,7 +21,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
  */
 public class ImageLoaderManager {
 
-    public static DisplayImageOptions options=ImageLoaderManager.initDisplayImageOptions(R.drawable.icons, R.drawable.icons, R.drawable.icons);;
+    public static DisplayImageOptions options=ImageLoaderManager.initDisplayImageOptions(R.mipmap.bg_oversea_project_normal, R.mipmap.bg_oversea_project_normal, R.mipmap.bg_oversea_project_normal);;
 
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     @SuppressWarnings("unused")

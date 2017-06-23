@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">大富豪</string>
-    <string name="app_chinesename">大富豪版本更新</string>
+    <string name="app_name">大富翁</string>
+    <string name="app_chinesename">大富翁版本更新</string>
     <!-- 登录 -->
 
     <string name="login_title">您身边的海外配置管家</string>
@@ -130,7 +130,7 @@
 
 
     <!-- 邀请好友内容 -->
-    <string name="shared_message">爱来不来</string>
+    <string name="shared_message">大富翁致力于打造最专业的客户服务，提供最前沿的海外产品，组织最舒适的线下体验，承办全方位的社交活动！</string>
 
 
     <!-- 客服电话 -->

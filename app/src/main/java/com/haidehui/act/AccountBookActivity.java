@@ -148,7 +148,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
 
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         HtmlRequest.getAccountBookData(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {

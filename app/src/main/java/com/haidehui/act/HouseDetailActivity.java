@@ -23,9 +23,12 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.photo_preview.PhotoPreviewAc;
+import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -211,9 +214,15 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
      * 获取最热房源详情页的数据
      */
     private void requestDetailData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        String userId = null;
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> param = new HashMap<>();
         param.put("hid", hid);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         HtmlRequest.getHouseDetailData(this, param, new BaseRequester.OnRequestListener() {
             @Override

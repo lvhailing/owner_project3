@@ -25,6 +25,7 @@ import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 // 发现--投资指南 列表页
@@ -100,8 +101,9 @@ public class InvestmentGuideFragment extends Fragment {
 
     // 获取投资指南列表数据
     private void requestInvestmentGuideListData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
+
         HtmlRequest.getInvestmentGuideListData(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {

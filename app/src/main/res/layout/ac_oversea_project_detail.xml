@@ -239,6 +239,7 @@
                 android:background="@color/bg_line"/>
 
             <RelativeLayout
+                android:id="@+id/rl_pro_house"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp">
@@ -330,6 +331,7 @@
                 android:background="@color/bg_line"/>
 
             <RelativeLayout
+                android:id="@+id/rl_pro_facilities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp">
@@ -390,6 +392,7 @@
                 android:background="@color/bg_line"/>
 
             <RelativeLayout
+                android:id="@+id/rl_pro_geographic_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp">

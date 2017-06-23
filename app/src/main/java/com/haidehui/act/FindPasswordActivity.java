@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     private MyHandler mHandler;
     private String btnString;
     private int time = 60;
+    private Context context;
 
 
     @Override
@@ -69,6 +71,8 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
     public void initView(){
 
+
+        context = this;
         et_findpassword_phone = (EditText) findViewById(R.id.et_findpassword_phone);
         tv_findpassword_get_verify_code = (TextView) findViewById(R.id.tv_findpassword_get_verify_code);
         et_findpassword_verify_code = (EditText) findViewById(R.id.et_findpassword_verify_code);
@@ -154,7 +158,14 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_findpassword_get_verify_code:          //  获取验证码
 
-                requestSMS();
+//                requestSMS();
+
+                if(!TextUtils.isEmpty(mobile.trim())){
+                    requestSMS();
+                }else{
+                    Toast.makeText(context,"请输入手机号",Toast.LENGTH_SHORT).show();
+                }
+
 //                smsflag = true;
 //                startThread();
                 break;

@@ -74,7 +74,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
     private void requestData() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
-        param.put("userId", "17021318005814472279");
+        param.put("userId", userId);
         HtmlRequest.getCustomerInFoDetails(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {

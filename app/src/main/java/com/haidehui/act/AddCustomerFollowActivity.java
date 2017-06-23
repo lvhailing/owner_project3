@@ -147,7 +147,7 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     private void submitData(String[] resultStr) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", "");
-        param.put("userId", "17021318005814472279");
+        param.put("userId", userId);
         param.put("telephoneContactedAndIntroductionProject", resultStr[0]);
         param.put("projectMaterialsAndAnsweredQuestion", resultStr[1]);
         param.put("interviewedAndDetailedIntroductionProject", resultStr[2]);

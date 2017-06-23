@@ -128,7 +128,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("id", id);
         param.put("messageId", messageId);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         HtmlRequest.getCommissionDetails(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {

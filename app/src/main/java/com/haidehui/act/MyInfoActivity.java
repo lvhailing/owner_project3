@@ -516,7 +516,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             RequestParams params = new RequestParams();
             params.add("photo", img);
             params.add("name", "headPhoto.jpg");
-            params.add("id", "17021511395798036131");
+            params.add("id", userId);
             params.add("photoType", "headPhoto");
             String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {

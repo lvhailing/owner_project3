@@ -201,7 +201,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
      */
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
         HtmlRequest.getPartnerIdentify(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
@@ -361,7 +361,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                                         return;
                                     }
 
-                                    requestSubmitData(email,idNo,"17021511395798036131",workProvince,workUnit);
+                                    requestSubmitData(email,idNo,userId,workProvince,workUnit);
                                 }else{
                                     Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
                                     edt_idNo.requestFocusFromTouch();
@@ -719,7 +719,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 params.add("photo", img);
                 params.add("name", busiName);
             }
-            params.add("id", "17021511395798036131");
+            params.add("id", userId);
             params.add("photoType", photoTypeStr);
             String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {
