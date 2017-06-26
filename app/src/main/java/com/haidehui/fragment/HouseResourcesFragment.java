@@ -62,7 +62,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private List<String> functions = new ArrayList<>();
     private List<String> types = new ArrayList<>();
     private String functionSelected = "";
-    private String typeSelected = "";
+    //    private String typeSelected = "";
     private MouldList<HouseList3B> totalList = new MouldList<>();
     private PullToRefreshListView listView;
     private HouseResourceListAdapter mAdapter;
@@ -371,34 +371,23 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 clickTypeItem(tv6, "manor");
                 break;
             case R.id.btn_type_reset:  // 类型： 重置
+                //重置所有按钮状态
                 clickTypeBtnReset();
-
-                houseCatagory = ""; //首次默认"" ，代表全部类型
+                //将类型集合清空
+                types.clear();
+                //为接口字段赋值""
+                houseCatagory = "";
+                //上面的类型文字还原
+                tv_house_resources_type.setText("类型");
                 break;
             case R.id.btn_type_sure:  // 类型： 确定
-                if (types.size() == 1) {
-                    resetSelectText(typeSelected);
-                } else if (types.size() >= 2) {
-                    tv_house_resources_type.setText("多选");
-                    tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
-                } else {
-                    tv_house_resources_type.setText("类型");
-                    tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
-                }
 
-                if (!TextUtils.isEmpty(typeSelected)) {
-//                    btn_type_sure.setEnabled(true);
-                    houseCatagory = typeSelected;
-                } else {
-//                    btn_type_sure.setEnabled(false);
-                    houseCatagory = "";
-                }
+                //点确定时，请求接口
                 requestGetHouseList();
 
-                //类型处于展开状态，则需关闭动画，且箭头置成向下
+                //该按钮被点击了 则类型一定处于展开状态，此时需关闭动画，且箭头置成向下
                 iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_type);
-
 
                 break;
             case R.id.tv_1:  // 价格： 不限（1）
@@ -529,17 +518,17 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
      * 类型里的每个按钮被选时调的方法
      *
      * @param tv
-     * @param item
+     * @param typeEnglish
      */
-    private void clickTypeItem(TextView tv, String item) {
-        if (types.contains(item)) {
+    private void clickTypeItem(TextView tv, String typeEnglish) {
+        if (types.contains(typeEnglish)) {
             //添加过
-            types.remove(item);
+            types.remove(typeEnglish);
             tv.setTextColor(getResources().getColor(R.color.txt_black));
             tv.setBackgroundResource(R.drawable.shape_center_gray_white);
         } else {
             //未添加过
-            types.add(item);
+            types.add(typeEnglish);
             tv.setTextColor(getResources().getColor(R.color.txt_orange));
             tv.setBackgroundResource(R.drawable.shape_center_orange_white);
         }
@@ -549,25 +538,48 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             sb.append(",");
         }
         String strResultType = sb.toString();
-        typeSelected = strResultType.substring(0, strResultType.length());
+        //应该是每选择一次类型 就为接口字段赋值一次
+        houseCatagory = strResultType.equals("") ? "" : strResultType.substring(0, strResultType.length() - 1);
+
+        //设置上面的类型文字
+        if (types.size() == 0) {
+            tv_house_resources_type.setText("类型");
+            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
+        } else if (types.size() == 1) {
+            String selectedType = getOnlyTypeItem();
+            tv_house_resources_type.setText(selectedType);
+            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
+        } else if (types.size() >= 2) {
+            tv_house_resources_type.setText("多选");
+            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
+        }
     }
 
-    private void resetSelectText(String typeSelected) {
-        if (typeSelected.equals("flat,")) {
-            tv_house_resources_type.setText("公寓");
-        } else if (typeSelected.equals("shops,")) {
-            tv_house_resources_type.setText("商铺");
-        } else if (typeSelected.equals("villa,")) {
-            tv_house_resources_type.setText("别墅");
-        } else if (typeSelected.equals("schoolDistrict,")) {
-            tv_house_resources_type.setText("学区");
-        } else if (typeSelected.equals("land,")) {
-            tv_house_resources_type.setText("土地");
-        } else if (typeSelected.equals("manor,")) {
-            tv_house_resources_type.setText("庄园");
+    private String getOnlyTypeItem() {
+        String result;
+        switch (houseCatagory) {
+            case "flat":
+                result = "公寓";
+                break;
+            case "shops":
+                result = "商铺";
+                break;
+            case "villa":
+                result = "别墅";
+                break;
+            case "schoolDistrict":
+                result = "学区";
+                break;
+            case "land":
+                result = "土地";
+                break;
+            case "manor":
+                result = "庄园";
+                break;
+            default:
+                result = "";
         }
-        tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
-
+        return result;
     }
 
     /**
@@ -587,7 +599,6 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
      * 类型里的重置按钮点击时调的方法
      */
     private void clickTypeBtnReset() {
-        types.clear();
         changTextColorAndBg(tv1);
         changTextColorAndBg(tv2);
         changTextColorAndBg(tv3);
