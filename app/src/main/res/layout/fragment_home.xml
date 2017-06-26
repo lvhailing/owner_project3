@@ -5,7 +5,6 @@
             android:scrollbars="none">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_gray"
@@ -59,14 +58,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:layout_marginRight="12dp"
+                android:ellipsize="end"
                 android:gravity="center"
+                android:maxLines="1"
                 android:singleLine="true"
+                android:text="--------------------------"
                 android:textColor="@color/txt_light_gray"
-                android:textSize="14sp"
-                android:text="--------------------------"/>
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <ImageView
@@ -119,9 +118,9 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_gray"
             android:padding="10dp"
+            android:text="精品房源推荐"
             android:textColor="@color/txt_light_gray"
-            android:textSize="14sp"
-            android:text="精品房源推荐"/>
+            android:textSize="14sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -134,13 +133,14 @@
             android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:divider="@null"
             android:listSelector="#00000000"/>
 
         <TextView
             android:id="@+id/tv_no_house"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:background="@color/white"
             android:gravity="center"
             android:padding="12dp"

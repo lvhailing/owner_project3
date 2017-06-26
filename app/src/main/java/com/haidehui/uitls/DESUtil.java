@@ -18,8 +18,7 @@ public class DESUtil {
 	/**
 	 * 3DES加密
 	 * 
-	 * @param plainText
-	 *            普通文本
+	 * @param plainText 普通文本
 	 * @return
 	 * @throws Exception
 	 */
@@ -39,8 +38,7 @@ public class DESUtil {
 	/**
 	 * 3DES解密
 	 * 
-	 * @param encryptText
-	 *            加密文本
+	 * @param encryptText 加密文本
 	 * @return
 	 * @throws Exception
 	 */

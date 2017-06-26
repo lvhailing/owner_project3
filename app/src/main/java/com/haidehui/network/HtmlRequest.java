@@ -58,8 +58,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class HtmlRequest extends BaseRequester {
-
-
     /**
      * 同步一下cookie
      */
@@ -106,12 +104,14 @@ public class HtmlRequest extends BaseRequester {
 //        Log.i("hh", "排序后的入参为：" + sortMap);
         String str_md5 = gson.toJson(sortMap);
         String md5 = MD5.stringToMD5(str_md5);
+
         String result = null;
         try {
             Map<String, Object> map = new HashMap<>();
             map.put("check", md5);
             map.put("data", sortMap);
             String encrypt = gson.toJson(map);
+//            Log.i("hh", "传给后台的入参为：" + encrypt);
             result = DESUtil.encrypt(encrypt);
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,8 +208,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -223,9 +221,8 @@ public class HtmlRequest extends BaseRequester {
     /**
      * 版本检查更新
      *
-     * @param context   上线文
-     * @param listener  监听事件
-     *
+     * @param context  上线文
+     * @param listener 监听事件
      */
     public static void checkVersion(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
@@ -259,8 +256,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -311,8 +306,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -363,8 +356,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -416,8 +407,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -468,8 +457,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -520,8 +507,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -572,8 +557,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -625,8 +608,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -677,8 +658,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -729,8 +708,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 //                    return null;
                 }
-
-
             }
 
             @Override
@@ -781,8 +758,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -833,8 +808,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -885,8 +858,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -939,8 +910,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -992,8 +961,6 @@ public class HtmlRequest extends BaseRequester {
                 } finally {
 
                 }
-
-
             }
 
             @Override
@@ -1043,8 +1010,6 @@ public class HtmlRequest extends BaseRequester {
                     return null;
                 } finally {
                 }
-
-
             }
 
             @Override
@@ -1094,8 +1059,6 @@ public class HtmlRequest extends BaseRequester {
                     return null;
                 } finally {
                 }
-
-
             }
 
             @Override
@@ -1141,8 +1104,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
-
             }
 
             @Override
@@ -1183,7 +1144,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页轮播图:" + data);
+//                    Log.i("hh", "首页轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -1232,7 +1193,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "首页数据:" + data);
+                    Log.i("hh", "首页数据:" + data);
 
                     Gson gson = new Gson();
                     HomeIndex1B b = gson.fromJson(data, HomeIndex1B.class);
@@ -1326,7 +1287,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1369,7 +1329,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1412,7 +1371,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1446,7 +1404,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-                    Log.i("hh", "房源列表列表数据:" + result);
+//                    Log.i("hh", "房源列表列表数据:" + result);
 
                     Gson gson = new Gson();
                     HouseList1B b = gson.fromJson(result, HouseList1B.class);
@@ -1455,7 +1413,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1647,9 +1604,8 @@ public class HtmlRequest extends BaseRequester {
                     return b.getData();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return null;
                 }
-
-                return null;
             }
 
             @Override
@@ -1741,7 +1697,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1787,7 +1742,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1833,7 +1787,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1879,7 +1832,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1925,7 +1877,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -1981,6 +1932,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 活动奖励详情详情
      *
@@ -2018,6 +1970,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2025,6 +1978,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 获取   置业顾问认证
      *
@@ -2062,6 +2016,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2069,6 +2024,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 提交  置业顾问认证
      *
@@ -2106,6 +2062,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2113,6 +2070,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 客户信息详情
      *
@@ -2150,6 +2108,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2157,6 +2116,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 新增客户信息
      *
@@ -2194,6 +2154,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2201,6 +2162,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 删除客户信息
      *
@@ -2238,6 +2200,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2245,6 +2208,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 删除客户信息
      *
@@ -2282,6 +2246,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2289,6 +2254,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 认购详情
      *
@@ -2326,6 +2292,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2333,6 +2300,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 客户跟踪列表
      *
@@ -2370,6 +2338,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2377,6 +2346,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 客户跟踪详情
      *
@@ -2414,6 +2384,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2421,6 +2392,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 新增客户跟踪
      *
@@ -2458,6 +2430,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;
@@ -2465,6 +2438,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
     /**
      * 保存姓名
      *
@@ -2502,6 +2476,7 @@ public class HtmlRequest extends BaseRequester {
                 }
 
             }
+
             @Override
             public void onPostExecute(Object result, BaseParams params) {
                 params.result = result;

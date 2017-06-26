@@ -45,6 +45,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private Context context;
     private View mView;
     private RelativeLayout rl_house_resources_type, rl_house_resources_price, rl_house_function; // 顶部的类型、价格、功能
+    private TextView tv_house_resources_type, tv_house_resources_price, tv_house_function; // 顶部的类型、价格、功能
     private ImageView iv_select_type, iv_select_price, iv_select_function; // 顶部的类型、价格、功能后面的小箭头
     private View v_hidden; // 隐藏的 类型、价格、功能布局背景
     private LinearLayout ll_hidden_type, ll_hidden_price, ll_hidden_function; // 点击顶部的类型、价格、功能等时对应的布局
@@ -93,12 +94,17 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     private void initView(View mView) {
         context = getActivity();
+
         rl_house_resources_type = (RelativeLayout) mView.findViewById(R.id.rl_house_resources_type);
         rl_house_resources_price = (RelativeLayout) mView.findViewById(R.id.rl_house_resources_price);
         rl_house_function = (RelativeLayout) mView.findViewById(R.id.rl_house_function);
+        tv_house_resources_type = (TextView) mView.findViewById(R.id.tv_house_resources_type);
+        tv_house_resources_price = (TextView) mView.findViewById(R.id.tv_house_resources_price);
+        tv_house_function = (TextView) mView.findViewById(R.id.tv_house_function);
         iv_select_type = (ImageView) mView.findViewById(R.id.iv_select_type);
         iv_select_price = (ImageView) mView.findViewById(R.id.iv_select_price);
         iv_select_function = (ImageView) mView.findViewById(R.id.iv_select_function);
+
         tv_no_house = (TextView) mView.findViewById(R.id.tv_no_house);
         listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
 
@@ -253,6 +259,15 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                     //动画是开启状态
                     if (currentFlag == 1) {
                         //类型处于展开状态，则需关闭动画，且箭头置成向下
+                        if (types.size() == 1) {
+                            tv_house_resources_type.setText(typeSelected);
+                            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
+
+                        } else if (types.size() >= 2) {
+                            tv_house_resources_type.setText("多选");
+                            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
+
+                        }
                         iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
                         closeShopping(ll_hidden_type);
                     } else {
@@ -377,7 +392,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 //                    btn_type_sure.setEnabled(false);
                     houseCatagory = "";
                 }
-                    requestGetHouseList();
+                requestGetHouseList();
 
                 //类型处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
