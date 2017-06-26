@@ -373,22 +373,24 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             case R.id.btn_type_reset:  // 类型： 重置
                 //重置所有按钮状态
                 clickTypeBtnReset();
+
                 //将类型集合清空
                 types.clear();
                 //为接口字段赋值""
                 houseCatagory = "";
+
                 //上面的类型文字还原
                 tv_house_resources_type.setText("类型");
+                //上面的类型颜色还原
+                tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
                 break;
             case R.id.btn_type_sure:  // 类型： 确定
-
                 //点确定时，请求接口
                 requestGetHouseList();
 
                 //该按钮被点击了 则类型一定处于展开状态，此时需关闭动画，且箭头置成向下
                 iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_type);
-
                 break;
             case R.id.tv_1:  // 价格： 不限（1）
                 tv_house_resources_price.setText("价格");
