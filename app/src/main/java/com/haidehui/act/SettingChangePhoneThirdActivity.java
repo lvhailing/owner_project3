@@ -204,6 +204,7 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
         switch (view.getId()){
 
             case R.id.tv_change_phone_get_verify_code:
+                tv_change_phone_get_verify_code.setClickable(false);
                 requestSMS();
 //                smsflag = true;
 //                startThread();
@@ -232,18 +233,20 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
             public void onRequestFinished(BaseParams params) {
                 ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                 if (b != null) {
-                    if (Boolean.parseBoolean(b.getResult())) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
                         Toast.makeText(SettingChangePhoneThirdActivity.this, "短信发送成功",
                                 Toast.LENGTH_LONG).show();
                         smsflag = true;
                         startThread();
                     } else {
+                        tv_change_phone_get_verify_code.setClickable(true);
                         smsflag = false;
                         Toast.makeText(SettingChangePhoneThirdActivity.this,
                                 b.getMessage(), Toast.LENGTH_LONG)
                                 .show();
                     }
                 } else {
+                    tv_change_phone_get_verify_code.setClickable(true);
                     Toast.makeText(SettingChangePhoneThirdActivity.this, "加载失败，请确认网络通畅",
                             Toast.LENGTH_LONG).show();
                 }

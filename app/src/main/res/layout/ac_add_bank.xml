@@ -42,6 +42,7 @@
                 android:layout_marginRight="10dip"
                 android:padding="5dip"
                 android:layout_marginLeft="5dip"
+                android:textSize="14sp"
                 />
             <EditText
                 android:id="@+id/et_add_bank_verify_code"
@@ -56,6 +57,7 @@
                 android:padding="5dip"
                 android:inputType="number"
                 android:maxLength="10"
+                android:textSize="15sp"
                 />
         </RelativeLayout>
 
@@ -102,6 +104,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:gravity="center_vertical"
+            android:textSize="15sp"
             />
 
 
@@ -135,6 +138,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:gravity="center_vertical"
+            android:textSize="15sp"
             />
 
 
@@ -148,7 +152,7 @@
         android:layout_marginTop="10dip"
         android:layout_marginBottom="15dip"
         android:textColor="@color/txt_gray"
-        android:textSize="15sp"
+        android:textSize="14sp"
         />
 
     <LinearLayout
@@ -177,6 +181,8 @@
             android:textColorHint="@color/bg_gray_gray"
             android:maxLength="20"
             android:maxLines="1"
+            android:textSize="15sp"
+            android:singleLine="true"
             />
 
 
@@ -207,6 +213,8 @@
             android:textColorHint="@color/bg_gray_gray"
             android:maxLength="30"
             android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="15sp"
             />
 
 
@@ -238,6 +246,7 @@
             android:maxLength="20"
             android:maxLines="1"
             android:inputType="number"
+            android:textSize="15sp"
             />
 
     </LinearLayout>

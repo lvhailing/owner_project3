@@ -20,6 +20,8 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -36,6 +38,7 @@ public class WithdrawDetailsFragment extends Fragment {
     private MouldList<AccountBookWithDraw3B> withdrawlist= new MouldList<>();
     private AccountBookWithdrawAdapter adapterWithdraw;
     private int currentPage = 1;    //当前页
+    private String userId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,9 +105,14 @@ public class WithdrawDetailsFragment extends Fragment {
 
     }
     private void requestWithDrawList() {  // 获取提现记录列表数据
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", currentPage + "");
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
 
         try {
             HtmlRequest.getWithdrawList(getActivity(), param, new BaseRequester.OnRequestListener() {

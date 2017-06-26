@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.haidehui.R;
@@ -37,6 +38,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     private MouldList<ResultMyBankListContentItemBean> list;
     private int lastPress = 0;
     private MyBankAdapter bankAdapter;
+    private RelativeLayout rl_mybank_add;
 
 
     @Override
@@ -55,7 +57,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("page", "1");
+        param.put("page", "");
         param.put("userId", userId);
         HtmlRequest.getMyBankList(MyBankActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -107,8 +109,17 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
         context = this;
         list = new MouldList<ResultMyBankListContentItemBean>();
         lv_mybank = (ListView) findViewById(R.id.lv_mybank);
+        rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);
 
-        View view = View.inflate(MyBankActivity.this, R.layout.ac_mybank_item_button, null);
+        rl_mybank_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i_addCard = new Intent(context,AddBankActivity.class);
+                startActivity(i_addCard);
+            }
+        });
+
+        /*View view = View.inflate(MyBankActivity.this, R.layout.ac_mybank_item_button, null);
         view.findViewById(R.id.rl_mybank_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +131,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
             }
         });
-        lv_mybank.addFooterView(view);// 为listview添加footview
+        lv_mybank.addFooterView(view);// 为listview添加footview*/
 
         lv_mybank.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             private View delview;

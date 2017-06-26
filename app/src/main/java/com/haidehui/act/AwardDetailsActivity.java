@@ -13,6 +13,7 @@ import com.haidehui.widget.TitleBar;
 
 import java.util.LinkedHashMap;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 
 
 /**
@@ -30,6 +31,10 @@ public class AwardDetailsActivity extends BaseActivity implements View.OnClickLi
     private TextView tv_houseNum;
     private TextView tv_remark;
     private TextView tv_createTime;
+
+    private LinearLayout layout_tradeCode;
+    private LinearLayout layout_projectName;
+    private LinearLayout layout_houseNum;
 
 
     @Override
@@ -78,6 +83,10 @@ public class AwardDetailsActivity extends BaseActivity implements View.OnClickLi
         tv_createTime= (TextView) findViewById(R.id.tv_createTime);
         tv_rewardType= (TextView) findViewById(R.id.tv_rewardType);
 
+        layout_tradeCode= (LinearLayout) findViewById(R.id.layout_tradeCode);
+        layout_projectName= (LinearLayout) findViewById(R.id.layout_projectName);
+        layout_houseNum= (LinearLayout) findViewById(R.id.layout_houseNum);
+
     }
 
 
@@ -115,10 +124,16 @@ public class AwardDetailsActivity extends BaseActivity implements View.OnClickLi
             tv_rewardStatus.setText("已完成");
         }else{
             tv_rewardStatus.setText("已发放");
+            layout_tradeCode.setVisibility(View.GONE);
+            layout_projectName.setVisibility(View.GONE);
+            layout_houseNum.setVisibility(View.GONE);
+
         }
+
         tv_serialNumber.setText(data.getSerialNumber());
         tv_tradeCode.setText(data.getTradeCode());
         tv_projectName.setText(data.getProjectName());
+
         tv_houseNum.setText(data.getHouseNum());
         tv_remark.setText(data.getRemark());
         tv_createTime.setText(data.getCreateTime());

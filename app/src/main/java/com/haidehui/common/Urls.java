@@ -27,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_DEBUG;
+    private static String EC_HOST = URL_OUTER_NET_DEBUG;
 
     /**
      * 登出
@@ -83,6 +83,11 @@ public class Urls {
      * 注册
      */
     public static final String URL_SIGNUP = EC_HOST + "android/register";
+
+    /**
+     * 注册协议
+     */
+    public static final String URL_SIGNUP_WEB_AGREEMENT = EC_HOST + "user/daFuWangAgreement";
     /**
      * 修改登录密码
      */

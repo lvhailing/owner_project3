@@ -28,6 +28,7 @@ public class WebActivity extends Activity implements View.OnClickListener {
     public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
     public static final String WEBTYPE_NOTICE = "noticedetail "; // 公告详情/其他消息详情
     public static final String WEBTYPE_SERVICE_AGREEMENT = "service_agreement "; // 服务协议
+    public static final String WEBTYPE_SIGN_AGREEMENT = "sign_agreement "; // 大富翁协议
     public static final String WEBTYPE_ABOUT_US = "about_us "; // 关于我们
 
     public String title;
@@ -83,6 +84,9 @@ public class WebActivity extends Activity implements View.OnClickListener {
         } else if (type.equals(WEBTYPE_SERVICE_AGREEMENT)) {
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         }else if (type.equals(WEBTYPE_ABOUT_US)) {
+            tv_web_title.setText(getIntent().getExtras().getString("title"));
+
+        }else if (type.equals(WEBTYPE_SIGN_AGREEMENT)) {
             tv_web_title.setText(getIntent().getExtras().getString("title"));
 
         }

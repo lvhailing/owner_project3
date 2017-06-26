@@ -17,16 +17,6 @@ public class NumUtils {
 
     }
 
-    //  判断是否合格银行卡
-
-    public static boolean isBankCardNum(String d){
-
-        boolean flag = false;
-        flag = d.matches("^\\\\d{16,19}$|^\\\\d{6}[- ]\\\\d{10,13}$|^\\\\d{4}[- ]\\\\d{4}[- ]\\\\d{4}[- ]\\\\d{4,7}$");
-
-        return flag;
-
-    }
 
     /**
 

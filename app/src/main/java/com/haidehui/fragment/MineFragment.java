@@ -48,6 +48,7 @@ import java.util.HashMap;
 
 import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.CircularImage;
+import android.widget.ImageView;
 
 /**
  * 底部导航 我的
@@ -73,6 +74,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     private ResultMessageInfoContentBean bean;       //  消息参数
     private MineData2B data;
     private CircularImage img_photo;
+    private ImageView img_sign;
     /**
      * 图片保存SD卡位置
      */
@@ -124,6 +126,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         layout_account_book = (RelativeLayout) mView.findViewById(R.id.layout_account_book);
         rl_mine_mybankcard = (RelativeLayout) mView.findViewById(R.id.rl_mine_mybankcard);
         rl_mine_setting = (RelativeLayout) mView.findViewById(R.id.rl_mine_setting);
+        img_sign= (ImageView) mView.findViewById(R.id.img_sign);
 
 
     }
@@ -249,7 +252,12 @@ public class MineFragment extends Fragment implements OnClickListener {
         if (messageInt > 9) {
             tv_messageTotal.setText("9+");
         } else {
-            tv_messageTotal.setText(data.getMessageTotal());
+            if(messageInt == 0){
+                tv_messageTotal.setVisibility(View.GONE);
+            }else{
+                tv_messageTotal.setText(data.getMessageTotal());
+            }
+
         }
         tv_messageTotal.setText(data.getMessageTotal());
         tv_realName.setText(data.getRealName());
@@ -261,6 +269,12 @@ public class MineFragment extends Fragment implements OnClickListener {
             new ImageViewService().execute(url);
         } else {
             img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
+        }
+        String status = data.getCheckStatus();
+        if ("success".equals(status)){
+            img_sign.setImageResource(R.mipmap.img_business);
+        }else{
+            img_sign.setImageResource(R.mipmap.img_business);
         }
 
     }

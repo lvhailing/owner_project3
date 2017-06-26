@@ -31,7 +31,8 @@
             android:textColorHint="@color/bg_gray_gray"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="14sp"
+            android:textSize="15sp"
+            android:textColor="@color/txt_gray_d"
             />
 
 

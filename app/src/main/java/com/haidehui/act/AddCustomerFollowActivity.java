@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
@@ -16,6 +18,7 @@ import com.haidehui.adapter.AddCustomerFollowAdapter;
 import com.haidehui.adapter.CustomerFollowDetailsAdapter;
 import com.haidehui.bean.ResultCustomerFollowDetailslistBean;
 import com.haidehui.model.SubmitCustomer2B;
+import com.haidehui.model.TrackingDetails2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -30,11 +33,14 @@ import java.util.HashMap;
  *  添加跟踪
  */
 public class AddCustomerFollowActivity extends BaseActivity implements View.OnClickListener {
+    private String customerId;
     private MyListView lv_follow_detail;
     private CustomerFollowDetailsAdapter adapter;
     private MouldList<ResultCustomerFollowDetailslistBean> detailsList;
     private ScrollView scrollview;
     private Button btn_save;
+    private TextView tv_customerName;
+    private TextView tv_customerPhone;
 
     private String[] resultStr=new String[12];
     @Override
@@ -75,6 +81,8 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     private void initView() {
         scrollview= (ScrollView) findViewById(R.id.scrollview);
         btn_save= (Button) findViewById(R.id.btn_save);
+        tv_customerName= (TextView) findViewById(R.id.tv_customerName);
+        tv_customerPhone= (TextView) findViewById(R.id.tv_customerPhone);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
         lv_follow_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -86,15 +94,17 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
         });
     }
     private void initData() {
+        customerId=getIntent().getStringExtra("customerId");
+        requestData();
         btn_save.setOnClickListener(this);
         put();
         adapter = new CustomerFollowDetailsAdapter(AddCustomerFollowActivity.this, detailsList, new CustomerFollowDetailsAdapter.OnEditListener() {
             @Override
             public void onCheckBox(int position, boolean isChecked) {
                 if (isChecked) {
-
+                    resultStr[position]="true";
                 } else {
-
+                    resultStr[position]="false";
                 }
             }
         });
@@ -146,7 +156,7 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
      */
     private void submitData(String[] resultStr) {
         HashMap<String, Object> param = new HashMap<>();
-        param.put("customerId", "");
+        param.put("customerId", customerId);
         param.put("userId", userId);
         param.put("telephoneContactedAndIntroductionProject", resultStr[0]);
         param.put("projectMaterialsAndAnsweredQuestion", resultStr[1]);
@@ -170,9 +180,13 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
                         }
                         SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                         if ("true".equals(data.getFlag())) {
+                            Intent intent = new Intent(mContext, CustomerTrackingActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
                             Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
                             finish();
                         }
+
                     }
                 }
         );
@@ -184,6 +198,26 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
                 submitData(resultStr);
                 break;
         }
+    }
+
+    private void requestData() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("customerId", customerId);
+        param.put("userId", userId);
+        HtmlRequest.getTrackingDetails(this, param, new BaseRequester.OnRequestListener() {
+                    @Override
+                    public void onRequestFinished(BaseParams params) {
+                        if (params.result == null) {
+                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        TrackingDetails2B data = (TrackingDetails2B) params.result;
+                        tv_customerName.setText(data.getCustomerName());
+                        tv_customerPhone.setText(data.getCustomerPhone());
+
+                    }
+                }
+        );
     }
     /**
      * 动态设置ListView的高度

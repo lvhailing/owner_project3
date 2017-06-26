@@ -161,6 +161,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 //                requestSMS();
 
                 if(!TextUtils.isEmpty(mobile.trim())){
+                    tv_findpassword_get_verify_code.setClickable(false);
                     requestSMS();
                 }else{
                     Toast.makeText(context,"请输入手机号",Toast.LENGTH_SHORT).show();
@@ -196,12 +197,14 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                                 smsflag = true;
                                 startThread();
                             } else {
+                                tv_findpassword_get_verify_code.setClickable(true);
                                 smsflag = false;
                                 Toast.makeText(FindPasswordActivity.this,
                                         b.getMessage(), Toast.LENGTH_LONG)
                                         .show();
                             }
                         } else {
+                            tv_findpassword_get_verify_code.setClickable(true);
                             Toast.makeText(FindPasswordActivity.this, "加载失败，请确认网络通畅",
                                     Toast.LENGTH_LONG).show();
                         }

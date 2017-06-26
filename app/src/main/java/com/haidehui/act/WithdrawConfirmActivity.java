@@ -167,7 +167,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         switch (view.getId()){
 
             case R.id.tv_withdraw_get_verify_code:
-
+                tv_withdraw_get_verify_code.setClickable(false);
                 requestSMS();
 //                smsflag = true;
 //                startThread();
@@ -282,18 +282,20 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
             public void onRequestFinished(BaseParams params) {
                 ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                 if (b != null) {
-                    if (Boolean.parseBoolean(b.getResult())) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
                         Toast.makeText(WithdrawConfirmActivity.this, "短信发送成功",
                                 Toast.LENGTH_LONG).show();
                         smsflag = true;
                         startThread();
                     } else {
+                        tv_withdraw_get_verify_code.setClickable(true);
                         smsflag = false;
                         Toast.makeText(WithdrawConfirmActivity.this,
                                 b.getMessage(), Toast.LENGTH_LONG)
                                 .show();
                     }
                 } else {
+                    tv_withdraw_get_verify_code.setClickable(true);
                     Toast.makeText(WithdrawConfirmActivity.this, "加载失败，请确认网络通畅",
                             Toast.LENGTH_LONG).show();
                 }

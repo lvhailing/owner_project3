@@ -132,6 +132,20 @@ public class StringUtil {
     }
 
     /**
+     * 银行卡前后留四位
+     * @param bankNum
+     * @return
+     */
+    public static String encryBankNum(String bankNum){
+        StringBuffer sb = new StringBuffer();
+        sb.append(bankNum.substring(0, 4));
+        sb.append(" **** **** ");
+        sb.append(bankNum.substring(bankNum.length()-4, bankNum.length()));
+
+        return sb.toString();
+    }
+
+    /**
      * 把字符串的后n位用“*”号代替(只保留头尾两位)
      *
      * @param str 要代替的字符串
@@ -430,6 +444,17 @@ public class StringUtil {
         return hasSymble;
     }
 
+    /**
+     * 密码是否是8-16位字母数字组合
+     *
+     * @param str
+     * @return
+     */
+    public static boolean checkPassword(String str) {
+        boolean hasSymble = str.matches("^(?![^a-zA-Z]+$)(?!\\D+$).{8,16}$");
+        return hasSymble;
+    }
+
     /***
      * 修改字符串样式
      *
@@ -713,5 +738,17 @@ public class StringUtil {
             btn_one.setTextColor(mResource.getColor(R.color.gray_d));
         }
 
+    }
+    /**
+     * 验证是否属于与email格式
+     * @param strEmail
+     * @return
+     */
+    public static boolean isEmail(String strEmail) {
+        String strPattern = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+
+        Pattern p = Pattern.compile(strPattern);
+        Matcher m = p.matcher(strEmail);
+        return m.matches();
     }
 }

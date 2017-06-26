@@ -19,7 +19,7 @@
     <string name="sign_recommendation">推荐码</string>
     <string name="sign_get_verify">获取验证码</string>
     <string name="sign_agree">我已阅读并同意</string>
-    <string name="sign_web">《海德汇》</string>
+    <string name="sign_web">《大富翁》</string>
     <string name="sign_agree_two">服务协议。</string>
     <string name="sign_btn_name">立即注册</string>
     <string name="sign_getsms_again">重新获取</string>
@@ -49,6 +49,7 @@
     <string name="setting_change_gesture_password">修改手势密码</string>
     <string name="setting_change_password">修改登录密码</string>
     <string name="setting_service_agreement">服务协议</string>
+    <string name="setting_sign_agreement">大富翁协议</string>
     <string name="setting_privacy_agreement">隐私协议</string>
     <string name="setting_advice">意见反馈</string>
     <string name="setting_invite">推荐大富翁APP朋友</string>

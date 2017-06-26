@@ -111,6 +111,9 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             e.printStackTrace();
         }
 
+        tv_add_bank_real_name.setText(realName);
+        tv_add_bank_idcard.setText(idCard);
+
         checkNull();
 
     }
@@ -151,7 +154,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
             public void onRequestFinished(BaseParams params) {
                 ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                 if (b != null) {
-                    if (Boolean.parseBoolean(b.getResult())) {
+                    if (Boolean.parseBoolean(b.getFlag())) {
                         Toast.makeText(AddBankActivity.this, "短信发送成功",
                                 Toast.LENGTH_LONG).show();
                         smsflag = true;
@@ -161,8 +164,10 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
                         Toast.makeText(AddBankActivity.this,
                                 b.getMessage(), Toast.LENGTH_LONG)
                                 .show();
+                        tv_add_bank_get_verify_code.setClickable(true);
                     }
                 } else {
+                    tv_add_bank_get_verify_code.setClickable(true);
                     Toast.makeText(AddBankActivity.this, "加载失败，请确认网络通畅",
                             Toast.LENGTH_LONG).show();
                 }
@@ -235,10 +240,11 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
         switch (view.getId()){
 
             case R.id.tv_add_bank_get_verify_code:
-
+                tv_add_bank_get_verify_code.setClickable(false);
                 requestSMS();
 //                smsflag = true;
 //                startThread();
+
 
                 break;
 

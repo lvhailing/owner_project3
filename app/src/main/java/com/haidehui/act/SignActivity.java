@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +23,7 @@ import com.haidehui.model.ResultSentSMSContentBean;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 
@@ -156,16 +158,33 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
         switch (view.getId()){
 
             case R.id.btn_sign:         //      立即注册
-                signup();
+                if(StringUtil.checkPassword(password)){
+                    signup();
+                }else{
+                    Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
 
             case R.id.signup_web:       //  海德汇协议
+
+                Intent i_service = new Intent(SignActivity.this,WebActivity.class);
+                i_service.putExtra("type", WebActivity.WEBTYPE_SIGN_AGREEMENT);
+                i_service.putExtra("title", getResources().getString(R.string.setting_sign_agreement));
+                i_service.putExtra("url", Urls.URL_SIGNUP_WEB_AGREEMENT);
+                startActivity(i_service);
 
                 break;
             case R.id.tv_sign_get_verify_code:          //  获取验证码
 
                 if(!TextUtils.isEmpty(mobile.trim())){
-                    requestSMS();
+                    if(StringUtil.isMobileNO(mobile)){
+                        tv_sign_get_verify_code.setClickable(false);
+                        requestSMS();
+                    }else{
+                        Toast.makeText(context,"请输入正确的手机号",Toast.LENGTH_SHORT).show();
+                    }
+
                 }else{
                     Toast.makeText(context,"请输入手机号",Toast.LENGTH_SHORT).show();
                 }
@@ -195,12 +214,13 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     public void onRequestFinished(BaseParams params) {
                         ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                         if (b != null) {
-                            if (Boolean.parseBoolean(b.getResult())) {
+                            if (Boolean.parseBoolean(b.getFlag())) {
                                 Toast.makeText(SignActivity.this, "短信发送成功",
                                         Toast.LENGTH_LONG).show();
                                 smsflag = true;
                                 startThread();
                             } else {
+                                tv_sign_get_verify_code.setClickable(true);
                                 smsflag = false;
                                 Toast.makeText(SignActivity.this,
                                         b.getMessage(), Toast.LENGTH_LONG)
@@ -209,6 +229,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                         } else {
                             Toast.makeText(SignActivity.this, "加载失败，请确认网络通畅",
                                     Toast.LENGTH_LONG).show();
+                            tv_sign_get_verify_code.setClickable(true);
                         }
                     }
                 });
@@ -231,12 +252,12 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                 if (b != null) {
                     if(b.getFlag().equals("true")){
                         Toast.makeText(SignActivity.this,
-                                b.getMessage(), Toast.LENGTH_LONG)
+                                b.getMsg(), Toast.LENGTH_LONG)
                                 .show();
                         finish();
                     }else{
                         Toast.makeText(SignActivity.this,
-                                b.getMessage(), Toast.LENGTH_LONG)
+                                b.getMsg(), Toast.LENGTH_LONG)
                                 .show();
                     }
                 } else {

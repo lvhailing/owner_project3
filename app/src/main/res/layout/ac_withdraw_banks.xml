@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/bg_gray"
+    android:paddingBottom="10dip"
     >
 
     <ListView
@@ -12,10 +13,42 @@
         android:layout_height="match_parent"
         android:divider="@color/bg_gray_gray"
         android:dividerHeight="0dp"
+        android:layout_marginBottom="55dip"
         android:scrollbars="none"
 
         />
+    <RelativeLayout
+        android:id="@+id/rl_mybank_add"
+        android:layout_width="match_parent"
+        android:layout_height="42dip"
+        android:background="@drawable/shape_center_orange"
+        android:visibility="visible"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        >
 
+        <TextView
+            android:id="@+id/tv_add_bank_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mybank_add_card"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/txt_white"
+            android:textSize="16sp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_add_bank_card"
+            android:layout_toLeftOf="@id/tv_add_bank_card"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

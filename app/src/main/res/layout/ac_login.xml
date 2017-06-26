@@ -108,7 +108,11 @@
                     android:inputType="phone"
                     android:maxLength="11"
                     android:textSize="15sp"
+                    android:textColor="@color/txt_gray_d"
+                    android:textCursorDrawable="@drawable/color_cursor"
                     />
+
+
             </RelativeLayout>
 
             <ImageView
@@ -156,11 +160,12 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dip"
                     android:layout_toRightOf="@id/iv_login_password"
-                    android:background="@color/transparent"
+                    android:background="@color/white"
                     android:hint="密码"
                     android:inputType="textPassword"
-                    android:maxLength="30"
+                    android:maxLength="20"
                     android:textSize="15sp"
+                    android:textColor="@color/txt_gray_d"
                     />
             </RelativeLayout>
 

@@ -379,9 +379,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 //为接口字段赋值""
                 houseCatagory = "";
 
-                //上面的类型文字还原
+                //上面的“类型”文字及颜色还原
                 tv_house_resources_type.setText("类型");
-                //上面的类型颜色还原
                 tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
                 break;
             case R.id.btn_type_sure:  // 类型： 确定
@@ -416,7 +415,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_3:  // 价格： 50-100万元（3）
-                tv_house_resources_price.setText("50-100...");
+                tv_house_resources_price.setText("50-1...");
                 tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_3.setTextColor(getResources().getColor(R.color.txt_orange));
@@ -428,7 +427,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_4:  // 价格： 100-200万元（4）
-                tv_house_resources_price.setText("100-200...");
+                tv_house_resources_price.setText("100-2...");
                 tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_4.setTextColor(getResources().getColor(R.color.txt_orange));
@@ -440,7 +439,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_5:  // 价格： 200-500万元（5）
-                tv_house_resources_price.setText("200-500...");
+                tv_house_resources_price.setText("200-5...");
                 tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_5.setTextColor(getResources().getColor(R.color.txt_orange));
@@ -452,7 +451,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_6:  // 价格： 500-1000万元（6）
-                tv_house_resources_price.setText("500-1000...");
+                tv_house_resources_price.setText("500-1...");
                 tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_6.setTextColor(getResources().getColor(R.color.txt_orange));
@@ -491,18 +490,21 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 clickFunctionItem(tv5_func, "immigrant");
                 break;
             case R.id.btn_func_reset:  // 功能： 重置
+                //重置所有按钮状态
                 clickFunctionBtnReset();
 
+                //将类型集合清空
+                functions.clear();
+                //为接口字段赋值""
                 houseFunction = ""; //首次默认"" ，代表全部功能
+
+                //上面的“功能”文字及颜色还原
+                tv_house_function.setText("功能");
+                tv_house_function.setTextColor(getResources().getColor(R.color.txt_black));
+
                 break;
             case R.id.btn_func_sure:  // 功能： 确定
-                if (!TextUtils.isEmpty(functionSelected)) {
-//                    btn_func_sure.setEnabled(true);
-                    houseFunction = functionSelected;
-                } else {
-//                    btn_func_sure.setEnabled(false);
-                    houseFunction = ""; //首次默认"" ，代表全部功能
-                }
+                //点确定时，请求接口
                 requestGetHouseList();
 
                 //功能处于展开状态，则需关闭动画，且箭头置成向下
@@ -540,7 +542,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             sb.append(",");
         }
         String strResultType = sb.toString();
-        //应该是每选择一次类型 就为接口字段赋值一次
+        // 每选择一次类型 就为接口字段赋值一次
         houseCatagory = strResultType.equals("") ? "" : strResultType.substring(0, strResultType.length() - 1);
 
         //设置上面的类型文字
@@ -613,17 +615,17 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
      * 功能里的每个按钮被选时调的方法
      *
      * @param tv
-     * @param item
+     * @param functionEnglish
      */
-    private void clickFunctionItem(TextView tv, String item) {
-        if (functions.contains(item)) {
+    private void clickFunctionItem(TextView tv, String functionEnglish) {
+        if (functions.contains(functionEnglish)) {
             //添加过
-            functions.remove(item);
+            functions.remove(functionEnglish);
             tv.setTextColor(getResources().getColor(R.color.txt_black));
             tv.setBackgroundResource(R.drawable.shape_center_gray_white);
         } else {
             //未添加过
-            functions.add(item);
+            functions.add(functionEnglish);
             tv.setTextColor(getResources().getColor(R.color.txt_orange));
             tv.setBackgroundResource(R.drawable.shape_center_orange_white);
         }
@@ -632,12 +634,52 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             sb.append(str);
             sb.append(",");
         }
-        String strResult = sb.toString();
-        functionSelected = strResult.substring(0, strResult.length());
+        String strResultFunction = sb.toString();
+//        functionSelected = strResult.substring(0, strResult.length());
+        //每选择一次功能 就为接口字段赋值一次
+        functionSelected = strResultFunction.equals("") ? "" : strResultFunction.substring(0, strResultFunction.length() - 1);
+
+        //设置上面的类型文字
+        if (functions.size() == 0) {
+            tv_house_function.setText("功能");
+            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
+        } else if (functions.size() == 1) {
+            String selectedFunc = getOnlyFuncItem();
+            tv_house_function.setText(selectedFunc);
+            tv_house_function.setTextColor(getResources().getColor(R.color.txt_orange));
+        } else if (functions.size() >= 2) {
+            tv_house_function.setText("多选");
+            tv_house_function.setTextColor(getResources().getColor(R.color.txt_orange));
+        }
+    }
+
+    private String getOnlyFuncItem() {
+        String result;
+        switch (functionSelected) {
+            case "investment":
+                result = "投资";
+                break;
+            case "selfOccupation":
+                result = "自住";
+                break;
+            case "holiday":
+                result = "度假";
+                break;
+            case "seascape":
+                result = "海景";
+                break;
+            case "immigrant":
+                result = "移民";
+                break;
+
+            default:
+                result = "";
+        }
+        return result;
     }
 
     /**
-     * 功能里的重置按钮点击时调的方法
+     * 功能里的重置功能按钮点击时调的方法
      */
     private void clickFunctionBtnReset() {
         functions.clear();

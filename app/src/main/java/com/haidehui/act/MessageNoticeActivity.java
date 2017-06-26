@@ -144,31 +144,33 @@ public class MessageNoticeActivity extends BaseActivity{
                 if (params != null) {
                     if (params.result != null) {
                         ResultMessageContentBean infoBean = (ResultMessageContentBean)params.result;
-
-                        if (infoBean.getList().size() == 0 && page!=1 ) {
-                            Toast.makeText(context, "已经到最后一页",
-                                    Toast.LENGTH_SHORT).show();
-                            page = cachePage_pro - 1;
-                            noticeAdapter.notifyDataSetChanged();
-                            listview_message_notice.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
-                            listview_message_notice.onRefreshComplete();
-                        }else if (infoBean.getList().size() == 0&&page==1){
+                        if(infoBean.getList()!=null){
+                            if (infoBean.getList().size() == 0 && page!=1 ) {
+                                Toast.makeText(context, "已经到最后一页",
+                                        Toast.LENGTH_SHORT).show();
+                                page = cachePage_pro - 1;
+                                noticeAdapter.notifyDataSetChanged();
+                                listview_message_notice.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                                listview_message_notice.onRefreshComplete();
+                            }else if (infoBean.getList().size() == 0&&page==1){
 //                            vs_messgae_notice.setDisplayedChild(1);
-                        }else {
-                            // layout.addView(btnLayout);
+                            }else {
+                                // layout.addView(btnLayout);
 
-                            list.clear();
-                            list.addAll(infoBean.getList());
-                            noticeAdapter.notifyDataSetChanged();
+                                list.clear();
+                                list.addAll(infoBean.getList());
+                                noticeAdapter.notifyDataSetChanged();
 //									lv_info_repayplan.getRefreshableView().smoothScrollToPositionFromTop(5, 0);
-                            listview_message_notice.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    listview_message_notice.onRefreshComplete();
-                                }
-                            }, 1000);
-                            listview_message_notice.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                                listview_message_notice.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listview_message_notice.onRefreshComplete();
+                                    }
+                                }, 1000);
+                                listview_message_notice.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                            }
                         }
+
 
                     }
 

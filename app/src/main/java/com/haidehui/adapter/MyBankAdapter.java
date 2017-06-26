@@ -11,6 +11,7 @@ import com.haidehui.R;
 import com.haidehui.model.ResultMessageContentBean;
 import com.haidehui.model.ResultMyBankListContentItemBean;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.StringUtil;
 
 /**
  * 我的银行卡
@@ -60,7 +61,10 @@ public class MyBankAdapter extends BaseAdapter{
         }
         holder.tv_bank_bankname.setText(list.get(i).getBankName());
         holder.tv_bank_username.setText(list.get(i).getRealName());
-        holder.tv_bank_num.setText(list.get(i).getBankCardNum());
+        if(list.get(i).getBankCardNum().length()>4){
+            holder.tv_bank_num.setText(StringUtil.encryBankNum(list.get(i).getBankCardNum()));
+        }
+
 
         return view;
     }

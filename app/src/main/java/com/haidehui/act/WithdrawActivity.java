@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.haidehui.R;
@@ -36,6 +37,7 @@ public class WithdrawActivity extends BaseActivity{
     private MouldList<ResultMyBankListContentItemBean> list;
     private int lastPress = 0;
     private WithdrawAdapter withdrawAdapter;
+    private RelativeLayout rl_mybank_add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +52,17 @@ public class WithdrawActivity extends BaseActivity{
     public void initView(){
         context = this;
         lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
+        rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);
 
         requestData();
 //        test();
-
+        rl_mybank_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i_addCard = new Intent(context,AddBankActivity.class);
+                startActivity(i_addCard);
+            }
+        });
 
 
         lv_withdraw_mybank.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -79,8 +88,7 @@ public class WithdrawActivity extends BaseActivity{
 //                                i_recharge.setClass(context, ReChargeActivity.class);
 //                                context.startActivity(i_recharge);
 //                                    requestCancelData();
-                                    list.remove(position);
-                                    withdrawAdapter.notifyDataSetChanged();
+
 
                                     delete(position,list.get(position).getId());
 
@@ -110,7 +118,20 @@ public class WithdrawActivity extends BaseActivity{
             }
         });
 
+        /*View view = View.inflate(WithdrawActivity.this, R.layout.ac_mybank_item_button, null);
+        view.findViewById(R.id.rl_mybank_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+//                Toast.makeText(getApplicationContext(), "哈哈哈.点击了按钮.去处理自己的逻辑咯", Toast.LENGTH_SHORT).show();
 
+                Intent i_addCard = new Intent(context,AddBankActivity.class);
+                startActivity(i_addCard);
+
+            }
+        });
+
+        lv_withdraw_mybank.addFooterView(view);// 为listview添加footview*/
 
     }
 
@@ -140,7 +161,7 @@ public class WithdrawActivity extends BaseActivity{
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-        param.put("page", "1");
+        param.put("page", "");
         param.put("userId", userId);
 
         HtmlRequest.getMyBankList(WithdrawActivity.this, param,new BaseRequester.OnRequestListener() {
@@ -179,6 +200,7 @@ public class WithdrawActivity extends BaseActivity{
                     if(b.getFlag().equals("true")){
                         list.remove(position);
                         withdrawAdapter.notifyDataSetChanged();
+
                     }
                     Toast.makeText(WithdrawActivity.this, b.getMessage(),
                             Toast.LENGTH_LONG).show();

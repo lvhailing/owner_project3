@@ -33,6 +33,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
     private TextView tv_area;
     private TextView tv_total_amount;
     private TextView tv_time;
+    private CustomerDetails2B data;
 
     @Override
 
@@ -82,7 +83,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
                             Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                             return;
                         }
-                        CustomerDetails2B data = (CustomerDetails2B) params.result;
+                        data = (CustomerDetails2B) params.result;
                         setData(data);
                     }
                 }
@@ -109,6 +110,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.img_add_follow:
                 Intent intent = new Intent(CustomerDetailsActivity.this, AddCustomerFollowActivity.class);
+                intent.putExtra("customerId", data.getCustomerId());
                 startActivity(intent);
                 break;
         }

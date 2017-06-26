@@ -179,8 +179,8 @@ public class MessageInfoActivity extends BaseActivity{
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("messageType", "count");
         param.put("page", page);
-//        param.put("userId", userId);
-        param.put("userId", "17021511395798036131");
+        param.put("userId", userId);
+//        param.put("userId", "17021511395798036131");
         cachePage_pro = page;
         HtmlRequest.sentMessageInfo(MessageInfoActivity.this, param,new BaseRequester.OnRequestListener() {
 
@@ -191,30 +191,32 @@ public class MessageInfoActivity extends BaseActivity{
                         infoBean = (ResultMessageContentBean)params.result;
 //                        list = infoBean.getList();
 //                        setView();
-
-                        if (infoBean.getList().size() == 0 && page!=1 ) {
-                            Toast.makeText(context, "已经到最后一页",
-                                    Toast.LENGTH_SHORT).show();
-                            page = cachePage_pro - 1;
-                            infoAdapter.notifyDataSetChanged();
-                            listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
-                            listview_message_info.onRefreshComplete();
-                        }else if (infoBean.getList().size() == 0&&page==1){
+                        if(infoBean.getList()!=null){
+                            if (infoBean.getList().size() == 0 && page!=1 ) {
+                                Toast.makeText(context, "已经到最后一页",
+                                        Toast.LENGTH_SHORT).show();
+                                page = cachePage_pro - 1;
+                                infoAdapter.notifyDataSetChanged();
+                                listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                                listview_message_info.onRefreshComplete();
+                            }else if (infoBean.getList().size() == 0&&page==1){
 //                            vs_messgae_info.setDisplayedChild(1);
-                        }else {
-                            // layout.addView(btnLayout);
-                            list.clear();
-                            list.addAll(infoBean.getList());
-                            infoAdapter.notifyDataSetChanged();
+                            }else {
+                                // layout.addView(btnLayout);
+                                list.clear();
+                                list.addAll(infoBean.getList());
+                                infoAdapter.notifyDataSetChanged();
 //									lv_info_repayplan.getRefreshableView().smoothScrollToPositionFromTop(5, 0);
-                            listview_message_info.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    listview_message_info.onRefreshComplete();
-                                }
-                            }, 1000);
-                            listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                                listview_message_info.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listview_message_info.onRefreshComplete();
+                                    }
+                                }, 1000);
+                                listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
+                            }
                         }
+
 
 
                     }

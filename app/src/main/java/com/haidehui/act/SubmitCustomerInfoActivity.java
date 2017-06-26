@@ -98,36 +98,13 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
                     if (!TextUtils.isEmpty(customerPhone)){
                         if (StringUtil.isMobileNO(customerPhone)){
                             if (!TextUtils.isEmpty(customerEmail)){
-                                if (!TextUtils.isEmpty(houseLocation)){
-                                    if (!TextUtils.isEmpty(houseProject)){
-                                        if (!TextUtils.isEmpty(roomNumber)){
-                                            if (!TextUtils.isEmpty(area)){
-                                                if (!TextUtils.isEmpty(totalPrice)){
+                                if (StringUtil.isEmail(customerEmail)){
 
-                                                    requestData(area, customerEmail, customerName, customerPhone, houseLocation, houseProject, roomNumber, totalPrice);
-                                                }else{
-                                                    Toast.makeText(mContext, "请输入房产总价", Toast.LENGTH_LONG).show();
-                                                    edt_total_amount.requestFocusFromTouch();
-                                                }
-
-                                            }else{
-                                                Toast.makeText(mContext, "请输入房产面积", Toast.LENGTH_LONG).show();
-                                                edt_area.requestFocusFromTouch();
-                                            }
-
-                                        }else{
-                                            Toast.makeText(mContext, "请输入房产房号", Toast.LENGTH_LONG).show();
-                                            edt_room_number.requestFocusFromTouch();
-                                        }
-
-                                    }else{
-                                        Toast.makeText(mContext, "请输入项目名称", Toast.LENGTH_LONG).show();
-                                        edt_project.requestFocusFromTouch();
-                                    }
+                                    requestData(area, customerEmail, customerName, customerPhone, houseLocation, houseProject, roomNumber, totalPrice);
 
                                 }else{
-                                    Toast.makeText(mContext, "请输入房产所在国家", Toast.LENGTH_LONG).show();
-                                    edt_location.requestFocusFromTouch();
+                                    Toast.makeText(mContext, "请输入正确的邮箱地址", Toast.LENGTH_LONG).show();
+                                    edt_email.requestFocusFromTouch();
                                 }
 
                             }else{
@@ -185,6 +162,8 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
                             Intent intent=new Intent(SubmitCustomerInfoActivity.this,CustomerInfoActivity.class);
                             setResult(RESULT_OK, intent);
                             finish();
+                        }else{
+                            Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
                         }
                     }
                 }

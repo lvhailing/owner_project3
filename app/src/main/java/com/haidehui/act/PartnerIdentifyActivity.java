@@ -59,6 +59,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import com.haidehui.widget.SelectPhotoDialog;
+import com.haidehui.uitls.PreferenceUtil;
+import com.haidehui.uitls.DESUtil;
 
 /**
  *  事业合伙人认证
@@ -286,8 +288,17 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 btn_submit.setText("已认证");
                 btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
 
+                if(!TextUtils.isEmpty(data.getIdNo())) {
+                    try {
+                        PreferenceUtil.setIdNo(DESUtil.encrypt(data.getIdNo()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-            }else if ("fail".equals(data.getCheckStatus())){//内容可以编辑  身份证照片变成 可照相状态 提交认证可以点
+                }else if ("fail".equals(data.getCheckStatus())){//内容可以编辑  身份证照片变成 可照相状态 提交认证可以点
+                layout_delete.setVisibility(View.VISIBLE);
+                tv_remark.setText("认证失败，请提交您的真实信息！");
                 edt_workUnit.requestFocusFromTouch();
                 edt_email.requestFocusFromTouch();
                 edt_idNo.requestFocusFromTouch();
@@ -350,26 +361,31 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 if (!TextUtils.isEmpty(workProvince)){
                     if (!TextUtils.isEmpty(workUnit)){
                         if (!TextUtils.isEmpty(email)){
-                            if (!TextUtils.isEmpty(idNo)){
-                                if (StringUtil.personIdValidation(idNo)){
-                                    if (isID == false) {
-                                        Toast.makeText(PartnerIdentifyActivity.this,"请上传身份证正面", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                    if (isCard== false) {
-                                        Toast.makeText(PartnerIdentifyActivity.this,"请上传名片", Toast.LENGTH_SHORT).show();
-                                        return;
+                            if (StringUtil.isEmail(email)) {
+                                if (!TextUtils.isEmpty(idNo)) {
+                                    if (StringUtil.personIdValidation(idNo)) {
+                                        if (isID == false) {
+                                            Toast.makeText(PartnerIdentifyActivity.this, "请上传身份证正面", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+                                        if (isCard == false) {
+                                            Toast.makeText(PartnerIdentifyActivity.this, "请上传名片", Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+
+                                        requestSubmitData(email, idNo, userId, workProvince, workUnit);
+                                    } else {
+                                        Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
+                                        edt_idNo.requestFocusFromTouch();
                                     }
 
-                                    requestSubmitData(email,idNo,userId,workProvince,workUnit);
-                                }else{
-                                    Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(mContext, "请输入您的身份证号", Toast.LENGTH_LONG).show();
                                     edt_idNo.requestFocusFromTouch();
                                 }
-
                             }else{
-                                Toast.makeText(mContext, "请输入您的身份证号", Toast.LENGTH_LONG).show();
-                                edt_idNo.requestFocusFromTouch();
+                                Toast.makeText(mContext, "请输入正确的邮箱", Toast.LENGTH_LONG).show();
+                                edt_email.requestFocusFromTouch();
                             }
 
                         }else{
@@ -427,6 +443,8 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                                 img_card.setClickable(true);
                                 btn_submit.setClickable(false);
                                 btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
+                            }else{
+                                Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
                             }
                     }
                 }

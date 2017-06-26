@@ -19,6 +19,8 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -35,6 +37,7 @@ public class AwardDetailsFragment extends Fragment {
     private MouldList<AccountBookAward3B> awardList= new MouldList<>();
     private AccountBookAwardAdapter adapterAward;
     private int currentPage = 1;    //当前页
+    private String userId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,9 +104,14 @@ public class AwardDetailsFragment extends Fragment {
 
     }
     private void requestAwardList() {  // 获取活动奖励列表数据
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", currentPage + "");
-        param.put("userId", "17021511395798036131");
+        param.put("userId",userId);
 
         try {
             HtmlRequest.getAwardList(getActivity(), param, new BaseRequester.OnRequestListener() {

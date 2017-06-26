@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,9 +41,6 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
         initTopTitle();
         initView();
-
-
-
 
     }
 
@@ -116,9 +114,34 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
     public void setView(){
 
-        tv_message_info_num.setText(bean.getCountNum());
-        tv_message_notice_num.setText(bean.getBulletNum());
-        tv_message_other_num.setText(bean.getOthersNum());
+        if(!TextUtils.isEmpty(bean.getCountNum())){
+            if(Integer.parseInt(bean.getCountNum())==0){
+                tv_message_info_num.setVisibility(View.GONE);
+            }else{
+                tv_message_info_num.setVisibility(View.VISIBLE);
+                tv_message_info_num.setText(bean.getCountNum());
+            }
+
+        }
+        if(!TextUtils.isEmpty(bean.getBulletNum())){
+            if(Integer.parseInt(bean.getBulletNum())==0){
+
+                tv_message_notice_num.setVisibility(View.GONE);
+            }else{
+                tv_message_notice_num.setVisibility(View.VISIBLE);
+                tv_message_notice_num.setText(bean.getBulletNum());
+            }
+
+        }
+        if(!TextUtils.isEmpty(bean.getOthersNum())){
+            if(Integer.parseInt(bean.getOthersNum())==0){
+                tv_message_other_num.setVisibility(View.GONE);
+            }else{
+                tv_message_other_num.setVisibility(View.VISIBLE);
+                tv_message_other_num.setText(bean.getOthersNum());
+            }
+
+        }
 
     }
 
@@ -170,10 +193,7 @@ public class MessageActivity extends BaseActivity implements View.OnClickListene
 
                 break;
 
-
         }
     }
-
-
 
 }
