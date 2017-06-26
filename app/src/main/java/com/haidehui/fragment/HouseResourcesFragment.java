@@ -259,15 +259,6 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                     //动画是开启状态
                     if (currentFlag == 1) {
                         //类型处于展开状态，则需关闭动画，且箭头置成向下
-                        if (types.size() == 1) {
-                            tv_house_resources_type.setText(typeSelected);
-                            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
-
-                        } else if (types.size() >= 2) {
-                            tv_house_resources_type.setText("多选");
-                            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
-
-                        }
                         iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
                         closeShopping(ll_hidden_type);
                     } else {
@@ -385,6 +376,16 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 houseCatagory = ""; //首次默认"" ，代表全部类型
                 break;
             case R.id.btn_type_sure:  // 类型： 确定
+                if (types.size() == 1) {
+                    resetSelectText(typeSelected);
+                } else if (types.size() >= 2) {
+                    tv_house_resources_type.setText("多选");
+                    tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
+                } else {
+                    tv_house_resources_type.setText("类型");
+                    tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
+                }
+
                 if (!TextUtils.isEmpty(typeSelected)) {
 //                    btn_type_sure.setEnabled(true);
                     houseCatagory = typeSelected;
@@ -401,6 +402,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
                 break;
             case R.id.tv_1:  // 价格： 不限（1）
+                tv_house_resources_price.setText("价格");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_black));
                 resetPriceItemColor();
                 tv_1.setTextColor(getResources().getColor(R.color.txt_orange));
                 housePrice = "1";
@@ -410,6 +413,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_2:  // 价格：50万元以下（2）
+                tv_house_resources_price.setText("50万元...");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_2.setTextColor(getResources().getColor(R.color.txt_orange));
 
@@ -420,6 +425,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_3:  // 价格： 50-100万元（3）
+                tv_house_resources_price.setText("50-100...");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_3.setTextColor(getResources().getColor(R.color.txt_orange));
 
@@ -430,6 +437,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_4:  // 价格： 100-200万元（4）
+                tv_house_resources_price.setText("100-200...");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_4.setTextColor(getResources().getColor(R.color.txt_orange));
 
@@ -440,6 +449,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_5:  // 价格： 200-500万元（5）
+                tv_house_resources_price.setText("200-500...");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_5.setTextColor(getResources().getColor(R.color.txt_orange));
 
@@ -450,6 +461,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_6:  // 价格： 500-1000万元（6）
+                tv_house_resources_price.setText("500-1000...");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_6.setTextColor(getResources().getColor(R.color.txt_orange));
 
@@ -460,6 +473,8 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 closeShopping(ll_hidden_price);
                 break;
             case R.id.tv_7:  // 价格： 1000万元以上（7）
+                tv_house_resources_price.setText("1000万元...");
+                tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_orange));
                 resetPriceItemColor();
                 tv_7.setTextColor(getResources().getColor(R.color.txt_orange));
 
@@ -535,6 +550,24 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         }
         String strResultType = sb.toString();
         typeSelected = strResultType.substring(0, strResultType.length());
+    }
+
+    private void resetSelectText(String typeSelected) {
+        if (typeSelected.equals("flat,")) {
+            tv_house_resources_type.setText("公寓");
+        } else if (typeSelected.equals("shops,")) {
+            tv_house_resources_type.setText("商铺");
+        } else if (typeSelected.equals("villa,")) {
+            tv_house_resources_type.setText("别墅");
+        } else if (typeSelected.equals("schoolDistrict,")) {
+            tv_house_resources_type.setText("学区");
+        } else if (typeSelected.equals("land,")) {
+            tv_house_resources_type.setText("土地");
+        } else if (typeSelected.equals("manor,")) {
+            tv_house_resources_type.setText("庄园");
+        }
+        tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_orange));
+
     }
 
     /**
