@@ -47,10 +47,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private ViewPager vp;
     private int currentPos;
     private TextView tv_vp_page;
-    private ImageView image;
-    private ArrayList<ImageView> imageList;
-    private ArrayList<String> list;
-    private HouseDetailAdapter mAdapter;
+    private HouseDetailAdapter mAdapter; // 轮播图Adapter
     private ImageView iv_project_click, iv_support_facilities_click, iv_geographic_location_click;
     private LinearLayout ll_pro_house_photos, ll_support_facilities, ll_geographic_location; // 项目居室，配套设施，地理位置等布局
     private TextView tv_project_des, tv_support_facilities_desc, tv_geographic_location_desc; // 项目居室，配套设施，地理位置等的描述
@@ -59,7 +56,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private ArrayList<String> houseTypeImgList;
     private MyListView myListView;
     private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
-    private RelatedHouseAdapter myAdapter;
+    private RelatedHouseAdapter myAdapter; // 相关房源 Adapter
     private TextView tv_no_house; // 相关房源没数据时显示的提示语
 
     private RelativeLayout rl_pro_house,rl_pro_facilities,rl_pro_geographic_location; // 项目居室，配套设施，地理位置布局

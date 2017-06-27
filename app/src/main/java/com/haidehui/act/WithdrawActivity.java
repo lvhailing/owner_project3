@@ -50,11 +50,7 @@ public class WithdrawActivity extends BaseActivity{
 
     }
 
-    public void initView(){
-        context = this;
-        lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
-        rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);
-
+    public void initData(){
         requestData();
 //        test();
         rl_mybank_add.setOnClickListener(new View.OnClickListener() {
@@ -148,6 +144,15 @@ public class WithdrawActivity extends BaseActivity{
 
     }
 
+    public void initView(){
+        context = this;
+        lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
+        rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);
+
+
+
+    }
+
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.setTitle(getResources().getString(R.string.title_null))
@@ -237,6 +242,7 @@ public class WithdrawActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override

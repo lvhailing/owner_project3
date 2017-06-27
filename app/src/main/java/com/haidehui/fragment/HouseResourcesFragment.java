@@ -45,10 +45,10 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private Context context;
     private View mView;
     private RelativeLayout rl_house_resources_type, rl_house_resources_price, rl_house_function; // 顶部的类型、价格、功能
-    private TextView tv_house_resources_type, tv_house_resources_price, tv_house_function; // 顶部的类型、价格、功能
     private ImageView iv_select_type, iv_select_price, iv_select_function; // 顶部的类型、价格、功能后面的小箭头
     private View v_hidden; // 隐藏的 类型、价格、功能布局背景
     private LinearLayout ll_hidden_type, ll_hidden_price, ll_hidden_function; // 点击顶部的类型、价格、功能等时对应的布局
+    private TextView tv_house_resources_type, tv_house_resources_price, tv_house_function; // 顶部的类型、价格、功能
     private TextView tv1, tv2, tv3, tv4, tv5, tv6; // 顶部的类型( 公寓，商铺，别墅，学区，土地，庄园)
     private TextView tv_1, tv_2, tv_3, tv_4, tv_5, tv_6, tv_7; // 顶部的价格( 不限，50万元以下，50-100万元，100-200万元，200-500万元，500-1000万元,1000万以上)
     private TextView tv1_func, tv2_func, tv3_func, tv4_func, tv5_func; // 顶部的功能( 投资，自住，度假，海景，移民)
@@ -214,7 +214,21 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
+        requestDefaultData();
+    }
+
+    public void requestDefaultData() {
+        tv_house_resources_type.setText("类型");
+        tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
+
+        tv_house_resources_price.setText("价格");
+        tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_black));
+
+        tv_house_function.setText("功能");
+        tv_house_function.setTextColor(getResources().getColor(R.color.txt_black));
+
         houseCatagory = ""; //首次默认"" ，代表全部类型
+        housePrice = "1"; // 首次默认价格传1
         houseFunction = ""; //首次默认"" ，代表全部功能
         requestGetHouseList();
     }

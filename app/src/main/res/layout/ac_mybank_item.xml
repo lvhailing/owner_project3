@@ -20,6 +20,7 @@
             android:text="工商银行"
             android:textColor="@color/txt_gray_d"
             android:textSize="16sp"
+            android:maxWidth="240dip"
             />
         <TextView
             android:id="@+id/tv_bank_username"

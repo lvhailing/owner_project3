@@ -952,7 +952,7 @@ public class HtmlRequest extends BaseRequester {
                 try {
                     String data = DESUtil.decrypt(result);
                     Gson json = new Gson();
-                    ResultWithdrawInfoBean b = json.fromJson(data, ResultWithdrawInfoBean.class);
+                    ResultSentSMSBean b = json.fromJson(data, ResultSentSMSBean.class);
                     return b.getData();
 
                 } catch (Exception e) {
@@ -1144,7 +1144,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页轮播图:" + data);
+//                    Log.i("hh", "首页轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -1193,7 +1193,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页数据:" + data);
+//                    Log.i("hh", "首页数据:" + data);
 
                     Gson gson = new Gson();
                     HomeIndex1B b = gson.fromJson(data, HomeIndex1B.class);
@@ -1404,7 +1404,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-//                    Log.i("hh", "房源列表列表数据:" + result);
+                    Log.i("hh", "房源列表列表数据:" + result);
 
                     Gson gson = new Gson();
                     HouseList1B b = gson.fromJson(result, HouseList1B.class);
@@ -1452,7 +1452,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "发现轮播图:" + data);
+//                    Log.i("hh", "发现轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);

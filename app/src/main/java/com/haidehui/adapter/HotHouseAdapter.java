@@ -67,7 +67,7 @@ public class HotHouseAdapter extends BaseAdapter {
         String area = list.get(position).getArea();
 
         holder.tv_house_name.setText(list.get(position).getName());
-        holder.tv_house_area.setText(houseType + "/" + area+"㎡");
+        holder.tv_house_area.setText(houseType + "/" + area);
         holder.tv_house_price.setText(list.get(position).getPrice() + "万元");
 
         return convertView;

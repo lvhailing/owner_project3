@@ -64,7 +64,7 @@ public class OverseaProjectAdapter extends BaseAdapter {
 
         holder.tv_oversea_name.setText(list.get(position).getName());
         holder.tv_oversea_price.setText(list.get(position).getPrice() + "万元");
-        holder.tv_oversea_area.setText(list.get(position).getArea() + "㎡");
+        holder.tv_oversea_area.setText(list.get(position).getArea());
         return convertView;
     }
 

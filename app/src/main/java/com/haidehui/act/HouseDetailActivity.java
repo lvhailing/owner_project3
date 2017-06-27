@@ -259,7 +259,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
         tv_house_name.setText(houseDetail.getName());
         tv_house_detail_price.setText(houseDetail.getPrice() + "万元");
-        tv_house_detail_area.setText(houseDetail.getArea() + "㎡");
+        tv_house_detail_area.setText(houseDetail.getArea());
         tv_house_detail_house_type.setText(houseDetail.getHouseType());
         tv_house_detail_commission_rate.setText(houseDetail.getCommissionRate());
         tv_house_detail_address.setText(houseDetail.getLocation());

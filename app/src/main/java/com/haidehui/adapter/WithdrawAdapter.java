@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.haidehui.R;
 import com.haidehui.model.ResultMyBankListContentItemBean;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.StringUtil;
 
 /**
  * 提现--选择银行卡
@@ -57,7 +58,11 @@ public class WithdrawAdapter extends BaseAdapter{
 
             holder = (Holder) view.getTag();
         }
-        holder.tv_bank_banknum.setText(list.get(i).getBankCardNum());
+
+        if(list.get(i).getBankCardNum().length()>4){
+            holder.tv_bank_banknum.setText(StringUtil.encryBankNum(list.get(i).getBankCardNum()));
+        }
+
         holder.tv_bank_username.setText(list.get(i).getRealName());
         holder.tv_bank_name.setText(list.get(i).getBankName());
 

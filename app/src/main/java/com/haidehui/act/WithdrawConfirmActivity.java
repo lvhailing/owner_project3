@@ -24,6 +24,8 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.NumUtils;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 
@@ -65,6 +67,8 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
     private String bankName = "";        //      银行名称
     private String realName = "";        //      姓名开户名
 
+    private TextView tv_withdraw_mes;           //  提示信息
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +104,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         et_withdraw_verify_code = (EditText) findViewById(R.id.et_withdraw_verify_code);
         btn_withdraw_confirm = (Button) findViewById(R.id.btn_withdraw_confirm);
         tv_withdraw_reward = (TextView) findViewById(R.id.tv_withdraw_reward);
+        tv_withdraw_mes = (TextView) findViewById(R.id.tv_withdraw_mes);
 
         tv_withdraw_get_verify_code.setOnClickListener(this);
         btn_withdraw_confirm.setOnClickListener(this);
@@ -115,7 +120,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.setTitle(getResources().getString(R.string.title_null))
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.withdraw_choose_bank_title))
+                .setCenterText(getResources().getString(R.string.withdraw_button))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
@@ -176,7 +181,19 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
             case R.id.btn_withdraw_confirm:
 
-                WithdrawConfirm();
+                if(Double.parseDouble(amount)>Double.parseDouble(b.getCashNum())||Double.parseDouble(b.getCashNum())==0){
+                    Toast.makeText(WithdrawConfirmActivity.this, "可提现佣金不足",
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    if(!NumUtils.isTwoDecimal(amount)){
+                        Toast.makeText(WithdrawConfirmActivity.this, "提现金额格式不正确，请保留两位小数",
+                                Toast.LENGTH_SHORT).show();
+                    }else{
+                        WithdrawConfirm();
+                    }
+
+                }
+
 
                 break;
 
@@ -232,10 +249,19 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onRequestFinished(BaseParams params) {
-                b = (ResultWithdrawInfoContentBean) params.result;
+                ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                 if (b != null) {
 
-                    setView();
+                    if (Boolean.parseBoolean(b.getFlag())) {
+                        Toast.makeText(WithdrawConfirmActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                        finish();
+                    } else {
+                        Toast.makeText(WithdrawConfirmActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
+                    }
 
                 } else {
                     Toast.makeText(WithdrawConfirmActivity.this, "加载失败，请确认网络通畅",
@@ -248,7 +274,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
     public void setView(){
 
-        tv_withdraw_able.setText("可提现金额"+b.getCashNum()+"元");
+        tv_withdraw_able.setText("可提现佣金"+b.getCashNum()+"元");
 
         if(b.getRewardStatus().equals("init")){
             tv_withdraw_reward.setVisibility(View.VISIBLE);
@@ -259,9 +285,13 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         }
 
 
-        tv_bank_banknum.setText(bankCardNum);
+        if(bankCardNum.length()>4){
+            tv_bank_banknum.setText(StringUtil.encryBankNum(bankCardNum));
+        }
         tv_bank_username.setText(realName);
         tv_bank_name.setText(bankName);
+
+
 
 
     }
@@ -354,13 +384,16 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
             tv_withdraw_get_verify_code.setBackgroundResource(R.drawable.shape_center_orange);
             tv_withdraw_get_verify_code.setText(getResources().getString(
                     R.string.sign_getsms_again));
+//            tv_withdraw_mes.setVisibility(View.GONE);
+//            tv_withdraw_mes.setText("请输入"+ StringUtil.replaceSubString(phone)+"收到的短信验证码");
         } else if (time < 60) {
             tv_withdraw_get_verify_code.setClickable(false);
             tv_withdraw_get_verify_code.setBackgroundResource(R.drawable.shape_center_gray);
             tv_withdraw_get_verify_code
                     .setTextColor(getResources().getColor(R.color.txt_white));
             tv_withdraw_get_verify_code.setText(btnString+"("+time+")");
-
+            tv_withdraw_mes.setVisibility(View.VISIBLE);
+            tv_withdraw_mes.setText("请输入"+ StringUtil.replaceSubString(phone)+"收到的短信验证码");
         }
     }
 

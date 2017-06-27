@@ -46,7 +46,7 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
         tv_change_phone = (TextView) findViewById(R.id.tv_change_phone);
         et_change_phone = (EditText) findViewById(R.id.et_change_phone);
 
-        tv_change_phone.setText(StringUtil.replaceSubStringIdNo(phone));
+        tv_change_phone.setText(StringUtil.replaceSubString(phone));
 
         et_change_phone.addTextChangedListener(new TextWatcher() {
             @Override

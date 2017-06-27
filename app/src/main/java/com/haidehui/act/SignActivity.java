@@ -252,12 +252,12 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                 if (b != null) {
                     if(b.getFlag().equals("true")){
                         Toast.makeText(SignActivity.this,
-                                b.getMsg(), Toast.LENGTH_LONG)
+                                b.getMessage(), Toast.LENGTH_LONG)
                                 .show();
                         finish();
                     }else{
                         Toast.makeText(SignActivity.this,
-                                b.getMsg(), Toast.LENGTH_LONG)
+                                b.getMessage(), Toast.LENGTH_LONG)
                                 .show();
                     }
                 } else {

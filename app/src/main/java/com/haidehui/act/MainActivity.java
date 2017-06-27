@@ -92,7 +92,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (intent != null) {
             int tab = intent.getIntExtra("tab", 0);
             setSelect(tab);
-//            requestBulletinUnreadCount();
         }
     }
 
@@ -171,6 +170,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     private void setSelect(int i) {
+        if (i==0) {
+            tab_home.resetScrollViewSmooth();
+        }
+        if (i==1) {
+            tab_house_resources.requestDefaultData();
+        }
         setTab(i);
         mViewPager.setCurrentItem(i);
     }

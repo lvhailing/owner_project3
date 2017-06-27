@@ -88,6 +88,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         scrollView.smoothScrollTo(0, 0);
     }
 
+    public void resetScrollViewSmooth() {
+        if (scrollView != null) {
+        scrollView.smoothScrollTo(0, 0);
+        }
+    }
 
     private void initView(View mView) {
         context = getActivity();
