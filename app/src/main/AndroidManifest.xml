@@ -218,6 +218,9 @@
         <activity
             android:name=".act.CustomerTrackingActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.EditCustomerInfoActivity"
+            android:screenOrientation="portrait"/>
 
 
 

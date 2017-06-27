@@ -207,7 +207,7 @@
                 android:layout_toRightOf="@+id/img_identify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="置业顾问认证"
+                android:text="事业合伙人认证"
                 android:layout_centerInParent="true"
                 android:textSize="16sp"
                 android:textColor="@color/gray_dark"/>

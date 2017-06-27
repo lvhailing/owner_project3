@@ -107,6 +107,7 @@
                     android:textSize="24sp"
                     android:background="@color/txt_white"
                     android:inputType="numberDecimal"
+                    android:textCursorDrawable="@drawable/color_cursor"
                     />
 
             </LinearLayout>
@@ -181,7 +182,7 @@
                 android:padding="5dip"
                 android:inputType="number"
                 android:maxLength="10"
-
+                android:textCursorDrawable="@drawable/color_cursor"
                 />
         </RelativeLayout>
 

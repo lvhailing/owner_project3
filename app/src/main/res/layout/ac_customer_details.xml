@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="客戶姓名:"
+                    android:text="客戶姓名："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -78,7 +78,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="联系电话:"
+                    android:text="联系电话："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="电子邮箱:"
+                    android:text="电子邮箱："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="房产所在地:"
+                    android:text="房产所在地："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -145,7 +145,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="项目:"
+                    android:text="项目："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -164,7 +164,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="房号:"
+                    android:text="房号："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -183,7 +183,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="户型:"
+                    android:text="面积："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -202,7 +202,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总价:"
+                    android:text="总价："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
@@ -221,7 +221,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="提交时间:"
+                    android:text="提交时间："
                     android:textColor="@color/gray_dark" />
 
                 <TextView

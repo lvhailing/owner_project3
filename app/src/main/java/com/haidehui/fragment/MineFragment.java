@@ -167,6 +167,7 @@ public class MineFragment extends Fragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        String status = data.getCheckStatus();
         switch (v.getId()) {
             case R.id.layout_email:// 跳转邮件
                 Intent i_message = new Intent(context, MessageActivity.class); // 消息页面
@@ -180,8 +181,12 @@ public class MineFragment extends Fragment implements OnClickListener {
                 startActivity(i_my_info);
                 break;
             case R.id.tv_customer_info://跳转客户信息
-                Intent i_customer_info = new Intent(context, CustomerInfoActivity.class);
-                startActivity(i_customer_info);
+                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
+                    Intent i_customer_info = new Intent(context, CustomerInfoActivity.class);
+                    startActivity(i_customer_info);
+                } else {
+                    Toast.makeText(context, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.tv_customer_follow://跳转客户跟踪
                 Intent i_customer_follow = new Intent(context, CustomerTrackingActivity.class);
@@ -196,16 +201,20 @@ public class MineFragment extends Fragment implements OnClickListener {
                 startActivity(i_identify);
                 break;
             case R.id.layout_account_book://跳转我的账本
-                Intent i_account_book = new Intent(context, AccountBookActivity.class);
-                startActivity(i_account_book);
+                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
+                    Intent i_account_book = new Intent(context, AccountBookActivity.class);
+                    startActivity(i_account_book);
+                } else {
+                    Toast.makeText(context, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
+                }
                 break;
+
             case R.id.rl_mine_mybankcard:  // 我的银行卡
-                String status = data.getCheckStatus();
                 if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
                     Intent i_mybank = new Intent(context, MyBankActivity.class);          //  我的银行卡
                     startActivity(i_mybank);
                 } else {
-                    Toast.makeText(context, "您尚未通过认证", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -259,7 +268,6 @@ public class MineFragment extends Fragment implements OnClickListener {
             }
 
         }
-        tv_messageTotal.setText(data.getMessageTotal());
         tv_realName.setText(data.getRealName());
         tv_mobile.setText(StringUtil.replaceSubString(data.getMobile()));
         tv_totalCommission.setText(data.getTotalCommission() + "元");

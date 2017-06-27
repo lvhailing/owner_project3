@@ -19,6 +19,8 @@ import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.ViewUtils;
+import com.haidehui.widget.EditCustomerInfoDialog;
+import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.widget.TitleBar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -91,12 +93,28 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         });
         lv_customer_info.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CustomerInfoActivity.this, "长按啦啦啦", Toast.LENGTH_LONG).show();
-                mDelId = position - 1;
-                customerId=totalList.get(position-1).getCustomerId();
-                showDialog();
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                EditCustomerInfoDialog mDialog = new EditCustomerInfoDialog(mContext,new EditCustomerInfoDialog.OnSelectPhotoChanged() {
+                    @Override
+                    public void onDelete() {
+                        mDelId = position - 1;
+                        customerId=totalList.get(position-1).getCustomerId();
+                        showDialog();
+                    }
+
+                    @Override
+                    public void onEdit() {
+                        customerId=totalList.get(position-1).getCustomerId();
+                        Intent intent=new Intent(mContext,EditCustomerInfoActivity.class);
+                        intent.putExtra("customerId",customerId);
+                        startActivity(intent);
+                    }
+
+                });
+                mDialog.show();
                 return true;
+
             }
         });
         lv_customer_info.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -155,8 +173,6 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode==1000) {
  //           requestList(); 重新请求数据
-            Toast.makeText(CustomerInfoActivity.this, "呦呦呦",
-                    Toast.LENGTH_LONG).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

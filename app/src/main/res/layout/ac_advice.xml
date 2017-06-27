@@ -23,6 +23,7 @@
             android:padding="8dip"
             android:inputType="textMultiLine"
             android:textSize="15.0sp"
+            android:textCursorDrawable="@drawable/color_cursor"
             />
 
         <LinearLayout

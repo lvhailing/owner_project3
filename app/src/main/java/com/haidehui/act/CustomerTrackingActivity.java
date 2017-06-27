@@ -112,7 +112,6 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(mContext, "长按啦啦啦", Toast.LENGTH_LONG).show();
                 mDelId = position - 1;
                 customerId = totalList.get(position - 1).getCustomerId();
                 showDialog();

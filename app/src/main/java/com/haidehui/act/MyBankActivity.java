@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.haidehui.R;
 import com.haidehui.adapter.MyBankAdapter;
 import com.haidehui.common.Urls;
+import com.haidehui.dialog.BasicDialog;
 import com.haidehui.model.ResultMyBankListContentBean;
 import com.haidehui.model.ResultMyBankListContentItemBean;
 import com.haidehui.model.ResultSentSMSContentBean;
@@ -139,7 +140,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (lastPress < parent.getCount()) {
-                    new AlertDialog.Builder(context)
+                    /*new AlertDialog.Builder(context)
 
                             .setMessage("您确定删除么？")
                             .setPositiveButton("取消", new DialogInterface.OnClickListener() {
@@ -161,7 +162,23 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
                                 }
                             })
-                            .show();
+                            .show();*/
+                    BasicDialog dialog=new BasicDialog(context, new BasicDialog.OnBasicChanged() {
+                        @Override
+                        public void onConfim() {
+                            delete(position,list.get(position).getId());
+                        }
+
+                        @Override
+                        public void onCancel() {
+                        }
+                    },"确认删除吗？","确认");
+                    dialog.show();
+
+
+
+
+
                 }
 
                 return true;
@@ -170,6 +187,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
 
     }
+
 
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);

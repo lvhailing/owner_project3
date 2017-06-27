@@ -57,6 +57,7 @@
             android:maxLength="11"
             android:textSize="15sp"
             android:textColor="@color/txt_gray_d"
+            android:textCursorDrawable="@drawable/color_cursor"
             />
 
 

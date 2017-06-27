@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -56,11 +57,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.IdCardCheckUtils;
 
 /**
  *  事业合伙人认证
@@ -119,9 +124,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private Uri photoUri;
 
     private static final String TAG = "PartnerIdentifyActivity";
-
-    private ImageLoader imageLoader = ImageLoader.getInstance();
-    private DisplayImageOptions options;
 
     private ArrayList<String> list;
     private PartnerIdentify2B data;
@@ -182,13 +184,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
     }
     private void initData() {
-        options = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.mipmap.img_default_picture)
-                .showImageOnFail(R.mipmap.img_default_picture)
-                .resetViewBeforeLoading(true).cacheOnDisc(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
         layout_address.setOnClickListener(this);
         layout_identity_card.setOnClickListener(this);
         layout_card.setOnClickListener(this);
@@ -242,13 +237,11 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         String cardUrl = data.getBusiCardPhoto();
         if (!TextUtils.isEmpty(idCardUrl)){
             isID=true;
-            imageLoader.displayImage(idCardUrl, img_identity_card,
-                    options);
+            new ImageViewService().execute(idCardUrl);
         }
         if (!TextUtils.isEmpty(cardUrl)){
             isCard=true;
-            imageLoader.displayImage(cardUrl, img_card,
-                    options);
+            new ImageViewServiceCard().execute(cardUrl);
         }
 
         if (!TextUtils.isEmpty(data.getCheckStatus())){
@@ -310,7 +303,76 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             }
         }
     }
+    /**
+     * 获取网落图片资源
+     *
+     * @return
+     */
+    class ImageViewService extends AsyncTask<String, Void, Bitmap> {
 
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            Bitmap data = getImageBitmap(params[0]);
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                img_identity_card.setImageBitmap(result);
+                saveBitmap(result);
+            } else {
+                img_identity_card.setImageDrawable(getResources().getDrawable(R.mipmap.img_default_picture));
+            }
+        }
+
+    }
+    /**
+     * 获取网落图片资源
+     *
+     * @return
+     */
+    class ImageViewServiceCard extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            Bitmap data = getImageBitmap(params[0]);
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                img_card.setImageBitmap(result);
+                saveBitmap(result);
+            } else {
+                img_card.setImageDrawable(getResources().getDrawable(R.mipmap.img_default_picture));
+            }
+        }
+
+    }
+    private Bitmap getImageBitmap(String url) {
+        URL imgUrl = null;
+        Bitmap bitmap = null;
+        try {
+            imgUrl = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -363,7 +425,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                         if (!TextUtils.isEmpty(email)){
                             if (StringUtil.isEmail(email)) {
                                 if (!TextUtils.isEmpty(idNo)) {
-                                    if (StringUtil.personIdValidation(idNo)) {
+                                    if (IdCardCheckUtils.isIdCard((idNo.toUpperCase()))) {
                                         if (isID == false) {
                                             Toast.makeText(PartnerIdentifyActivity.this, "请上传身份证正面", Toast.LENGTH_SHORT).show();
                                             return;

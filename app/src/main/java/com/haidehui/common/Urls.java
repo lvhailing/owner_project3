@@ -27,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_OUTER_NET_DEBUG;
+    private static String EC_HOST = URL_BB;
 
     /**
      * 登出
@@ -87,7 +87,7 @@ public class Urls {
     /**
      * 注册协议
      */
-    public static final String URL_SIGNUP_WEB_AGREEMENT = EC_HOST + "user/daFuWangAgreement";
+    public static final String URL_SIGNUP_WEB_AGREEMENT = EC_HOST + "register/agreement";
     /**
      * 修改登录密码
      */
@@ -249,6 +249,9 @@ public class Urls {
 
     //新增客户信息
     public static final String URL_ADD_CUSTOMER_INFO = EC_HOST + "account/trade/customer/add/save";
+
+    //修改客户信息
+    public static final String URL_EDIT_CUSTOMER_INFO = EC_HOST + "account/trade/customer/edit/save";
 
     //删除客户信息
     public static final String URL_DELETE_CUSTOMER_INFO = EC_HOST + "account/trade/customer/delete";
