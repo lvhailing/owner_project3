@@ -75,6 +75,9 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
         tv_add_bank_phone_mes.setText("请输入"+ StringUtil.replaceSubString(phone)+"收到的短信验证码");
 
+        tv_add_bank_real_name.setText(realName);
+        tv_add_bank_idcard.setText(idCard);
+
 //        verifyCode = et_add_bank_verify_code.getText().toString();
 //        realName = et_add_bank_real_name.getText().toString();
 //        idCard = et_add_bank_idcard.getText().toString();
@@ -106,13 +109,12 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
             realName = DESUtil.decrypt(PreferenceUtil.getUserRealName());
             idCard = DESUtil.decrypt(PreferenceUtil.getIdNo());
-
+            phone = DESUtil.decrypt(PreferenceUtil.getPhone());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        tv_add_bank_real_name.setText(realName);
-        tv_add_bank_idcard.setText(idCard);
+
 
         checkNull();
 
