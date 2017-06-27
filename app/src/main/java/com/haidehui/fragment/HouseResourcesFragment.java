@@ -214,7 +214,9 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-
+        houseCatagory = ""; //首次默认"" ，代表全部类型
+        houseFunction = ""; //首次默认"" ，代表全部功能
+        requestGetHouseList();
     }
 
     //开启动画

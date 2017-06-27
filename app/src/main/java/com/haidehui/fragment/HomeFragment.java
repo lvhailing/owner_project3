@@ -85,8 +85,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-//        requestBoutiqueHouseData();
-//        scrollView.smoothScrollTo(0, 0);
+        scrollView.smoothScrollTo(0, 0);
     }
 
 
@@ -209,7 +208,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
                     myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
                     myListView.setAdapter(myAdapter);
-                    scrollView.smoothScrollTo(0, 0);
+//                    scrollView.smoothScrollTo(0, 0);
                 } else {
                     tv_no_house.setVisibility(View.VISIBLE);
                 }

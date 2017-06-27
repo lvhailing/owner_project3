@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -77,12 +78,52 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.activity_main);
-        initTopTitle();
 
+        initTopTitle();
         initView();
         initVP();
         setSelect(0);
         initData();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            int tab = intent.getIntExtra("tab", 0);
+            setSelect(tab);
+//            requestBulletinUnreadCount();
+        }
+    }
+
+    public void initTopTitle() {
+        title = (TitleBar) findViewById(R.id.rl_title);
+        title.setVisibility(View.GONE);
+    }
+
+    private void initView() {
+        title = (TitleBar) findViewById(R.id.rl_title);
+        title.setVisibility(View.GONE);
+        mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
+        ll_tab_house_resources = (LinearLayout) findViewById(R.id.ll_tab_house_resources);
+        ll_tab_discovery = (LinearLayout) findViewById(R.id.ll_tab_discovery);
+        ll_tab_mine = (LinearLayout) findViewById(R.id.ll_tab_mine);
+
+        iv_home = (ImageView) findViewById(R.id.iv_home);
+        iv_house_resources = (ImageView) findViewById(R.id.iv_house_resources);
+        iv_discovery = (ImageView) findViewById(R.id.iv_discovery);
+        mIvmine = (ImageView) findViewById(R.id.iv_mine);
+
+        tv_home = (TextView) findViewById(R.id.tv_home);
+        tv_house_resources = (TextView) findViewById(R.id.tv_house_resources);
+        tv_discovery = (TextView) findViewById(R.id.tv_discovery);
+        tv_mine = (TextView) findViewById(R.id.tv_mine);
+
+        ll_tab_home.setOnClickListener(this);
+        ll_tab_house_resources.setOnClickListener(this);
+        ll_tab_discovery.setOnClickListener(this);
+        ll_tab_mine.setOnClickListener(this);
     }
 
     private void initVP() {
@@ -128,46 +169,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent != null) {
-            int tab = intent.getIntExtra("tab", 0);
-            setSelect(tab);
-//            requestBulletinUnreadCount();
-        }
-    }
-
-
-    public void initTopTitle() {
-        title = (TitleBar) findViewById(R.id.rl_title);
-        title.setVisibility(View.GONE);
-    }
-
-    private void initView() {
-        title = (TitleBar) findViewById(R.id.rl_title);
-        title.setVisibility(View.GONE);
-        mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
-        ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
-        ll_tab_house_resources = (LinearLayout) findViewById(R.id.ll_tab_house_resources);
-        ll_tab_discovery = (LinearLayout) findViewById(R.id.ll_tab_discovery);
-        ll_tab_mine = (LinearLayout) findViewById(R.id.ll_tab_mine);
-
-        iv_home = (ImageView) findViewById(R.id.iv_home);
-        iv_house_resources = (ImageView) findViewById(R.id.iv_house_resources);
-        iv_discovery = (ImageView) findViewById(R.id.iv_discovery);
-        mIvmine = (ImageView) findViewById(R.id.iv_mine);
-
-        tv_home = (TextView) findViewById(R.id.tv_home);
-        tv_house_resources = (TextView) findViewById(R.id.tv_house_resources);
-        tv_discovery = (TextView) findViewById(R.id.tv_discovery);
-        tv_mine = (TextView) findViewById(R.id.tv_mine);
-
-        ll_tab_home.setOnClickListener(this);
-        ll_tab_house_resources.setOnClickListener(this);
-        ll_tab_discovery.setOnClickListener(this);
-        ll_tab_mine.setOnClickListener(this);
-    }
 
     private void setSelect(int i) {
         setTab(i);
@@ -176,6 +177,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void initData() {
         requestData(); //检查版本更新
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void setTab(int pos) {

@@ -109,7 +109,6 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
 
             realName = DESUtil.decrypt(PreferenceUtil.getUserRealName());
             idCard = DESUtil.decrypt(PreferenceUtil.getIdNo());
-            phone = DESUtil.decrypt(PreferenceUtil.getPhone());
         } catch (Exception e) {
             e.printStackTrace();
         }

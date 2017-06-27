@@ -41,7 +41,7 @@ public class BaseActivity extends FragmentActivity implements NetListener {
 
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
-            token = DESUtil.decrypt(PreferenceUtil.getToken());
+//            token = DESUtil.decrypt(PreferenceUtil.getToken());
             phone = DESUtil.decrypt(PreferenceUtil.getPhone());
         } catch (Exception e) {
             e.printStackTrace();
