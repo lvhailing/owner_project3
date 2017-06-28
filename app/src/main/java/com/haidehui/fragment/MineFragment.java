@@ -48,6 +48,7 @@ import java.util.HashMap;
 
 import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.CircularImage;
+
 import android.widget.ImageView;
 
 /**
@@ -80,6 +81,7 @@ public class MineFragment extends Fragment implements OnClickListener {
      */
     private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/";
     private int messageInt;
+    private String status; // 认证状态
 
 
     @Override
@@ -126,7 +128,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         layout_account_book = (RelativeLayout) mView.findViewById(R.id.layout_account_book);
         rl_mine_mybankcard = (RelativeLayout) mView.findViewById(R.id.rl_mine_mybankcard);
         rl_mine_setting = (RelativeLayout) mView.findViewById(R.id.rl_mine_setting);
-        img_sign= (ImageView) mView.findViewById(R.id.img_sign);
+        img_sign = (ImageView) mView.findViewById(R.id.img_sign);
 
 
     }
@@ -151,11 +153,7 @@ public class MineFragment extends Fragment implements OnClickListener {
             if (getActivity() != null) {
                 requestData();
             }
-
-        } else {
-
         }
-
     }
 
     @Override
@@ -167,7 +165,9 @@ public class MineFragment extends Fragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String status = data.getCheckStatus();
+        if (data != null) {
+            status = data.getCheckStatus();
+        }
         switch (v.getId()) {
             case R.id.layout_email:// 跳转邮件
                 Intent i_message = new Intent(context, MessageActivity.class); // 消息页面
@@ -175,10 +175,14 @@ public class MineFragment extends Fragment implements OnClickListener {
 
                 break;
             case R.id.layout_my_info://跳转我的信息
-                Intent i_my_info = new Intent(context, MyInfoActivity.class);
-                i_my_info.putExtra("headPhoto", data.getHeadPhoto());
-                i_my_info.putExtra("realName", data.getRealName());
-                startActivity(i_my_info);
+                if (data != null) {
+                    if (data.getHeadPhoto() != null && data.getRealName() != null) {
+                        Intent i_my_info = new Intent(context, MyInfoActivity.class);
+                        i_my_info.putExtra("headPhoto", data.getHeadPhoto());
+                        i_my_info.putExtra("realName", data.getRealName());
+                        startActivity(i_my_info);
+                    }
+                }
                 break;
             case R.id.tv_customer_info://跳转客户信息
                 if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
@@ -231,7 +235,6 @@ public class MineFragment extends Fragment implements OnClickListener {
 
     //我的主页面数据
     private void requestData() {
-
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
         } catch (Exception e) {
@@ -261,9 +264,9 @@ public class MineFragment extends Fragment implements OnClickListener {
         if (messageInt > 9) {
             tv_messageTotal.setText("9+");
         } else {
-            if(messageInt == 0){
+            if (messageInt == 0) {
                 tv_messageTotal.setVisibility(View.GONE);
-            }else{
+            } else {
                 tv_messageTotal.setText(data.getMessageTotal());
             }
 
@@ -279,10 +282,10 @@ public class MineFragment extends Fragment implements OnClickListener {
             img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
         String status = data.getCheckStatus();
-        if ("success".equals(status)){
-            img_sign.setImageResource(R.mipmap.img_business);
-        }else{
-            img_sign.setImageResource(R.mipmap.img_business);
+        if ("success".equals(status)) {
+            img_sign.setImageResource(R.mipmap.img_identified);
+        } else {
+            img_sign.setImageResource(R.mipmap.img_unidentify);
         }
 
     }
@@ -303,7 +306,6 @@ public class MineFragment extends Fragment implements OnClickListener {
         @Override
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
-
             if (result != null) {
                 img_photo.setImageBitmap(result);
                 saveBitmap(result);

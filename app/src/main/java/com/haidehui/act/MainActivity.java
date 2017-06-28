@@ -237,6 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             public void onRequestFinished(BaseParams params) {
                 if (params.result != null) {
                     final ResultCheckVersionContentBean b = (ResultCheckVersionContentBean) params.result;
+                    if(!TextUtils.isEmpty(b.getVersion())){
                         if (!b.getVersion().equals(SystemInfo.sVersionName)) {
 
                             CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this,
@@ -295,6 +296,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 }
                             }
                         }
+
+                    }else{
+
+                    }
 
                 }
             }

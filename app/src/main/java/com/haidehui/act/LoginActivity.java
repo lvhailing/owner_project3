@@ -36,6 +36,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private TextView tv_login_sign;     //  注册
     private LinearLayout ll_login_phone_service;        //  客服电话
     private ResultUserLoginContentBean bean;
+    public static String GOTOMAIN = "1000";
+    private String resultCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     public void initView(){
 
+
+        resultCode = getIntent().getStringExtra("GOTOMAIN");
+
         PreferenceUtil.setAutoLoginPwd("");
         PreferenceUtil.setLogin(false);
         PreferenceUtil.setPhone("");
@@ -57,6 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         PreferenceUtil.setUserNickName("");
         PreferenceUtil.setCookie("");
         PreferenceUtil.setToken("");
+        PreferenceUtil.setGestureChose(false);
+        PreferenceUtil.setGesturePwd("");
 
 //        bean = new ResultUserLoginContentBean();
         et_login_phone = (EditText) findViewById(R.id.et_login_phone);
@@ -216,9 +223,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         bean = (ResultUserLoginContentBean) data;
         if (bean != null) {
             if (Boolean.parseBoolean(bean.getFlag())) {
-                finish();
-                PreferenceUtil.setGestureChose(false);
-                PreferenceUtil.setGesturePwd("");
+                if(resultCode.equals(GOTOMAIN)){            //  登录完成跳至主页
+
+                    Intent iMain = new Intent(LoginActivity.this, MainActivity.class);
+                    iMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(iMain);
+                    finish();
+
+                }else{
+
+
+                    finish();
+                }
+
             } else {
                 Toast.makeText(LoginActivity.this, bean.getMessage(),
                         Toast.LENGTH_SHORT).show();

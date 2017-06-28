@@ -104,6 +104,12 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        requestListData();
+    }
+
+    @Override
     public void onClick(View v) {
 
     }

@@ -1,5 +1,6 @@
 package com.haidehui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.WithDrawDetailsActivity;
 import com.haidehui.adapter.AccountBookWithdrawAdapter;
 import com.haidehui.model.AccountBookWithDraw3B;
@@ -39,6 +41,7 @@ public class WithdrawDetailsFragment extends Fragment {
     private AccountBookWithdrawAdapter adapterWithdraw;
     private int currentPage = 1;    //当前页
     private String userId = "";
+    private AccountBookActivity mActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class WithdrawDetailsFragment extends Fragment {
                     currentPage++;
                 }
                 requestWithDrawList();
+                mActivity.onRefresh();
 
             }
         });
@@ -140,7 +144,6 @@ public class WithdrawDetailsFragment extends Fragment {
                         withdrawlist.clear();
                     }
                     withdrawlist.addAll(everyList);
-                    lv.setAdapter(adapterWithdraw);
 
                     //刷新数据
                     adapterWithdraw.notifyDataSetChanged();
@@ -158,4 +161,10 @@ public class WithdrawDetailsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity= (AccountBookActivity) getActivity();
+
+    }
 }

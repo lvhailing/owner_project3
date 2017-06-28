@@ -4,12 +4,12 @@ package com.haidehui.model;
 import com.haidehui.network.types.IMouldType;
 
 public class MineData2B implements IMouldType {
-    private String messageTotal;
-    private String mobile;
-    private String realName;
-    private String totalCommission;
-    private String headPhoto;
-    private String checkStatus;
+    private String messageTotal; // 消息总数
+    private String mobile; // 手机号
+    private String realName; // 用户姓名
+    private String totalCommission; // 账本额度值
+    private String headPhoto; // 头像
+    private String checkStatus; // 认证状态
 
 
     public String getMessageTotal() {

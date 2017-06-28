@@ -3,10 +3,12 @@ package com.haidehui.act;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -23,6 +25,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.ActivityStack;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 
@@ -41,6 +44,10 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     private Button btn_save;
     private TextView tv_customerName;
     private TextView tv_customerPhone;
+    private EditText edt_project;
+    private EditText edt_room_number;
+    private EditText edit_remark;
+    private ActivityStack stack;
 
     private String[] resultStr=new String[12];
     @Override
@@ -79,10 +86,16 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     }
 
     private void initView() {
+        stack = ActivityStack.getActivityManage();
+        stack.addActivity(this);
+
         scrollview= (ScrollView) findViewById(R.id.scrollview);
         btn_save= (Button) findViewById(R.id.btn_save);
         tv_customerName= (TextView) findViewById(R.id.tv_customerName);
         tv_customerPhone= (TextView) findViewById(R.id.tv_customerPhone);
+        edt_project= (EditText) findViewById(R.id.edt_project);
+        edt_room_number= (EditText) findViewById(R.id.edt_room_number);
+        edit_remark= (EditText) findViewById(R.id.edt_room_number);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
         lv_follow_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -154,10 +167,13 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     /**
      * 新增客户跟踪
      */
-    private void submitData(String[] resultStr) {
+    private void submitData(String[] resultStr,String houseProject,String roomNumber,String trackingRemark) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
         param.put("userId", userId);
+        param.put("houseProject", houseProject);
+        param.put("roomNumber", roomNumber);
+        param.put("trackingRemark", trackingRemark);
         param.put("telephoneContactedAndIntroductionProject", resultStr[0]);
         param.put("projectMaterialsAndAnsweredQuestion", resultStr[1]);
         param.put("interviewedAndDetailedIntroductionProject", resultStr[2]);
@@ -180,8 +196,8 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
                         }
                         SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                         if ("true".equals(data.getFlag())) {
+                            stack.removeAllActivityExceptOne("com.haidehui.act.MainActivity");
                             Intent intent = new Intent(mContext, CustomerTrackingActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
                             finish();
@@ -195,7 +211,30 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_save:
-                submitData(resultStr);
+                String houseProject=edt_project.getText().toString();
+                String roomNumber=edt_room_number.getText().toString();
+                String remark=edit_remark.getText().toString();
+                int m=0;
+                if (!TextUtils.isEmpty(houseProject)){
+                    if (!TextUtils.isEmpty(roomNumber)){
+                        for (int i=0;i<resultStr.length;i++){
+                            if (resultStr[i].equals("false")){
+                                m+=1;
+                            }
+                        }
+                        if (m==12){
+                            Toast.makeText(mContext, "请选择跟踪进度", Toast.LENGTH_LONG).show();
+                        }else{
+                            submitData(resultStr,houseProject,roomNumber,remark);
+                        }
+                    }else{
+                        Toast.makeText(mContext, "请输入房产房号", Toast.LENGTH_LONG).show();
+                        edt_room_number.requestFocusFromTouch();
+                    }
+                }else{
+                    Toast.makeText(mContext, "请输入项目名称", Toast.LENGTH_LONG).show();
+                    edt_project.requestFocusFromTouch();
+                }
                 break;
         }
     }

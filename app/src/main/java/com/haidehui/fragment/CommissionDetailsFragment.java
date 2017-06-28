@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.CommissionDetailsActivity;
 import com.haidehui.adapter.AccountBookCommissionAdapter;
 import com.haidehui.model.AccountBookCommission2B;
@@ -27,7 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.LinkedHashMap;
-
+import android.app.Activity;
 /**
  * 账本 --- 佣金收益
  */
@@ -39,6 +40,7 @@ public class CommissionDetailsFragment extends Fragment {
     private AccountBookCommissionAdapter adapterCommission;
     private int currentPage = 1;    //当前页
     private String userId = "";
+    private AccountBookActivity mActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class CommissionDetailsFragment extends Fragment {
                     currentPage++;
                 }
                 requestCommissionList();
+                mActivity.onRefresh();
 
             }
         });
@@ -151,12 +154,17 @@ public class CommissionDetailsFragment extends Fragment {
                         }
                     }, 1000);
 
-
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity= (AccountBookActivity) getActivity();
+
     }
 
 }

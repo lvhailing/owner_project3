@@ -108,7 +108,7 @@ public class RengouDetailsActivity extends BaseActivity implements View.OnClickL
         }
         tv_projectName.setText(data.getProjectName());
         tv_roomNumber.setText(data.getRoomNumber());
-        tv_downpaymentAmount.setText(data.getDownpaymentAmount());
+        tv_downpaymentAmount.setText(data.getDownpaymentAmount()+"元");
 
 
     }

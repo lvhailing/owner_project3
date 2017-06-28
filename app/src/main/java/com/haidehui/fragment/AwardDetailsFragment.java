@@ -1,5 +1,6 @@
 package com.haidehui.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.act.AccountBookActivity;
 import com.haidehui.adapter.AccountBookAwardAdapter;
 import com.haidehui.model.AccountBookAward2B;
 import com.haidehui.model.AccountBookAward3B;
@@ -38,6 +40,7 @@ public class AwardDetailsFragment extends Fragment {
     private AccountBookAwardAdapter adapterAward;
     private int currentPage = 1;    //当前页
     private String userId = "";
+    private AccountBookActivity mActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class AwardDetailsFragment extends Fragment {
                     currentPage++;
                 }
                 requestAwardList();
+                mActivity.onRefresh();
 
             }
         });
@@ -111,7 +115,7 @@ public class AwardDetailsFragment extends Fragment {
         }
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("page", currentPage + "");
-        param.put("userId",userId);
+        param.put("userId", userId);
 
         try {
             HtmlRequest.getAwardList(getActivity(), param, new BaseRequester.OnRequestListener() {
@@ -139,7 +143,6 @@ public class AwardDetailsFragment extends Fragment {
                         awardList.clear();
                     }
                     awardList.addAll(everyList);
-                    lv.setAdapter(adapterAward);
 
                     //刷新数据
                     adapterAward.notifyDataSetChanged();
@@ -158,5 +161,10 @@ public class AwardDetailsFragment extends Fragment {
             e.printStackTrace();
         }
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity= (AccountBookActivity) getActivity();
 
+    }
 }

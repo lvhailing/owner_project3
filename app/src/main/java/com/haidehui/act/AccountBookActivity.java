@@ -15,7 +15,6 @@ import com.haidehui.R;
 import com.haidehui.dialog.IntroductionsDialog;
 import com.haidehui.fragment.AwardDetailsFragment;
 import com.haidehui.fragment.CommissionDetailsFragment;
-import com.haidehui.fragment.EssentialInfoFragment;
 import com.haidehui.fragment.WithdrawDetailsFragment;
 import com.haidehui.model.AccountBookCommission2B;
 import com.haidehui.network.BaseParams;
@@ -180,6 +179,14 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
             transaction.remove(fragment3);
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestData();
+    }
 
+    public void onRefresh() {
+        requestData();
+    }
 
 }

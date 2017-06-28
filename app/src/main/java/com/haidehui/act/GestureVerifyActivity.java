@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.common.Urls;
+import com.haidehui.dialog.BasicDialog;
 import com.haidehui.dialog.CheckVersionDialog;
 import com.haidehui.dialog.VerifyPassWordDialog;
 import com.haidehui.model.ResultUserLoginContentBean;
@@ -194,7 +195,7 @@ public class GestureVerifyActivity extends BaseActivity implements
 								Intent i = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
 								//判断从账户设置手势密码，点击跳过，再次登录时不会关闭手势密码
 								i.putExtra("skip","skip_from_account");
-								i.putExtra("title", R.string.title_gestureset);
+								i.putExtra("title", getString(R.string.setting_change_gesture_password));
 								i.putExtra("comeflag", 4);
 								startActivity(i);
 							}
@@ -206,7 +207,7 @@ public class GestureVerifyActivity extends BaseActivity implements
 					@Override
 					public void checkedFail() {
 						if (current_num >= MAX_NUM) {
-							Builder builder = new Builder(
+							/*Builder builder = new Builder(
 									GestureVerifyActivity.this);
 							builder.setMessage("您输入的手势密码错误次数已达到最大次数，请使用登录密码进行登录");
 							builder.setTitle("密码错误");
@@ -223,7 +224,7 @@ public class GestureVerifyActivity extends BaseActivity implements
 													GestureVerifyActivity.this,
 													LoginActivity.class);
 
-											intent.putExtra("tomain", TOMAIN);
+											intent.putExtra("GOTOMAIN", LoginActivity.GOTOMAIN);
 											intent.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
 											PreferenceUtil.setFirstLogin(true);
 											PreferenceUtil.setGesturePwd("");
@@ -232,7 +233,38 @@ public class GestureVerifyActivity extends BaseActivity implements
 											finish();
 										}
 									});
-							builder.create().show();
+							builder.create().show();*/
+
+
+							BasicDialog dialog=new BasicDialog(GestureVerifyActivity.this, new BasicDialog.OnBasicChanged() {
+								@Override
+								public void onConfim() {
+//									delete(position,list.get(position).getId());
+									from = Urls.ACTIVITY_GESVERIFY;
+									Intent intent = new Intent();
+									intent.setClass(
+											GestureVerifyActivity.this,
+											LoginActivity.class);
+
+									intent.putExtra("GOTOMAIN", LoginActivity.GOTOMAIN);
+									intent.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
+									PreferenceUtil.setFirstLogin(true);
+									PreferenceUtil.setGesturePwd("");
+									PreferenceUtil.setLogin(false);
+									startActivity(intent);
+									finish();
+
+								}
+
+								@Override
+								public void onCancel() {
+
+								}
+							},"您输入的手势密码错误次数已达到最大次数，请使用登录密码进行登录","确认",false);
+							dialog.show();
+
+
+
 						} else {
 							mGestureContentView.clearDrawlineState(1300L);
 							mTextTip.setVisibility(View.VISIBLE);
@@ -283,54 +315,56 @@ public class GestureVerifyActivity extends BaseActivity implements
 				break;*/
 			case R.id.text_forget_gesture:
 
-				if(from.equals(Urls.ACTIVITY_SPLASH)){
-					VerifyPassWordDialog dialog_phone = new VerifyPassWordDialog(GestureVerifyActivity.this, new VerifyPassWordDialog.OnVerifyPW() {
+//					VerifyPassWordDialog dialog_phone = new VerifyPassWordDialog(GestureVerifyActivity.this, new VerifyPassWordDialog.OnVerifyPW() {
+//						@Override
+//						public void onConfirm(String input) {
+////							requestData(input,"splash");
+//						}
+//
+//						@Override
+//						public void onCancel() {
+//
+//						}
+//					},"请输入登录密码");
+//					dialog_phone.show();
+
+
+					BasicDialog dialog_1=new BasicDialog(GestureVerifyActivity.this, new BasicDialog.OnBasicChanged() {
 						@Override
-						public void onConfirm(String input) {
-//							requestData(input,"splash");
+						public void onConfim() {
+//							delete(position,list.get(position).getId());
+							Intent i_login = new Intent(GestureVerifyActivity.this, LoginActivity.class);
+							i_login.putExtra("GOTOMAIN",LoginActivity.GOTOMAIN);
+							startActivity(i_login);
 						}
 
 						@Override
 						public void onCancel() {
-
 						}
-					},"请输入登录密码");
-					dialog_phone.show();
-					break;
-				}else if(from.equals(Urls.ACTIVITY_CHANGE_GESTURE)){
-					VerifyPassWordDialog dialog_phone = new VerifyPassWordDialog(GestureVerifyActivity.this, new VerifyPassWordDialog.OnVerifyPW() {
-						@Override
-						public void onConfirm(String input) {
-//							requestData(input,"change_gesture");
-						}
+					},"忘记手势密码需要重新登录","确认");
+				dialog_1.show();
 
-						@Override
-						public void onCancel() {
 
-						}
-					},"请输入登录密码");
-					dialog_phone.show();
-					break;
-				}
-				CheckVersionDialog dialog = new CheckVersionDialog(GestureVerifyActivity.this,
-						new CheckVersionDialog.OnCheckVersion() {
-
-							@Override
-							public void onConfim() {
-								UserLoadout out = new UserLoadout(GestureVerifyActivity.this,userId);
-								out.requestData();
-							}
-
-							@Override
-							public void onCancel() {
-
-							}
-						},"忘记手势密码，需要重新登录并设置手势密码","false");
-				dialog.show();
+//				CheckVersionDialog dialog = new CheckVersionDialog(GestureVerifyActivity.this,
+//						new CheckVersionDialog.OnCheckVersion() {
+//
+//							@Override
+//							public void onConfim() {
+//								UserLoadout out = new UserLoadout(GestureVerifyActivity.this,userId);
+//								out.requestData();
+//							}
+//
+//							@Override
+//							public void onCancel() {
+//
+//							}
+//						},"忘记手势密码，需要重新登录并设置手势密码","false");
+//				dialog.show();
 
 				break;
 			case R.id.text_other_account:
 				Intent i_login=new Intent(this,LoginActivity.class);
+				i_login.putExtra("GOTOMAIN",LoginActivity.GOTOMAIN);
 				i_login.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
 				startActivity(i_login);
 				break;

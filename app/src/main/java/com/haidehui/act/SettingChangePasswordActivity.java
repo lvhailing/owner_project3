@@ -1,5 +1,6 @@
 package com.haidehui.act;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import com.haidehui.net.UserLoadout;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.util.LinkedHashMap;
@@ -31,6 +33,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
     private String oldPassword =  "";
     private String newPassword =  "";
     private String newPasswordAgain =  "";
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
 
     public void initView(){
 
+        context = this;
         et_change_password_old = (EditText) findViewById(R.id.et_change_password_old);
         et_change_password_new = (EditText) findViewById(R.id.et_change_password_new);
         et_change_password_new_again = (EditText) findViewById(R.id.et_change_password_new_again);
@@ -60,7 +64,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                oldPassword = et_change_password_old.getText().toString();
                 newPassword = et_change_password_new.getText().toString();
                 newPasswordAgain = et_change_password_new_again.getText().toString();
                 checkButton(editable.toString(),newPassword,newPasswordAgain);
@@ -83,6 +87,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
             public void afterTextChanged(Editable editable) {
 
                 oldPassword = et_change_password_old.getText().toString();
+                newPassword = et_change_password_new.getText().toString();
                 newPasswordAgain = et_change_password_new_again.getText().toString();
                 checkButton(oldPassword,editable.toString(),newPasswordAgain);
 
@@ -105,6 +110,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
 
                 oldPassword = et_change_password_old.getText().toString();
                 newPassword = et_change_password_new.getText().toString();
+                newPasswordAgain = et_change_password_new_again.getText().toString();
                 checkButton(oldPassword,newPassword,editable.toString());
 
             }
@@ -136,7 +142,18 @@ public class SettingChangePasswordActivity extends BaseActivity{
 //                Toast.makeText(SettingChangePasswordActivity.this,"////************",Toast.LENGTH_SHORT).show();
 //                Intent i_second = new Intent(SettingChangePasswordActivity.this,SettingChangePhoneSecondActivity.class);
 //                startActivity(i_second);
-                changePassword();
+
+
+                if(StringUtil.checkPassword(newPassword)){
+                    if(newPassword.equals(newPasswordAgain)){
+                        changePassword();
+                    }else{
+                        Toast.makeText(context,"两次密码输入不一致，请重新输入",Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -163,6 +180,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
                         Intent i_login = new Intent(SettingChangePasswordActivity.this, LoginActivity.class);
 //                        i_login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                        i_login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        i_login.putExtra("GOTOMAIN",LoginActivity.GOTOMAIN);
                         startActivity(i_login);
                         finish();
                     }else{

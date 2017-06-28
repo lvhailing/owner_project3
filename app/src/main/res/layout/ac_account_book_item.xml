@@ -61,7 +61,7 @@
             android:id="@+id/tv_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_d"
+            android:textColor="@color/bg_btn_orange"
             android:gravity="right"
             android:layout_marginTop="3dp"
             android:text="结佣完成" />

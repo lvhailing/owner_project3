@@ -9,6 +9,8 @@ public class Tracking2B implements IMouldType {
     private String customerName;
     private String customerPhone;
     private String editTime;
+    private String customerTrackingId;
+    private String houseProject;
 
     public String getCustomerId() {
         return customerId;
@@ -42,4 +44,19 @@ public class Tracking2B implements IMouldType {
         this.editTime = editTime;
     }
 
+    public String getCustomerTrackingId() {
+        return customerTrackingId;
+    }
+
+    public void setCustomerTrackingId(String customerTrackingId) {
+        this.customerTrackingId = customerTrackingId;
+    }
+
+    public String getHouseProject() {
+        return houseProject;
+    }
+
+    public void setHouseProject(String houseProject) {
+        this.houseProject = houseProject;
+    }
 }

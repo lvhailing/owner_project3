@@ -23,6 +23,7 @@ import com.haidehui.model.ResultSentSMSContentBean;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.TitleBar;
 
@@ -81,6 +82,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         btn_findpassword = (Button) findViewById(R.id.btn_findpassword);
 
         tv_findpassword_get_verify_code.setOnClickListener(this);
+        btn_findpassword.setOnClickListener(this);
         btn_findpassword.setClickable(false);
 
         mHandler = new MyHandler();
@@ -148,8 +150,18 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()){
 
             case R.id.btn_findpassword:         //      密码重置
+                if(StringUtil.checkPassword(password)){
+                    if(password.equals(password_again)){
+//                        changePassword();
+                        findpassword();
+                    }else{
+                        Toast.makeText(context,"两次密码输入不一致，请重新输入",Toast.LENGTH_SHORT).show();
+                    }
 
-                findpassword();
+                }else{
+                    Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
+                }
+
 
                 break;
 
@@ -191,7 +203,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                     public void onRequestFinished(BaseParams params) {
                         ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                         if (b != null) {
-                            if (Boolean.parseBoolean(b.getResult())) {
+                            if (Boolean.parseBoolean(b.getFlag())) {
                                 Toast.makeText(FindPasswordActivity.this, "短信发送成功",
                                         Toast.LENGTH_LONG).show();
                                 smsflag = true;
@@ -225,7 +237,11 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                 ResultSentSMSContentBean b = (ResultSentSMSContentBean) params.result;
                 if (b != null) {
                     if (Boolean.parseBoolean(b.getFlag())) {
+                        Toast.makeText(FindPasswordActivity.this,
+                                b.getMessage(), Toast.LENGTH_LONG)
+                                .show();
                         Intent i_login = new Intent(FindPasswordActivity.this, LoginActivity.class);
+                        i_login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i_login);
                         finish();
                     } else {

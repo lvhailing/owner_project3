@@ -20,7 +20,8 @@ public class TrackingDetails2B implements IMouldType {
     private String revisitCustomerAndAnsweredQuestion;
     private String telephoneContactedAndIntroductionProject;
     private String trackingRemark;
-
+    private String houseProject;
+    private String roomNumber;
 
     public String getConfirmCondoTourPlan() {
         return confirmCondoTourPlan;
@@ -148,5 +149,21 @@ public class TrackingDetails2B implements IMouldType {
 
     public void setTrackingRemark(String trackingRemark) {
         this.trackingRemark = trackingRemark;
+    }
+
+    public String getHouseProject() {
+        return houseProject;
+    }
+
+    public void setHouseProject(String houseProject) {
+        this.houseProject = houseProject;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 }

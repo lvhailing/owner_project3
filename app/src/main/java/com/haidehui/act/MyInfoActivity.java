@@ -50,7 +50,7 @@ import java.net.URL;
 
 
 /**
- *  我的 --- 我的信息
+ * 我的 --- 我的信息
  */
 public class MyInfoActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout layout_photo;
@@ -77,13 +77,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     /**
      * 图片保存SD卡位置
      */
-    private final static String IMG_PATH = Environment
-            .getExternalStorageDirectory() + "/haidehui/imgs/";
+    private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/";
     /**
      * 图片保存SD卡位置
      */
-    private final static String IMG_PATH_TWO = Environment
-            .getExternalStorageDirectory() + "/haidehui/imgs2/";
+    private final static String IMG_PATH_TWO = Environment.getExternalStorageDirectory() + "/haidehui/imgs2/";
 
     /***
      * 使用照相机拍照获取图片
@@ -94,13 +92,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
      */
     public static final int SELECT_PIC_BY_PICK_PHOTO = 2;
 
-    /**获取到的图片路径*/
+    /**
+     * 获取到的图片路径
+     */
     private String picPath;
 
     private Uri photoUri;
 
     private static final String TAG = "MyInfoActivity";
-
 
 
     @Override
@@ -117,10 +116,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.title_my_info))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_my_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -139,25 +135,25 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        realName=getIntent().getStringExtra("realName");
-        headPhoto=getIntent().getStringExtra("headPhoto");
-        layout_photo= (RelativeLayout) findViewById(R.id.layout_photo);
-        img_photo= (CircularImage) findViewById(R.id.img_photo);
-        layout_name= (RelativeLayout) findViewById(R.id.layout_name);
-        tv_name= (TextView) findViewById(R.id.tv_name);
+        realName = getIntent().getStringExtra("realName");
+        headPhoto = getIntent().getStringExtra("headPhoto");
+
+        layout_photo = (RelativeLayout) findViewById(R.id.layout_photo);
+        img_photo = (CircularImage) findViewById(R.id.img_photo);
+        layout_name = (RelativeLayout) findViewById(R.id.layout_name);
+        tv_name = (TextView) findViewById(R.id.tv_name);
         tv_name.setText(realName);
         if (!TextUtils.isEmpty(headPhoto)) {
             new ImageViewService().execute(headPhoto);
         } else {
-            img_photo.setImageDrawable(getResources()
-                    .getDrawable(R.mipmap.user_icon));
+            img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
 
 
     }
+
     /**
      * 获取网落图片资源
-     *
      *
      * @return
      */
@@ -177,19 +173,18 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 img_photo.setImageBitmap(result);
                 saveBitmap2(result);
             } else {
-                img_photo.setImageDrawable(getResources().getDrawable(
-                        R.mipmap.user_icon));
+                img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
             }
         }
 
     }
+
     private Bitmap getImageBitmap(String url) {
         URL imgUrl = null;
         Bitmap bitmap = null;
         try {
             imgUrl = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection) imgUrl
-                    .openConnection();
+            HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
             conn.setDoInput(true);
             conn.connect();
             InputStream is = conn.getInputStream();
@@ -202,6 +197,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
         return bitmap;
     }
+
     private Uri saveBitmap2(Bitmap bm) {
         File tmpDir = new File(IMG_PATH_TWO);
         if (!tmpDir.exists()) {
@@ -228,21 +224,23 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         layout_photo.setOnClickListener(this);
         layout_name.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.layout_photo:
                 selectPhoto();
                 break;
             case R.id.layout_name:
                 Intent intent = new Intent(this, MyInfoForNameActivity.class);
-                intent.putExtra("realName",realName);
-                startActivityForResult(intent,1000);
+                intent.putExtra("realName", realName);
+                startActivityForResult(intent, 1000);
                 break;
         }
     }
+
     private void selectPhoto() {
-        SelectPhotoDialog mDialog = new SelectPhotoDialog(this,new SelectPhotoDialog.OnSelectPhotoChanged() {
+        SelectPhotoDialog mDialog = new SelectPhotoDialog(this, new SelectPhotoDialog.OnSelectPhotoChanged() {
             @Override
             public void onAlbum() {//相册
 
@@ -265,8 +263,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private void takePhoto() {
         //执行拍照前，应该先判断SD卡是否存在
         String sdState = Environment.getExternalStorageState();
-        if(sdState.equals(Environment.MEDIA_MOUNTED))
-        {
+        if (sdState.equals(Environment.MEDIA_MOUNTED)) {
 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
             /***
@@ -274,7 +271,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
              * 这里使用的这种方式有一个好处就是获取的图片是拍照后的原图
              * 如果不实用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
              */
-			/*//设置图片的保存路径,作为全局变量
+            /*//设置图片的保存路径,作为全局变量
 			String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
 			File temp = new File(imageFilePath);
 			photoUri = Uri.fromFile(temp);//获取文件的Uri*/
@@ -283,10 +280,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoUri);
             /**-----------------*/
             startActivityForResult(intent, SELECT_PIC_BY_TACK_PHOTO);
-        }else{
+        } else {
             Toast.makeText(this, "内存卡不存在", Toast.LENGTH_LONG).show();
         }
     }
+
     /***
      * 从相册中取图片
      */
@@ -306,9 +304,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
             if (photoUri != null) {
                 try {
-                    dialog.setmLoadingTip("正在上传照片，请稍后……");
-                    startLoading();
                     photoBmp = getBitmapFormUri(MyInfoActivity.this, photoUri);
+                    if (photoBmp!=null){
+                        dialog.setmLoadingTip("正在上传照片，请稍后……");
+                        startLoading();
+                    }
                     newZoomImage = photoBmp;
                     sendImage(photoBmp);
                 } catch (IOException e) {
@@ -348,13 +348,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             Bitmap bm = extras.getParcelable("data");
             newZoomImage = zoomImage(bm, 600, 300);
 //			sendImage(newZoomImage);
-        }else if(requestCode==1000 && resultCode==2000){
-           String nameData= data.getStringExtra("realName");
+        } else if (requestCode == 1000 && resultCode == 2000) {
+            String nameData = data.getStringExtra("realName");
+            realName=nameData;
             tv_name.setText(nameData);
 
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     /**
      * 通过uri获取图片并进行压缩
      *
@@ -370,8 +372,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         input.close();
         int originalWidth = onlyBoundsOptions.outWidth;
         int originalHeight = onlyBoundsOptions.outHeight;
-        if ((originalWidth == -1) || (originalHeight == -1))
-            return null;
+        if ((originalWidth == -1) || (originalHeight == -1)) return null;
         //图片分辨率以480x800为标准
         float hh = 800f;//这里设置高度为800f
         float ww = 480f;//这里设置宽度为480f
@@ -382,8 +383,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         } else if (originalWidth < originalHeight && originalHeight > hh) {//如果高度高的话根据宽度固定大小缩放
             be = (int) (originalHeight / hh);
         }
-        if (be <= 0)
-            be = 1;
+        if (be <= 0) be = 1;
         //比例压缩
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inSampleSize = be;//设置缩放比例
@@ -395,6 +395,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
         return compressImage(bitmap);//再进行质量压缩
     }
+
     /**
      * 质量压缩方法
      *
@@ -416,23 +417,22 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
         return bitmap;
     }
+
     /**
      * 选择图片后，获取图片的路径
+     *
      * @param requestCode
      * @param data
      */
-    private void doPhoto(int requestCode,Intent data)
-    {
-        if(requestCode == SELECT_PIC_BY_PICK_PHOTO )  //从相册取图片，有些手机有异常情况，请注意
+    private void doPhoto(int requestCode, Intent data) {
+        if (requestCode == SELECT_PIC_BY_PICK_PHOTO)  //从相册取图片，有些手机有异常情况，请注意
         {
-            if(data == null)
-            {
+            if (data == null) {
                 Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
                 return;
             }
             photoUri = data.getData();
-            if(photoUri == null )
-            {
+            if (photoUri == null) {
                 Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -441,8 +441,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         ContentResolver cr = getContentResolver();
         Cursor cursor = cr.query(photoUri, pojo, null, null, null);
 //		Cursor cursor = managedQuery(photoUri, pojo, null, null,null);
-        if(cursor != null )
-        {
+        if (cursor != null) {
             int columnIndex = cursor.getColumnIndexOrThrow(pojo[0]);
             cursor.moveToFirst();
             picPath = cursor.getString(columnIndex);
@@ -450,20 +449,20 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
         Log.i(TAG, "imagePath = " + picPath);
 
-        if(picPath != null && ( picPath.endsWith(".png") || picPath.endsWith(".PNG") ||picPath.endsWith(".jpg") ||picPath.endsWith(".JPG")  ))
-        {
+        if (picPath != null && (picPath.endsWith(".png") || picPath.endsWith(".PNG") || picPath.endsWith(".jpg") || picPath.endsWith(".JPG"))) {
 
             Bitmap bm = BitmapFactory.decodeFile(picPath);
             newZoomImage = zoomImage(bm, 600, 300);
 
 //			sendImage(image2byte(picPath));
-        }else{
+        } else {
             Toast.makeText(this, "选择图片文件不正确", Toast.LENGTH_LONG).show();
         }
 
     }
+
     //图片到byte数组
-    public byte[] image2byte(String path){
+    public byte[] image2byte(String path) {
         byte[] data = null;
         FileInputStream input = null;
         try {
@@ -477,18 +476,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             data = output.toByteArray();
             output.close();
             input.close();
-        }
-        catch (FileNotFoundException ex1) {
+        } catch (FileNotFoundException ex1) {
             ex1.printStackTrace();
-        }
-        catch (IOException ex1) {
+        } catch (IOException ex1) {
             ex1.printStackTrace();
         }
         return data;
     }
 
-    public static Bitmap zoomImage(Bitmap bgimage, double newWidth,
-                                   double newHeight) {
+    public static Bitmap zoomImage(Bitmap bgimage, double newWidth, double newHeight) {
         // 获取这个图片的宽和高
         float width = bgimage.getWidth();
         float height = bgimage.getHeight();
@@ -499,14 +495,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         float scaleHeight = ((float) newHeight) / height;
         // 缩放图片动作
         matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
-                (int) height, matrix, true);
+        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width, (int) height, matrix, true);
         return bitmap;
     }
 
     private void sendImage(Bitmap bm) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG,100, stream);
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bytes = stream.toByteArray();
 
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
@@ -521,8 +516,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers,
-                                      String content) {
+                public void onSuccess(int statusCode, Header[] headers, String content) {
                     super.onSuccess(statusCode, headers, content);
                     try {
                         mthread = new Thread(myRunnable);
@@ -549,9 +543,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             super.handleMessage(msg);
             stopLoading();
             if (msg.what == 1) {
-                   img_photo.setImageBitmap(newZoomImage);
-                }
-             else {
+                img_photo.setImageBitmap(newZoomImage);
+            } else {
             }
         }
 
@@ -567,8 +560,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     };
 
     private Uri saveBitmap(Bitmap bm) {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File tmpDir = new File(IMG_PATH);
             if (!tmpDir.exists()) {
                 tmpDir.mkdirs();
@@ -592,7 +584,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
 
     }
-
 
 
 }

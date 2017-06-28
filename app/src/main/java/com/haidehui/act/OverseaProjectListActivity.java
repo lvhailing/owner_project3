@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 
 
 /**
- *  首页-- 海外项目列表
+ * 首页-- 海外项目列表
  */
 public class OverseaProjectListActivity extends BaseActivity implements View.OnClickListener {
     private PullToRefreshListView listView;
@@ -48,10 +48,7 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-                .setCenterText(getResources().getString(R.string.title_oversea_project))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_oversea_project)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -104,6 +101,12 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestListData();
     }
 
     @Override
@@ -164,7 +167,6 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
             e.printStackTrace();
         }
     }
-
 
 
 }

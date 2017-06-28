@@ -62,7 +62,7 @@ public class HouseResourceListAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(list.get(position).gethCoverImg(), holder.iv_boutique_house, options);
 
         holder.tv_house_name.setText(list.get(position).gethName());
-        holder.tv_house_area.setText(list.get(position).gethType() + "/" + list.get(position).gethArea());
+        holder.tv_house_area.setText(list.get(position).gethType() + " / " + list.get(position).gethArea());
         holder.tv_house_price.setText(list.get(position).gethPrice() + "万元");
         return convertView;
     }

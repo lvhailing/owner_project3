@@ -61,6 +61,7 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
 
             @Override
             public void afterTextChanged(Editable editable) {
+                mobile = et_change_phone.getText().toString();
                 if(TextUtils.isEmpty(editable)){
                     title.setChildBankground(R.drawable.shape_center_gray,false);
                 }else{
@@ -123,8 +124,12 @@ public class SettingChangePhoneSecondActivity extends BaseActivity{
             public void onAction(int id) {
 
 //                Toast.makeText(SettingChangePhoneSecondActivity.this,"////************",Toast.LENGTH_SHORT).show();
+                if(StringUtil.isMobileNO(mobile)){
+                    request();
+                }else{
+                    Toast.makeText(SettingChangePhoneSecondActivity.this,"请输入正确手机号",Toast.LENGTH_SHORT).show();
+                }
 
-                request();
 
             }
         });

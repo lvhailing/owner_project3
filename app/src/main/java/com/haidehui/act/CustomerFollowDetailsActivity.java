@@ -2,10 +2,12 @@ package com.haidehui.act;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -36,9 +38,13 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private MouldList<ResultCustomerFollowDetailslistBean> detailsList=new MouldList<>();
     private ScrollView scrollview;
     private String customerId;
+    private String customerTrackingId;
 
     private TextView tv_customerName;
     private TextView tv_customerPhone;
+    private EditText edt_project;
+    private EditText edt_room_number;
+    private EditText edit_remark;
     private Button btn_save;
 
     private String[] checkStr=new String[12];
@@ -81,6 +87,9 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private void initView() {
         tv_customerName= (TextView) findViewById(R.id.tv_customerName);
         tv_customerPhone= (TextView) findViewById(R.id.tv_customerPhone);
+        edt_project= (EditText) findViewById(R.id.edt_project);
+        edt_room_number= (EditText) findViewById(R.id.edt_room_number);
+        edit_remark= (EditText) findViewById(R.id.edit_remark);
         btn_save= (Button) findViewById(R.id.btn_save);
         scrollview= (ScrollView) findViewById(R.id.scrollview);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
@@ -96,11 +105,13 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private void initData() {
         btn_save.setOnClickListener(this);
         customerId=getIntent().getStringExtra("customerId");
+        customerTrackingId=getIntent().getStringExtra("customerTrackingId");
         requestData();
     }
 
     private void requestData() {
         HashMap<String, Object> param = new HashMap<>();
+        param.put("customerTrackingId", customerTrackingId);
         param.put("customerId", customerId);
         param.put("userId", userId);
         HtmlRequest.getTrackingDetails(this, param, new BaseRequester.OnRequestListener() {
@@ -120,6 +131,9 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private void setData(TrackingDetails2B data) {
         tv_customerName.setText(data.getCustomerName());
         tv_customerPhone.setText(data.getCustomerPhone());
+        edt_project.setText(data.getHouseProject());
+        edt_room_number.setText(data.getRoomNumber());
+        edit_remark.setText(data.getTrackingRemark());
 
         if ("true".equals(data.getTelephoneContactedAndIntroductionProject())) {
             checkStr[0] = "true";
@@ -224,10 +238,13 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     /**
      * 新增客户跟踪
      */
-    private void submitData(String[] resultStr) {
+    private void submitData(String[] resultStr,String houseProject,String roomNumber,String trackingRemark) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
         param.put("userId", userId);
+        param.put("houseProject", houseProject);
+        param.put("roomNumber", roomNumber);
+        param.put("trackingRemark", trackingRemark);
         param.put("telephoneContactedAndIntroductionProject", resultStr[0]);
         param.put("projectMaterialsAndAnsweredQuestion", resultStr[1]);
         param.put("interviewedAndDetailedIntroductionProject", resultStr[2]);
@@ -250,7 +267,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
                         }
                         SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                         if ("true".equals(data.getFlag())){
-                            Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, "修改成功", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }
@@ -261,7 +278,31 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_save:
-                submitData(resultStr);
+                String houseProject=edt_project.getText().toString();
+                String roomNumber=edt_room_number.getText().toString();
+                String remark=edit_remark.getText().toString();
+                int m=0;
+                if (!TextUtils.isEmpty(houseProject)){
+                    if (!TextUtils.isEmpty(roomNumber)){
+                        for (int i=0;i<resultStr.length;i++){
+                            if (resultStr[i].equals("false")){
+                                m+=1;
+                            }
+                        }
+                        if (m==12){
+                            Toast.makeText(mContext, "请选择跟踪进度", Toast.LENGTH_LONG).show();
+                        }else{
+                            submitData(resultStr,houseProject,roomNumber,remark);
+                        }
+
+                    }else{
+                        Toast.makeText(mContext, "请输入房产房号", Toast.LENGTH_LONG).show();
+                        edt_room_number.requestFocusFromTouch();
+                    }
+                }else{
+                    Toast.makeText(mContext, "请输入项目名称", Toast.LENGTH_LONG).show();
+                    edt_project.requestFocusFromTouch();
+                }
                 break;
         }
     }

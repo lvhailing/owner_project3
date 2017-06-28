@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -33,10 +34,12 @@ public class BasicDialog extends Dialog implements
 	private TextView txtInfo = null;
 	private String info = null;
 	private String rightInfo=null;
+	private RelativeLayout rl_dialog_btn_cancel;
 	
 	ArrayList<OnCancelListener> m_arrCancelListeners = new ArrayList<OnCancelListener>();
 	ArrayList<OnDismissListener> m_arrDismissListeners = new ArrayList<OnDismissListener>();
 	private OnBasicChanged onChanged = null;
+	private boolean isCancel = true;
 
 	public BasicDialog(Context context, OnBasicChanged onChanged, String info,String rightInfo) {
 		super(context, R.style.Dialog);
@@ -44,6 +47,15 @@ public class BasicDialog extends Dialog implements
 		this.onChanged = onChanged;
 		this.info = info;
 		this.rightInfo=rightInfo;
+	}
+
+	public BasicDialog(Context context, OnBasicChanged onChanged, String info,String rightInfo,boolean isCancel) {
+		super(context, R.style.Dialog);
+		this.mContext = context;
+		this.onChanged = onChanged;
+		this.info = info;
+		this.rightInfo=rightInfo;
+		this.isCancel = isCancel;
 	}
 
 	@Override
@@ -78,10 +90,18 @@ public class BasicDialog extends Dialog implements
 				.findViewById(R.id.dialog_btn_cancel);
 		txtInfo = (TextView) mView
 				.findViewById(R.id.dialog_btn_info);
+		rl_dialog_btn_cancel = (RelativeLayout) mView
+				.findViewById(R.id.rl_dialog_btn_cancel);
 		txtInfo.setText(info);
 		txtConfim.setText(rightInfo);
 		txtConfim.setOnClickListener(confimListener);
 		txtCancel.setOnClickListener(cancelListener);
+
+		if(isCancel){
+			rl_dialog_btn_cancel.setVisibility(View.VISIBLE);
+		}else{
+			rl_dialog_btn_cancel.setVisibility(View.GONE);
+		}
 	}
 
 	private View.OnClickListener confimListener = new View.OnClickListener() {

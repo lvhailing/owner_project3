@@ -27,6 +27,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import com.haidehui.uitls.ActivityStack;
 
 
 /**
@@ -75,6 +76,9 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        ActivityStack stack = ActivityStack.getActivityManage();
+        stack.addActivity(this);
+
         btn_submit= (Button) findViewById(R.id.btn_submit);
 
         lv_customer_info = (PullToRefreshListView) findViewById(R.id.lv_customer_info);
@@ -135,13 +139,12 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         btn_submit.setOnClickListener(this);
         adapter = new CustomerInfoAdapter(CustomerInfoActivity.this, totalList);
         lv_customer_info.setAdapter(adapter);
-
+        requestListData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        requestListData();
     }
 
     protected void showDialog() {
@@ -154,7 +157,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onCancel() {
             }
-        },"确认删除吗？","确认");
+        },"此操作将同时删除该客户相应的跟踪信息","确认");
         dialog.show();
     }
     /**

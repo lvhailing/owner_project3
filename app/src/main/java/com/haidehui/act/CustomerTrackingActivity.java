@@ -40,6 +40,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     private int currentPage = 1;    //当前页
     private static int mDelId = 0;
     private String customerId;
+    private String customerTrackingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
                                     long id) {
                 Intent intent = new Intent(mContext, CustomerFollowDetailsActivity.class);
                 intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
+                intent.putExtra("customerTrackingId", totalList.get(position - 1).getCustomerTrackingId());
                 startActivity(intent);
             }
         });
@@ -114,6 +116,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mDelId = position - 1;
                 customerId = totalList.get(position - 1).getCustomerId();
+                customerTrackingId = totalList.get(position - 1).getCustomerTrackingId();
                 showDialog();
                 return true;
             }
@@ -141,14 +144,14 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
             totalList.remove(mDelId);
             mAdapter.notifyDataSetChanged();
 
-            deleteData(customerId);
+            deleteData(customerTrackingId);
 
         }
     }
 
-    private void deleteData(String customerId) {
+    private void deleteData(String customerTrackingId) {
         HashMap<String, Object> param = new HashMap<>();
-        param.put("customerId", customerId);
+        param.put("customerTrackingId", customerTrackingId);
         param.put("userId", userId);
         HtmlRequest.deleteCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
                     @Override

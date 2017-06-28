@@ -16,7 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import static com.haidehui.uitls.ImageLoaderManager.options;
 
-// 发现-- 投资指南列表 Adapter
+// 发现-- 产品路演列表 Adapter
 public class ProductRoadShowAdapter extends BaseAdapter {
     private MouldList<ProductRoadshow3B> list;
     private Context context;

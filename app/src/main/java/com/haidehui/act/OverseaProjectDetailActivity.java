@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.haidehui.R;
@@ -32,6 +33,7 @@ import java.util.LinkedHashMap;
  * 海外项目详情
  */
 public class OverseaProjectDetailActivity extends BaseActivity implements View.OnClickListener {
+    private ScrollView scrollView;
     private boolean isShow = false; //刚进来此页面时，项目居室、配套设施、地理位置等下面的内容默认是不显示的
     private ImageView iv_oversea_detail; // 顶部图片
     private TextView tv_pro_house_name;
@@ -59,7 +61,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private RelatedHouseAdapter myAdapter; // 相关房源 Adapter
     private TextView tv_no_house; // 相关房源没数据时显示的提示语
 
-    private RelativeLayout rl_pro_house,rl_pro_facilities,rl_pro_geographic_location; // 项目居室，配套设施，地理位置布局
+    private RelativeLayout rl_pro_house, rl_pro_facilities, rl_pro_geographic_location; // 项目居室，配套设施，地理位置布局
 
 
     @Override
@@ -96,6 +98,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private void initView() {
         pid = getIntent().getStringExtra("pid");
 
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
         iv_oversea_detail = (ImageView) findViewById(R.id.iv_oversea_detail);
         iv_project_click = (ImageView) findViewById(R.id.iv_project_click);
         iv_support_facilities_click = (ImageView) findViewById(R.id.iv_support_facilities_click);
@@ -171,11 +174,11 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
 
         tv_pro_house_name.setText(overseaProjectDetail.getName());
-        tv_pro_house_price.setText(overseaProjectDetail.getPrice());
-        tv_pro_house_area.setText(overseaProjectDetail.getArea());
+        tv_pro_house_price.setText(overseaProjectDetail.getPrice() + "万元起");
+        tv_pro_house_area.setText("面积" + overseaProjectDetail.getArea());
         tv_pro_position.setText(overseaProjectDetail.getLocation());
         tv_pro_type.setText(overseaProjectDetail.getCategory());
-        tv_pro_count.setText(overseaProjectDetail.getTotal());
+        tv_pro_count.setText(overseaProjectDetail.getTotal() + "套");
         tv_pro_decoration_standard.setText(overseaProjectDetail.getDecorateStandard());
         tv_pro_house_desc.setText(overseaProjectDetail.getProjectDesc());
 
@@ -188,6 +191,14 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
         updateNum();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        scrollView.smoothScrollTo(0, 0);
+        requestDetailData();
     }
 
     @Override

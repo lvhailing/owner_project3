@@ -27,12 +27,18 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_OUTER_NET_DEBUG;
+ //   private static String EC_HOST = URL_OUTER_NET_DEBUG;
+    private static String EC_HOST = URL_DEBUG;
 
     /**
      * 登出
      */
     public static final String URL_LOGINOFF = EC_HOST + "account/logoff";
+
+    /**
+     * url
+     */
+    public static final String URL = EC_HOST + "";
 
     /**
      * 获取消息主页信息
@@ -270,6 +276,9 @@ public class Urls {
 
     //新增客户跟踪
     public static final String URL_SUBMIT_TRACKING = EC_HOST + "account/trade/customer/tracking/save";
+
+    //删除客户跟踪
+    public static final String URL_DELETE_TRACKING = EC_HOST + "account/trade/customers/tracking/delete";
 
     //获取我的信息
     public static final String URL_MINE_DATA = EC_HOST + "account/userInfo";

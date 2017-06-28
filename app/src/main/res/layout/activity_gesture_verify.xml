@@ -49,23 +49,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="50.0dip"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
             <TextView
                 android:id="@+id/text_forget_gesture"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
                 android:gravity="center"
                 android:text="@string/forget_gesture_code"
-                android:textColor="#ffe7e7e6"
-                android:textSize="16.0sp" />
+                android:textColor="@color/txt_gray"
+                android:textSize="16.0sp"
+                android:drawableRight="@mipmap/img_arrow_right"
+                android:layout_gravity="center"
+                />
 
             <TextView
                 android:id="@+id/text_other_account"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
                 android:gravity="center"
                 android:text="@string/use_other_account_login"
                 android:textColor="#ffe7e7e6"

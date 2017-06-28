@@ -216,9 +216,9 @@
                 android:layout_toRightOf="@+id/tv_identify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/img_business" />
+                android:src="@mipmap/img_unidentify" />
 
             <ImageView
                 android:layout_width="wrap_content"

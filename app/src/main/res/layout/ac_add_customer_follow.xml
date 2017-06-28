@@ -19,12 +19,13 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@color/white"
-                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="16sp"
                     android:text="客户姓名"/>
                 <TextView
                     android:id="@+id/tv_customerName"
@@ -44,11 +45,12 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="@color/white"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp">
+                android:layout_marginRight="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="16sp"
                     android:text="联系电话"/>
                 <TextView
                     android:id="@+id/tv_customerPhone"
@@ -63,18 +65,93 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="@color/gray_light"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:hint="输入项目名称"
+                    android:maxLength="20"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_dark"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:layout_toRightOf="@+id/tv_project"
+                    android:background="@color/white" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_room_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="房号"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_room_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:hint="输入房产房号"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_dark"
+                    android:maxLength="20"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:layout_toRightOf="@+id/tv_room_number"
+                    android:background="@color/white" />
+            </RelativeLayout>
             <com.haidehui.widget.MyListView
                 xmlns:ptr="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/lv_follow_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="57dp"
                 android:divider="@color/gray_light"
                 android:scrollbars="none"
                 android:dividerHeight="1dp"
                 android:listSelector="#00000000"
                 ptr:ptrAnimationStyle="flip"
                 ptr:ptrMode="disabled" />
+
+            <EditText
+                android:id="@+id/edit_remark"
+                android:layout_width="fill_parent"
+                android:layout_height="150.0dip"
+                android:background="@color/white"
+                android:hint="请输入您的备注信息！"
+                android:maxLength="500"
+                android:minLines="10"
+                android:gravity="top"
+                android:padding="8dip"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="57dp"
+                android:inputType="textMultiLine"
+                android:textSize="15.0sp"
+                />
 
         </LinearLayout>
     </ScrollView>

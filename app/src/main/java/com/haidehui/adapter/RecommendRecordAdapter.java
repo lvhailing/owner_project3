@@ -11,6 +11,7 @@ import com.haidehui.R;
 import com.haidehui.model.ResultMessageContentBean;
 import com.haidehui.model.ResultRecommendRecordItemContentBean;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.StringUtil;
 
 /**
  * 邀请记录
@@ -58,9 +59,9 @@ public class RecommendRecordAdapter extends BaseAdapter{
             holder = (Holder) view.getTag();
         }
 
-        holder.tv_recommend_record_friend.setText(list.get(i).getMobile());
-        holder.tv_recommend_record_level.setText(list.get(i).getUserLevel());
-        holder.tv_recommend_record_account.setText(list.get(i).getRewardAmount());
+        holder.tv_recommend_record_friend.setText(StringUtil.replaceSubString(list.get(i).getMobile()));
+        holder.tv_recommend_record_level.setText(list.get(i).getUserLevel()+"级推荐");
+        holder.tv_recommend_record_account.setText(list.get(i).getRewardAmount()+"元");
 
         return view;
     }

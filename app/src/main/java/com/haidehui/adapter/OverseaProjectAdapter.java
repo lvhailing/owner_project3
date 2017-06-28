@@ -63,8 +63,8 @@ public class OverseaProjectAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(list.get(position).getPath(), holder.iv_oversea_house, options);
 
         holder.tv_oversea_name.setText(list.get(position).getName());
-        holder.tv_oversea_price.setText(list.get(position).getPrice() + "万元");
-        holder.tv_oversea_area.setText(list.get(position).getArea());
+        holder.tv_oversea_price.setText(list.get(position).getPrice() + "万元起");
+        holder.tv_oversea_area.setText("面积" + list.get(position).getArea());
         return convertView;
     }
 

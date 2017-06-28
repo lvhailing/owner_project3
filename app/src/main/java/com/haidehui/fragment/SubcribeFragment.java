@@ -143,7 +143,6 @@ public class SubcribeFragment extends Fragment {
                         totalList.clear();
                     }
                     totalList.addAll(everyList);
-                    lv.setAdapter(adapter);
 
                     //刷新数据
                     adapter.notifyDataSetChanged();

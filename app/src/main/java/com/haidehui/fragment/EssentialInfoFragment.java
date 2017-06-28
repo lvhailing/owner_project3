@@ -66,7 +66,7 @@ public class EssentialInfoFragment extends Fragment {
     public void refreshLayoutInfo(HouseDetail2B data) {
         tv_house_name.setText(data.getName());
         tv_house_function.setText(data.getFunction());
-        tv_house_type.setText(data.getHouseType());
+        tv_house_type.setText(data.getCatagory());
         tv_decoration_standard.setText(data.getDecorateStandard());
         tv_house_year.setText(data.getTime());
         tv_house_floor.setText(data.getStory());

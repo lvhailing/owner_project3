@@ -23,13 +23,10 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.photo_preview.PhotoPreviewAc;
-import com.haidehui.uitls.DESUtil;
-import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * 房源详情
@@ -46,7 +43,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private EssentialInfoFragment essentialInfoFragment; // 购房基本信息
     private PurchaseCostFragment purchaseCostFragment; // 购房费用
     private PurchaseFlowFragment purchaseFlowFragment; // 购房流程
-    private ImageView iv_phone;
+    private RelativeLayout rl_phone;
     private String hid; // 房源编号
     private HouseDetail2B houseDetail;
     private ArrayList<String> houseImgList; // 房源图片列表
@@ -54,6 +51,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_house_detail_address; // 地址
     private Intent intent;
     private int currentPage;
+    private int flag = 1;
 
 
     @Override
@@ -90,8 +88,6 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private void initView() {
         hid = getIntent().getStringExtra("hid");
 
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
         vp = (ViewPager) findViewById(R.id.vp);
         tv_house_name = (TextView) findViewById(R.id.tv_house_name);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
@@ -105,10 +101,11 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         btn_essential_info = (Button) findViewById(R.id.btn_essential_info);
         btn_purchase_cost = (Button) findViewById(R.id.btn_purchase_cost);
         btn_purchase_flow = (Button) findViewById(R.id.btn_purchase_flow);
-        iv_phone = (ImageView) findViewById(R.id.iv_phone);
+        rl_phone = (RelativeLayout) findViewById(R.id.rl_phone);
 
-        // “基本信息”按钮首次进来时默认是选中状态
-        initBtnEssentialInfoColor();
+        resetBtnTextAnaBg();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
         essentialInfoFragment = new EssentialInfoFragment();
         transaction.replace(R.id.fragment_container, essentialInfoFragment);
         transaction.commit();
@@ -117,13 +114,8 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         btn_essential_info.setOnClickListener(this);
         btn_purchase_cost.setOnClickListener(this);
         btn_purchase_flow.setOnClickListener(this);
-        iv_phone.setOnClickListener(this);
+        rl_phone.setOnClickListener(this);
 
-    }
-
-    private void initBtnEssentialInfoColor() {
-        btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
-        btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
     }
 
     private void initData() {
@@ -133,7 +125,16 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        initBtnEssentialInfoColor();
+        if (flag == 1) {
+            btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
+            btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
+        } else if (flag == 2) {
+            btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
+            btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
+        } else {
+            btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
+            btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
+        }
 
     }
 
@@ -152,7 +153,10 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.btn_essential_info:  // 基本信息
-                initBtnEssentialInfoColor();
+                flag = 1;
+                requestDetailData();
+                btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
+                btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
                 hideFragment(transaction);
                 essentialInfoFragment = new EssentialInfoFragment();
                 transaction.replace(R.id.fragment_container, essentialInfoFragment);
@@ -160,6 +164,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.btn_purchase_cost:  // 购房费用
+                flag = 2;
                 btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
                 btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
                 hideFragment(transaction);
@@ -168,6 +173,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 transaction.commit();
                 break;
             case R.id.btn_purchase_flow:  // 购房流程
+                flag = 3;
                 btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
                 btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
                 hideFragment(transaction);
@@ -175,7 +181,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 transaction.replace(R.id.fragment_container, purchaseFlowFragment);
                 transaction.commit();
                 break;
-            case R.id.iv_phone:
+            case R.id.rl_phone:
                 intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + getString(R.string.adviser_phone_num));
                 intent.setData(data);
@@ -214,12 +220,12 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
      * 获取最热房源详情页的数据
      */
     private void requestDetailData() {
-        String userId = null;
+       /* String userId = null;
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         HashMap<String, Object> param = new HashMap<>();
         param.put("hid", hid);
         param.put("userId", userId);

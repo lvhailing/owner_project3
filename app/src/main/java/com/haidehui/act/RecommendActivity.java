@@ -125,7 +125,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 //        createQRImage(iv_myperson_invite_code, ApplicationConsts.URL_DEBUG_M + "vjinke/" + inviteBean.getRecommendCode()
 //                + "/scanQRCode/" + randomNum, bitmap);
 
-        createQRImage(iv_recommend_invite_code, "www.baidu.com", bitmap);
+        createQRImage(iv_recommend_invite_code, Urls.URL + "register/" + recommendCode + "/recommend", bitmap);
 
     }
 
@@ -256,33 +256,26 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     int t = (int) (Math.random() * 10);
                     randomNum2.append(t);
                 }
+                String url = Urls.URL + "register/" + recommendCode + "/recommend";
                 if (string.contains("WechatMoments")) {
                     way = "weixin";            //微信朋友圈
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                     oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
                 } else if (string.contains("Wechat")) {
                     way = "weixinFr";        //微信好友
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
 //					oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");
                 } else if (string.contains("QZone")) {
                     way = "Qzone";
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 } else if (string.contains("SinaWeibo")) {
                     way = "sinablog";
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
 //					oks.setTitleUrl(url);
                     oks.setUrl(url);
@@ -290,15 +283,11 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     oks.setSilent(false);
                 } else if (string.contains("TencentWeibo")) {
                     way = "tencentblog";
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 } else if (string.contains("QQ")) {
                     way = "QQ";
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
 //					oks.setTitleUrl(url);
                     // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
@@ -313,15 +302,11 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     oks.setSiteUrl(url);
                 } else if (string.contains("Email")) {
                     way = "email";
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 } else if (string.contains("ShortMessage")) {
                     way = "sms";
-                    String url = Urls.URL_DEBUG + "vjinke/" + recommendCode
-                            + "/" + way + "/" + randomNum + "?rad=" + randomNum2;
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
@@ -352,8 +337,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     randomNum.append(t);
                 }
                 ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(Urls.URL_DEBUG + "vjinke/" + recommendCode
-                        + "/link/" + randomNum);
+                cm.setText(Urls.URL + "register/" + recommendCode + "/recommend");
                 Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
             }
         };

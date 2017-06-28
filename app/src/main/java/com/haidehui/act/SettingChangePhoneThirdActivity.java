@@ -90,6 +90,7 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
 //                        UserLoadout out = new UserLoadout(SettingChangePhoneThirdActivity.this,userId);
 //                        out.requestData();
                         Intent i_login = new Intent(SettingChangePhoneThirdActivity.this, LoginActivity.class);
+                        i_login.putExtra("GOTOMAIN",LoginActivity.GOTOMAIN);
                         startActivity(i_login);
                         finish();
 
@@ -223,9 +224,8 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
 
     private void requestSMS() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("mobile", "");
-        param.put("busiType", Urls.REGISTER);
-        param.put("token", token);
+        param.put("busiType", Urls.MOBILEEDIT);
+        param.put("mobile", mobile);
 
         HtmlRequest.sentSMS(SettingChangePhoneThirdActivity.this, param,new BaseRequester.OnRequestListener() {
 

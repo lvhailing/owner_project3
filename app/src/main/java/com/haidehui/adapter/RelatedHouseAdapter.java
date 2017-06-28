@@ -66,7 +66,7 @@ public class RelatedHouseAdapter extends BaseAdapter {
         String area = list.get(position).gethArea();
 
         holder.tv_house_name.setText(list.get(position).getHname());
-        holder.tv_house_area.setText(houseType + "/" + area);
+        holder.tv_house_area.setText(houseType + " / " + area);
         holder.tv_house_price.setText(list.get(position).gethPrice() + "万元");
 
         return convertView;

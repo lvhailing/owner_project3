@@ -74,8 +74,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -126,8 +127,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -188,8 +190,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -240,8 +243,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
@@ -265,7 +269,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="7dp"
                         android:gravity="center_vertical"
-                        android:text="认证可见"
+                        android:text="返佣比例"
                         android:textColor="@color/txt_light_gray"
                         android:textSize="14sp"/>
                 </LinearLayout>
@@ -359,6 +363,7 @@
             android:layout_marginTop="3dp"/>
 
         <RelativeLayout
+            android:id="@+id/rl_phone"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_alignParentBottom="true"
@@ -385,7 +390,6 @@
                 />
 
             <ImageView
-                android:id="@+id/iv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

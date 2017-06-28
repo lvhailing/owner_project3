@@ -582,6 +582,29 @@
                     android:layout_weight="4"
                     android:textColor="@color/gray_dark"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1.3"
+                    android:gravity="right"
+                    android:text="结佣时间："
+                    android:textColor="@color/gray_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_commissionTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="4"
+                    android:textColor="@color/gray_dark"/>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

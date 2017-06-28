@@ -77,10 +77,10 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.btn_save:
                 String name=edt_name.getText().toString();
-                if (TextUtils.isEmpty(name)){
-                    saveData(realName);
-                }else{
+                if (!TextUtils.isEmpty(name)){
                     saveData(name);
+                }else{
+                    Toast.makeText(mContext, "请输入您的姓名", Toast.LENGTH_LONG).show();
                 }
                 break;
         }

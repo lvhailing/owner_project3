@@ -12,6 +12,7 @@ import com.haidehui.model.CustomerDetails2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.ActivityStack;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
@@ -52,6 +53,9 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
+        ActivityStack stack = ActivityStack.getActivityManage();
+        stack.addActivity(this);
+
         img_back= (ImageView) findViewById(R.id.img_back);
         img_add_follow= (ImageView) findViewById(R.id.img_add_follow);
         tv_name= (TextView) findViewById(R.id.tv_name);

@@ -57,16 +57,16 @@ public class AccountBookCommissionAdapter extends BaseAdapter {
 			holder = (Holder) convertView.getTag();
 		}
 		holder.item_info.setText(bean.getProjectName());
-		holder.item_money.setText(bean.getRewardAmount());
+		holder.item_money.setText("+"+bean.getRewardAmount());
 		holder.item_time.setText(bean.getCreateTime());
 		if (bean.getRewardType().equals("commissionOver")) {
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
 			holder.item_status.setText("结佣完成");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));
+			/*holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));*/
 		}else if(bean.getRewardType().equals("commissionFirst")){
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.txt_vertical_line));
 			holder.item_status.setText("首次结佣");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.txt_vertical_line));
+			/*holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.txt_vertical_line));
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.txt_vertical_line));*/
 		}
 		return convertView;
 	}

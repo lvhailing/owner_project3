@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
@@ -104,9 +105,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
-                    android:ellipsize="end"
-                    android:maxLength="20"
-                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
@@ -132,9 +130,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
-                    android:ellipsize="end"
-                    android:maxLength="20"
-                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
@@ -188,9 +183,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
-                    android:ellipsize="end"
-                    android:maxLength="20"
-                    android:maxLines="1"
                     android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
@@ -217,9 +209,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
-                    android:ellipsize="end"
-                    android:maxLength="80"
-                    android:maxLines="3"
                     android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="14sp"/>
@@ -277,9 +266,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:ellipsize="end"
-                    android:maxLength="26"
-                    android:maxLines="1"
                     android:paddingBottom="12dp"
                     android:paddingTop="12dp"
                     android:text=""

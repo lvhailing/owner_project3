@@ -45,7 +45,7 @@ public class DownloadUtils {
 	public static long download(String urlStr, File dest, boolean append,
 								DownloadListener downloadListener) throws Exception {
 		
-		/*int downloadProgress = 0;
+		int downloadProgress = 0;
 		long remoteSize = 0;
 		int currentSize = 0;
 		long totalSize = -1;
@@ -125,10 +125,10 @@ public class DownloadUtils {
 			downloadListener.downloaded();
 		}
 
-		return totalSize;*/
+		return totalSize;
 
 
-		int downloadProgress = 0;
+		/*int downloadProgress = 0;
 		long remoteSize = 0;
 		int currentSize = 0;
 		long totalSize = -1;
@@ -195,6 +195,7 @@ public class DownloadUtils {
 //						}
 //					});
 			SSLSocketFactory.getSocketFactory().setHostnameVerifier(new AllowAllHostnameVerifier());
+
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(urlStr)
 					.openConnection();
 			conn.setDoOutput(true);
@@ -212,7 +213,7 @@ public class DownloadUtils {
 						.getFirstHeader("Content-Encoding");
 
 				//	验证https协议
-				SSLSocketFactory.getSocketFactory().setHostnameVerifier(new AllowAllHostnameVerifier());
+//				SSLSocketFactory.getSocketFactory().setHostnameVerifier(new AllowAllHostnameVerifier());
 
 				if (contentEncoding != null
 						&& contentEncoding.getValue().equalsIgnoreCase("gzip")) {
@@ -274,7 +275,7 @@ public class DownloadUtils {
 				throws CertificateException { }
 
 		@Override
-		public X509Certificate[] getAcceptedIssuers() { return null; }
+		public X509Certificate[] getAcceptedIssuers() { return null; }*/
 
 	}
 }

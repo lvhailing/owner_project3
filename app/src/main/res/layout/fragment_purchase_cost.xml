@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="14dp"
-        android:text="1.泰国申请养老签证的条件：\n(1)年龄满50周岁；\n(2)在泰国的个人银行帐户内有至少80万泰铢存款"
+        android:text="1.泰国申请养老签证的条件：\n(1)年龄满50周岁；\n(2)在泰国的个人银行帐户内有至少80万泰铢的存款"
         android:textColor="@color/txt_black"
         android:textSize="14sp"/>
 

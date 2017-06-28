@@ -27,7 +27,7 @@
 
 
     <!-- 找回密码 -->
-    <string name="findpassword_titile">找回密码</string>
+    <string name="findpassword_titile">密码找回</string>
     <string name="findpassword_phone">注册的手机号</string>
     <string name="findpassword_verify_code_mess">请输入注册手机号收到的短信验证码。</string>
     <string name="findpassword_password">新密码</string>
@@ -45,7 +45,7 @@
 
     <!-- 设置模块 -->
     <string name="setting_title">设置</string>
-    <string name="setting_change_phone">修改手机</string>
+    <string name="setting_change_phone">修改手机号</string>
     <string name="setting_gesture_password">手势密码</string>
     <string name="setting_change_gesture_password">修改手势密码</string>
     <string name="setting_change_password">修改登录密码</string>
@@ -53,7 +53,7 @@
     <string name="setting_sign_agreement">大富翁协议</string>
     <string name="setting_privacy_agreement">隐私协议</string>
     <string name="setting_advice">意见反馈</string>
-    <string name="setting_invite">推荐大富翁APP朋友</string>
+    <string name="setting_invite">推荐大富翁APP给朋友</string>
     <string name="setting_about">关于我们</string>
     <string name="setting_version">版本号</string>
     <string name="setting_change_phone_first">请输入当前登录密码</string>
@@ -79,10 +79,10 @@
     <string name="setting_recommend_record">推荐记录</string>
     <string name="setting_recommend_des">推荐说明：</string>
     <string name="setting_recommend_des_1">1、您注册大富翁成功后会自动生成一个您的专属推荐码。</string>
-    <string name="setting_recommend_des_2">2、您可以通过微信、微信朋友圈、新浪微博、QQ、短信、扫描二维码等方式分享给您的好友，也可以以让您身边的好友在注册大富翁时，输入您的推荐码。</string>
+    <string name="setting_recommend_des_2">2、您可以通过微信、微信朋友圈、新浪微博、QQ、短信、扫描二维码等方式分享给您的好友，也可以让您身边的好友在注册大富翁时，输入您的推荐码。</string>
     <string name="setting_recommend_des_3">3、好友通过推荐链接或输入您的推荐码成功注册后则您和您的好友将建立推荐与被推荐关系，推荐的好友成单后，您可以获得相应金额的推荐奖励。</string>
     <string name="setting_recommend_des_4">4、若您的好友注册时未填写您的推荐码或未通过您的推荐链接注册，则推荐关系不成立。</string>
-    <string name="setting_recommend_record_name">荐好友成单获得推荐奖励！</string>
+    <string name="setting_recommend_record_name">推荐好友成单获得推荐奖励！</string>
     <string name="setting_recommend_friend">推荐好友</string>
     <string name="setting_recommend_level">推荐级别</string>
     <string name="setting_recommend_account">总共为您赚了</string>
@@ -157,7 +157,7 @@
     <string name="title_withdraw_details">提现详情</string>
     <string name="title_rengou_status">认购状态</string>
     <string name="title_customer_follow">客户跟踪</string>
-    <string name="title_customer_follow_details">跟踪详情</string>
+    <string name="title_customer_follow_details">跟踪信息</string>
     <string name="title_rengou_details">认购详情</string>
     <string name="title_add_customer_follow">添加跟踪</string>
     <string name="title_edit_info">修改客户信息</string>

@@ -57,24 +57,24 @@ public class AccountBookWithdrawAdapter extends BaseAdapter {
 			holder = (Holder) convertView.getTag();
 		}
 		holder.item_info.setText("佣金提现");
-		holder.item_money.setText(bean.getCashNum());
+		holder.item_money.setText("-"+bean.getCashNumNew());
 		holder.item_time.setText(bean.getCreateTime());
 		if (bean.getCashStatus().equals("checking")){
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.txt_vertical_line));
 			holder.item_status.setText("审核中");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.txt_vertical_line));
+			/*holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.txt_vertical_line));
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.txt_vertical_line));*/
 		}else if(bean.getCashStatus().equals("paying")){
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
 			holder.item_status.setText("审核通过");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));
+			/*holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));*/
 		}else if(bean.getCashStatus().equals("fail")){
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.red2));
 			holder.item_status.setText("审核失败");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.red2));
+			/*holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.red2));
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.red2));*/
 		}else if(bean.getCashStatus().equals("success")){
-			holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
 			holder.item_status.setText("佣金已发放");
-			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));
+			/*holder.item_line.setBackgroundColor(mContext.getResources().getColor(R.color.bg_btn_orange));
+			holder.item_status.setTextColor(mContext.getResources().getColor(R.color.gray_d));*/
 		}
 		return convertView;
 	}

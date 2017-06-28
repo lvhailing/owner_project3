@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private DisplayImageOptions options;
     private CycleAdapter cycleAdapter;//自定义viewPager
     private MyListView myListView; // 精品房源推荐列表
-    private BoutiqueHouseAdapter myAdapter;
+    private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
     private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
     private Context context;
     private MouldList<ResultCycleIndex2B> homeCycleBean;
@@ -89,8 +89,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void resetScrollViewSmooth() {
+        requestHomeIndexData(); // 请求首页数据
+
         if (scrollView != null) {
-        scrollView.smoothScrollTo(0, 0);
+            scrollView.smoothScrollTo(0, 0);
         }
     }
 

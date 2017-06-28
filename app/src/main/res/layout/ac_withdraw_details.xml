@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -167,7 +169,8 @@
                     android:textColor="@color/gray_dark"/>
             </LinearLayout>
         </LinearLayout>
-
+    </LinearLayout>
+</FrameLayout>
         <RelativeLayout
             android:id="@+id/layout_delete"
             android:layout_width="match_parent"
@@ -195,6 +198,5 @@
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/img_delete"/>
         </RelativeLayout>
-    </LinearLayout>
 </RelativeLayout>
 

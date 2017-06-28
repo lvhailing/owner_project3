@@ -47,24 +47,24 @@ public class CustomerTrackingAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Holder holder = null;
+        Tracking2B bean = list.get(position);
         if (convertView == null) {
             holder = new Holder();
             convertView = inflater.inflate(R.layout.ac_customer_follow_item, null);
             holder.item_name = (TextView) convertView.findViewById(R.id.tv_name);
-            holder.item_time = (TextView) convertView.findViewById(R.id.tv_time);
+            holder.item_project = (TextView) convertView.findViewById(R.id.tv_project);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
         }
-        Tracking2B bean = list.get(position);
         holder.item_name.setText(bean.getCustomerName());
-        holder.item_time.setText(bean.getEditTime());
+        holder.item_project.setText(bean.getHouseProject());
         return convertView;
     }
 
     class Holder {
         TextView item_name;
-        TextView item_time;
+        TextView item_project;
 
     }
 }

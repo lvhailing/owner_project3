@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -204,7 +205,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(context, HouseDetailActivity.class);
-                intent.putExtra("hid", everyList.get(position - 1).getHid());
+                intent.putExtra("hid", totalList.get(position - 1).getHid());
                 startActivity(intent);
             }
         });
@@ -214,22 +215,35 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-        requestDefaultData();
+//        requestDefaultData();
     }
 
     public void requestDefaultData() {
+        //重置类型里所有按钮状态
+        clickTypeBtnReset();
+
+        //将类型集合清空
+        types.clear();
+        houseCatagory = ""; //首次默认"" ，代表全部类型
         tv_house_resources_type.setText("类型");
         tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
 
+        //重置功能里所有按钮状态
+        clickFunctionBtnReset();
+
+        housePrice = "1"; // 首次默认价格传1
+        resetPriceItemColor();
         tv_house_resources_price.setText("价格");
         tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_black));
+        tv_1.setText("不限");
+        tv_1.setTextColor(getResources().getColor(R.color.txt_orange));
 
+        //将类型集合清空
+        functions.clear();
+        houseFunction = ""; //首次默认"" ，代表全部功能
         tv_house_function.setText("功能");
         tv_house_function.setTextColor(getResources().getColor(R.color.txt_black));
 
-        houseCatagory = ""; //首次默认"" ，代表全部类型
-        housePrice = "1"; // 首次默认价格传1
-        houseFunction = ""; //首次默认"" ，代表全部功能
         requestGetHouseList();
     }
 
@@ -651,7 +665,6 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             sb.append(",");
         }
         String strResultFunction = sb.toString();
-//        functionSelected = strResult.substring(0, strResult.length());
         //每选择一次功能 就为接口字段赋值一次
         functionSelected = strResultFunction.equals("") ? "" : strResultFunction.substring(0, strResultFunction.length() - 1);
 

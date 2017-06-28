@@ -47,6 +47,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
     private TextView tv_commissionRate;
     private TextView tv_serviceFee;
     private TextView tv_actualCommiRepayed;
+    private TextView tv_commissionTime;
 
     private LinearLayout layout_emergencyName;
     private LinearLayout layout_emergencyMobile;
@@ -113,6 +114,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         tv_commissionRate= (TextView) findViewById(R.id.tv_commissionRate);
         tv_serviceFee= (TextView) findViewById(R.id.tv_serviceFee);
         tv_actualCommiRepayed= (TextView) findViewById(R.id.tv_actualCommiRepayed);
+        tv_commissionTime= (TextView) findViewById(R.id.tv_commissionTime);
 
         layout_emergencyName= (LinearLayout) findViewById(R.id.layout_emergencyName);
         layout_emergencyMobile= (LinearLayout) findViewById(R.id.layout_emergencyMobile);
@@ -155,20 +157,28 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         tv_houseType.setText(data.getHouseType());
         tv_houseArea.setText(data.getHouseArea()+"㎡");
         tv_purchaseAmount.setText(data.getPurchaseAmount()+"元");
-        tv_isCommitAmount.setText(data.getIsCommitAmount()+"元");
+        tv_downPaymentAmount.setText(data.getDownPaymentAmount()+"元");
+        tv_repayedRate.setText(data.getRepayedRate()+"%");
+        tv_commissionAmountTotal.setText(data.getCommissionAmountTotal()+"元");
+        tv_commissionRate.setText(data.getCommissionRate()+"%");
+        tv_actualCommiRepayed.setText(data.getCommissionAmountReal()+"元");
+        tv_commissionTime.setText(data.getCommissionTime());
+
         if ("true".equals(data.getIsSigned())){
             tv_isSigned.setText("已签约");
         }else{
             tv_isSigned.setText("未签约");
         }
-
-        tv_downPaymentAmount.setText(data.getDownPaymentAmount()+"元");
-        tv_repayedRate.setText(data.getRepayedRate()+"%");
-        tv_isCommitData.setText(data.getIsCommitData());
-        tv_commissionAmountTotal.setText(data.getCommissionAmountTotal()+"元");
-        tv_commissionRate.setText(data.getCommissionRate()+"%");
-        tv_actualCommiRepayed.setText(data.getCommissionAmountReal()+"元");
-
+        if ("true".equals(data.getIsCommitAmount())){
+            tv_isCommitAmount.setText("已提交");
+        }else{
+            tv_isCommitAmount.setText("未提交");
+        }
+        if ("true".equals(data.getIsCommitData())){
+            tv_isCommitData.setText("已提交");
+        }else{
+            tv_isCommitData.setText("未提交");
+        }
         if(!TextUtils.isEmpty(data.getEmergencyName())){
             tv_emergencyName.setText(data.getEmergencyName());
         }else{
@@ -181,7 +191,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
             tv_emergencyMobile.setText("--");
         }
         if(!TextUtils.isEmpty(data.getServiceFee())){
-            tv_serviceFee.setText(data.getServiceFee()+"元");
+            tv_serviceFee.setText(data.getServiceFee());
         }else{
             tv_serviceFee.setText("--");
         }

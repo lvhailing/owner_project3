@@ -236,6 +236,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
     private void WithdrawConfirm() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
+        param.put("availableCommission", b.getCashNum());
         param.put("bankAddress", bankAddress);
         param.put("bankCardId", bankCardId);
         param.put("bankCardNum", bankCardNum);
