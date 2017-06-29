@@ -175,7 +175,10 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode==1000) {
- //           requestList(); 重新请求数据
+            currentPage=1;
+            totalList.clear();
+            requestListData(); //重新请求数据
+            lv_customer_info.getRefreshableView().setSelection(0);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

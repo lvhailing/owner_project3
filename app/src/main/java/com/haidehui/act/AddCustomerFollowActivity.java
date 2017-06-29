@@ -95,7 +95,7 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
         tv_customerPhone= (TextView) findViewById(R.id.tv_customerPhone);
         edt_project= (EditText) findViewById(R.id.edt_project);
         edt_room_number= (EditText) findViewById(R.id.edt_room_number);
-        edit_remark= (EditText) findViewById(R.id.edt_room_number);
+        edit_remark= (EditText) findViewById(R.id.edit_remark);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
         lv_follow_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

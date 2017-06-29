@@ -23,6 +23,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.ActivityStack;
 import com.haidehui.widget.TitleBar;
 
 import java.util.LinkedHashMap;
@@ -145,6 +146,8 @@ public class WithdrawActivity extends BaseActivity{
     }
 
     public void initView(){
+        ActivityStack stack = ActivityStack.getActivityManage();
+        stack.addActivity(this);
         context = this;
         lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
         rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         scrollView.smoothScrollTo(0, 0);
-
+        Log.i("hh", "首页---Fragment----onResume");
 //        requestCycleIndex(); // 请求轮图数据
 //        requestHomeIndexData(); // 请求首页数据
     }

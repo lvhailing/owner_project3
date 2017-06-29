@@ -451,7 +451,7 @@ public class StringUtil {
      * @return
      */
     public static boolean checkPassword(String str) {
-        boolean hasSymble = str.matches("^(?![^a-zA-Z]+$)(?!\\D+$).{8,16}$");
+        boolean hasSymble = str.matches("^(?![^a-zA-Z]+$)(?!\\D+$).[0-9a-zA-Z]{8,16}$");
         return hasSymble;
     }
 

@@ -34,7 +34,9 @@ import java.util.LinkedHashMap;
  */
 public class OverseaProjectDetailActivity extends BaseActivity implements View.OnClickListener {
     private ScrollView scrollView;
-    private boolean isShow = false; //刚进来此页面时，项目居室、配套设施、地理位置等下面的内容默认是不显示的
+    private boolean isShowHouse = false; //刚进来此页面时，项目居室内容默认是不显示的
+    private boolean isShowFacilities = false; //刚进来此页面时，配套设施内容默认是不显示的
+    private boolean isShowLocation = false; //刚进来此页面时，地理位置内容默认是不显示的
     private ImageView iv_oversea_detail; // 顶部图片
     private TextView tv_pro_house_name;
     private TextView tv_pro_house_price;
@@ -205,37 +207,37 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_pro_house:   // 项目居室
-                if (!isShow) {
+                if (!isShowHouse) {
                     ll_pro_house_photos.setVisibility(View.VISIBLE);
                     tv_project_des.setText(overseaProjectDetail.getHouseType());
                     iv_project_click.setBackgroundResource(R.mipmap.icon_oversea_up);
-                    isShow = true;
+                    isShowHouse = true;
                 } else {
-                    isShow = false;
+                    isShowHouse = false;
                     ll_pro_house_photos.setVisibility(View.GONE);
                     iv_project_click.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }
                 break;
             case R.id.rl_pro_facilities:  // 配套设施
-                if (!isShow) {
+                if (!isShowFacilities) { // 布局处于打开状态
                     ll_support_facilities.setVisibility(View.VISIBLE);
                     tv_support_facilities_desc.setText(overseaProjectDetail.getSupportFacility());
                     iv_support_facilities_click.setBackgroundResource(R.mipmap.icon_oversea_up);
-                    isShow = true;
-                } else {
-                    isShow = false;
+                    isShowFacilities = true;
+                } else { // 关闭状态
+                    isShowFacilities = false;
                     ll_support_facilities.setVisibility(View.GONE);
                     iv_support_facilities_click.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }
                 break;
             case R.id.rl_pro_geographic_location:  // 地理位置
-                if (!isShow) {
+                if (!isShowLocation) {
                     ll_geographic_location.setVisibility(View.VISIBLE);
                     tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
                     iv_geographic_location_click.setBackgroundResource(R.mipmap.icon_oversea_up);
-                    isShow = true;
+                    isShowLocation = true;
                 } else {
-                    isShow = false;
+                    isShowLocation = false;
                     ll_geographic_location.setVisibility(View.GONE);
                     iv_geographic_location_click.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }

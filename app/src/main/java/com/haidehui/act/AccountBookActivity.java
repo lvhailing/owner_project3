@@ -45,6 +45,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
     private WithdrawDetailsFragment fragment3;
 
     private Button btn_withdraw;
+    private int flag=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 dialog.show();
                 break;
             case R.id.tv_commission:
+                flag=1;
                 StringUtil.changeButtonStyleThree(tv_commission,tv_award,tv_withdraw,
                         R.id.tv_commission,mResource);
                 hideFragment(transaction);
@@ -115,6 +117,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 transaction.commit();
                 break;
             case R.id.tv_award:
+                flag=2;
                 StringUtil.changeButtonStyleThree(tv_commission, tv_award, tv_withdraw,
                         R.id.tv_award, mResource);
                 hideFragment(transaction);
@@ -123,6 +126,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 transaction.commit();
                 break;
             case R.id.tv_withdraw:
+                flag=3;
                 StringUtil.changeButtonStyleThree(tv_commission, tv_award, tv_withdraw,
                         R.id.tv_withdraw, mResource);
                 hideFragment(transaction);
@@ -182,7 +186,15 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
         requestData();
+        if (flag==3){
+            hideFragment(transaction);
+            fragment3 = new WithdrawDetailsFragment();
+            transaction.replace(R.id.fragment_container, fragment3);
+            transaction.commit();
+        }
     }
 
     public void onRefresh() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class ProductRoadshowFragment extends Fragment {
         myAdapter = new ProductRoadShowAdapter(context, totalList);
         listView.setAdapter(myAdapter);
         requestRoadShowListData();
+        listView.getRefreshableView().setSelection(0);
 
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -93,6 +95,18 @@ public class ProductRoadshowFragment extends Fragment {
             }
         });
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.i("hh", "产品路演---Fragment----onResume");
+
+        currentPage = 1;
+        requestRoadShowListData();
+        listView.getRefreshableView().setSelection(0);
     }
 
     // 获取路演列表数据
@@ -138,6 +152,12 @@ public class ProductRoadshowFragment extends Fragment {
                 listView.onRefreshComplete();
             }
         }, 1000);
+    }
+
+    public void upDateRoadShowList() {
+        currentPage = 1;
+        requestRoadShowListData();
+        listView.getRefreshableView().setSelection(0);
     }
 
 }

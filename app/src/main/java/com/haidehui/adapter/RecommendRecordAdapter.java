@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,18 @@ public class RecommendRecordAdapter extends BaseAdapter{
 
         holder.tv_recommend_record_friend.setText(StringUtil.replaceSubString(list.get(i).getMobile()));
         holder.tv_recommend_record_level.setText(list.get(i).getUserLevel()+"级推荐");
-        holder.tv_recommend_record_account.setText(list.get(i).getRewardAmount()+"元");
+
+        if(!TextUtils.isEmpty(list.get(i).getRewardAmount())){
+            if(list.get(i).getRewardAmount().equals("0")){
+                holder.tv_recommend_record_account.setText("0.00");
+            }else{
+                holder.tv_recommend_record_account.setText(list.get(i).getRewardAmount()+"元");
+            }
+        }else{
+            holder.tv_recommend_record_account.setText("0.00");
+        }
+
+
 
         return view;
     }

@@ -221,6 +221,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_recommend_record:      //  邀请记录
 
                 Intent i_record = new Intent(this,RecommendRecordActivity.class);
+                i_record.putExtra("recommendCode",recommendCode);
                 startActivity(i_record);
 
                 break;
@@ -402,9 +403,16 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             }
             Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+
             // 图像数据转换，使用了矩阵转换
             BitMatrix bitMatrix = new QRCodeWriter().encode(url,
                     BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
+//            bitMatrix = deleteWhite(bitMatrix);//删除白边
+            bitMatrix = updateBit(bitMatrix, 10);  //生成新的bitMatrix
+
+            QR_WIDTH = bitMatrix.getWidth();
+            QR_HEIGHT = bitMatrix.getHeight();
+
             int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
             // 下面这里按照二维码的算法，逐个生成二维码的图片，
             // 两个for循环是图片横列扫描的结果
@@ -420,7 +428,9 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             // 生成二维码图片的格式，使用ARGB_8888
             Bitmap bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT,
                     Bitmap.Config.ARGB_8888);
+
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
+
             if (logoBm != null) {
                 bitmap = addLogo(bitmap, logoBm);
             }
@@ -431,6 +441,76 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
+    private static BitMatrix deleteWhite(BitMatrix matrix) {
+        int[] rec = matrix.getEnclosingRectangle();
+        int resWidth = rec[2] + 1;
+        int resHeight = rec[3] + 1;
+
+        BitMatrix resMatrix = new BitMatrix(resWidth, resHeight);
+        resMatrix.clear();
+        for (int i = 0; i < resWidth; i++) {
+            for (int j = 0; j < resHeight; j++) {
+                if (matrix.get(i + rec[0], j + rec[1]))
+                    resMatrix.set(i, j);
+            }
+        }
+        return resMatrix;
+    }
+
+    private BitMatrix updateBit(BitMatrix matrix, int margin){
+
+        int tempM = margin*2;
+
+        int[] rec = matrix.getEnclosingRectangle();   //获取二维码图案的属性
+
+        int resWidth = rec[2] + tempM;
+
+        int resHeight = rec[3] + tempM;
+
+        BitMatrix resMatrix = new BitMatrix(resWidth, resHeight); // 按照自定义边框生成新的BitMatrix
+
+        resMatrix.clear();
+
+        for(int i= margin; i < resWidth- margin; i++){   //循环，将二维码图案绘制到新的bitMatrix中
+
+            for(int j=margin; j < resHeight-margin; j++){
+
+                if(matrix.get(i-margin + rec[0], j-margin + rec[1])){
+
+                    resMatrix.set(i,j);
+
+                }
+
+            }
+
+        }
+
+        return resMatrix;
+
+    }
+
+    /**
+
+     * 图片放大缩小
+
+     */
+
+//    public static BufferedImage  zoomInImage(BufferedImage  originalImage, int width, int height){
+//
+//        BufferedImage newImage = new BufferedImage(width,height,originalImage.getType());
+//
+//        Graphics g = newImage.getGraphics();
+//
+//        g.drawImage(originalImage, 0,0,width,height,null);
+//
+//        g.dispose();
+//
+//        return newImage;
+//
+//    }
+
+
 
     /**
      * 在二维码中间添加Logo图案

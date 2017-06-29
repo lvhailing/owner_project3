@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -160,7 +161,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     public void onResume() {
         requestData();
         super.onResume();
-
+        Log.i("hh", "我的---Fragment----onResum");
     }
 
     @Override
@@ -262,11 +263,13 @@ public class MineFragment extends Fragment implements OnClickListener {
             messageInt = Integer.parseInt(data.getMessageTotal());
         }
         if (messageInt > 9) {
+            tv_messageTotal.setVisibility(View.VISIBLE);
             tv_messageTotal.setText("9+");
         } else {
             if (messageInt == 0) {
                 tv_messageTotal.setVisibility(View.GONE);
             } else {
+                tv_messageTotal.setVisibility(View.VISIBLE);
                 tv_messageTotal.setText(data.getMessageTotal());
             }
 

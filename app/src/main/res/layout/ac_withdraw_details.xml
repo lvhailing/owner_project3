@@ -35,8 +35,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/tv_commission_info"
                 android:gravity="right"
-                android:text="+552200.00"
-                android:textColor="@color/bg_btn_orange"
                 android:textSize="30sp"/>
 
         </RelativeLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class InvestmentGuideFragment extends Fragment {
         listView.setAdapter(myAdapter);
 
         requestInvestmentGuideListData();
+        listView.getRefreshableView().setSelection(0);
 
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -98,6 +100,16 @@ public class InvestmentGuideFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.i("hh", "投资指南---Fragment----onResume");
+
+        currentPage = 1;
+        requestInvestmentGuideListData();
+        listView.getRefreshableView().setSelection(0);
+    }
 
     // 获取投资指南列表数据
     private void requestInvestmentGuideListData() {
@@ -142,5 +154,11 @@ public class InvestmentGuideFragment extends Fragment {
                 listView.onRefreshComplete();
             }
         }, 1000);
+    }
+
+    public void upDateInvestmentGuideList() {
+        currentPage = 1;
+        requestInvestmentGuideListData();
+        listView.getRefreshableView().setSelection(0);
     }
 }

@@ -62,7 +62,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private int currentFlag;  //当前选择哪个按钮  1、类型按钮  2、价格按钮  3、功能按钮
     private List<String> functions = new ArrayList<>();
     private List<String> types = new ArrayList<>();
-    private String functionSelected = "";
+//    private String functionSelected = "";
     //    private String typeSelected = "";
     private MouldList<HouseList3B> totalList = new MouldList<>();
     private PullToRefreshListView listView;
@@ -217,6 +217,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         super.onResume();
 //        requestDefaultData();
         requestGetHouseList();
+        Log.i("hh", "房源---Fragment----onResume");
     }
 
     public void requestDefaultData() {
@@ -247,6 +248,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
         currentPage = 1;
         requestGetHouseList();
+        listView.getRefreshableView().setSelection(0);
     }
 
     //开启动画
@@ -668,7 +670,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         }
         String strResultFunction = sb.toString();
         //每选择一次功能 就为接口字段赋值一次
-        functionSelected = strResultFunction.equals("") ? "" : strResultFunction.substring(0, strResultFunction.length() - 1);
+        houseFunction = strResultFunction.equals("") ? "" : strResultFunction.substring(0, strResultFunction.length() - 1);
 
         //设置上面的类型文字
         if (functions.size() == 0) {
@@ -686,7 +688,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
     private String getOnlyFuncItem() {
         String result;
-        switch (functionSelected) {
+        switch (houseFunction) {
             case "investment":
                 result = "投资";
                 break;

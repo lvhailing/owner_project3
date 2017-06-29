@@ -138,6 +138,12 @@ public class WebActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mWebview.reload();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityStack stack = ActivityStack.getActivityManage();

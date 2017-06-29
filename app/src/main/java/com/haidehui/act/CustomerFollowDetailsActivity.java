@@ -1,6 +1,7 @@
 package com.haidehui.act;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -231,7 +232,14 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         });
         lv_follow_detail.setAdapter(adapter);
         setListViewHeightBasedOnChildren(CustomerFollowDetailsActivity.this, lv_follow_detail, 0);
-        scrollview.smoothScrollTo(0, 0);
+//        scrollview.smoothScrollTo(0, 0);
+        scrollview.post(new Runnable() {
+            @Override
+            public void run() {
+
+                scrollview.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
 
     }
 
@@ -268,6 +276,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
                         SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                         if ("true".equals(data.getFlag())){
                             Toast.makeText(mContext, "修改成功", Toast.LENGTH_LONG).show();
+                            Intent intent=new Intent(mContext,CustomerTrackingActivity.class);
+                            setResult(RESULT_OK, intent);
                             finish();
                         }
                     }

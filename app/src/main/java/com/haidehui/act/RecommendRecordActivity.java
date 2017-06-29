@@ -34,6 +34,7 @@ public class RecommendRecordActivity extends BaseActivity{
     private MouldList<ResultRecommendRecordItemContentBean> list;
     private Context context;
     private ResultRecommendRecordContentBean bean;
+    private String recommendCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class RecommendRecordActivity extends BaseActivity{
         list = new MouldList<ResultRecommendRecordItemContentBean>();
         bean = new ResultRecommendRecordContentBean();
 
+        recommendCode = getIntent().getStringExtra("recommendCode");
         vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
         tv_recommend_friends = (TextView) findViewById(R.id.tv_recommend_friends);
         lv_recommend_record = (ListView) findViewById(R.id.lv_recommend_record);
@@ -84,6 +86,7 @@ public class RecommendRecordActivity extends BaseActivity{
 
 
         param.put("userId", userId);
+        param.put("recommendCode", recommendCode);
 //        param.put("userId", "17031409341310256680");
 
         HtmlRequest.getRecommendRecord(RecommendRecordActivity.this, param,new BaseRequester.OnRequestListener() {

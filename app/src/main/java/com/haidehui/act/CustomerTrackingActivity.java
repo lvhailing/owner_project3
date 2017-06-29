@@ -108,7 +108,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
                 Intent intent = new Intent(mContext, CustomerFollowDetailsActivity.class);
                 intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
                 intent.putExtra("customerTrackingId", totalList.get(position - 1).getCustomerTrackingId());
-                startActivity(intent);
+                startActivityForResult(intent,1000);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -153,7 +153,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerTrackingId", customerTrackingId);
         param.put("userId", userId);
-        HtmlRequest.deleteCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.deleteCustomerTracking(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
                         if (params.result == null) {
@@ -222,6 +222,15 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
             e.printStackTrace();
         }
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode==1000) {
+            currentPage=1;
+            totalList.clear();
+            requestListData(); //重新请求数据
+            listView.getRefreshableView().setSelection(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 }

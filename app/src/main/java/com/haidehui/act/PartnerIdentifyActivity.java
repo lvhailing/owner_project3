@@ -578,9 +578,11 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
             if (photoUri != null) {
                 try {
-                    dialog.setmLoadingTip("正在上传照片，请稍后……");
-                    startLoading();
                     photoBmp = getBitmapFormUri(PartnerIdentifyActivity.this, photoUri);
+                    if (photoBmp!=null){
+                        dialog.setmLoadingTip("正在上传照片，请稍后……");
+                        startLoading();
+                    }
                     newZoomImage = photoBmp;
                     sendImage(photoBmp);
                 } catch (IOException e) {

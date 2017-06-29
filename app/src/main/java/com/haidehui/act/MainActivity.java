@@ -176,6 +176,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (i == 1) {
             tab_house_resources.requestDefaultData();
         }
+        if (i == 2) {
+//            tab_discovery.upDateCycleIndex();
+            if (tab_discovery.investmentGuideFr != null && tab_discovery.roadShowFr != null) {
+                tab_discovery.investmentGuideFr.upDateInvestmentGuideList();
+                tab_discovery.roadShowFr.upDateRoadShowList();
+            }
+        }
         setTab(i);
         mViewPager.setCurrentItem(i);
     }
@@ -187,6 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("hh", "主页---MainActivity----onResume");
     }
 
     private void setTab(int pos) {

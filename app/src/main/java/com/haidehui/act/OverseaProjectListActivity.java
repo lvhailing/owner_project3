@@ -106,7 +106,9 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
     @Override
     protected void onResume() {
         super.onResume();
+        currentPage = 1;
         requestListData();
+        listView.getRefreshableView().setSelection(0);
     }
 
     @Override
@@ -115,12 +117,6 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
     }
 
     private void requestListData() {  // 获取海外项目列表数据
-        String userId = null;
-        try {
-            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
         param.put("userId", userId);

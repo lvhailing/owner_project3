@@ -108,7 +108,7 @@ public class WithDrawDetailsActivity extends BaseActivity implements View.OnClic
         );
     }
     private void setData(WithDrawDetails2B data) {
-        tv_cashNum.setText("+"+data.getCashNum());
+        tv_cashNum.setText("-"+data.getCashNum());
         if (data.getCashStatus().equals("checking")){
             tv_cashStatus.setText("审核中");
         }else if (data.getCashStatus().equals("paying")){

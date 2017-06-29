@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     private ArrayList<Fragment> fragments;
     private int screenWidth; // 屏幕宽度
     private int line_width; // 下划线宽度
+    public InvestmentGuideFragment investmentGuideFr;
+    public ProductRoadshowFragment roadShowFr;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +72,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-//        requestInvestmentGuideListData();
+        Log.i("hh", "发现----Fragment----onResume");
     }
 
     private void initView(View mView) {
@@ -91,8 +94,10 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         setTitleStyle(0);
 
         fragments = new ArrayList<Fragment>();
-        fragments.add(new InvestmentGuideFragment());
-        fragments.add(new ProductRoadshowFragment());
+        investmentGuideFr = new InvestmentGuideFragment();
+        roadShowFr = new ProductRoadshowFragment();
+        fragments.add(investmentGuideFr);
+        fragments.add(roadShowFr);
 
         //屏幕宽度
         screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
@@ -163,25 +168,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         requestCycleIndex();
     }
 
-
-    /**
-     * 请求轮播图数据
-     */
-    private void requestData() {
-        cycleAdapter = new CycleAdapter(context, cycleBean, options);
-        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
-        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
-            @Override
-            public void onImageClick(int postion, View imageView) {
-                if (cycleBean != null && cycleBean.size() != 0) {
-                }
-            }
-        });
-        cycleAdapter.setCycle(true);
-        cycleAdapter.startRoll();
-        mViewPager.addView(cycleAdapter);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -218,4 +204,24 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         });
     }
 
+    private void requestData() {
+        cycleAdapter = new CycleAdapter(context, cycleBean, options);
+        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
+        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
+            @Override
+            public void onImageClick(int postion, View imageView) {
+                if (cycleBean != null && cycleBean.size() != 0) {
+                }
+            }
+        });
+        cycleAdapter.setCycle(true);
+        cycleAdapter.startRoll();
+        mViewPager.addView(cycleAdapter);
+    }
+
+    // 底部tab之间切换时，刷新轮播图数据
+    public void upDateCycleIndex() {
+        requestCycleIndex();
+
+    }
 }

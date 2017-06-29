@@ -106,7 +106,9 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
+        currentPage = 1;
         requestListData();
+        listView.getRefreshableView().setSelection(0);
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.ActivityStack;
 import com.haidehui.uitls.NumUtils;
 import com.haidehui.uitls.StringUtil;
 import com.haidehui.uitls.ViewUtils;
@@ -68,6 +69,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
     private String realName = "";        //      姓名开户名
 
     private TextView tv_withdraw_mes;           //  提示信息
+    private ActivityStack stack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,8 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
     }
 
     public void initView(){
+        stack = ActivityStack.getActivityManage();
+        stack.addActivity(this);
         context = this;
         b =  new ResultWithdrawInfoContentBean();
         bankAddress = getIntent().getStringExtra("bankAddress");
@@ -108,7 +112,7 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
         tv_withdraw_get_verify_code.setOnClickListener(this);
         btn_withdraw_confirm.setOnClickListener(this);
-
+        btn_withdraw_confirm.setClickable(false);
         mHandler = new MyHandler();
         btnString = getResources().getString(R.string.sign_getsms_again);
 
@@ -255,8 +259,9 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
 
                     if (Boolean.parseBoolean(b.getFlag())) {
                         Toast.makeText(WithdrawConfirmActivity.this,
-                                b.getMessage(), Toast.LENGTH_LONG)
-                                .show();
+                                    b.getMessage(), Toast.LENGTH_LONG)
+                                    .show();
+                        stack.removeAllActivityExceptOne("com.haidehui.act.MainActivity");
                         finish();
                     } else {
                         Toast.makeText(WithdrawConfirmActivity.this,
