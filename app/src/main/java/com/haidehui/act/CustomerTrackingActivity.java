@@ -226,7 +226,6 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode==1000) {
             currentPage=1;
-            totalList.clear();
             requestListData(); //重新请求数据
             listView.getRefreshableView().setSelection(0);
         }

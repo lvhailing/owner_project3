@@ -177,7 +177,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             tab_house_resources.requestDefaultData();
         }
         if (i == 2) {
-//            tab_discovery.upDateCycleIndex();
+            tab_discovery.upDateCycleIndex();
             if (tab_discovery.investmentGuideFr != null && tab_discovery.roadShowFr != null) {
                 tab_discovery.investmentGuideFr.upDateInvestmentGuideList();
                 tab_discovery.roadShowFr.upDateRoadShowList();

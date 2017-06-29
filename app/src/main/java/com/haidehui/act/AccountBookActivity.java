@@ -108,6 +108,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 dialog.show();
                 break;
             case R.id.tv_commission:
+                onRefresh();
                 flag=1;
                 StringUtil.changeButtonStyleThree(tv_commission,tv_award,tv_withdraw,
                         R.id.tv_commission,mResource);
@@ -117,6 +118,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 transaction.commit();
                 break;
             case R.id.tv_award:
+                onRefresh();
                 flag=2;
                 StringUtil.changeButtonStyleThree(tv_commission, tv_award, tv_withdraw,
                         R.id.tv_award, mResource);
@@ -126,6 +128,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 transaction.commit();
                 break;
             case R.id.tv_withdraw:
+                onRefresh();
                 flag=3;
                 StringUtil.changeButtonStyleThree(tv_commission, tv_award, tv_withdraw,
                         R.id.tv_withdraw, mResource);

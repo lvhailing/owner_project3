@@ -277,6 +277,9 @@ public class Urls {
     //新增客户跟踪
     public static final String URL_SUBMIT_TRACKING = EC_HOST + "account/trade/customer/tracking/save";
 
+    //修改客户跟踪
+    public static final String URL_EDIT_TRACKING = EC_HOST + "account/trade/customer/tracking/edit";
+
     //删除客户跟踪
     public static final String URL_DELETE_TRACKING = EC_HOST + "account/trade/customers/tracking/delete";
 

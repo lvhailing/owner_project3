@@ -178,13 +178,14 @@
 
             <TextView
                 android:id="@+id/tv_remark"
+                android:layout_toLeftOf="@+id/img_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="15dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="15dp"
-                android:text="客户信息无效，请您提交真实的客户信息！"
+                android:text="客户信息无效，请您提交真实的客户信息的饭钱温泉谷！"
                 android:textColor="@color/white"/>
 
             <ImageView

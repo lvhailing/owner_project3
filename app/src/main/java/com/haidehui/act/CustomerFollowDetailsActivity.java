@@ -266,7 +266,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         param.put("contactedOtherCustomers", resultStr[10]);
         param.put("recommendOtherCustomersSuccess", resultStr[11]);
 
-        HtmlRequest.submitTracking(this, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.editTracking(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
                         if (params.result == null) {
