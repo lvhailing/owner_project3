@@ -223,18 +223,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         bean = (ResultUserLoginContentBean) data;
         if (bean != null) {
             if (Boolean.parseBoolean(bean.getFlag())) {
-                if(resultCode.equals(GOTOMAIN)){            //  登录完成跳至主页
+                if(!TextUtils.isEmpty(resultCode)){
+                    if(resultCode.equals(GOTOMAIN)){            //  登录完成跳至主页
 
-                    Intent iMain = new Intent(LoginActivity.this, MainActivity.class);
-                    iMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(iMain);
-                    finish();
+                        Intent iMain = new Intent(LoginActivity.this, MainActivity.class);
+                        iMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(iMain);
+                        finish();
 
+                    }else{
+
+
+                        finish();
+                    }
                 }else{
-
-
                     finish();
                 }
+
 
             } else {
                 Toast.makeText(LoginActivity.this, bean.getMessage(),

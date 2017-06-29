@@ -216,6 +216,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     public void onResume() {
         super.onResume();
 //        requestDefaultData();
+        requestGetHouseList();
     }
 
     public void requestDefaultData() {
@@ -244,6 +245,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         tv_house_function.setText("功能");
         tv_house_function.setTextColor(getResources().getColor(R.color.txt_black));
 
+        currentPage = 1;
         requestGetHouseList();
     }
 

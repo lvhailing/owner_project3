@@ -170,10 +170,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     private void setSelect(int i) {
-        if (i==0) {
+        if (i == 0) {
             tab_home.resetScrollViewSmooth();
         }
-        if (i==1) {
+        if (i == 1) {
             tab_house_resources.requestDefaultData();
         }
         setTab(i);
@@ -237,67 +237,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             public void onRequestFinished(BaseParams params) {
                 if (params.result != null) {
                     final ResultCheckVersionContentBean b = (ResultCheckVersionContentBean) params.result;
-                    if(!TextUtils.isEmpty(b.getVersion())){
+                    if (!TextUtils.isEmpty(b.getVersion())) {
                         if (!b.getVersion().equals(SystemInfo.sVersionName)) {
 
-                            CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this,
-                                    new CheckVersionDialog.OnCheckVersion() {
+                            CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this, new CheckVersionDialog.OnCheckVersion() {
 
-                                        @Override
-                                        public void onConfim() {
-                                            Intent updateIntent = new Intent(
-                                                    MainActivity.this,
-                                                    AppUpgradeService.class);
-                                            updateIntent
-                                                    .putExtra(
-                                                            "titleId",
-                                                            R.string.app_chinesename);
-                                            updateIntent
-                                                    .putExtra(
-                                                            "downloadUrl",
-                                                            // "http://114.113.238.90:40080/upload/app/vjinke.apk");
+                                @Override
+                                public void onConfim() {
+                                    Intent updateIntent = new Intent(MainActivity.this, AppUpgradeService.class);
+                                    updateIntent.putExtra("titleId", R.string.app_chinesename);
+                                    updateIntent.putExtra("downloadUrl",
+                                            // "http://114.113.238.90:40080/upload/app/vjinke.apk");
 //																ApplicationConsts.EC_HOST
 //																		+ b.getUrl()
-                                                            b.getUrl());
-                                            MainActivity.this.startService(updateIntent);
-                                        }
+                                            b.getUrl());
+                                    MainActivity.this.startService(updateIntent);
+                                }
 
-                                        @Override
-                                        public void onCancel() {
+                                @Override
+                                public void onCancel() {
 
-                                        }
-                                    }, "发现新版本,是否更新",b.getForcedUpgrade());
+                                }
+                            }, "发现新版本,是否更新", b.getForcedUpgrade());
                             dialog.setCancelable(false);
 
                             dialog.show();
                         } else {
-                            if (Environment
-                                    .getExternalStorageState()
-                                    .equals(android.os.Environment.MEDIA_MOUNTED)) {
+                            if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                                 if (destDir == null) {
-                                    destDir = new File(
-                                            Environment
-                                                    .getExternalStorageDirectory()
-                                                    .getPath()
-                                                    + MyApplication.mDownloadPath);
+                                    destDir = new File(Environment.getExternalStorageDirectory().getPath() + MyApplication.mDownloadPath);
                                 }
                                 if (destDir.exists() || destDir.mkdirs()) {
-                                    destFile = new File(
-                                            destDir.getPath()
-                                                    + "/"
-                                                    + URLEncoder
-                                                    .encode("http://114.113.238.90:40080/upload/app/vjinke.apk"));
-                                    if (destFile.exists()
-                                            && destFile.isFile()
-                                            && checkApkFile(destFile
-                                            .getPath())) {
+                                    destFile = new File(destDir.getPath() + "/" + URLEncoder.encode("http://114.113.238.90:40080/upload/app/vjinke.apk"));
+                                    if (destFile.exists() && destFile.isFile() && checkApkFile(destFile.getPath())) {
                                         destFile.delete();
                                     }
                                 }
                             }
                         }
 
-                    }else{
+                    } else {
 
                     }
 

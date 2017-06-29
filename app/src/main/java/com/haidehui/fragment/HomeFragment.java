@@ -45,6 +45,7 @@ import java.util.LinkedHashMap;
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private View mView;
+    private Context context;
     private ScrollView scrollView;
     private LinearLayout mViewPager; //顶部轮播图
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
@@ -53,7 +54,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private MyListView myListView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
     private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
-    private Context context;
     private MouldList<ResultCycleIndex2B> homeCycleBean;
     private LinearLayout ll_home_notice; // 公告布局
     private TextView tv_home_notice; // 公告标题
@@ -86,6 +86,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         scrollView.smoothScrollTo(0, 0);
+
+//        requestCycleIndex(); // 请求轮图数据
+//        requestHomeIndexData(); // 请求首页数据
     }
 
     public void resetScrollViewSmooth() {
