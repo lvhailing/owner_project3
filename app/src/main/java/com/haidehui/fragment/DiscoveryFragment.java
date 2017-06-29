@@ -1,7 +1,6 @@
 package com.haidehui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +20,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.widget.MyRollViewPager;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -28,7 +28,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * 底部导航---发现模块
@@ -40,7 +39,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     private DisplayImageOptions options;
     private CycleAdapter cycleAdapter;//自定义viewPager
     private Context context;
-    private MouldList<ResultCycleIndex2B> cycleBean;
+    private MouldList<ResultCycleIndex2B> picList;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
     private ViewPager vp;
     private View v_line; // 投资指南，产品路演下的下划线
@@ -77,7 +76,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
 
     private void initView(View mView) {
         context = getActivity();
-        cycleBean = new MouldList<ResultCycleIndex2B>();
+        picList = new MouldList<ResultCycleIndex2B>();
 
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
         ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
@@ -196,7 +195,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        cycleBean = (MouldList<ResultCycleIndex2B>) params.result;
+                        picList = (MouldList<ResultCycleIndex2B>) params.result;
                     }
                 }
                 requestData();
@@ -205,18 +204,30 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     }
 
     private void requestData() {
-        cycleAdapter = new CycleAdapter(context, cycleBean, options);
-        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
-        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
+//        cycleAdapter = new CycleAdapter(context, picList, options);
+//        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
+//        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
+//            @Override
+//            public void onImageClick(int postion, View imageView) {
+//                if (picList != null && picList.size() != 0) {
+//                }
+//            }
+//        });
+//        cycleAdapter.setCycle(true);
+//        cycleAdapter.startRoll();
+//        mViewPager.addView(cycleAdapter);
+
+        MyRollViewPager rollViewPager = new MyRollViewPager(context, picList);
+        rollViewPager.setRollPointContainer(ll_down_dots);
+        rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
             @Override
-            public void onImageClick(int postion, View imageView) {
-                if (cycleBean != null && cycleBean.size() != 0) {
-                }
+            public void onMyClick(int position) {
+                Log.i("aaa", "第" + (position + 1) + "张图片被点击了");
             }
         });
-        cycleAdapter.setCycle(true);
-        cycleAdapter.startRoll();
-        mViewPager.addView(cycleAdapter);
+        rollViewPager.setCycle(true);
+        rollViewPager.startRoll();
+        mViewPager.addView(rollViewPager);
     }
 
     // 底部tab之间切换时，刷新轮播图数据
