@@ -10,7 +10,15 @@ public class MineData2B implements IMouldType {
     private String totalCommission; // 账本额度值
     private String headPhoto; // 头像
     private String checkStatus; // 认证状态
+    private String idNo;        //  身份证号
 
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
 
     public String getMessageTotal() {
         return messageTotal;

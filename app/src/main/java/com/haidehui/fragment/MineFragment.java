@@ -109,6 +109,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         try {
             checkStatus = DESUtil.decrypt(PreferenceUtil.getCheckStatus());
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,7 +162,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     public void onResume() {
         requestData();
         super.onResume();
-        Log.i("hh", "我的---Fragment----onResum");
+//        Log.i("hh", "我的---Fragment----onResume");
     }
 
     @Override
@@ -290,6 +291,17 @@ public class MineFragment extends Fragment implements OnClickListener {
         } else {
             img_sign.setImageResource(R.mipmap.img_unidentify);
         }
+
+        if(!TextUtils.isEmpty(data.getIdNo())) {
+            try {
+                PreferenceUtil.setIdNo(DESUtil.encrypt(data.getIdNo()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            PreferenceUtil.setIdNo("");
+        }
+
 
     }
 

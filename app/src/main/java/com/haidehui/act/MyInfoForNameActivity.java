@@ -12,6 +12,8 @@ import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
@@ -102,6 +104,14 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
                         }
                         SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                         if ("true".equals(data.getFlag())) {
+
+                            if(!TextUtils.isEmpty(nameStr)){
+                                try {
+                                    PreferenceUtil.setUserRealName(DESUtil.encrypt(nameStr));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
                             Intent intent =new Intent(mContext,MyInfoActivity.class);
                             intent.putExtra("realName",nameStr);

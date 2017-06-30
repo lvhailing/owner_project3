@@ -26,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="我的"
-            android:textStyle="bold"
-            android:textColor="@color/gray_dark"
+            android:textColor="@color/txt_black"
             android:textSize="18sp"
             />
     <RelativeLayout

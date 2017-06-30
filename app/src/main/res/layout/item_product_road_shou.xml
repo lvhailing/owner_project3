@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-           android:ellipsize="end"
+            android:ellipsize="end"
             android:maxLines="1"
             android:text=""
             android:textColor="@color/txt_black"
@@ -38,14 +38,16 @@
             android:layout_marginTop="10dp"
             android:src="@mipmap/bg_oversea_project_normal"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_release_time"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="发布时间："
@@ -54,15 +56,16 @@
 
             <TextView
                 android:id="@+id/tv_guest_speaker"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_marginLeft="28dp"
+                android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="演讲嘉宾："
                 android:textColor="@color/txt_light_gray"
                 android:textSize="13sp"/>
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <View

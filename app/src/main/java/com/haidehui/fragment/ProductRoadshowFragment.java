@@ -102,7 +102,7 @@ public class ProductRoadshowFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.i("hh", "产品路演---Fragment----onResume");
+//        Log.i("hh", "产品路演---Fragment----onResume");
 
         currentPage = 1;
         requestRoadShowListData();

@@ -104,7 +104,7 @@ public class InvestmentGuideFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.i("hh", "投资指南---Fragment----onResume");
+//        Log.i("hh", "投资指南---Fragment----onResume");
 
         currentPage = 1;
         requestInvestmentGuideListData();

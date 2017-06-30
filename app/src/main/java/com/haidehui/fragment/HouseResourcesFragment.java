@@ -62,7 +62,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private int currentFlag;  //当前选择哪个按钮  1、类型按钮  2、价格按钮  3、功能按钮
     private List<String> functions = new ArrayList<>();
     private List<String> types = new ArrayList<>();
-//    private String functionSelected = "";
+    //    private String functionSelected = "";
     //    private String typeSelected = "";
     private MouldList<HouseList3B> totalList = new MouldList<>();
     private PullToRefreshListView listView;
@@ -145,9 +145,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         btn_func_reset = (Button) mView.findViewById(R.id.btn_func_reset);
         btn_func_sure = (Button) mView.findViewById(R.id.btn_func_sure);
 
-
         v_hidden.setOnClickListener(this);
-
         rl_house_resources_type.setOnClickListener(this);
         rl_house_resources_price.setOnClickListener(this);
         rl_house_function.setOnClickListener(this);
@@ -215,9 +213,14 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-//        requestDefaultData();
+
+        currentPage = 1;
+        houseCatagory = ""; //首次默认"" ，代表全部类型
+        housePrice = "1"; // 首次默认价格传1
+        houseFunction = ""; //首次默认"" ，代表全部功能
         requestGetHouseList();
-        Log.i("hh", "房源---Fragment----onResume");
+        listView.getRefreshableView().setSelection(0);
+//        Log.i("hh", "房源---Fragment----onResume");
     }
 
     public void requestDefaultData() {
@@ -412,6 +415,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 types.clear();
                 //为接口字段赋值""
                 houseCatagory = "";
+                currentPage = 1;
 
                 //上面的“类型”文字及颜色还原
                 tv_house_resources_type.setText("类型");
@@ -419,7 +423,9 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 break;
             case R.id.btn_type_sure:  // 类型： 确定
                 //点确定时，请求接口
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
 
                 //该按钮被点击了 则类型一定处于展开状态，此时需关闭动画，且箭头置成向下
                 iv_select_type.setBackgroundResource(R.mipmap.icon_oversea_down);
@@ -430,8 +436,13 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 tv_house_resources_price.setTextColor(getResources().getColor(R.color.txt_black));
                 resetPriceItemColor();
                 tv_1.setTextColor(getResources().getColor(R.color.txt_orange));
+
+                // 调接口请求当前价格数据
                 housePrice = "1";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -442,8 +453,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 resetPriceItemColor();
                 tv_2.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                // 调接口请求当前价格数据
                 housePrice = "2";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -454,8 +469,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 resetPriceItemColor();
                 tv_3.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                // 调接口请求当前价格数据
                 housePrice = "3";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -466,8 +485,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 resetPriceItemColor();
                 tv_4.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                // 调接口请求当前价格数据
                 housePrice = "4";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -478,8 +501,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 resetPriceItemColor();
                 tv_5.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                // 调接口请求当前价格数据
                 housePrice = "5";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -490,8 +517,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 resetPriceItemColor();
                 tv_6.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                // 调接口请求当前价格数据
                 housePrice = "6";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -502,8 +533,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 resetPriceItemColor();
                 tv_7.setTextColor(getResources().getColor(R.color.txt_orange));
 
+                // 调接口请求当前价格数据
                 housePrice = "7";
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
+
                 //价格处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_price.setBackgroundResource(R.mipmap.icon_oversea_down);
                 closeShopping(ll_hidden_price);
@@ -531,6 +566,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 functions.clear();
                 //为接口字段赋值""
                 houseFunction = ""; //首次默认"" ，代表全部功能
+                currentPage = 1;
 
                 //上面的“功能”文字及颜色还原
                 tv_house_function.setText("功能");
@@ -539,7 +575,9 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 break;
             case R.id.btn_func_sure:  // 功能： 确定
                 //点确定时，请求接口
+                currentPage = 1;
                 requestGetHouseList();
+                listView.getRefreshableView().setSelection(0);
 
                 //功能处于展开状态，则需关闭动画，且箭头置成向下
                 iv_select_function.setBackgroundResource(R.mipmap.icon_oversea_down);

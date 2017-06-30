@@ -171,7 +171,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void setSelect(int i) {
         if (i == 0) {
+//            Log.i("hh", "hh1");
             tab_home.resetScrollViewSmooth();
+//            Log.i("hh", "hh2");
         }
         if (i == 1) {
             tab_house_resources.requestDefaultData();
@@ -194,7 +196,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("hh", "主页---MainActivity----onResume");
+//        Log.i("hh", "主页---MainActivity----onResume");
     }
 
     private void setTab(int pos) {

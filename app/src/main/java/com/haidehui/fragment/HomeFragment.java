@@ -86,10 +86,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        scrollView.smoothScrollTo(0, 0);
-        Log.i("hh", "首页---Fragment----onResume");
-
+//        Log.i("hh", "首页---Fragment----onResume");
         requestHomeIndexData(); // 请求首页数据
+//        Log.i("hh", "首页---Fragment1----onResume");
+        scrollView.smoothScrollTo(0, 0);
+//        Log.i("hh", "首页---Fragment2----onResume");
     }
 
     public void resetScrollViewSmooth() {
@@ -97,7 +98,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         requestHomeIndexData(); // 请求首页数据
 
         if (scrollView != null) {
+//            Log.i("hh", "hh3");
             scrollView.smoothScrollTo(0, 0);
+//            Log.i("hh", "hh4");
         }
     }
 

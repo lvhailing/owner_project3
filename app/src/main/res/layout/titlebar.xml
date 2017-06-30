@@ -99,9 +99,8 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:layout_centerInParent="true"	
-        android:textColor="@color/gray_dark"
+        android:textColor="@color/txt_black"
         android:ellipsize="end"
-        android:textStyle="bold"
         android:maxEms="12"
         android:textSize="18sp" />
 

@@ -60,8 +60,10 @@ public class CustomerFollowDetailsAdapter extends BaseAdapter {
 		holder.tv_details.setText(bean.getDetails());
 		if (bean.getIsChecked().equals("true")) {
 			holder.checkbox.setButtonDrawable(R.mipmap.img_follow_checked);
+			holder.checkbox.setChecked(true);
 		} else {
 			holder.checkbox.setButtonDrawable(R.mipmap.img_follow_uncheck);
+			holder.checkbox.setChecked(false);
 		}
 		holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override

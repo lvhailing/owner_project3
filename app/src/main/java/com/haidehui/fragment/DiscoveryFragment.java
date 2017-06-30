@@ -71,7 +71,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("hh", "发现----Fragment----onResume");
+//        Log.i("hh", "发现----Fragment----onResume");
     }
 
     private void initView(View mView) {
@@ -174,12 +174,14 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
                 setTitleStyle(0);
                 setLineStyle(0);
                 vp.setCurrentItem(0);
+                investmentGuideFr.upDateInvestmentGuideList();
 
                 break;
             case R.id.tv_discovery_tab2: // 产品路演
                 setTitleStyle(1);
                 setLineStyle(1);
                 vp.setCurrentItem(1);
+                roadShowFr.upDateRoadShowList();
 
                 break;
 
