@@ -183,7 +183,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.rl_phone:
                 intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + getString(R.string.adviser_phone_num));
+                Uri data = Uri.parse("tel:" + getString(R.string.phone_number));
                 intent.setData(data);
                 startActivity(intent);
                 break;
