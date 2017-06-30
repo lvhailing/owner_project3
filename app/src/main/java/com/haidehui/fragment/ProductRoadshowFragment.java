@@ -26,7 +26,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 
 // 发现--产品路演 列表页
@@ -155,9 +154,11 @@ public class ProductRoadshowFragment extends Fragment {
     }
 
     public void upDateRoadShowList() {
-        currentPage = 1;
-        requestRoadShowListData();
-        listView.getRefreshableView().setSelection(0);
+        if(listView!=null) {
+            currentPage = 1;
+            requestRoadShowListData();
+            listView.getRefreshableView().setSelection(0);
+        }
     }
 
 }

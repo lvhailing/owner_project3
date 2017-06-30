@@ -1,7 +1,6 @@
 package com.haidehui.act;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,22 +25,19 @@ import com.haidehui.fragment.HomeFragment;
 import com.haidehui.fragment.HouseResourcesFragment;
 import com.haidehui.fragment.MineFragment;
 import com.haidehui.model.ResultCheckVersionContentBean;
-import com.haidehui.model.VersionMo;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.service.AppUpgradeService;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.widget.TitleBar;
-import com.haidehui.uitls.PreferenceUtil;
 
 import java.io.File;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
@@ -159,7 +154,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onPageSelected(int i) {
-                setTab(i);
+                setSelect(i);
             }
 
             @Override
@@ -171,9 +166,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void setSelect(int i) {
         if (i == 0) {
-//            Log.i("hh", "hh1");
             tab_home.resetScrollViewSmooth();
-//            Log.i("hh", "hh2");
+        } else {
+            tab_home.onMyPause();
         }
         if (i == 1) {
             tab_house_resources.requestDefaultData();
@@ -184,9 +179,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 tab_discovery.investmentGuideFr.upDateInvestmentGuideList();
                 tab_discovery.roadShowFr.upDateRoadShowList();
             }
+        } else {
+            tab_discovery.onMyPause();
         }
         setTab(i);
-        mViewPager.setCurrentItem(i);
     }
 
     private void initData() {
@@ -328,18 +324,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_tab_home:  // 首页
-                setSelect(0);
+                mViewPager.setCurrentItem(0);
+//                setSelect(0);
                 break;
             case R.id.ll_tab_house_resources:  // 房源
-                setSelect(1);
+//                setSelect(1);
+                mViewPager.setCurrentItem(1);
                 break;
             case R.id.ll_tab_discovery:  // 发现
                 setSelect(2);
+                mViewPager.setCurrentItem(2);
                 break;
             case R.id.ll_tab_mine:  // 我的
 //                PreferenceUtil.setLogin(true);
                 if (PreferenceUtil.isLogin()) {
-                    setSelect(3);
+//                    setSelect(3);
+                    mViewPager.setCurrentItem(3);
                 } else {
                     Intent i_login = new Intent(this, LoginActivity.class);
                     startActivity(i_login);

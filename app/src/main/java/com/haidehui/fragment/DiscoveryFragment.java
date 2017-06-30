@@ -1,12 +1,10 @@
 package com.haidehui.fragment;
 
-import android.content.Context;
-import android.graphics.Bitmap;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -22,9 +19,6 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.widget.MyRollViewPager;
 import com.nineoldandroids.view.ViewPropertyAnimator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,11 +28,9 @@ import java.util.HashMap;
  */
 public class DiscoveryFragment extends Fragment implements View.OnClickListener {
     private View mView;
-    private LinearLayout mViewPager; //顶部轮播图
-    private LinearLayout ll_down_dots; // 轮播图下面的圆点
-    private DisplayImageOptions options;
-    private CycleAdapter cycleAdapter;//自定义viewPager
-    private Context context;
+    private LinearLayout ll_vp; //顶部轮播图
+    private LinearLayout ll_point_container; // 轮播图下面的圆点
+    private Activity context;
     private MouldList<ResultCycleIndex2B> picList;
     private TextView tv_discovery_tab1, tv_discovery_tab2; // 投资指南，产品路演
     private ViewPager vp;
@@ -48,6 +40,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     private int line_width; // 下划线宽度
     public InvestmentGuideFragment investmentGuideFr;
     public ProductRoadshowFragment roadShowFr;
+    private MyRollViewPager rollViewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,8 +71,8 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         context = getActivity();
         picList = new MouldList<ResultCycleIndex2B>();
 
-        mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
-        ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
+        ll_vp = (LinearLayout) mView.findViewById(R.id.ll_vp);
+        ll_point_container = (LinearLayout) mView.findViewById(R.id.ll_point_container);
         tv_discovery_tab1 = (TextView) mView.findViewById(R.id.tv_discovery_tab1);
         tv_discovery_tab2 = (TextView) mView.findViewById(R.id.tv_discovery_tab2);
 
@@ -162,9 +155,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.bg_home_carousel_figure_normal).showImageOnFail(R.mipmap.bg_home_carousel_figure_normal).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
-
-        requestCycleIndex();
     }
 
     @Override
@@ -195,46 +185,36 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         HtmlRequest.getDiscoveryCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
-                if (params != null) {
-                    if (params.result != null) {
-                        picList = (MouldList<ResultCycleIndex2B>) params.result;
-                    }
+                if (params != null && params.result != null) {
+                    picList = (MouldList<ResultCycleIndex2B>) params.result;
                 }
-                requestData();
+                freshVP();
             }
         });
     }
 
-    private void requestData() {
-//        cycleAdapter = new CycleAdapter(context, picList, options);
-//        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
-//        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
-//            @Override
-//            public void onImageClick(int postion, View imageView) {
-//                if (picList != null && picList.size() != 0) {
-//                }
-//            }
-//        });
-//        cycleAdapter.setCycle(true);
-//        cycleAdapter.startRoll();
-//        mViewPager.addView(cycleAdapter);
-
-        MyRollViewPager rollViewPager = new MyRollViewPager(context, picList);
-        rollViewPager.setRollPointContainer(ll_down_dots);
-        rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
-            @Override
-            public void onMyClick(int position) {
-                Log.i("aaa", "第" + (position + 1) + "张图片被点击了");
-            }
-        });
-        rollViewPager.setCycle(true);
-        rollViewPager.startRoll();
-        mViewPager.addView(rollViewPager);
+    private void freshVP() {
+        if (rollViewPager == null) {
+            //第一次从后台获取到数据
+            rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
+            rollViewPager.setCycle(true);
+            rollViewPager.startRoll();
+            ll_vp.addView(rollViewPager);
+        } else {
+            //第二或之后获取到数据，刷新vp
+            rollViewPager.setPicList(picList);
+            rollViewPager.reStartRoll();
+        }
     }
 
     // 底部tab之间切换时，刷新轮播图数据
     public void upDateCycleIndex() {
         requestCycleIndex();
+    }
 
+    public void onMyPause() {
+        if (rollViewPager != null) {
+            rollViewPager.pause();
+        }
     }
 }

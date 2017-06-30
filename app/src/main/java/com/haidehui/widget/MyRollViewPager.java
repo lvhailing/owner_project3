@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,9 +16,10 @@ import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.photo_preview.fresco.ImageLoader;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 轮播图 自定义的ViewPager
@@ -26,12 +27,12 @@ import java.util.List;
 public class MyRollViewPager extends ViewPager {
     private Context context;
     private List<View> dotList = new ArrayList<View>();
-    private int lastPosition = 0;
+    private MyPagerAdapter mpAdapter;
     private MyClickListener myClickListener;
     private LinearLayout mPointContainer;
     private boolean isCycle = false;
-    private MouldList<ResultCycleIndex2B> imageList; // 用于保存后台返回的图片的集合
-    private int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal}; // 假如后台没返回图片，则使用默认图片
+    private MouldList<ResultCycleIndex2B> picList; //用于保存后台返回的图片的集合
+    private int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal}; //加入后台没返回图片，则使用默认图片
 
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -42,26 +43,30 @@ public class MyRollViewPager extends ViewPager {
             }
         }
     };
+    private Timer timer;
+    private TimerTask timerTask;
 
     /**
      * @param context 构造函数
      */
-    public MyRollViewPager(Context context, MouldList<ResultCycleIndex2B> images) {
+    public MyRollViewPager(Context context, MouldList<ResultCycleIndex2B> pics, LinearLayout container) {
         super(context);
 
         this.context = context;
-        this.imageList = images;
+        this.picList = pics;
+        this.mPointContainer = container;
 
         //设置滑动属性
-        setVpSpeed();
+//        setVpSpeed();
 
         this.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 int index = position % dotList.size();
+                for (int i = 0; i < dotList.size(); i++) {
+                    dotList.get(i).setBackgroundResource(R.drawable.dot_normal);
+                }
                 dotList.get(index).setBackgroundResource(R.drawable.dot_focus_red);
-                dotList.get(lastPosition).setBackgroundResource(R.drawable.dot_normal);
-                lastPosition = index;
             }
 
             @Override
@@ -69,16 +74,19 @@ public class MyRollViewPager extends ViewPager {
             }
 
             @Override
-            public void onPageScrollStateChanged(int arg0) {
-                switch (arg0) {
-                    case 0:
-                        if (isCycle) {
-                            handler.sendEmptyMessageDelayed(0, 2000);
-                        }
-                        break;
-                }
+            public void onPageScrollStateChanged(int state) {
+//                if (isCycle && state == 0) {
+//                    handler.sendEmptyMessageDelayed(0, 2000);
+//                }
             }
         });
+    }
+
+    /**
+     * @param pics 第二次获取到后台数据后，需要将本类的数据更新下
+     */
+    public void setPicList(MouldList<ResultCycleIndex2B> pics) {
+        this.picList = pics;
     }
 
     /**
@@ -89,55 +97,73 @@ public class MyRollViewPager extends ViewPager {
     }
 
     /**
-     * @param container 设置轮播图的小圆点容器
+     * 第一次进来，开启滚动
      */
-    public void setRollPointContainer(LinearLayout container) {
-        this.mPointContainer = container;
+    public void startRoll() {
+        mpAdapter = new MyPagerAdapter();
+        setAdapter(mpAdapter);
 
         //初始化小圆点
         initDot();
-    }
 
-    /**
-     * 开启轮播图的方法
-     */
-    public void startRoll() {
-        MyPagerAdapter mpAdapter = new MyPagerAdapter();
-        setAdapter(mpAdapter);
+        //如果是无限循环
         if (isCycle) {
-            //如果是无限循环 则开始滚动
-            handler.sendEmptyMessageDelayed(0, 2000);
+            //则开始发送定时message
+//            handler.sendEmptyMessageDelayed(0, 2000);
+            startScroll();
         }
     }
 
     /**
-     * viewpager的水平滑动时间
+     * 第二次获取到后台数据后 重启滚动
      */
-    private void setVpSpeed() {
-        try {
-            Field mField;
-            mField = ViewPager.class.getDeclaredField("mScroller"); // 反射
-            mField.setAccessible(true);
-            FixedSpeedScroller mScroller = new FixedSpeedScroller(context, new AccelerateInterpolator());
-            mScroller.setmDuration(500); // 500ms 数值越大时间越长
-            mField.set(MyRollViewPager.this, mScroller);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void reStartRoll() {
+        //第二次获取到后台数据后
+
+        // 直接刷新这个adapter
+        mpAdapter.notifyDataSetChanged();
+
+        //清楚集合里小圆点实体 确保不重复
+        dotList.clear();
+        //清楚界面小圆点图像 确保不重复
+        mPointContainer.removeAllViews();
+        //之后，再重新初始化小圆点
+        initDot();
+
+        //如果是无限循环
+        if (isCycle) {
+            // 先移除之前的message，防止第二次获取到后台数据后message重复
+//            handler.removeMessages(0);
+//            则开始发送定时message
+//            handler.sendEmptyMessageDelayed(0, 2000);
+            startScroll();
         }
+    }
+
+    private void startScroll() {
+        Log.i("aaa", "0000");
+        pause();
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mPointContainer.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setCurrentItem(getCurrentItem() + 1);
+                    }
+                });
+            }
+        };
+        timer.schedule(timerTask, 2000, 2000);
     }
 
     /**
      * 控制轮播图的点
      */
     private void initDot() {
-
-        //清除集合里小圆点实体 确保不重复
-        dotList.clear();
-        //清除界面小圆点图像 确保不重复
-        mPointContainer.removeAllViews();
-
         //小圆点的个数 如果后台返回的地址集合无数据，则取默认图片数组
-        int pointNum = (imageList == null || imageList.size() == 0) ? ids.length : imageList.size();
+        int pointNum = (picList == null || picList.size() == 0) ? ids.length : picList.size();
 
         for (int i = 0; i < pointNum; i++) {
             View view = new View(context);
@@ -152,8 +178,18 @@ public class MyRollViewPager extends ViewPager {
             mPointContainer.addView(view, layoutParams);
             dotList.add(view);
         }
-//        dotList.get(0).setBackgroundResource(R.drawable.dot_focus_red);
+    }
 
+    public void pause() {
+        //界面离开时 停止计数
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
     }
 
     private class MyPagerAdapter extends PagerAdapter {
@@ -178,21 +214,21 @@ public class MyRollViewPager extends ViewPager {
             final SimpleDraweeView iv = new SimpleDraweeView(context);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
 
-            if (imageList != null && imageList.size() > 0) {
+            if (picList != null && picList.size() > 0) {
                 //后台返回了地址集合
-                ImageLoader.getInstance().loadImageLocalOrNet(iv, imageList.get(position % imageList.size()).getPicture());
+                ImageLoader.getInstance().loadImageLocalOrNet(iv, picList.get(position % picList.size()).getPicture());
 
                 //设置点击回调
                 if (myClickListener != null) {
                     iv.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            myClickListener.onMyClick(position % imageList.size());
+                            myClickListener.onMyClick(position % picList.size());
                         }
                     });
                 }
             } else {
-                //取默认图片
+                //去默认图片
                 iv.setBackgroundResource(ids[position % ids.length]);
             }
 

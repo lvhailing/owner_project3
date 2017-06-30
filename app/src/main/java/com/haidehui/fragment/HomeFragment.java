@@ -2,11 +2,9 @@ package com.haidehui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import com.haidehui.act.HouseDetailActivity;
 import com.haidehui.act.OverseaProjectListActivity;
 import com.haidehui.act.WebActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
-import com.haidehui.adapter.CycleAdapter;
 import com.haidehui.common.Urls;
 import com.haidehui.model.HomeIndex2B;
 import com.haidehui.model.HomeIndex3B;
@@ -35,9 +32,6 @@ import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.MyRollViewPager;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.HashMap;
 
@@ -48,11 +42,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private View mView;
     private Context context;
     private ScrollView scrollView;
-    private LinearLayout mViewPager; //顶部轮播图
-    private LinearLayout ll_down_dots; // 轮播图下面的圆点
+    private LinearLayout ll_vp; //顶部轮播图
+    private LinearLayout ll_point_container; // 轮播图下面的圆点
     private MouldList<ResultCycleIndex2B> picList;
-    private DisplayImageOptions options;
-//    private CycleAdapter cycleAdapter;//自定义viewPager
     private MyListView myListView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
     private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
@@ -63,6 +55,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private MouldList<HomeIndex3B> BoutiqueHouseList = new MouldList<>();
     private HomeIndex2B homeIndexData;
     private String userId;
+    private MyRollViewPager rollViewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,9 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         requestHomeIndexData(); // 请求首页数据
 
         if (scrollView != null) {
-//            Log.i("hh", "hh3");
             scrollView.smoothScrollTo(0, 0);
-//            Log.i("hh", "hh4");
         }
     }
 
@@ -109,8 +100,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         picList = new MouldList<ResultCycleIndex2B>();
 
         scrollView = (ScrollView) mView.findViewById(R.id.scrollView);
-        mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
-        ll_down_dots = (LinearLayout) mView.findViewById(R.id.ll_down_dots);
+        ll_vp = (LinearLayout) mView.findViewById(R.id.ll_vp);
+        ll_point_container = (LinearLayout) mView.findViewById(R.id.ll_point_container);
         tv_hot_house = (TextView) mView.findViewById(R.id.tv_hot_house);
         tv_oversea_project = (TextView) mView.findViewById(R.id.tv_oversea_project);
         tv_customer_service = (TextView) mView.findViewById(R.id.tv_customer_service);
@@ -127,7 +118,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.mipmap.bg_home_carousel_figure_normal).showImageOnFail(R.mipmap.bg_home_carousel_figure_normal).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
         userId = null;
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
@@ -228,7 +218,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         picList = (MouldList<ResultCycleIndex2B>) params.result;
                     }
                 }
-                requestData();
+                freshVP();
             }
         });
     }
@@ -236,34 +226,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     /**
      * 请求轮播图数据
      */
-    private void requestData() {
-//        cycleAdapter = new CycleAdapter(context, homeCycleBean, options);
-//        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
-//        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
-//            @Override
-//            public void onImageClick(int postion, View imageView) {
-//                if (homeCycleBean != null && homeCycleBean.size() != 0) {
-//                }
-//            }
-//        });
-//        cycleAdapter.setCycle(true);
-//        cycleAdapter.startRoll();
-//        mViewPager.addView(cycleAdapter);
-
-
-        MyRollViewPager rollViewPager = new MyRollViewPager(context, picList);
-        rollViewPager.setRollPointContainer(ll_down_dots);
-        rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
-            @Override
-            public void onMyClick(int position) {
-                Log.i("aaa", "第" + (position + 1) + "张图片被点击了");
-            }
-        });
-        rollViewPager.setCycle(true);
-        rollViewPager.startRoll();
-        mViewPager.addView(rollViewPager);
+    private void freshVP() {
+        if (rollViewPager == null) {
+            //第一次从后台获取到数据
+            rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
+            rollViewPager.setCycle(true);
+            rollViewPager.startRoll();
+            ll_vp.addView(rollViewPager);
+        } else {
+            //第二或之后获取到数据，刷新vp
+            rollViewPager.setPicList(picList);
+            rollViewPager.reStartRoll();
+        }
     }
 
+    public void onMyPause() {
+        if (rollViewPager != null) {
+            rollViewPager.pause();
+        }
+    }
 
 
 }
