@@ -14,51 +14,60 @@
         android:id="@+id/rl_house_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/iv_guide_photo"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
+            android:id="@+id/iv_boutique_house"
+            android:layout_width="112dp"
+            android:layout_height="78dp"
             android:layout_margin="12dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/img_normal"/>
+            android:scaleType="fitXY"
+            android:background="@mipmap/bg_home_list_normal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:layout_toRightOf="@id/iv_guide_photo"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+           android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_boutique_house"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_guide_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/txt_black"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/tv_guide_detail"
+                android:id="@+id/tv_house_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:maxLines="2"
                 android:ellipsize="end"
-                android:text=""
-                android:textColor="@color/txt_light_gray"
+                android:maxLines="1"
+                android:text="帕诺拉普吉岛豪华海景公寓"
                 android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_house_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="3卧1卫/100-125㎡"
+                android:textColor="@color/txt_light_gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_house_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="80-112.5万元"
+                android:textColor="@color/txt_orange"
+                android:textSize="14sp"/>
         </LinearLayout>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/bg_gray_gray"/>
+        android:layout_height="1dp"
+        android:background="@color/bg_line"/>
 </LinearLayout>

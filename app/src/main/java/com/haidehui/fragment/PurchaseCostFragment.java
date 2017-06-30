@@ -22,7 +22,6 @@ public class PurchaseCostFragment extends Fragment  {
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_purchase_cost, container, false);
             try {
-//                initView(mView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -39,12 +38,5 @@ public class PurchaseCostFragment extends Fragment  {
     public void onResume() {
         super.onResume();
     }
-
-    private void initView(View mView) {
-        context = getActivity();
-
-    }
-
-
 
 }

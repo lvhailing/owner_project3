@@ -34,12 +34,12 @@ import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.MyListView;
+import com.haidehui.widget.MyRollViewPager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * 底部导航---首页
@@ -50,12 +50,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ScrollView scrollView;
     private LinearLayout mViewPager; //顶部轮播图
     private LinearLayout ll_down_dots; // 轮播图下面的圆点
+    private MouldList<ResultCycleIndex2B> picList;
     private DisplayImageOptions options;
-    private CycleAdapter cycleAdapter;//自定义viewPager
+//    private CycleAdapter cycleAdapter;//自定义viewPager
     private MyListView myListView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
     private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
-    private MouldList<ResultCycleIndex2B> homeCycleBean;
     private LinearLayout ll_home_notice; // 公告布局
     private TextView tv_home_notice; // 公告标题
     private TextView tv_no_house; // 精品房源无数据时显示的提示语
@@ -88,11 +88,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         scrollView.smoothScrollTo(0, 0);
         Log.i("hh", "首页---Fragment----onResume");
-//        requestCycleIndex(); // 请求轮图数据
-//        requestHomeIndexData(); // 请求首页数据
+
+        requestHomeIndexData(); // 请求首页数据
     }
 
     public void resetScrollViewSmooth() {
+        requestCycleIndex(); // 请求轮图数据
         requestHomeIndexData(); // 请求首页数据
 
         if (scrollView != null) {
@@ -102,7 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View mView) {
         context = getActivity();
-        homeCycleBean = new MouldList<ResultCycleIndex2B>();
+        picList = new MouldList<ResultCycleIndex2B>();
 
         scrollView = (ScrollView) mView.findViewById(R.id.scrollView);
         mViewPager = (LinearLayout) mView.findViewById(R.id.viewpager);
@@ -143,24 +144,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
-    }
-
-    /**
-     * 请求轮播图数据
-     */
-    private void requestData() {
-        cycleAdapter = new CycleAdapter(context, homeCycleBean, options);
-        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
-        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
-            @Override
-            public void onImageClick(int postion, View imageView) {
-                if (homeCycleBean != null && homeCycleBean.size() != 0) {
-                }
-            }
-        });
-        cycleAdapter.setCycle(true);
-        cycleAdapter.startRoll();
-        mViewPager.addView(cycleAdapter);
     }
 
     @Override
@@ -234,17 +217,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void requestCycleIndex() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("params", "params");
-        HtmlRequest.getCycleIndex(context, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.getHomeCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        homeCycleBean = (MouldList<ResultCycleIndex2B>) params.result;
+                        picList = (MouldList<ResultCycleIndex2B>) params.result;
                     }
                 }
                 requestData();
             }
         });
     }
+
+    /**
+     * 请求轮播图数据
+     */
+    private void requestData() {
+//        cycleAdapter = new CycleAdapter(context, homeCycleBean, options);
+//        cycleAdapter.setNetAndLinearLayoutMethod(ll_down_dots);
+//        cycleAdapter.setOnImageListener(new CycleAdapter.ImageCycleViewListener() {
+//            @Override
+//            public void onImageClick(int postion, View imageView) {
+//                if (homeCycleBean != null && homeCycleBean.size() != 0) {
+//                }
+//            }
+//        });
+//        cycleAdapter.setCycle(true);
+//        cycleAdapter.startRoll();
+//        mViewPager.addView(cycleAdapter);
+
+
+        MyRollViewPager rollViewPager = new MyRollViewPager(context, picList);
+        rollViewPager.setRollPointContainer(ll_down_dots);
+        rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
+            @Override
+            public void onMyClick(int position) {
+                Log.i("aaa", "第" + (position + 1) + "张图片被点击了");
+            }
+        });
+        rollViewPager.setCycle(true);
+        rollViewPager.startRoll();
+        mViewPager.addView(rollViewPager);
+    }
+
+
 
 }

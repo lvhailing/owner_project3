@@ -30,8 +30,8 @@ public class MyRollViewPager extends ViewPager {
     private MyClickListener myClickListener;
     private LinearLayout mPointContainer;
     private boolean isCycle = false;
-    private MouldList<ResultCycleIndex2B> imageList; //用于保存后台返回的图片的集合
-    private int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal}; //加入后台没返回图片，则使用默认图片
+    private MouldList<ResultCycleIndex2B> imageList; // 用于保存后台返回的图片的集合
+    private int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal}; // 假如后台没返回图片，则使用默认图片
 
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -131,9 +131,9 @@ public class MyRollViewPager extends ViewPager {
      */
     private void initDot() {
 
-        //清楚集合里小圆点实体 确保不重复
+        //清除集合里小圆点实体 确保不重复
         dotList.clear();
-        //清楚界面小圆点图像 确保不重复
+        //清除界面小圆点图像 确保不重复
         mPointContainer.removeAllViews();
 
         //小圆点的个数 如果后台返回的地址集合无数据，则取默认图片数组
@@ -192,7 +192,7 @@ public class MyRollViewPager extends ViewPager {
                     });
                 }
             } else {
-                //去默认图片
+                //取默认图片
                 iv.setBackgroundResource(ids[position % ids.length]);
             }
 

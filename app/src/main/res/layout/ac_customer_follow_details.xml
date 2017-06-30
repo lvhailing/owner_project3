@@ -140,7 +140,7 @@
         <EditText
             android:id="@+id/edit_remark"
             android:layout_width="fill_parent"
-            android:layout_height="150.0dip"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="请输入您的备注信息！"
             android:maxLength="500"

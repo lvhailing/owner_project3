@@ -108,6 +108,14 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         customerId=getIntent().getStringExtra("customerId");
         customerTrackingId=getIntent().getStringExtra("customerTrackingId");
         requestData();
+        scrollview.post(new Runnable() {
+            @Override
+            public void run() {
+
+                scrollview.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+        edt_project.requestFocusFromTouch();
     }
 
     private void requestData() {
@@ -232,23 +240,16 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         });
         lv_follow_detail.setAdapter(adapter);
         setListViewHeightBasedOnChildren(CustomerFollowDetailsActivity.this, lv_follow_detail, 0);
-//        scrollview.smoothScrollTo(0, 0);
-        scrollview.post(new Runnable() {
-            @Override
-            public void run() {
-
-                scrollview.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
 
     }
 
     /**
-     * 新增客户跟踪
+     * 修改客户跟踪
      */
     private void submitData(String[] resultStr,String houseProject,String roomNumber,String trackingRemark) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
+        param.put("customerTrackingId", customerTrackingId);
         param.put("userId", userId);
         param.put("houseProject", houseProject);
         param.put("roomNumber", roomNumber);

@@ -28,6 +28,7 @@
             android:hint="输入您的姓名"
             android:gravity="right"
             android:singleLine="true"
+            android:maxLength="10"
             android:layout_centerVertical="true"
             android:textColor="@color/gray_dark"
             android:textSize="15sp"

@@ -50,7 +50,7 @@ public class HotHouseAdapter extends BaseAdapter {
         Holder holder = null;
         if (convertView == null) {
             holder = new Holder();
-            convertView = inflater.inflate(R.layout.item_boutique_house, null);
+            convertView = inflater.inflate(R.layout.item_hot_house, null);
             holder.iv_boutique_house = (ImageView) convertView.findViewById(R.id.iv_boutique_house);
             holder.tv_house_name = (TextView) convertView.findViewById(R.id.tv_house_name);
             holder.tv_house_area = (TextView) convertView.findViewById(R.id.tv_house_area);
@@ -67,7 +67,7 @@ public class HotHouseAdapter extends BaseAdapter {
         String area = list.get(position).getArea();
 
         holder.tv_house_name.setText(list.get(position).getName());
-        holder.tv_house_area.setText(houseType + "/" + area);
+        holder.tv_house_area.setText(houseType + " / " + area);
         holder.tv_house_price.setText(list.get(position).getPrice() + "万元");
 
         return convertView;

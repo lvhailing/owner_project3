@@ -48,7 +48,7 @@
         android:paddingBottom="60dp"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="14dp"
-        android:text="2.需要准备的材料有：\n(1)申请人护照；\n(2)申请人泰国个人帐户80万泰铢存款证明"
+        android:text="2.需要准备的材料有：\n(1)申请人护照；\n(2)申请人泰国个人帐户80万泰铢的存款证明"
         android:textColor="@color/txt_black"
         android:textSize="14sp"/>
 </LinearLayout>

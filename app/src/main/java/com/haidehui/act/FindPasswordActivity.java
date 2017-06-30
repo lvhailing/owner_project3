@@ -150,18 +150,18 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()){
 
             case R.id.btn_findpassword:         //      密码重置
-                if(StringUtil.checkPassword(password)){
-                    if(password.equals(password_again)){
-//                        changePassword();
+
+                if(password.equals(password_again)){
+
+                    if(StringUtil.checkPassword(password)){
                         findpassword();
                     }else{
-                        Toast.makeText(context,"两次密码输入不一致，请重新输入",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
                     }
 
                 }else{
-                    Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"两次密码输入不一致，请重新输入",Toast.LENGTH_SHORT).show();
                 }
-
 
                 break;
 

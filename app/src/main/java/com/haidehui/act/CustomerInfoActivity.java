@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.CustomerInfoAdapter;
@@ -28,7 +29,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import com.haidehui.uitls.ActivityStack;
-
+import android.widget.TextView;
 
 /**
  *  我的 --- 客户信息
@@ -41,6 +42,8 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     private Button btn_submit;
     private static int mDelId = 0;
     private String customerId;
+    private ViewSwitcher vs;
+    private TextView tv_empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +82,10 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         ActivityStack stack = ActivityStack.getActivityManage();
         stack.addActivity(this);
 
+        vs = (ViewSwitcher) findViewById(R.id.vs);
+        tv_empty= (TextView) findViewById(R.id.tv_empty);
+        tv_empty.setText("ddsdjfajfkjfkfjkdfjsdkf");
         btn_submit= (Button) findViewById(R.id.btn_submit);
-
         lv_customer_info = (PullToRefreshListView) findViewById(R.id.lv_customer_info);
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(lv_customer_info);
@@ -99,19 +104,19 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                EditCustomerInfoDialog mDialog = new EditCustomerInfoDialog(mContext,new EditCustomerInfoDialog.OnSelectPhotoChanged() {
+                EditCustomerInfoDialog mDialog = new EditCustomerInfoDialog(mContext, new EditCustomerInfoDialog.OnSelectPhotoChanged() {
                     @Override
                     public void onDelete() {
                         mDelId = position - 1;
-                        customerId=totalList.get(position-1).getCustomerId();
+                        customerId = totalList.get(position - 1).getCustomerId();
                         showDialog();
                     }
 
                     @Override
                     public void onEdit() {
-                        customerId=totalList.get(position-1).getCustomerId();
-                        Intent intent=new Intent(mContext,EditCustomerInfoActivity.class);
-                        intent.putExtra("customerId",customerId);
+                        customerId = totalList.get(position - 1).getCustomerId();
+                        Intent intent = new Intent(mContext, EditCustomerInfoActivity.class);
+                        intent.putExtra("customerId", customerId);
                         startActivity(intent);
                     }
 
@@ -195,6 +200,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onRequestFinished(BaseParams params) {
                     if (params.result == null) {
+                        vs.setDisplayedChild(1);
                         Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                         lv_customer_info.postDelayed(new Runnable() {
                             @Override
@@ -204,28 +210,31 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
                         }, 1000);
                         return;
                     }
-
                     CustomerInfo2B data = (CustomerInfo2B) params.result;
                     MouldList<CustomerInfo3B> everyList = data.getList();
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    adapter.notifyDataSetChanged();
-
-                    lv_customer_info.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            lv_customer_info.onRefreshComplete();
+                    if (everyList.size() == 0) {
+                        vs.setDisplayedChild(1);
+                    } else {
+                        if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                            Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                         }
-                    }, 1000);
+
+                        if (currentPage == 1) {
+                            //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                            totalList.clear();
+                        }
+                        totalList.addAll(everyList);
+
+                        //刷新数据
+                        adapter.notifyDataSetChanged();
+
+                        lv_customer_info.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                lv_customer_info.onRefreshComplete();
+                            }
+                        }, 1000);
+                    }
                 }
             });
         } catch (Exception e) {

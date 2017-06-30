@@ -64,7 +64,7 @@ public class ProductRoadShowAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(list.get(position).getVideoPicture(), holder.iv_product_road_show, options);
 
         holder.tv_product_road_show_title.setText(list.get(position).getVideoName());
-        holder.tv_release_time.setText("发布日期：" + list.get(position).getEditTime());
+        holder.tv_release_time.setText("发布时间：" + list.get(position).getEditTime());
         holder.tv_guest_speaker.setText("演讲嘉宾：" + list.get(position).getSpeaker());
 
 
