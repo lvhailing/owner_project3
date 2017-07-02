@@ -81,18 +81,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
 //        Log.i("hh", "首页---Fragment----onResume");
         requestHomeIndexData(); // 请求首页数据
-//        Log.i("hh", "首页---Fragment1----onResume");
-        scrollView.smoothScrollTo(0, 0);
-//        Log.i("hh", "首页---Fragment2----onResume");
     }
 
     public void resetScrollViewSmooth() {
         requestCycleIndex(); // 请求轮图数据
         requestHomeIndexData(); // 请求首页数据
-
-        if (scrollView != null) {
-            scrollView.smoothScrollTo(0, 0);
-        }
     }
 
     private void initView(View mView) {
@@ -195,7 +188,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
                     myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
                     myListView.setAdapter(myAdapter);
-//                    scrollView.smoothScrollTo(0, 0);
+
+                    myListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.smoothScrollTo(0, 0);
+                        }
+                    }, 500);
                 } else {
                     tv_no_house.setVisibility(View.VISIBLE);
                 }

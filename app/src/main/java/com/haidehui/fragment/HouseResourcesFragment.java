@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -713,7 +711,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         //设置上面的类型文字
         if (functions.size() == 0) {
             tv_house_function.setText("功能");
-            tv_house_resources_type.setTextColor(getResources().getColor(R.color.txt_black));
+            tv_house_function.setTextColor(getResources().getColor(R.color.txt_black));
         } else if (functions.size() == 1) {
             String selectedFunc = getOnlyFuncItem();
             tv_house_function.setText(selectedFunc);
