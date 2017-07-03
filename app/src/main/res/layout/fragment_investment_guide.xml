@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ptr="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/vs"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white"
@@ -15,4 +17,6 @@
         android:scrollbars="none"
         ptr:ptrAnimationStyle="flip"
         ptr:ptrMode="both"/>
-</LinearLayout>
+
+    <include layout="@layout/ac_empty_view"/>
+</ViewSwitcher>

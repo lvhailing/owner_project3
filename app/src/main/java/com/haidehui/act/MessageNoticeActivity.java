@@ -36,7 +36,7 @@ public class MessageNoticeActivity extends BaseActivity{
     private PullToRefreshListView listview_message_notice;
     private MouldList<ResultMessageItemContentBean> list;
     private Context context;
-//    private ViewSwitcher vs_messgae_notice;
+    private ViewSwitcher vs_messgae_notice;
     private int page = 1;
     private int cachePage_pro = page;
     private MessageNoticeAdapter noticeAdapter;
@@ -95,8 +95,8 @@ public class MessageNoticeActivity extends BaseActivity{
         list = new MouldList<ResultMessageItemContentBean>();
         context = this;
         listview_message_notice = (PullToRefreshListView) findViewById(R.id.listview_message_notice);
-//        vs_messgae_notice = (ViewSwitcher) findViewById(R.id.vs_messgae_notice);
-//        vs_messgae_notice.setDisplayedChild(0);
+        vs_messgae_notice = (ViewSwitcher) findViewById(R.id.vs_messgae_notice);
+        vs_messgae_notice.setDisplayedChild(0);
 
 //        test();
 
@@ -153,7 +153,7 @@ public class MessageNoticeActivity extends BaseActivity{
                                 listview_message_notice.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
                                 listview_message_notice.onRefreshComplete();
                             }else if (infoBean.getList().size() == 0&&page==1){
-//                            vs_messgae_notice.setDisplayedChild(1);
+                            vs_messgae_notice.setDisplayedChild(1);
                             }else {
                                 // layout.addView(btnLayout);
 

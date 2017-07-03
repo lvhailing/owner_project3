@@ -126,16 +126,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
-            xmlns:ptr="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/listview"
+        <ViewSwitcher
+            android:id="@+id/vs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/gray_light"
-            android:dividerHeight="1dp"
-            android:scrollbars="none"
-            ptr:ptrAnimationStyle="flip"
-            ptr:ptrMode="both"/>
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
+                xmlns:ptr="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/gray_light"
+                android:dividerHeight="1dp"
+                android:scrollbars="none"
+                ptr:ptrAnimationStyle="flip"
+                ptr:ptrMode="both"/>
+
+            <include layout="@layout/ac_empty_view"/>
+        </ViewSwitcher>
 
         <View
             android:id="@+id/v_hidden"
@@ -514,18 +524,34 @@
 
         </LinearLayout>
 
-       <!-- 无数据时显示的提示语-->
-        <TextView
-            android:id="@+id/tv_no_house"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="暂无匹配房源，敬请期待..."
-            android:textColor="@color/txt_light_gray"
-            android:textSize="16sp"
-            android:visibility="gone"/>
+        <!-- 无数据时显示的布局-->
+        <!--  <RelativeLayout
+              android:id="@+id/rl_no_data"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:visibility="visible">
+
+              <ImageView
+                  android:id="@+id/iv_no_data"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:src="@mipmap/ic_no_data_house_resources"/>
+
+              <TextView
+                  android:id="@+id/tv_no_house"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/iv_no_data"
+                  android:layout_marginTop="18dp"
+                  android:gravity="center"
+                  android:text="暂无房源"
+                  android:textColor="@color/txt_light_gray"
+                  android:textSize="16sp"/>
+          </RelativeLayout>-->
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -7,16 +7,52 @@
     android:paddingBottom="10dip"
     >
 
-    <ListView
-        android:id="@+id/lv_mybank"
+    <ViewSwitcher
+        android:id="@+id/vs_mybank"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/bg_gray_gray"
-        android:dividerHeight="0dp"
-        android:scrollbars="none"
-        android:layout_marginBottom="55dip"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/lv_mybank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/bg_gray_gray"
+            android:dividerHeight="0dp"
+            android:scrollbars="none"
+            android:layout_marginBottom="55dip"
 
-        />
+            />
+        <LinearLayout
+            android:id="@+id/ll_mybank_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dip"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal"
+            >
+            <ImageView
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/img_mybank_nodata"
+                />
+            <TextView
+                android:id="@+id/tv_mybank_nodata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:text="@string/mybank_add_nodata"
+                android:textSize="16sp"
+                android:textColor="@color/txt_light_gray"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                />
+
+        </LinearLayout>
+
+    </ViewSwitcher>
+
 
     <RelativeLayout
         android:id="@+id/rl_mybank_add"

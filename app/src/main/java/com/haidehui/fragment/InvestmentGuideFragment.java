@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.act.WebActivity;
@@ -36,6 +39,7 @@ public class InvestmentGuideFragment extends Fragment {
     private InvestmentGuideAdapter myAdapter;
     private MouldList<InvestmentGuide3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
+    private ViewSwitcher vs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,8 +64,14 @@ public class InvestmentGuideFragment extends Fragment {
 
     private void initView(View mView) {
         context = getActivity();
-        listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
 
+        vs = (ViewSwitcher) mView.findViewById(R.id.vs);
+        TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
+        ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
+        tv_empty.setText("暂无投资指南信息");
+        img_empty.setBackgroundResource(R.mipmap.ic_empty_investment_guide);
+
+        listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(listView);
     }
@@ -119,6 +129,7 @@ public class InvestmentGuideFragment extends Fragment {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {
+                    vs.setDisplayedChild(1);
                     Toast.makeText(context, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                     upDate(listView);
                     return;
@@ -126,21 +137,25 @@ public class InvestmentGuideFragment extends Fragment {
 
                 InvestmentGuide2B data = (InvestmentGuide2B) params.result;
                 MouldList<InvestmentGuide3B> everyList = data.getList();
-                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                if (everyList.size() == 0) {
+                    vs.setDisplayedChild(1);
+                } else {
+                    vs.setDisplayedChild(0);
+                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                        Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (currentPage == 1) {
+                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 ,这两种情况之前的数据都清掉
+                        totalList.clear();
+                    }
+                    totalList.addAll(everyList);
+
+                    //刷新数据
+                    myAdapter.notifyDataSetChanged();
+
+                    upDate(listView);
                 }
-
-                if (currentPage == 1) {
-                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 ,这两种情况之前的数据都清掉
-                    totalList.clear();
-                }
-                totalList.addAll(everyList);
-
-                //刷新数据
-                myAdapter.notifyDataSetChanged();
-
-                upDate(listView);
-
             }
         });
 
@@ -156,7 +171,7 @@ public class InvestmentGuideFragment extends Fragment {
     }
 
     public void upDateInvestmentGuideList() {
-        if(listView!=null) {
+        if (listView != null) {
             currentPage = 1;
             requestInvestmentGuideListData();
             listView.getRefreshableView().setSelection(0);

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -19,17 +20,16 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.ActivityStack;
 import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.EditCustomerInfoDialog;
-import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.widget.TitleBar;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import com.haidehui.uitls.ActivityStack;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 /**
  *  我的 --- 客户信息
@@ -44,6 +44,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     private String customerId;
     private ViewSwitcher vs;
     private TextView tv_empty;
+    private ImageView img_empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,10 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
 
         vs = (ViewSwitcher) findViewById(R.id.vs);
         tv_empty= (TextView) findViewById(R.id.tv_empty);
-        tv_empty.setText("ddsdjfajfkjfkfjkdfjsdkf");
+        img_empty= (ImageView) findViewById(R.id.img_empty);
+        tv_empty.setText("暂无客户信息");
+        img_empty.setBackgroundResource(R.mipmap.empty_customerinfo);
+
         btn_submit= (Button) findViewById(R.id.btn_submit);
         lv_customer_info = (PullToRefreshListView) findViewById(R.id.lv_customer_info);
         //PullToRefreshListView  上滑加载更多及下拉刷新
@@ -175,6 +179,9 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
             adapter.notifyDataSetChanged();
 
             deleteData(customerId);
+            if (totalList.size()==0){
+                vs.setDisplayedChild(1);
+            }
         }
     }
     @Override
@@ -215,6 +222,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
                     if (everyList.size() == 0) {
                         vs.setDisplayedChild(1);
                     } else {
+                        vs.setDisplayedChild(0);
                         if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
                             Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                         }
@@ -257,6 +265,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
                         if ("true".equals(data.getFlag())) {
                             Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
                         }
+
                     }
                 }
         );

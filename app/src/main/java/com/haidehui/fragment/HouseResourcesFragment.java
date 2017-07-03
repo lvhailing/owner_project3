@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.act.HouseDetailActivity;
@@ -51,7 +52,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private TextView tv1, tv2, tv3, tv4, tv5, tv6; // 顶部的类型( 公寓，商铺，别墅，学区，土地，庄园)
     private TextView tv_1, tv_2, tv_3, tv_4, tv_5, tv_6, tv_7; // 顶部的价格( 不限，50万元以下，50-100万元，100-200万元，200-500万元，500-1000万元,1000万以上)
     private TextView tv1_func, tv2_func, tv3_func, tv4_func, tv5_func; // 顶部的功能( 投资，自住，度假，海景，移民)
-    private TextView tv_no_house;
+    //    private RelativeLayout rl_no_data;
     private Button btn_type_reset, btn_type_sure; // 类型布局里面的重置，确定按钮
     private Button btn_func_reset, btn_func_sure; // 功能布局里面的重置，确定按钮
 
@@ -60,8 +61,6 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private int currentFlag;  //当前选择哪个按钮  1、类型按钮  2、价格按钮  3、功能按钮
     private List<String> functions = new ArrayList<>();
     private List<String> types = new ArrayList<>();
-    //    private String functionSelected = "";
-    //    private String typeSelected = "";
     private MouldList<HouseList3B> totalList = new MouldList<>();
     private PullToRefreshListView listView;
     private HouseResourceListAdapter mAdapter;
@@ -70,6 +69,9 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private String houseFunction; // 功能
     private String housePrice = "1"; // 价格
     private MouldList<HouseList3B> everyList;
+    private ViewSwitcher vs;
+    private TextView tv_empty;
+    private ImageView img_empty;
 
 
     @Override
@@ -94,6 +96,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     private void initView(View mView) {
         context = getActivity();
 
+        vs = (ViewSwitcher) mView.findViewById(R.id.vs);
+        tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
+        img_empty = (ImageView) mView.findViewById(R.id.img_empty);
+        tv_empty.setText("暂无房源");
+        img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
+
         rl_house_resources_type = (RelativeLayout) mView.findViewById(R.id.rl_house_resources_type);
         rl_house_resources_price = (RelativeLayout) mView.findViewById(R.id.rl_house_resources_price);
         rl_house_function = (RelativeLayout) mView.findViewById(R.id.rl_house_function);
@@ -104,7 +112,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
         iv_select_price = (ImageView) mView.findViewById(R.id.iv_select_price);
         iv_select_function = (ImageView) mView.findViewById(R.id.iv_select_function);
 
-        tv_no_house = (TextView) mView.findViewById(R.id.tv_no_house);
+//        rl_no_data = (RelativeLayout) mView.findViewById(R.id.rl_no_data);
         listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
 
         //PullToRefreshListView  上滑加载更多及下拉刷新
@@ -289,7 +297,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_house_resources_type:  // 类型
-                tv_no_house.setVisibility(View.GONE);
+//                rl_no_data.setVisibility(View.GONE);
                 if (isOpened) {
                     //动画是开启状态
                     if (currentFlag == 1) {
@@ -317,7 +325,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
                 break;
             case R.id.rl_house_resources_price:  // 价格
-                tv_no_house.setVisibility(View.GONE);
+//                rl_no_data.setVisibility(View.GONE);
                 if (isOpened) {
                     tv_1.setTextColor(getResources().getColor(R.color.txt_orange));
                     //动画是开启状态
@@ -346,7 +354,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
                 break;
             case R.id.rl_house_function:  // 功能
-                tv_no_house.setVisibility(View.GONE);
+//                rl_no_data.setVisibility(View.GONE);
                 if (isOpened) {
                     //动画是开启状态
                     if (currentFlag == 3) {
@@ -783,6 +791,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {
+                    vs.setDisplayedChild(1);
                     Toast.makeText(context, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                     listView.postDelayed(new Runnable() {
                         @Override
@@ -795,30 +804,34 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
 
                 HouseList2B data = (HouseList2B) params.result;
                 everyList = data.getList();
-
-                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                }
-
-                if (currentPage == 1) {
-                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                    totalList.clear();
-                }
-                totalList.addAll(everyList);
-
-                if (totalList == null || totalList.size() <= 0) {
-                    tv_no_house.setVisibility(View.VISIBLE);
-                }
-
-                //刷新数据
-                mAdapter.notifyDataSetChanged();
-
-                listView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        listView.onRefreshComplete();
+                if (everyList.size() == 0) {
+                    vs.setDisplayedChild(1);
+                } else {
+                    vs.setDisplayedChild(0);
+                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                        Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
                     }
-                }, 1000);
+
+                    if (currentPage == 1) {
+                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                        totalList.clear();
+                    }
+                    totalList.addAll(everyList);
+//
+//                if (totalList == null || totalList.size() <= 0) {
+//                    rl_no_data.setVisibility(View.VISIBLE);
+//                }
+
+                    //刷新数据
+                    mAdapter.notifyDataSetChanged();
+
+                    listView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listView.onRefreshComplete();
+                        }
+                    }, 1000);
+                }
             }
         });
 

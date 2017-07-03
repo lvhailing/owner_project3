@@ -61,7 +61,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private MyListView myListView;
     private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
     private RelatedHouseAdapter myAdapter; // 相关房源 Adapter
-    private TextView tv_no_house; // 相关房源没数据时显示的提示语
+//    private TextView tv_no_house; // 相关房源没数据时显示的提示语
+    private RelativeLayout rl_empty_house;
 
     private RelativeLayout rl_pro_house, rl_pro_facilities, rl_pro_geographic_location; // 项目居室，配套设施，地理位置布局
 
@@ -100,6 +101,12 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private void initView() {
         pid = getIntent().getStringExtra("pid");
 
+        rl_empty_house = (RelativeLayout)findViewById(R.id.rl_empty_house);
+        TextView tv_empty = (TextView)findViewById(R.id.tv_empty);
+        ImageView img_empty = (ImageView) findViewById(R.id.img_empty);
+        tv_empty.setText("暂无相关房源");
+        img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
+
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         iv_oversea_detail = (ImageView) findViewById(R.id.iv_oversea_detail);
         iv_project_click = (ImageView) findViewById(R.id.iv_project_click);
@@ -122,7 +129,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         tv_project_des = (TextView) findViewById(R.id.tv_project_des);
         tv_support_facilities_desc = (TextView) findViewById(R.id.tv_support_facilities_desc);
         tv_geographic_location_desc = (TextView) findViewById(R.id.tv_geographic_location_desc);
-        tv_no_house = (TextView) findViewById(R.id.tv_no_house);
+//        tv_no_house = (TextView) findViewById(R.id.tv_no_house);
 
         ll_pro_house_photos = (LinearLayout) findViewById(R.id.ll_pro_house_photos);
         ll_support_facilities = (LinearLayout) findViewById(R.id.ll_support_facilities);
@@ -263,7 +270,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                             myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);
                             myListView.setAdapter(myAdapter);
                         } else {
-                            tv_no_house.setVisibility(View.VISIBLE);
+                            rl_empty_house.setVisibility(View.VISIBLE);
                         }
                         setView();
                     }

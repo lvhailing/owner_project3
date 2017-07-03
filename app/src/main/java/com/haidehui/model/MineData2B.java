@@ -11,6 +11,7 @@ public class MineData2B implements IMouldType {
     private String headPhoto; // 头像
     private String checkStatus; // 认证状态
     private String idNo;        //  身份证号
+    private String recommendCode;//推荐码
 
     public String getIdNo() {
         return idNo;
@@ -66,5 +67,13 @@ public class MineData2B implements IMouldType {
 
     public void setCheckStatus(String checkStatus) {
         this.checkStatus = checkStatus;
+    }
+
+    public String getRecommendCode() {
+        return recommendCode;
+    }
+
+    public void setRecommendCode(String recommendCode) {
+        this.recommendCode = recommendCode;
     }
 }

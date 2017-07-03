@@ -62,7 +62,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     private TextView tv_messageTotal;
     private RelativeLayout layout_my_info;
     private TextView tv_realName;
-    private TextView tv_mobile;
+    private TextView tv_code;
     private TextView tv_totalCommission;
     private TextView tv_customer_info;
     private TextView tv_customer_follow;
@@ -75,7 +75,8 @@ public class MineFragment extends Fragment implements OnClickListener {
     private String userId = "";
     private ResultMessageInfoContentBean bean;       //  消息参数
     private MineData2B data;
-    private CircularImage img_photo;
+//    private CircularImage img_photo;
+    private ImageView img_photo;
     private ImageView img_sign;
     /**
      * 图片保存SD卡位置
@@ -120,9 +121,9 @@ public class MineFragment extends Fragment implements OnClickListener {
         tv_messageTotal = (TextView) mView.findViewById(R.id.tv_messageTotal);
         layout_my_info = (RelativeLayout) mView.findViewById(R.id.layout_my_info);
         tv_realName = (TextView) mView.findViewById(R.id.tv_realName);
-        tv_mobile = (TextView) mView.findViewById(R.id.tv_mobile);
+        tv_code = (TextView) mView.findViewById(R.id.tv_code);
         tv_totalCommission = (TextView) mView.findViewById(R.id.tv_totalCommission);
-        img_photo = (CircularImage) mView.findViewById(R.id.img_photo);
+        img_photo = (ImageView) mView.findViewById(R.id.img_photo);
         tv_customer_info = (TextView) mView.findViewById(R.id.tv_customer_info);
         tv_customer_follow = (TextView) mView.findViewById(R.id.tv_customer_follow);
         tv_rengou_state = (TextView) mView.findViewById(R.id.tv_rengou_state);
@@ -276,7 +277,7 @@ public class MineFragment extends Fragment implements OnClickListener {
 
         }
         tv_realName.setText(data.getRealName());
-        tv_mobile.setText(StringUtil.replaceSubString(data.getMobile()));
+        tv_code.setText("我的推荐码："+data.getRecommendCode());
         tv_totalCommission.setText(data.getTotalCommission() + "元");
 
         String url = data.getHeadPhoto();

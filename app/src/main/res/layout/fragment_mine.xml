@@ -66,12 +66,19 @@
             android:background="@color/white"
             android:orientation="horizontal"
             android:padding="10dp">
-
+<!--
             <com.haidehui.widget.CircularImage
                 android:id="@+id/img_photo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_margin="5dp"
+                android:src="@mipmap/user_icon"/>-->
+            <ImageView
+                android:id="@+id/img_photo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside"
                 android:src="@mipmap/user_icon"/>
 
             <LinearLayout
@@ -91,11 +98,11 @@
 
 
                 <TextView
-                    android:id="@+id/tv_mobile"
+                    android:id="@+id/tv_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="16sp"/>
+                    android:textColor="@color/gray_dark"/>
             </LinearLayout>
             <ImageView
                 android:layout_width="wrap_content"
@@ -257,7 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/accountset_img_trust"
-                android:textColor="@color/txt_red"
+                android:textColor="@color/gray_d"
                 android:textSize="16sp"/>
 
 

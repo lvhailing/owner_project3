@@ -8,12 +8,37 @@
     >
 
     <TextView
+        android:id="@+id/tv_about_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="关于海德汇的介绍"
+        android:text="关于大富豪的介绍"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dip"
+        android:textColor="@color/txt_gray"
+        android:textSize="14sp"
+        />
+    <ImageView
+        android:id="@+id/iv_about_line"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dip"
+        android:src="@color/bg_gray"
+        android:layout_below="@id/tv_about_title"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="18dip"
+        android:layout_marginRight="18dip"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\t\t\t君德海外投资专注于亚洲房产投资。君德海外在中国大陆及海外均设立全资子公司，拥有专业的销售团队，先进的看房车队，为客户提供一站式的亚洲房产购置服务。从2015年开始，君德海外为中国大陆客户提供专业、周到、安全、可靠的服务，全力以赴，从未间断。"
         android:layout_gravity="center"
-        android:layout_marginTop="30dip"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/iv_about_line"
+        android:lineSpacingExtra="5dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:textColor="@color/txt_gray"
+        android:textSize="12sp"
         />
 
 </RelativeLayout>

@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.MyBankAdapter;
@@ -40,6 +42,8 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     private int lastPress = 0;
     private MyBankAdapter bankAdapter;
     private RelativeLayout rl_mybank_add;
+    private LinearLayout ll_mybank_nodata;
+    private ViewSwitcher vs_mybank;
 
 
     @Override
@@ -67,10 +71,14 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
                 ResultMyBankListContentBean b = (ResultMyBankListContentBean) params.result;
                 if (b != null) {
                     list = b.getList();
+                    if(list.size()==0){
+                        vs_mybank.setDisplayedChild(1);
+                    }
                     bankAdapter = new MyBankAdapter(context,list);
                     lv_mybank.setAdapter(bankAdapter);
 
                 } else {
+                    vs_mybank.setDisplayedChild(1);
                     Toast.makeText(MyBankActivity.this, "加载失败，请确认网络通畅",
                             Toast.LENGTH_LONG).show();
                 }
@@ -111,7 +119,9 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
         list = new MouldList<ResultMyBankListContentItemBean>();
         lv_mybank = (ListView) findViewById(R.id.lv_mybank);
         rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);
-
+        ll_mybank_nodata = (LinearLayout) findViewById(R.id.ll_mybank_nodata);
+        vs_mybank = (ViewSwitcher) findViewById(R.id.vs_mybank);
+        vs_mybank.setDisplayedChild(0);
         rl_mybank_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

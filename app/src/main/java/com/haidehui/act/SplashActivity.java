@@ -204,7 +204,7 @@ public class SplashActivity extends FragmentActivity {
         @Override
         public void run() {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(2400);
                 Message msg = new Message();
                 if (PreferenceUtil.isLogin()) {
                     if (TextUtils.isEmpty(PreferenceUtil.getGesturePwd())) {

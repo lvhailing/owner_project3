@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +58,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private HomeIndex2B homeIndexData;
     private String userId;
     private MyRollViewPager rollViewPager;
+    private  RelativeLayout rl_empty_house;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +83,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 //        Log.i("hh", "首页---Fragment----onResume");
-        requestHomeIndexData(); // 请求首页数据
+//        requestHomeIndexData(); // 请求首页数据
     }
 
     public void resetScrollViewSmooth() {
@@ -92,6 +95,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         context = getActivity();
         picList = new MouldList<ResultCycleIndex2B>();
 
+         rl_empty_house = (RelativeLayout) mView.findViewById(R.id.rl_empty_house);
+        TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
+        ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
+        tv_empty.setText("暂无精品房源");
+        img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
+
+
         scrollView = (ScrollView) mView.findViewById(R.id.scrollView);
         ll_vp = (LinearLayout) mView.findViewById(R.id.ll_vp);
         ll_point_container = (LinearLayout) mView.findViewById(R.id.ll_point_container);
@@ -100,7 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_customer_service = (TextView) mView.findViewById(R.id.tv_customer_service);
         tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
         ll_home_notice = (LinearLayout) mView.findViewById(R.id.ll_home_notice);
-        tv_no_house = (TextView) mView.findViewById(R.id.tv_no_house);
+//        tv_no_house = (TextView) mView.findViewById(R.id.tv_no_house);
         myListView = (MyListView) mView.findViewById(R.id.lv);
 
         tv_hot_house.setOnClickListener(this);
@@ -196,7 +206,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }
                     }, 500);
                 } else {
-                    tv_no_house.setVisibility(View.VISIBLE);
+                    rl_empty_house.setVisibility(View.VISIBLE);
                 }
             }
 

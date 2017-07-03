@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.CustomerTrackingAdapter;
@@ -41,6 +44,9 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     private static int mDelId = 0;
     private String customerId;
     private String customerTrackingId;
+    private ViewSwitcher vs;
+    private TextView tv_empty;
+    private ImageView img_empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,12 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     }
 
     private void initView() {
+        vs = (ViewSwitcher) findViewById(R.id.vs);
+        tv_empty= (TextView) findViewById(R.id.tv_empty);
+        img_empty= (ImageView) findViewById(R.id.img_empty);
+        tv_empty.setText("暂无客户跟踪信息");
+        img_empty.setBackgroundResource(R.mipmap.empty_tracking);
+
         listView = (PullToRefreshListView) findViewById(R.id.listview);
 
         //PullToRefreshListView  上滑加载更多及下拉刷新
@@ -145,7 +157,9 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
             mAdapter.notifyDataSetChanged();
 
             deleteData(customerTrackingId);
-
+            if (totalList.size()==0){
+                vs.setDisplayedChild(1);
+            }
         }
     }
 
@@ -186,6 +200,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
                 @Override
                 public void onRequestFinished(BaseParams params) {
                     if (params.result == null) {
+                        vs.setDisplayedChild(1);
                         Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                         listView.postDelayed(new Runnable() {
                             @Override
@@ -197,25 +212,30 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
                     }
 
                     MouldList<Tracking2B> everyList = (MouldList<Tracking2B>) params.result;
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    mAdapter.notifyDataSetChanged();
-
-                    listView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            listView.onRefreshComplete();
+                    if (everyList.size() == 0) {
+                        vs.setDisplayedChild(1);
+                    } else {
+                        vs.setDisplayedChild(0);
+                        if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                            Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                         }
-                    }, 1000);
+
+                        if (currentPage == 1) {
+                            //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                            totalList.clear();
+                        }
+                        totalList.addAll(everyList);
+
+                        //刷新数据
+                        mAdapter.notifyDataSetChanged();
+
+                        listView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                listView.onRefreshComplete();
+                            }
+                        }, 1000);
+                    }
                 }
             });
         } catch (Exception e) {

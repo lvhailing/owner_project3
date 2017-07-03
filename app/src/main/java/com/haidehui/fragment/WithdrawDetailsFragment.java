@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
@@ -42,6 +45,9 @@ public class WithdrawDetailsFragment extends Fragment {
     private int currentPage = 1;    //当前页
     private String userId = "";
     private AccountBookActivity mActivity;
+    private ViewSwitcher vs;
+    private TextView tv_empty;
+    private ImageView img_empty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +76,11 @@ public class WithdrawDetailsFragment extends Fragment {
 
 
     private void initView(View mView) {
+        vs = (ViewSwitcher) mView.findViewById(R.id.vs);
+        tv_empty= (TextView) mView.findViewById(R.id.tv_empty);
+        img_empty= (ImageView) mView.findViewById(R.id.img_empty);
+        tv_empty.setText("暂无提现记录");
+        img_empty.setBackgroundResource(R.mipmap.empty_account);
         context = getActivity();
         lv= (PullToRefreshListView) mView.findViewById(R.id.lv_withdraw);
         //PullToRefreshListView  上滑加载更多及下拉刷新
@@ -123,6 +134,7 @@ public class WithdrawDetailsFragment extends Fragment {
                 @Override
                 public void onRequestFinished(BaseParams params) {
                     if (params.result == null) {
+                        vs.setDisplayedChild(1);
                         Toast.makeText(getActivity(), "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                         lv.postDelayed(new Runnable() {
                             @Override
@@ -135,25 +147,30 @@ public class WithdrawDetailsFragment extends Fragment {
 
                     AccountBookWithdraw2B data = (AccountBookWithdraw2B) params.result;
                     MouldList<AccountBookWithDraw3B> everyList = data.getList();
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(getActivity(), "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        withdrawlist.clear();
-                    }
-                    withdrawlist.addAll(everyList);
-
-                    //刷新数据
-                    adapterWithdraw.notifyDataSetChanged();
-
-                    lv.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            lv.onRefreshComplete();
+                    if (everyList.size() == 0) {
+                        vs.setDisplayedChild(1);
+                    } else {
+                        vs.setDisplayedChild(0);
+                        if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                            Toast.makeText(getActivity(), "已经到最后一页", Toast.LENGTH_SHORT).show();
                         }
-                    }, 1000);
+
+                        if (currentPage == 1) {
+                            //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                            withdrawlist.clear();
+                        }
+                        withdrawlist.addAll(everyList);
+
+                        //刷新数据
+                        adapterWithdraw.notifyDataSetChanged();
+
+                        lv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                lv.onRefreshComplete();
+                            }
+                        }, 1000);
+                    }
                 }
             });
         } catch (Exception e) {

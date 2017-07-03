@@ -36,7 +36,7 @@ public class MessageInfoActivity extends BaseActivity{
     private PullToRefreshListView listview_message_info;
     private MouldList<ResultMessageItemContentBean> list;
     private Context context;
-//    private ViewSwitcher vs_messgae_info;
+    private ViewSwitcher vs_messgae_info;
     private int page = 1;
     private int cachePage_pro = page;
     private MessageInfoAdapter infoAdapter;
@@ -146,8 +146,8 @@ public class MessageInfoActivity extends BaseActivity{
         infoBean = new ResultMessageContentBean();
         context = this;
         listview_message_info = (PullToRefreshListView) findViewById(R.id.listview_message_info);
-//        vs_messgae_info = (ViewSwitcher) findViewById(R.id.vs_messgae_info);
-//        vs_messgae_info.setDisplayedChild(0);
+        vs_messgae_info = (ViewSwitcher) findViewById(R.id.vs_messgae_info);
+        vs_messgae_info.setDisplayedChild(0);
 //        test();
 
     }
@@ -193,14 +193,14 @@ public class MessageInfoActivity extends BaseActivity{
 //                        setView();
                         if(infoBean.getList()!=null){
                             if (infoBean.getList().size() == 0 && page!=1 ) {
-                                Toast.makeText(context, "已经到最后一页",
+                                Toast.makeText(context, "已显示全部",
                                         Toast.LENGTH_SHORT).show();
                                 page = cachePage_pro - 1;
                                 infoAdapter.notifyDataSetChanged();
                                 listview_message_info.getRefreshableView().smoothScrollToPositionFromTop(0, 100, 100);
                                 listview_message_info.onRefreshComplete();
                             }else if (infoBean.getList().size() == 0&&page==1){
-//                            vs_messgae_info.setDisplayedChild(1);
+                                vs_messgae_info.setDisplayedChild(1);
                             }else {
                                 // layout.addView(btnLayout);
                                 list.clear();

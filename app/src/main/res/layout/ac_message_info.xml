@@ -1,32 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ViewSwitcher
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vs_messgae_info"
     android:background="@color/bg_gray"
     >
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/listview_message_info"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/bg_gray_gray"
-        android:dividerHeight="0dp"
-        android:scrollbars="none"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="both"
+        android:layout_height="match_parent">
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/listview_message_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/bg_gray_gray"
+            android:dividerHeight="0dp"
+            android:scrollbars="none"
+            ptr:ptrAnimationStyle="flip"
+            ptr:ptrMode="both"
 
-        />
+            />
 
-    <TextView
-        android:id="@+id/tv_myinfo_nodata"
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_message_info_nodata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/message_nodata"
-        android:textSize="16sp"
-        android:textColor="@color/txt_gray_d"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:visibility="gone"
-        />
-</RelativeLayout>
+        >
+        <ImageView
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_message_info_nodata"
+            />
+        <TextView
+            android:id="@+id/tv_myinfo_nodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:text="@string/message_info_nodata"
+            android:textSize="16sp"
+            android:textColor="@color/txt_light_gray"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            />
+
+    </LinearLayout>
+
+</ViewSwitcher>

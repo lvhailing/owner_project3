@@ -131,7 +131,7 @@ public class Urls {
     public static final String URL_OTHERDETAIL = EC_HOST + "message/others/";
 
     // 设置--服务协议
-    public static final String URL_SERVICE_AGREEMENT = EC_HOST + "service/agreement";
+    public static final String URL_SERVICE_AGREEMENT = EC_HOST + "register/agreement";
 
 
     // 设置--关于我们

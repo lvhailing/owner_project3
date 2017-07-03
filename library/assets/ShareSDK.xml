@@ -53,7 +53,7 @@
     -->
     
     <ShareSDK 
-        AppKey = "1ea86a798f5d6"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
+        AppKey = "1ed3deba90fd9"/> <!-- 修改成你在sharesdk后台注册的应用的appkey"-->
     
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo
@@ -63,7 +63,7 @@
         AppSecret="0c872f01b37bb2556fd30a90aa0b5342"
         RedirectUrl="https://api.weibo.com/oauth2/default.html"
         ShareByAppClient="false"
-        Enable="true" />
+        Enable="false" />
 
     <TencentWeibo
         Id="2" 
@@ -97,16 +97,16 @@
     <Wechat
         Id="4"
         SortId="1"
-        AppId="wx999ffceeae7d3381"
-        AppSecret="f6763e4ab4a7ce2712ec6fefb3114c17"
+        AppId="wx050672f881511cb6"
+        AppSecret="49e71035d1a3b012f1cb1be878d3f8c4"
         BypassApproval="true"
         Enable="true" />
     
     <WechatMoments
         Id="5"
         SortId="2"
-        AppId="wx999ffceeae7d3381"
-        AppSecret="f6763e4ab4a7ce2712ec6fefb3114c17"
+        AppId="wx050672f881511cb6"
+        AppSecret="49e71035d1a3b012f1cb1be878d3f8c4"
         BypassApproval="true"
         Enable="true" />
         

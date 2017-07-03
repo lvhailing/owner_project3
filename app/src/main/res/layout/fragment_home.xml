@@ -131,17 +131,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
-            android:listSelector="#00000000"/>
+            android:listSelector="#00000000"
+            android:scrollbars="none"/>
 
-        <TextView
-            android:id="@+id/tv_no_house"
+        <RelativeLayout
+            android:id="@+id/rl_empty_house"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:gravity="center_vertical"
-            android:padding="12dp"
-            android:text="暂无精品房源推荐，敬请期待..."
-            android:textColor="@color/txt_light_gray"
-            android:textSize="16sp"
-            android:visibility="gone"/>
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/img_middle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dip"
+                android:scaleType="centerInside"/>
+
+            <ImageView
+                android:id="@+id/img_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleType="centerInside"/>
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_middle"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:textColor="@color/gray_d"
+                />
+        </RelativeLayout>
+
+
+        <!-- <TextView
+             android:id="@+id/tv_no_house"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center_vertical"
+             android:padding="12dp"
+             android:text="暂无精品房源"
+             android:textColor="@color/txt_light_gray"
+             android:textSize="16sp"
+             android:visibility="gone"/>-->
     </LinearLayout>
 </ScrollView>

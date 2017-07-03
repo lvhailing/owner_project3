@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.MyBankAdapter;
@@ -40,6 +41,7 @@ public class WithdrawActivity extends BaseActivity{
     private int lastPress = 0;
     private WithdrawAdapter withdrawAdapter;
     private RelativeLayout rl_mybank_add;
+    private ViewSwitcher vs_withdraw_bank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +153,8 @@ public class WithdrawActivity extends BaseActivity{
         context = this;
         lv_withdraw_mybank = (ListView) findViewById(R.id.lv_withdraw_mybank);
         rl_mybank_add = (RelativeLayout) findViewById(R.id.rl_mybank_add);
-
+        vs_withdraw_bank = (ViewSwitcher) findViewById(R.id.vs_withdraw_bank);
+        vs_withdraw_bank.setDisplayedChild(0);
 
 
     }
@@ -192,12 +195,18 @@ public class WithdrawActivity extends BaseActivity{
                 ResultMyBankListContentBean b = (ResultMyBankListContentBean) params.result;
                 if (b != null) {
                     list = b.getList();
+                    if(list.size()==0){
+                        vs_withdraw_bank.setDisplayedChild(1);
+                    }else{
+                        vs_withdraw_bank.setDisplayedChild(0);
+                    }
                     withdrawAdapter = new WithdrawAdapter(context,list);
 
                     lv_withdraw_mybank.setAdapter(withdrawAdapter);
 
 
                 } else {
+                    vs_withdraw_bank.setDisplayedChild(1);
                     Toast.makeText(WithdrawActivity.this, "加载失败，请确认网络通畅",
                             Toast.LENGTH_LONG).show();
                 }

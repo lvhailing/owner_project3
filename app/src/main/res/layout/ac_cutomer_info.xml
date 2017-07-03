@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewSwitcher xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/vs"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/bg_gray"
+    android:paddingBottom="10dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_gray"
-        android:paddingBottom="10dp">
+        <ViewSwitcher
+            android:id="@+id/vs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             xmlns:ptr="http://schemas.android.com/apk/res-auto"
@@ -25,7 +25,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="52dp"
             ptr:ptrMode="both" />
+         <include layout="@layout/ac_empty_view" />
 
+        </ViewSwitcher >
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
@@ -37,7 +39,5 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/shape_center_orange"/>
 
-    </RelativeLayout>
-    <include layout="@layout/ac_empty_view" />
+</RelativeLayout>
 
-</ViewSwitcher >

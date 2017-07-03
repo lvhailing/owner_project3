@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.OverseaProjectAdapter;
@@ -34,6 +37,7 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
     private OverseaProjectAdapter mAdapter;
     private MouldList<OverseaProjectList3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
+    private ViewSwitcher vs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +71,13 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
     }
 
     private void initView() {
-        listView = (PullToRefreshListView) findViewById(R.id.listview);
+        vs = (ViewSwitcher) findViewById(R.id.vs);
+        TextView tv_empty = (TextView) findViewById(R.id.tv_empty);
+        ImageView img_empty = (ImageView) findViewById(R.id.img_empty);
+        tv_empty.setText("暂无海外项目");
+        img_empty.setBackgroundResource(R.mipmap.ic_empty_oversea_project);
 
+        listView = (PullToRefreshListView) findViewById(R.id.listview);
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(listView);
     }
@@ -126,6 +135,7 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
                 @Override
                 public void onRequestFinished(BaseParams params) {
                     if (params.result == null) {
+                        vs.setDisplayedChild(1);
                         Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                         listView.postDelayed(new Runnable() {
                             @Override
@@ -138,25 +148,30 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
 
                     OverseaProjectList2B data = (OverseaProjectList2B) params.result;
                     MouldList<OverseaProjectList3B> everyList = data.getList();
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    mAdapter.notifyDataSetChanged();
-
-                    listView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            listView.onRefreshComplete();
+                    if (everyList.size() == 0) {
+                        vs.setDisplayedChild(1);
+                    } else {
+                        vs.setDisplayedChild(0);
+                        if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                            Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
                         }
-                    }, 1000);
+
+                        if (currentPage == 1) {
+                            //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                            totalList.clear();
+                        }
+                        totalList.addAll(everyList);
+
+                        //刷新数据
+                        mAdapter.notifyDataSetChanged();
+
+                        listView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                listView.onRefreshComplete();
+                            }
+                        }, 1000);
+                    }
                 }
             });
         } catch (Exception e) {

@@ -442,7 +442,41 @@
             android:divider="@null"
             android:listSelector="#00000000"/>
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/rl_empty_house"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/img_middle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dip"
+                android:scaleType="centerInside"/>
+
+            <ImageView
+                android:id="@+id/img_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleType="centerInside"/>
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_middle"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:textColor="@color/gray_d"
+                />
+        </RelativeLayout>
+
+       <!-- <TextView
             android:id="@+id/tv_no_house"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -452,7 +486,7 @@
             android:text="暂无相关房源，敬请期待..."
             android:textColor="@color/txt_light_gray"
             android:textSize="16sp"
-            android:visibility="gone"/>
+            android:visibility="gone"/>-->
     </LinearLayout>
 
 </ScrollView>

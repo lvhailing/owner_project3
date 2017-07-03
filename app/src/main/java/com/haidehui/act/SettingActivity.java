@@ -202,7 +202,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
             case R.id.rl_setting_service_agreement:     // 服务协议
                 Intent i_service = new Intent(SettingActivity.this,WebActivity.class);
-                i_service.putExtra("type", WebActivity.WEBTYPE_SERVICE_AGREEMENT);
+                i_service.putExtra("type", WebActivity.WEBTYPE_SIGN_AGREEMENT);
                 i_service.putExtra("title", getResources().getString(R.string.setting_service_agreement));
                 i_service.putExtra("url", Urls.URL_SERVICE_AGREEMENT );
                 startActivity(i_service);
