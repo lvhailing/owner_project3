@@ -36,6 +36,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/bg_oversea_project_normal"/>
 
         <LinearLayout
@@ -48,8 +49,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLength="18"
+                android:maxLines="1"
                 android:text="发布时间："
                 android:textColor="@color/txt_light_gray"
                 android:textSize="13sp"/>
@@ -59,9 +60,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="28dp"
+                android:gravity="right"
+                android:paddingRight="60dp"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
+                android:maxLength="16"
                 android:text="演讲嘉宾："
                 android:textColor="@color/txt_light_gray"
                 android:textSize="13sp"/>
