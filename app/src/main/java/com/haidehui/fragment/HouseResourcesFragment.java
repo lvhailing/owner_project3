@@ -220,12 +220,12 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
     public void onResume() {
         super.onResume();
 
-        currentPage = 1;
-        houseCatagory = ""; //首次默认"" ，代表全部类型
-        housePrice = "1"; // 首次默认价格传1
-        houseFunction = ""; //首次默认"" ，代表全部功能
-        requestGetHouseList();
-        listView.getRefreshableView().setSelection(0);
+//        currentPage = 1;
+//        houseCatagory = ""; //首次默认"" ，代表全部类型
+//        housePrice = "1"; // 首次默认价格传1
+//        houseFunction = ""; //首次默认"" ，代表全部功能
+//        requestGetHouseList();
+//        listView.getRefreshableView().setSelection(0);
 //        Log.i("hh", "房源---Fragment----onResume");
     }
 
