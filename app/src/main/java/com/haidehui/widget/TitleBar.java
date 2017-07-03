@@ -330,7 +330,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         }
         child = new TextView(mContext);
         int p_left = ViewUtils.dip2px(mContext, 15);
-        int p_top = ViewUtils.dip2px(mContext, 5);
+        int p_top = ViewUtils.dip2px(mContext, 2.5f);
+        int p_bottom = ViewUtils.dip2px(mContext, 5);
         child.setPadding(p_left, p_top, p_left, p_top);
         child.setGravity(Gravity.CENTER);
         if (text.length() >= 3) {
@@ -357,9 +358,9 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         child.setOnClickListener(this);
         child.setClickable(false);
          int l = ViewUtils.dip2px(mContext, 0);
-         int t = ViewUtils.dip2px(mContext, 12);
+         int t = ViewUtils.dip2px(mContext, 10);
          int r = ViewUtils.dip2px(mContext, 20);
-         int b = ViewUtils.dip2px(mContext, 12);
+         int b = ViewUtils.dip2px(mContext, 10);
 //        child.setVisibility(ishow);
         LinearLayout.LayoutParams LayoutParams_l = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LayoutParams_l.setMargins(l, t, r, b);
