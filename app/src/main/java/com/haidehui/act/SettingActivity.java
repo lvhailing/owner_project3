@@ -11,6 +11,7 @@ import com.haidehui.R;
 import com.haidehui.common.Urls;
 import com.haidehui.dialog.VerifyPassWordDialog;
 import com.haidehui.net.UserLoadout;
+import com.haidehui.uitls.ActivityStack;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.widget.TitleBar;
@@ -37,6 +38,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView tv_setting_version_code;       //  版本号
     private TextView tv_setting_logout;         //  退出登录
 
+    private ActivityStack stack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void initView(){
+
+        stack = ActivityStack.getActivityManage();
+        stack.addActivity(this);
+
         rl_setting_change_phone = (RelativeLayout) findViewById(R.id.rl_setting_change_phone);
         ib_setting_gesture = (ImageButton) findViewById(R.id.ib_setting_gesture);
         rl_setting_change_gesture_password = (RelativeLayout) findViewById(R.id.rl_setting_change_gesture_password);
@@ -233,7 +239,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
 
             case R.id.rl_setting_about:     //  关于我们
-                Intent i_about = new Intent(SettingActivity.this,AboutActivity.class);
+                Intent i_about = new Intent(SettingActivity.this,WebActivity.class);
                 i_about.putExtra("type", WebActivity.WEBTYPE_ABOUT_US);
                 i_about.putExtra("title", getResources().getString(R.string.setting_about));
                 i_about.putExtra("url", Urls.URL_ABOUT_US );

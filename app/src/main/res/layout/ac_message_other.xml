@@ -35,10 +35,10 @@
         android:layout_gravity="center"
         >
         <ImageView
-            android:layout_width="100dip"
-            android:layout_height="100dip"
-            android:scaleType="fitXY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@mipmap/img_message_other_nodata"
+            android:layout_gravity="center"
             />
         <TextView
             android:id="@+id/tv_myother_nodata"

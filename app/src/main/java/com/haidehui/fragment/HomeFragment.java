@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private HomeIndex2B homeIndexData;
     private String userId;
     private MyRollViewPager rollViewPager;
-    private  RelativeLayout rl_empty_house;
+    private RelativeLayout rl_empty_house;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         context = getActivity();
         picList = new MouldList<ResultCycleIndex2B>();
 
-         rl_empty_house = (RelativeLayout) mView.findViewById(R.id.rl_empty_house);
+        rl_empty_house = (RelativeLayout) mView.findViewById(R.id.rl_empty_house);
         TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
         ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
         tv_empty.setText("暂无精品房源");
@@ -160,19 +161,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.ll_home_notice: // 公告的点击监听
-                intent = new Intent(context, WebActivity.class);
-                intent.putExtra("type", WebActivity.WEBTYPE_NOTICE);
-                intent.putExtra("title", getResources().getString(R.string.message_notice_detail));
-                intent.putExtra("url", Urls.URL_NOTICEDETAIL + homeIndexData.getBid() + "&userId=" + userId);
-                startActivity(intent);
+                if (!TextUtils.isEmpty(homeIndexData.getBid())) {
+                    intent = new Intent(context, WebActivity.class);
+                    intent.putExtra("type", WebActivity.WEBTYPE_NOTICE);
+                    intent.putExtra("title", getResources().getString(R.string.message_notice_detail));
+                    intent.putExtra("url", Urls.URL_NOTICEDETAIL + homeIndexData.getBid() + "&userId=" + userId);
+                    startActivity(intent);
+                }
 
                 break;
             case R.id.tv_home_notice: // 公告的点击监听
-                intent = new Intent(context, WebActivity.class);
-                intent.putExtra("type", WebActivity.WEBTYPE_NOTICE);
-                intent.putExtra("title", getResources().getString(R.string.message_notice_detail));
-                intent.putExtra("url", Urls.URL_NOTICEDETAIL + homeIndexData.getBid() + "&userId=" + userId);
-                startActivity(intent);
+                if (!TextUtils.isEmpty(homeIndexData.getBid())) {
+                    intent = new Intent(context, WebActivity.class);
+                    intent.putExtra("type", WebActivity.WEBTYPE_NOTICE);
+                    intent.putExtra("title", getResources().getString(R.string.message_notice_detail));
+                    intent.putExtra("url", Urls.URL_NOTICEDETAIL + homeIndexData.getBid() + "&userId=" + userId);
+                    startActivity(intent);
+                }
 
                 break;
         }
@@ -193,7 +198,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
 
                 homeIndexData = (HomeIndex2B) params.result;
-                tv_home_notice.setText(homeIndexData.getTitle());
+                if (!TextUtils.isEmpty(homeIndexData.getTitle())) {
+                    tv_home_notice.setText(homeIndexData.getTitle());
+                } else {
+                    tv_home_notice.setText("暂无公告");
+                }
                 BoutiqueHouseList = homeIndexData.getList();
                 if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
                     myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
@@ -204,7 +213,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         public void run() {
                             scrollView.smoothScrollTo(0, 0);
                         }
-                    }, 500);
+                    },5);
                 } else {
                     rl_empty_house.setVisibility(View.VISIBLE);
                 }

@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginRight="5dp"
-    android:background="@color/white"
+    android:background="@drawable/shape_center_white"
     android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
 

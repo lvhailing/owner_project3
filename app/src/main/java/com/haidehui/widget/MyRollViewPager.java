@@ -29,7 +29,7 @@ public class MyRollViewPager extends ViewPager {
     private LinearLayout mPointContainer;
     private boolean isCycle = false;
     private MouldList<ResultCycleIndex2B> picList; //用于保存后台返回的图片的集合
-    private int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal}; //加入后台没返回图片，则使用默认图片
+    private int ids[] = {R.mipmap.bg_home_carousel_figure_normal, R.mipmap.bg_home_carousel_figure_normal}; // 假如后台没返回图片，则使用默认图片
 
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -56,7 +56,7 @@ public class MyRollViewPager extends ViewPager {
         this.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                //每滑动一次 改变一次所有小圆点的状态
+                // 每滑动一次 改变一次所有小圆点的状态
                 resetCircleState(position);
             }
 
@@ -93,7 +93,7 @@ public class MyRollViewPager extends ViewPager {
 
         //初始化小圆点
         initDot();
-        //重新设置小圆点谁亮谁暗
+        //重新设置小圆点状态
         resetCircleState(getCurrentItem());
 
         //如果是无限循环
@@ -114,13 +114,13 @@ public class MyRollViewPager extends ViewPager {
         // 直接刷新这个adapter
         mpAdapter.notifyDataSetChanged();
 
-        //清楚集合里小圆点实体 确保不重复
+        //清除集合里小圆点实体 确保不重复
         dotList.clear();
-        //清楚界面小圆点图像 确保不重复
+        //清除界面小圆点图像 确保不重复
         mPointContainer.removeAllViews();
         //之后，再重新初始化小圆点
         initDot();
-        //重新设置小圆点谁亮谁暗
+        //重新设置小圆点状态
         resetCircleState(getCurrentItem());
 
         //如果是无限循环
@@ -132,7 +132,7 @@ public class MyRollViewPager extends ViewPager {
         }
     }
 
-    //重新设置小圆点谁亮谁暗
+    //重新设置小圆点状态
     private void resetCircleState(int position) {
         //因为是无限循环 position会无限增大，所以%
         int index = position % dotList.size();
@@ -202,7 +202,7 @@ public class MyRollViewPager extends ViewPager {
                     });
                 }
             } else {
-                //去默认图片
+                // 取默认图片
                 iv.setBackgroundResource(ids[position % ids.length]);
             }
 

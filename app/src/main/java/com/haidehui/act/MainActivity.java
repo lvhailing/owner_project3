@@ -164,7 +164,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private void setSelect(int i) {
+    public void setSelect(int i) {
         if (i == 0) {
             tab_home.resetScrollViewSmooth();
         } else {
@@ -203,6 +203,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case 0:
                 tv_home.setTextColor(Color.parseColor("#8a0002"));
                 iv_home.setImageResource(R.mipmap.bg_home_pressed);
+                mViewPager.setCurrentItem(0);
                 break;
             case 1:
                 tv_house_resources.setTextColor(Color.parseColor("#8a0002"));
