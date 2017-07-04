@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,8 +17,6 @@ import com.haidehui.photo_preview.fresco.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * 轮播图 自定义的ViewPager
@@ -39,12 +36,12 @@ public class MyRollViewPager extends ViewPager {
             switch (msg.what) {
                 case 0:
                     setCurrentItem(getCurrentItem() + 1);
+                    //启动下一次定时
+                    handler.sendEmptyMessageDelayed(0, 2000);
                     break;
             }
         }
     };
-    private Timer timer;
-    private TimerTask timerTask;
 
     /**
      * @param context 构造函数
@@ -56,17 +53,11 @@ public class MyRollViewPager extends ViewPager {
         this.picList = pics;
         this.mPointContainer = container;
 
-        //设置滑动属性
-//        setVpSpeed();
-
         this.setOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                int index = position % dotList.size();
-                for (int i = 0; i < dotList.size(); i++) {
-                    dotList.get(i).setBackgroundResource(R.drawable.dot_normal);
-                }
-                dotList.get(index).setBackgroundResource(R.drawable.dot_focus_red);
+                //每滑动一次 改变一次所有小圆点的状态
+                resetCircleState(position);
             }
 
             @Override
@@ -75,9 +66,6 @@ public class MyRollViewPager extends ViewPager {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//                if (isCycle && state == 0) {
-//                    handler.sendEmptyMessageDelayed(0, 2000);
-//                }
             }
         });
     }
@@ -105,12 +93,15 @@ public class MyRollViewPager extends ViewPager {
 
         //初始化小圆点
         initDot();
+        //重新设置小圆点谁亮谁暗
+        resetCircleState(getCurrentItem());
 
         //如果是无限循环
         if (isCycle) {
-            //则开始发送定时message
-//            handler.sendEmptyMessageDelayed(0, 2000);
-            startScroll();
+            //移除当前定时（移除之前的message，防止再次进入时message重复）
+            handler.removeCallbacksAndMessages(null);   //切记参数传null
+            //启动本次定时（开始发送定时message）
+            handler.sendEmptyMessageDelayed(0, 2000);
         }
     }
 
@@ -129,33 +120,26 @@ public class MyRollViewPager extends ViewPager {
         mPointContainer.removeAllViews();
         //之后，再重新初始化小圆点
         initDot();
+        //重新设置小圆点谁亮谁暗
+        resetCircleState(getCurrentItem());
 
         //如果是无限循环
         if (isCycle) {
-            // 先移除之前的message，防止第二次获取到后台数据后message重复
-//            handler.removeMessages(0);
-//            则开始发送定时message
-//            handler.sendEmptyMessageDelayed(0, 2000);
-            startScroll();
+            //移除当前定时（移除之前的message，防止再次进入时message重复）
+            handler.removeCallbacksAndMessages(null);   //切记参数传null
+            //启动本次定时（开始发送定时message）
+            handler.sendEmptyMessageDelayed(0, 2000);
         }
     }
 
-    private void startScroll() {
-        Log.i("aaa", "0000");
-        pause();
-        timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                mPointContainer.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setCurrentItem(getCurrentItem() + 1);
-                    }
-                });
-            }
-        };
-        timer.schedule(timerTask, 2000, 2000);
+    //重新设置小圆点谁亮谁暗
+    private void resetCircleState(int position) {
+        //因为是无限循环 position会无限增大，所以%
+        int index = position % dotList.size();
+        for (int i = 0; i < dotList.size(); i++) {
+            dotList.get(i).setBackgroundResource(R.drawable.dot_normal);
+        }
+        dotList.get(index).setBackgroundResource(R.drawable.dot_focus_red);
     }
 
     /**
@@ -164,15 +148,8 @@ public class MyRollViewPager extends ViewPager {
     private void initDot() {
         //小圆点的个数 如果后台返回的地址集合无数据，则取默认图片数组
         int pointNum = (picList == null || picList.size() == 0) ? ids.length : picList.size();
-
         for (int i = 0; i < pointNum; i++) {
             View view = new View(context);
-            if (i == 0) {
-                //第一个小圆点点亮
-                view.setBackgroundResource(R.drawable.dot_focus_red);
-            } else {
-                view.setBackgroundResource(R.drawable.dot_normal);
-            }
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(18, 18);
             layoutParams.setMargins(8, 0, 8, 0);
             mPointContainer.addView(view, layoutParams);
@@ -180,15 +157,12 @@ public class MyRollViewPager extends ViewPager {
         }
     }
 
+    //切换到其他tab时，需要移除当前定时
     public void pause() {
-        //界面离开时 停止计数
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
+        //如果是无限循环
+        if (isCycle) {
+            //移除当前定时（移除之前的message，防止再次进入时message重复）
+            handler.removeCallbacksAndMessages(null);   //切记参数传null
         }
     }
 
@@ -218,7 +192,7 @@ public class MyRollViewPager extends ViewPager {
                 //后台返回了地址集合
                 ImageLoader.getInstance().loadImageLocalOrNet(iv, picList.get(position % picList.size()).getPicture());
 
-                //设置点击回调
+                //设置了点击回调，则回调activity
                 if (myClickListener != null) {
                     iv.setOnClickListener(new OnClickListener() {
                         @Override
