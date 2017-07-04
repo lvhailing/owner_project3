@@ -219,30 +219,31 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
                     }
                     CustomerInfo2B data = (CustomerInfo2B) params.result;
                     MouldList<CustomerInfo3B> everyList = data.getList();
-                    if (everyList.size() == 0) {
+
+                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (currentPage == 1) {
+                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                        totalList.clear();
+                    }
+                    totalList.addAll(everyList);
+                    if (totalList.size() == 0) {
                         vs.setDisplayedChild(1);
                     } else {
                         vs.setDisplayedChild(0);
-                        if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                            Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                        }
-
-                        if (currentPage == 1) {
-                            //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                            totalList.clear();
-                        }
-                        totalList.addAll(everyList);
-
-                        //刷新数据
-                        adapter.notifyDataSetChanged();
-
-                        lv_customer_info.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                lv_customer_info.onRefreshComplete();
-                            }
-                        }, 1000);
                     }
+
+                    //刷新数据
+                    adapter.notifyDataSetChanged();
+
+                    lv_customer_info.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            lv_customer_info.onRefreshComplete();
+                        }
+                    }, 1000);
                 }
             });
         } catch (Exception e) {

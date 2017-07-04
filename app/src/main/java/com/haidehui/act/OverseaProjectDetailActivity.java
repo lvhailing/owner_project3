@@ -61,8 +61,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private MyListView myListView;
     private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
     private RelatedHouseAdapter myAdapter; // 相关房源 Adapter
-//    private TextView tv_no_house; // 相关房源没数据时显示的提示语
-    private RelativeLayout rl_empty_house;
+    private RelativeLayout rl_empty_house;// 相关房源没数据时显示的提示语
 
     private RelativeLayout rl_pro_house, rl_pro_facilities, rl_pro_geographic_location; // 项目居室，配套设施，地理位置布局
 
@@ -129,7 +128,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         tv_project_des = (TextView) findViewById(R.id.tv_project_des);
         tv_support_facilities_desc = (TextView) findViewById(R.id.tv_support_facilities_desc);
         tv_geographic_location_desc = (TextView) findViewById(R.id.tv_geographic_location_desc);
-//        tv_no_house = (TextView) findViewById(R.id.tv_no_house);
 
         ll_pro_house_photos = (LinearLayout) findViewById(R.id.ll_pro_house_photos);
         ll_support_facilities = (LinearLayout) findViewById(R.id.ll_support_facilities);
@@ -139,9 +137,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         vp = (ViewPager) findViewById(R.id.vp);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
 
-//        iv_project_click.setOnClickListener(this);
-//        iv_support_facilities_click.setOnClickListener(this);
-//        iv_geographic_location_click.setOnClickListener(this);
         rl_pro_house.setOnClickListener(this);
         rl_pro_facilities.setOnClickListener(this);
         rl_pro_geographic_location.setOnClickListener(this);
@@ -173,6 +168,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         }
     }
 
+    // 图片切换时更新数字
     private void updateNum() {
         tv_vp_page.setText(currentPos + 1 + "/" + houseTypeImgList.size());
     }
@@ -205,8 +201,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     @Override
     protected void onResume() {
         super.onResume();
-
-        scrollView.smoothScrollTo(0, 0);
+//        scrollView.smoothScrollTo(0, 0);
         requestDetailData();
     }
 
@@ -269,6 +264,12 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                         if (relatedhouseList != null && relatedhouseList.size() > 0) {
                             myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);
                             myListView.setAdapter(myAdapter);
+                            myListView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scrollView.smoothScrollTo(0, 0);
+                                }
+                            }, 500);
                         } else {
                             rl_empty_house.setVisibility(View.VISIBLE);
                         }

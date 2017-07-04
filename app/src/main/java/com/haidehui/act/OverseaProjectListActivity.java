@@ -132,48 +132,51 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
 
         try {
             HtmlRequest.getOverseaListData(mContext, param, new BaseRequester.OnRequestListener() {
-                @Override
-                public void onRequestFinished(BaseParams params) {
-                    if (params.result == null) {
-                        vs.setDisplayedChild(1);
-                        Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                        listView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                listView.onRefreshComplete();
+                        @Override
+                        public void onRequestFinished(BaseParams params) {
+                            if (params.result == null) {
+                                vs.setDisplayedChild(1);
+                                Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                                listView.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listView.onRefreshComplete();
+                                    }
+                                }, 1000);
+                                return;
                             }
-                        }, 1000);
-                        return;
-                    }
 
-                    OverseaProjectList2B data = (OverseaProjectList2B) params.result;
-                    MouldList<OverseaProjectList3B> everyList = data.getList();
-                    if (everyList.size() == 0) {
-                        vs.setDisplayedChild(1);
-                    } else {
-                        vs.setDisplayedChild(0);
-                        if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                            Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                            OverseaProjectList2B data = (OverseaProjectList2B) params.result;
+                            MouldList<OverseaProjectList3B> everyList = data.getList();
+
+                            if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                                Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                            }
+
+                            if (currentPage == 1) {
+                                //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                                totalList.clear();
+                            }
+                            totalList.addAll(everyList);
+                            if (totalList.size() == 0) {
+                                vs.setDisplayedChild(1);
+                            } else {
+                                vs.setDisplayedChild(0);
+                            }
+                            //刷新数据
+                            mAdapter.notifyDataSetChanged();
+
+                            listView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listView.onRefreshComplete();
+                                }
+                            }, 1000);
                         }
 
-                        if (currentPage == 1) {
-                            //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                            totalList.clear();
-                        }
-                        totalList.addAll(everyList);
-
-                        //刷新数据
-                        mAdapter.notifyDataSetChanged();
-
-                        listView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                listView.onRefreshComplete();
-                            }
-                        }, 1000);
                     }
-                }
-            });
+
+            );
         } catch (Exception e) {
             e.printStackTrace();
         }

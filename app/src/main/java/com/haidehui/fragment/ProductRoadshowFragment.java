@@ -138,25 +138,27 @@ public class ProductRoadshowFragment extends Fragment {
 
                 ProductRoadshow2B data = (ProductRoadshow2B) params.result;
                 MouldList<ProductRoadshow3B> everyList = data.getList();
-                if (everyList.size() == 0) {
+
+                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                }
+
+                if (currentPage == 1) {
+                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 ,这两种情况之前的数据都清掉
+                    totalList.clear();
+                }
+                totalList.addAll(everyList);
+                if (totalList.size() == 0) {
                     vs.setDisplayedChild(1);
                 } else {
                     vs.setDisplayedChild(0);
-                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (currentPage == 1) {
-                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 ,这两种情况之前的数据都清掉
-                        totalList.clear();
-                    }
-                    totalList.addAll(everyList);
-
-                    //刷新数据
-                    myAdapter.notifyDataSetChanged();
-
-                    upDate(listView);
                 }
+
+                //刷新数据
+                myAdapter.notifyDataSetChanged();
+
+                upDate(listView);
+
             }
         });
 

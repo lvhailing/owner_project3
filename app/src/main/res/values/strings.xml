@@ -42,7 +42,7 @@
     <string name="message_nodata">暂无数据</string>
     <string name="message_info_nodata">暂无账本消息</string>
     <string name="message_notice_nodata">暂无公告消息</string>
-    <string name="message_other_nodata">暂无其他消息</string>
+    <string name="message_other_nodata">暂无其它消息</string>
     <string name="message_notice_detail">详情</string>
     <string name="message_other_detail">详情</string>
 

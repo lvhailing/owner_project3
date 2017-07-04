@@ -146,7 +146,7 @@ public class MessageNoticeActivity extends BaseActivity{
                         ResultMessageContentBean infoBean = (ResultMessageContentBean)params.result;
                         if(infoBean.getList()!=null){
                             if (infoBean.getList().size() == 0 && page!=1 ) {
-                                Toast.makeText(context, "已经到最后一页",
+                                Toast.makeText(context, "已显示全部",
                                         Toast.LENGTH_SHORT).show();
                                 page = cachePage_pro - 1;
                                 noticeAdapter.notifyDataSetChanged();

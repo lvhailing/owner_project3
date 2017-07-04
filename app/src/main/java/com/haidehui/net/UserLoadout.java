@@ -53,7 +53,7 @@ public class UserLoadout {
 				Intent i_account = new Intent();
 				i_account.setClass(context, MainActivity.class);
 				i_account.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				i_account.putExtra("selectPage", 3);
+				i_account.putExtra("selectPage", 0);
 				context.startActivity(i_account);
 				// } else {
 				// Toast.makeText(context, b.getMsg(), Toast.LENGTH_LONG)
