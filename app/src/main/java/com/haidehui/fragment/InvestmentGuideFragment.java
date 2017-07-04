@@ -115,9 +115,9 @@ public class InvestmentGuideFragment extends Fragment {
 
 //        Log.i("hh", "投资指南---Fragment----onResume");
 
-        currentPage = 1;
-        requestInvestmentGuideListData();
-        listView.getRefreshableView().setSelection(0);
+//        currentPage = 1;
+//        requestInvestmentGuideListData();
+//        listView.getRefreshableView().setSelection(0);
     }
 
     // 获取投资指南列表数据
@@ -139,7 +139,7 @@ public class InvestmentGuideFragment extends Fragment {
                 MouldList<InvestmentGuide3B> everyList = data.getList();
 
                 if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "已显示全部", Toast.LENGTH_SHORT).show();
                 }
 
                 if (currentPage == 1) {

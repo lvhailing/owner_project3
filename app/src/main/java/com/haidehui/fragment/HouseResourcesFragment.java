@@ -805,7 +805,7 @@ public class HouseResourcesFragment extends Fragment implements OnClickListener 
                 HouseList2B data = (HouseList2B) params.result;
                 everyList = data.getList();
                 if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "已显示全部", Toast.LENGTH_SHORT).show();
                 }
 
                 if (currentPage == 1) {

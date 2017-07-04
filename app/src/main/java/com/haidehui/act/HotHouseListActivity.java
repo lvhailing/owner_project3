@@ -153,7 +153,7 @@ public class HotHouseListActivity extends BaseActivity implements View.OnClickLi
                     MouldList<HotHouse3B> everyList = data.getList();
 
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "已显示全部", Toast.LENGTH_SHORT).show();
                     }
 
                     if (currentPage == 1) {

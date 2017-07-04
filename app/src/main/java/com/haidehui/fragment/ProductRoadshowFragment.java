@@ -116,9 +116,9 @@ public class ProductRoadshowFragment extends Fragment {
 
 //        Log.i("hh", "产品路演---Fragment----onResume");
 
-        currentPage = 1;
-        requestRoadShowListData();
-        listView.getRefreshableView().setSelection(0);
+//        currentPage = 1;
+//        requestRoadShowListData();
+//        listView.getRefreshableView().setSelection(0);
     }
 
     // 获取路演列表数据
@@ -140,7 +140,7 @@ public class ProductRoadshowFragment extends Fragment {
                 MouldList<ProductRoadshow3B> everyList = data.getList();
 
                 if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(context, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "已显示全部", Toast.LENGTH_SHORT).show();
                 }
 
                 if (currentPage == 1) {

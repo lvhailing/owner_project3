@@ -148,7 +148,7 @@ public class SubcribeFragment extends Fragment {
                     MouldList<RenGou3B> everyList = data.getList();
 
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(getActivity(), "已经到最后一页", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "已显示全部", Toast.LENGTH_SHORT).show();
                     }
 
                     if (currentPage == 1) {

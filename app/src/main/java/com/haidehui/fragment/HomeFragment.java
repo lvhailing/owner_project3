@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,13 +84,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-//        Log.i("hh", "首页---Fragment----onResume");
-//        requestHomeIndexData(); // 请求首页数据
+        Log.i("hh", "首页---Fragment----onResume");
+        resetScrollViewSmooth();
     }
 
     public void resetScrollViewSmooth() {
         requestCycleIndex(); // 请求轮图数据
         requestHomeIndexData(); // 请求首页数据
+
     }
 
     private void initView(View mView) {
@@ -129,9 +131,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-        requestCycleIndex(); // 请求轮图数据
-
-        requestHomeIndexData(); // 请求首页数据
+//        requestCycleIndex(); // 请求轮图数据
+//
+//        requestHomeIndexData(); // 请求首页数据
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
             @Override
@@ -213,7 +215,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         public void run() {
                             scrollView.smoothScrollTo(0, 0);
                         }
-                    },5);
+                    },1);
+//                    scrollView.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                            scrollView.smoothScrollTo(0,0);
+//                        }
+//                    },1);
+
                 } else {
                     rl_empty_house.setVisibility(View.VISIBLE);
                 }

@@ -214,7 +214,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
                     MouldList<Tracking2B> everyList = (MouldList<Tracking2B>) params.result;
 
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                        Toast.makeText(mContext, "已经到最后一页", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "已显示全部", Toast.LENGTH_SHORT).show();
                     }
 
                     if (currentPage == 1) {
