@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     private ViewSwitcher vs;
     private TextView tv_empty;
     private ImageView img_empty;
+    private String status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +148,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
 
     }
     private void initData() {
+        status=getIntent().getStringExtra("checkStatus");
         btn_submit.setOnClickListener(this);
         adapter = new CustomerInfoAdapter(CustomerInfoActivity.this, totalList);
         lv_customer_info.setAdapter(adapter);
@@ -276,8 +280,13 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_submit:
-                Intent intent = new Intent(this, SubmitCustomerInfoActivity.class);
-                startActivityForResult(intent, 1000);
+                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
+                    Intent intent = new Intent(this, SubmitCustomerInfoActivity.class);
+                    startActivityForResult(intent, 1000);
+                } else {
+                    Toast.makeText(mContext, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }

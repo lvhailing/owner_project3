@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dip"
-            android:src="@mipmap/img_login_logo"
+            android:src="@mipmap/img_logo"
             />
 
         <TextView

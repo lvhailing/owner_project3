@@ -171,19 +171,18 @@
                 android:textColor="@color/txt_light_gray"
                 android:textSize="14sp"/>
 
-           <!-- <View
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/transparent"/>-->
+                android:layout_height="100dp"
+                android:background="@color/transparent"/>
         </LinearLayout>
 
         <ImageView
             android:layout_width="1.5dp"
-            android:layout_height="match_parent"
+            android:layout_height="906dp"
             android:src="@mipmap/bg_dash_line"
             android:layout_marginLeft="21dp"
             android:layout_marginTop="65dp"
-           android:layout_marginBottom="30dp"
            />
     </RelativeLayout>
 

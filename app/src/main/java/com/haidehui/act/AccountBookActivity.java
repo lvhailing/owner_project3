@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,6 +47,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
 
     private Button btn_withdraw;
     private int flag=1;
+    private String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
+        status=getIntent().getStringExtra("checkStatus");
         img_back.setOnClickListener(this);
         img_income_intro.setOnClickListener(this);
         tv_commission.setOnClickListener(this);
@@ -139,10 +142,14 @@ public class AccountBookActivity extends BaseActivity implements View.OnClickLis
                 break;
 
             case R.id.btn_withdraw:
+                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
 
-                Intent i_withdraw = new Intent(this,WithdrawActivity.class);          //  提现
-                startActivity(i_withdraw);
+                    Intent i_withdraw = new Intent(this,WithdrawActivity.class);          //  提现
+                    startActivity(i_withdraw);
 
+                } else {
+                    Toast.makeText(mContext, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             default:

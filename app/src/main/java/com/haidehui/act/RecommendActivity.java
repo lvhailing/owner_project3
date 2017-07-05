@@ -78,7 +78,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         initView();
         initData();
         try {
-            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_recommend_code)), "dafuweng.png");
+            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "dafuweng.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -263,13 +263,16 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     oks.setText(getString(R.string.shared_message) + url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
+                    oks.setTitle(getString(R.string.login_title));
                     oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
                 } else if (string.contains("Wechat")) {
                     way = "weixinFr";        //微信好友
                     oks.setText(getString(R.string.shared_message) + url);
+                    oks.setTitle(getString(R.string.login_title));
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
 //					oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");
+                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
                 } else if (string.contains("QZone")) {
                     way = "Qzone";
                     oks.setText(getString(R.string.shared_message) + url);

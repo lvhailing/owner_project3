@@ -188,12 +188,9 @@ public class MineFragment extends Fragment implements OnClickListener {
                 }
                 break;
             case R.id.tv_customer_info://跳转客户信息
-                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
-                    Intent i_customer_info = new Intent(context, CustomerInfoActivity.class);
-                    startActivity(i_customer_info);
-                } else {
-                    Toast.makeText(context, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
-                }
+                Intent i_customer_info = new Intent(context, CustomerInfoActivity.class);
+                i_customer_info.putExtra("checkStatus",status);
+                startActivity(i_customer_info);
                 break;
             case R.id.tv_customer_follow://跳转客户跟踪
                 Intent i_customer_follow = new Intent(context, CustomerTrackingActivity.class);
@@ -208,21 +205,15 @@ public class MineFragment extends Fragment implements OnClickListener {
                 startActivity(i_identify);
                 break;
             case R.id.layout_account_book://跳转我的账本
-                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
                     Intent i_account_book = new Intent(context, AccountBookActivity.class);
+                    i_account_book.putExtra("checkStatus",status);
                     startActivity(i_account_book);
-                } else {
-                    Toast.makeText(context, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
-                }
                 break;
 
             case R.id.rl_mine_mybankcard:  // 我的银行卡
-                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
                     Intent i_mybank = new Intent(context, MyBankActivity.class);          //  我的银行卡
+                    i_mybank.putExtra("checkStatus",status);
                     startActivity(i_mybank);
-                } else {
-                    Toast.makeText(context, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
-                }
                 break;
 
             case R.id.rl_mine_setting:

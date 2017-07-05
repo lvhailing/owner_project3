@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
     private RelativeLayout rl_mybank_add;
     private LinearLayout ll_mybank_nodata;
     private ViewSwitcher vs_mybank;
+    private String status;
 
 
     @Override
@@ -121,7 +123,7 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
 
 
     public void initView(){
-
+        status=getIntent().getStringExtra("checkStatus");
         context = this;
         list = new MouldList<ResultMyBankListContentItemBean>();
         lv_mybank = (ListView) findViewById(R.id.lv_mybank);
@@ -132,8 +134,13 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
         rl_mybank_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i_addCard = new Intent(context,AddBankActivity.class);
-                startActivity(i_addCard);
+                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
+                    Intent i_addCard = new Intent(context,AddBankActivity.class);
+                    startActivity(i_addCard);
+                } else {
+                    Toast.makeText(mContext, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

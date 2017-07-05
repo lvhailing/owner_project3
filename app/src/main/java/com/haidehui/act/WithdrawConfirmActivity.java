@@ -176,10 +176,24 @@ public class WithdrawConfirmActivity extends BaseActivity implements View.OnClic
         switch (view.getId()){
 
             case R.id.tv_withdraw_get_verify_code:
-                tv_withdraw_get_verify_code.setClickable(false);
-                requestSMS();
+
 //                smsflag = true;
 //                startThread();
+
+                if(Double.parseDouble(amount)>Double.parseDouble(b.getCashNum())||Double.parseDouble(b.getCashNum())==0){
+                    Toast.makeText(WithdrawConfirmActivity.this, "可提现佣金不足",
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    if(!NumUtils.isTwoDecimal(amount)){
+                        Toast.makeText(WithdrawConfirmActivity.this, "提现金额格式不正确，请保留两位小数",
+                                Toast.LENGTH_SHORT).show();
+                    }else{
+                        tv_withdraw_get_verify_code.setClickable(false);
+                        requestSMS();
+                    }
+
+                }
+
 
                 break;
 
