@@ -40,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:text="类型"
                 android:textColor="@color/txt_black"
-                android:textSize="18sp"/>
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/iv_select_type"
@@ -72,7 +72,7 @@
                 android:layout_centerVertical="true"
                 android:text="价格"
                 android:textColor="@color/txt_black"
-                android:textSize="18sp"/>
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/iv_select_price"
@@ -104,7 +104,7 @@
                 android:layout_centerVertical="true"
                 android:text="功能"
                 android:textColor="@color/txt_black"
-                android:textSize="18sp"/>
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/iv_select_function"
@@ -182,7 +182,7 @@
                     android:gravity="center"
                     android:text="公寓"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv2"
@@ -194,7 +194,7 @@
                     android:gravity="center"
                     android:text="商铺"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv3"
@@ -206,7 +206,7 @@
                     android:gravity="center"
                     android:text="别墅"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -229,7 +229,7 @@
                     android:gravity="center"
                     android:text="学区"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv5"
@@ -241,7 +241,7 @@
                     android:gravity="center"
                     android:text="土地"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv6"
@@ -253,7 +253,7 @@
                     android:gravity="center"
                     android:text="庄园"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <View
@@ -282,7 +282,7 @@
                     android:gravity="center"
                     android:text="重置"
                     android:textColor="@color/txt_orange"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <Button
                     android:id="@+id/btn_type_sure"
@@ -294,7 +294,7 @@
                     android:gravity="center"
                     android:text="确定"
                     android:textColor="@color/white"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -405,7 +405,7 @@
                     android:gravity="center"
                     android:text="投资"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv2_func"
@@ -417,7 +417,7 @@
                     android:gravity="center"
                     android:text="自住"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv3_func"
@@ -429,7 +429,7 @@
                     android:gravity="center"
                     android:text="度假"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -452,7 +452,7 @@
                     android:gravity="center"
                     android:text="海景"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv5_func"
@@ -464,7 +464,7 @@
                     android:gravity="center"
                     android:text="移民"
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tv6_func"
@@ -476,7 +476,7 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/txt_black"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:visibility="invisible"/>
             </LinearLayout>
 
@@ -506,7 +506,7 @@
                     android:gravity="center"
                     android:text="重置"
                     android:textColor="@color/txt_orange"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <Button
                     android:id="@+id/btn_func_sure"
@@ -518,7 +518,7 @@
                     android:gravity="center"
                     android:text="确定"
                     android:textColor="@color/white"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
