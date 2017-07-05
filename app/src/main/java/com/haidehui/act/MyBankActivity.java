@@ -73,6 +73,8 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
                     list = b.getList();
                     if(list.size()==0){
                         vs_mybank.setDisplayedChild(1);
+                    }else{
+                        vs_mybank.setDisplayedChild(0);
                     }
                     bankAdapter = new MyBankAdapter(context,list);
                     lv_mybank.setAdapter(bankAdapter);
@@ -99,6 +101,11 @@ public class MyBankActivity extends BaseActivity implements View.OnClickListener
                 if (b != null) {
                     if(b.getFlag().equals("true")){
                         list.remove(position);
+                        if(list.size()==0){
+                            vs_mybank.setDisplayedChild(1);
+                        }else{
+                            vs_mybank.setDisplayedChild(0);
+                        }
                         bankAdapter.notifyDataSetChanged();
                     }
                     Toast.makeText(MyBankActivity.this, b.getMessage(),

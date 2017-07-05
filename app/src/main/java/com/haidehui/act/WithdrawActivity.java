@@ -39,7 +39,7 @@ public class WithdrawActivity extends BaseActivity{
     private Context context;
     private MouldList<ResultMyBankListContentItemBean> list;
     private int lastPress = 0;
-    private WithdrawAdapter withdrawAdapter;
+    private MyBankAdapter withdrawAdapter;
     private RelativeLayout rl_mybank_add;
     private ViewSwitcher vs_withdraw_bank;
 
@@ -200,7 +200,7 @@ public class WithdrawActivity extends BaseActivity{
                     }else{
                         vs_withdraw_bank.setDisplayedChild(0);
                     }
-                    withdrawAdapter = new WithdrawAdapter(context,list);
+                    withdrawAdapter = new MyBankAdapter(context,list);
 
                     lv_withdraw_mybank.setAdapter(withdrawAdapter);
 
@@ -229,6 +229,11 @@ public class WithdrawActivity extends BaseActivity{
                 if (b != null) {
                     if(b.getFlag().equals("true")){
                         list.remove(position);
+                        if(list.size()==0){
+                            vs_withdraw_bank.setDisplayedChild(1);
+                        }else{
+                            vs_withdraw_bank.setDisplayedChild(0);
+                        }
                         withdrawAdapter.notifyDataSetChanged();
 
                     }

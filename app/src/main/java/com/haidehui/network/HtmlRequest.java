@@ -101,7 +101,7 @@ public class HtmlRequest extends BaseRequester {
     public static String getResult(Map<String, Object> param) {
         Gson gson = new Gson();
         Map<String, Object> sortMap = sortMap(param);
-        Log.i("hh", "排序后的入参为：" + sortMap);
+//        Log.i("hh", "排序后的入参为：" + sortMap);
         String str_md5 = gson.toJson(sortMap);
         String md5 = MD5.stringToMD5(str_md5);
 
@@ -1193,7 +1193,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页数据:" + data);
+//                    Log.i("hh", "首页数据:" + data);
 
                     Gson gson = new Gson();
                     HomeIndex1B b = gson.fromJson(data, HomeIndex1B.class);

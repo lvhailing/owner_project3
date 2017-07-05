@@ -127,13 +127,13 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         super.onResume();
         if (flag == 1) {
             btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
-            btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
+//            btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
         } else if (flag == 2) {
             btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
-            btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
+//            btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
         } else {
             btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
-            btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
+//            btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
         }
 
     }
@@ -156,7 +156,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 flag = 1;
                 requestDetailData();
                 btn_essential_info.setTextColor(Color.parseColor("#ddb57f"));
-                btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
+//                btn_essential_info.setBackgroundResource(R.drawable.shape_center_orange_white);
                 hideFragment(transaction);
                 essentialInfoFragment = new EssentialInfoFragment();
                 transaction.replace(R.id.fragment_container, essentialInfoFragment);
@@ -166,7 +166,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_purchase_cost:  // 购房费用
                 flag = 2;
                 btn_purchase_cost.setTextColor(Color.parseColor("#ddb57f"));
-                btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
+//                btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_orange_white);
                 hideFragment(transaction);
                 purchaseCostFragment = new PurchaseCostFragment();
                 transaction.replace(R.id.fragment_container, purchaseCostFragment);
@@ -175,7 +175,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_purchase_flow:  // 购房流程
                 flag = 3;
                 btn_purchase_flow.setTextColor(Color.parseColor("#ddb57f"));
-                btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
+//                btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_orange_white);
                 hideFragment(transaction);
                 purchaseFlowFragment = new PurchaseFlowFragment();
                 transaction.replace(R.id.fragment_container, purchaseFlowFragment);
@@ -198,9 +198,9 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         btn_purchase_cost.setTextColor(Color.parseColor("#b3b3b3"));
         btn_purchase_flow.setTextColor(Color.parseColor("#b3b3b3"));
 
-        btn_essential_info.setBackgroundResource(R.drawable.shape_center_gray_white);
-        btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_gray_white);
-        btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_gray_white);
+        btn_essential_info.setBackgroundResource(R.drawable.shape_center_light_gray_white);
+        btn_purchase_cost.setBackgroundResource(R.drawable.shape_center_light_gray_white);
+        btn_purchase_flow.setBackgroundResource(R.drawable.shape_center_light_gray_white);
     }
 
     // 去除所有的Fragment

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +26,7 @@ import java.util.LinkedHashMap;
  * 修改密码
  * Created by hasee on 2017/6/12.
  */
-public class SettingChangePasswordActivity extends BaseActivity{
+public class SettingChangePasswordActivity extends BaseActivity implements View.OnClickListener{
 
     private EditText et_change_password_old;        //  旧密码
     private EditText et_change_password_new;        //  新密码
@@ -34,6 +36,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
     private String newPassword =  "";
     private String newPasswordAgain =  "";
     private Context context;
+    private Button btn_change_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class SettingChangePasswordActivity extends BaseActivity{
         et_change_password_old = (EditText) findViewById(R.id.et_change_password_old);
         et_change_password_new = (EditText) findViewById(R.id.et_change_password_new);
         et_change_password_new_again = (EditText) findViewById(R.id.et_change_password_new_again);
+        btn_change_password = (Button) findViewById(R.id.btn_change_password);
+        btn_change_password.setOnClickListener(this);
+        btn_change_password.setClickable(false);
 
         et_change_password_old.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,7 +129,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
         title.setTitle(getResources().getString(R.string.title_null))
 
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .addAction(new TitleBar.Action(2, 0, R.color.blue_light),SettingChangePasswordActivity.this.getResources().getString(R.string.setting_change_password_sure),R.drawable.shape_center_gray)
+//                .addAction(new TitleBar.Action(2, 0, R.color.blue_light),SettingChangePasswordActivity.this.getResources().getString(R.string.setting_change_password_sure),R.drawable.shape_center_gray)
                 .setCenterText(getResources().getString(R.string.setting_change_password_title))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
@@ -144,16 +150,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
 //                startActivity(i_second);
 
 
-                if(StringUtil.checkPassword(newPassword)){
-                    if(newPassword.equals(newPasswordAgain)){
-                        changePassword();
-                    }else{
-                        Toast.makeText(context,"两次密码输入不一致，请重新输入",Toast.LENGTH_SHORT).show();
-                    }
 
-                }else{
-                    Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
-                }
 
             }
         });
@@ -221,7 +218,7 @@ public class SettingChangePasswordActivity extends BaseActivity{
         super.onDestroy();
     }
 
-    public void checkButton(String str1,String str2,String str3){
+    /*public void checkButton(String str1,String str2,String str3){
         if(TextUtils.isEmpty(str1)){
             title.setChildBankground(R.drawable.shape_center_gray,false);
         }else{
@@ -235,6 +232,49 @@ public class SettingChangePasswordActivity extends BaseActivity{
                 }
             }
         }
+    }*/
+
+    public void checkButton(String str1,String str2,String str3){
+        if(TextUtils.isEmpty(str1)){
+            btn_change_password.setClickable(false);
+            btn_change_password.setBackgroundResource(R.drawable.shape_center_gray);
+        }else{
+            if(TextUtils.isEmpty(str2)){
+                btn_change_password.setClickable(false);
+                btn_change_password.setBackgroundResource(R.drawable.shape_center_gray);
+            }else{
+                if(TextUtils.isEmpty(str3)){
+                    btn_change_password.setClickable(false);
+                    btn_change_password.setBackgroundResource(R.drawable.shape_center_gray);
+                }else{
+                    btn_change_password.setClickable(true);
+                    btn_change_password.setBackgroundResource(R.drawable.shape_center_orange);
+                }
+            }
+        }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.btn_change_password:
+                if(StringUtil.checkPassword(newPassword)){
+                    if(newPassword.equals(newPasswordAgain)){
+                        changePassword();
+                    }else{
+                        Toast.makeText(context,"两次密码输入不一致，请重新输入",Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(context,"请输入8至16位字母数字组合密码",Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            default:
+
+                break;
+
+        }
+    }
 }

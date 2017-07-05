@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
     private TextView tv_advice_call_phone;      //
     private TitleBar title;
     private String content = "";
+    private Button btn_advice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
         title.setTitle(getResources().getString(R.string.title_null))
 
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .addAction(new TitleBar.Action(2, 0, R.color.blue_light),AdviceActivity.this.getResources().getString(R.string.setting_change_phone_third_submit),R.drawable.shape_center_gray)
+//                .addAction(new TitleBar.Action(2, 0, R.color.blue_light),AdviceActivity.this.getResources().getString(R.string.setting_change_phone_third_submit),R.drawable.shape_center_gray)
                 .setCenterText(getResources().getString(R.string.setting_advice))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
@@ -66,7 +68,7 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
 //                Toast.makeText(AdviceActivity.this,"////************",Toast.LENGTH_SHORT).show();
 //                Intent i_second = new Intent(AdviceActivity.this,SettingChangePhoneSecondActivity.class);
 //                startActivity(i_second);
-                requestData();
+
 
             }
         });
@@ -112,8 +114,11 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
 
         advice_edt = (EditText) findViewById(R.id.advice_edt);
         tv_advice_call_phone = (TextView) findViewById(R.id.tv_advice_call_phone);
+        btn_advice = (Button) findViewById(R.id.btn_advice);
 
         tv_advice_call_phone.setOnClickListener(this);
+        btn_advice.setOnClickListener(this);
+        btn_advice.setClickable(false);
 
         advice_edt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -128,13 +133,23 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(editable)){
+                /*if(TextUtils.isEmpty(editable)){
                     title.setChildBankground(R.drawable.shape_center_gray,false);
 
                 }else{
                     title.setChildBankground(R.drawable.shape_center_orange,true);
 
+                }*/
+
+                if(TextUtils.isEmpty(editable)){
+                    btn_advice.setClickable(false);
+                    btn_advice.setBackgroundResource(R.drawable.shape_center_gray);
+                }else{
+                    btn_advice.setClickable(true);
+                    btn_advice.setBackgroundResource(R.drawable.shape_center_orange);
                 }
+
+
             }
         });
 
@@ -172,10 +187,17 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
         switch (view.getId()){
 
             case R.id.tv_advice_call_phone:
+
                 Intent i_phone = new Intent(Intent.ACTION_DIAL,
                         Uri.parse("tel:"+getString(R.string.phone_number)));
                 i_phone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_phone);
+
+                break;
+
+            case R.id.btn_advice:
+
+                requestData();
 
                 break;
 

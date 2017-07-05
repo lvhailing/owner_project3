@@ -18,11 +18,12 @@
 
         <ImageView
             android:id="@+id/iv_guide_photo"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
             android:layout_margin="12dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/img_normal"/>
+            android:scaleType="fitXY"
+            android:src="@mipmap/bg_oversea_project_normal"/>
 
         <LinearLayout
             android:layout_width="match_parent"

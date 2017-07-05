@@ -64,22 +64,22 @@ public class CustomerFollowDetailsAdapter extends BaseAdapter {
 		} else {
 			holder.checkbox.setButtonDrawable(R.mipmap.img_follow_uncheck);
 			holder.checkbox.setChecked(false);
-		}
-		holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					buttonView.setButtonDrawable(R.mipmap.img_follow_checked);
-				} else {
-					buttonView.setButtonDrawable(R.mipmap.img_follow_uncheck);
-				}
-						listener.onCheckBox(position, isChecked);
-			}
 
+		}
+		holder.checkbox.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				boolean checked = ((CheckBox) v).isChecked();
+				if (checked) {
+					((CheckBox) v).setButtonDrawable(R.mipmap.img_follow_checked);
+				} else {
+					((CheckBox) v).setButtonDrawable(R.mipmap.img_follow_uncheck);
+				}
+				listener.onCheckBox(position, checked);
+			}
 		});
 		return convertView;
 	}
-
 	public interface OnEditListener {
 		public void onCheckBox(int position, boolean isChecked);
 	}

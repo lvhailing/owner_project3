@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.text.TextUtilsCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.haidehui.uitls.ActivityStack;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
+import android.text.TextUtils;
 
 
 /**
@@ -98,11 +100,32 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
         tv_name.setText(data.getCustomerName());
         tv_phone.setText(data.getCustomerPhone());
         tv_email.setText(data.getCustomerEmail());
-        tv_location.setText(data.getHouseLocation());
-        tv_project.setText(data.getHouseProject());
-        tv_room_number.setText(data.getRoomNumber());
-        tv_area.setText(data.getArea());
-        tv_total_amount.setText(data.getTotalPrice());
+
+        if (TextUtils.isEmpty(data.getHouseLocation())){
+            tv_location.setText("--");
+        }else{
+            tv_location.setText(data.getHouseLocation());
+        }
+        if (TextUtils.isEmpty(data.getHouseProject())){
+            tv_project.setText("--");
+        }else{
+            tv_project.setText(data.getHouseProject());
+        }
+        if (TextUtils.isEmpty(data.getRoomNumber())){
+            tv_room_number.setText("--");
+        }else{
+            tv_room_number.setText(data.getRoomNumber());
+        }
+        if (TextUtils.isEmpty(data.getArea())){
+            tv_area.setText("--");
+        }else{
+            tv_area.setText(data.getArea());
+        }
+        if (TextUtils.isEmpty(data.getTotalPrice())){
+            tv_total_amount.setText("--");
+        }else{
+            tv_total_amount.setText(data.getTotalPrice());
+        }
         tv_time.setText(data.getCreateTime());
     }
 

@@ -124,14 +124,17 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
                     android:text="房产所在地："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
                     android:id="@+id/tv_location"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
             </LinearLayout>
@@ -143,14 +146,17 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
                     android:text="项目："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
                     android:id="@+id/tv_project"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
             </LinearLayout>
@@ -162,14 +168,17 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
                     android:text="房号："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
                     android:id="@+id/tv_room_number"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
             </LinearLayout>
@@ -181,14 +190,17 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
                     android:text="面积："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
                     android:id="@+id/tv_area"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
             </LinearLayout>
@@ -200,14 +212,17 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
                     android:text="总价："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
                     android:id="@+id/tv_total_amount"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
             </LinearLayout>
@@ -219,14 +234,17 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.4"
+                    android:gravity="right"
                     android:layout_height="wrap_content"
                     android:text="提交时间："
                     android:textColor="@color/gray_dark" />
 
                 <TextView
                     android:id="@+id/tv_time"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_dark" />
             </LinearLayout>

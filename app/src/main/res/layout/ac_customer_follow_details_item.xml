@@ -10,7 +10,7 @@
             android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:background="@drawable/checkbox_follow"
-            android:button="@null" />
+            android:button="@null"/>
         <TextView
             android:id="@+id/tv_details"
             android:layout_marginLeft="7dp"

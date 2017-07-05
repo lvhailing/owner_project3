@@ -325,15 +325,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_tab_home:  // 首页
-                mViewPager.setCurrentItem(0);
 //                setSelect(0);
+                mViewPager.setCurrentItem(0);
                 break;
             case R.id.ll_tab_house_resources:  // 房源
 //                setSelect(1);
                 mViewPager.setCurrentItem(1);
                 break;
             case R.id.ll_tab_discovery:  // 发现
-                setSelect(2);
+//                setSelect(2);
                 mViewPager.setCurrentItem(2);
                 break;
             case R.id.ll_tab_mine:  // 我的

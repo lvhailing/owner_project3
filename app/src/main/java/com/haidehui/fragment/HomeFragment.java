@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("hh", "首页---Fragment----onResume");
+//        Log.i("hh", "首页---Fragment----onResume");
         resetScrollViewSmooth();
     }
 
@@ -132,7 +132,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
 
 //        requestCycleIndex(); // 请求轮图数据
-//
 //        requestHomeIndexData(); // 请求首页数据
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
@@ -215,14 +214,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         public void run() {
                             scrollView.smoothScrollTo(0, 0);
                         }
-                    },1);
+                    }, 50);
 //                    scrollView.postDelayed(new Runnable() {
 //                        @Override
 //                        public void run() {
 //
-//                            scrollView.smoothScrollTo(0,0);
+//                            scrollView.scrollTo(0,0);
 //                        }
-//                    },1);
+//                    },100);
 
                 } else {
                     rl_empty_house.setVisibility(View.VISIBLE);

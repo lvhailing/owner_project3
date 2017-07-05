@@ -54,9 +54,9 @@
 
     <style name="btn_house_detail_stytle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">34dp</item>
+        <item name="android:layout_height">39dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/shape_center_gray_white</item>
+        <item name="android:background">@drawable/shape_center_light_gray_white</item>
         <item name="android:textSize">14sp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>

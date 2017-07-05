@@ -9,8 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
         <RelativeLayout
             android:id="@+id/rl_top_carousel_figure"
@@ -57,7 +56,7 @@
         <LinearLayout
             android:id="@+id/ll_house_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="88dp"
             android:layout_below="@id/rl_top_carousel_figure"
             android:background="@color/white"
             android:orientation="horizontal">
@@ -65,6 +64,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -73,25 +73,26 @@
                     android:id="@+id/tv_house_detail_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
+                    android:gravity="center_horizontal"
                     android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_marginTop="12dp"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerInside"
                         android:src="@mipmap/icon_price"/>
 
@@ -106,18 +107,18 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
+            <!--顶部竖线-->
+            <View
                 android:id="@+id/img_top"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end|bottom"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/vertical_lines"/>
+                android:background="@color/bg_line_light_gray"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -126,25 +127,26 @@
                     android:id="@+id/tv_house_detail_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
+                    android:gravity="center_horizontal"
                     android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_marginTop="12dp"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerInside"
                         android:src="@mipmap/icon_area"/>
 
@@ -157,18 +159,21 @@
                         android:textColor="@color/txt_light_gray"
                         android:textSize="14sp"/>
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
 
+        <!--中间横线-->
         <ImageView
             android:id="@+id/iv_line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_below="@id/ll_house_info"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/tab_lines"/>
+            android:background="@color/bg_line_light_gray"
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:id="@+id/ll_house_info2"
@@ -182,6 +187,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginBottom="18dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -189,25 +195,26 @@
                     android:id="@+id/tv_house_detail_house_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
+                    android:gravity="center_horizontal"
                     android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerInside"
                         android:src="@mipmap/icon_house"/>
 
@@ -222,19 +229,20 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
+            <!--底部的竖线-->
+            <View
                 android:id="@+id/img_bottom"
-                android:layout_width="wrap_content"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="end"
                 android:layout_marginBottom="18dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/vertical_lines"/>
+                android:layout_gravity="end"
+                android:background="@color/bg_line_light_gray"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginBottom="18dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -242,25 +250,26 @@
                     android:id="@+id/tv_house_detail_commission_rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
+                    android:gravity="center_horizontal"
                     android:maxLines="2"
                     android:text=""
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                   android:gravity="center"
                     android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                      android:layout_gravity="center_vertical"
                         android:scaleType="centerInside"
                         android:src="@mipmap/icon_brokerage"/>
 
@@ -273,7 +282,9 @@
                         android:textColor="@color/txt_light_gray"
                         android:textSize="14sp"/>
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
 
         <View
@@ -289,9 +300,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/v_line1"
             android:background="@color/white"
-            android:paddingBottom="12dp"
+            android:paddingBottom="10.5dp"
             android:paddingLeft="12dp"
-            android:paddingTop="12dp">
+            android:paddingTop="10.5dp">
 
 
             <ImageView
@@ -317,7 +328,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_go_forward"/>
+                android:layout_marginRight="12dp"
+                android:src="@mipmap/arrow"/>
         </RelativeLayout>
 
         <View
