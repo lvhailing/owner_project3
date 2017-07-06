@@ -85,6 +85,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 //        Log.i("hh", "首页---Fragment----onResume");
+
+        context = getActivity();
         resetScrollViewSmooth();
     }
 

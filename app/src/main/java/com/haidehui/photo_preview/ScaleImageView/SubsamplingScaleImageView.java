@@ -1120,7 +1120,12 @@ public class SubsamplingScaleImageView extends View {
                 matrix.mapRect(sRect);
                 canvas.drawRect(sRect, tileBgPaint);
             }
+            try {
             canvas.drawBitmap(bitmap, matrix, bitmapPaint);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
     }
