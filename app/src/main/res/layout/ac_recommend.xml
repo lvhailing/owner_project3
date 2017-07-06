@@ -3,34 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_gray"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
 
-            >
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/bg_recommend"
                 android:scaleType="fitStart"
-                />
+                android:src="@mipmap/bg_recommend"/>
+
             <LinearLayout
                 android:id="@+id/ll_recommend_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="200dip"
+                android:orientation="vertical">
 
-                >
                 <TextView
                     android:id="@+id/tv_recommend_all_friend"
                     android:layout_width="wrap_content"
@@ -38,36 +35,36 @@
                     android:layout_gravity="center"
                     android:text="0位朋友为我赚取了"
                     android:textColor="@color/txt_white"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp"/>
+
                 <TextView
                     android:id="@+id/tv_recommend_all_acount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dip"
                     android:layout_gravity="center"
+                    android:layout_marginTop="15dip"
                     android:text="￥0.00元"
                     android:textColor="@color/txt_white"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp"/>
+
                 <ImageView
                     android:id="@+id/iv_recommend_invite_code"
                     android:layout_width="100dip"
                     android:layout_height="100dip"
-                    android:background="@color/black"
-                    android:scaleType="fitXY"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="45dip"
-                    />
+                    android:background="@color/black"
+                    android:scaleType="fitXY"/>
+
                 <TextView
                     android:id="@+id/tv_recommend_mycode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的推荐码："
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dip"
-                    android:textColor="@color/txt_gray"
-                    />
+                    android:text="我的推荐码："
+                    android:textColor="@color/txt_gray"/>
+
                 <TextView
                     android:id="@+id/tv_recommend_btn"
                     android:layout_width="match_parent"
@@ -76,52 +73,49 @@
                     android:layout_marginRight="25dip"
                     android:layout_marginTop="10dip"
                     android:background="@drawable/shape_center_orange"
-                    android:text="@string/setting_recommend_btn"
                     android:gravity="center"
+                    android:text="@string/setting_recommend_btn"
                     android:textColor="@color/txt_white"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp"/>
             </LinearLayout>
 
-
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_white"
             android:layout_marginTop="15dip"
-            >
+            android:background="@color/bg_white">
+
             <TextView
                 android:id="@+id/tv_recommend_rule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_recommend_rule"
+                android:layout_marginBottom="20dip"
                 android:layout_marginLeft="20dip"
                 android:layout_marginTop="20dip"
-                android:layout_marginBottom="20dip"
-                android:textSize="15sp"
+                android:text="@string/setting_recommend_rule"
                 android:textColor="@color/txt_gray"
-                />
+                android:textSize="15sp"/>
+
             <TextView
                 android:id="@+id/tv_recommend_record"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_recommend_record"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="20dip"
                 android:layout_marginBottom="20dip"
                 android:layout_marginRight="20dip"
-                android:textColor="@color/txt_gray"
-                />
+                android:layout_marginTop="20dip"
+                android:text="@string/setting_recommend_record"
+                android:textColor="@color/txt_gray"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/img_logo_recommend"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dip"
                 android:layout_marginBottom="8dip"
-                />
-
+                android:layout_marginTop="8dip"
+                android:src="@mipmap/img_logo_recommend"/>
         </RelativeLayout>
 
     </LinearLayout>

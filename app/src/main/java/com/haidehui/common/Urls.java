@@ -27,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_OUTER_NET_DEBUG;
+    private static String EC_HOST = URL_XYJ;
 //    private static String EC_HOST = URL_DEBUG;
 
     /**
@@ -136,6 +136,9 @@ public class Urls {
 
     // 设置--关于我们
     public static final String URL_ABOUT_US = EC_HOST + "about/us";
+
+    // 设置--版本号
+    public static final String URL_VERSION = EC_HOST + "android/version?num=";
 
 
     /**

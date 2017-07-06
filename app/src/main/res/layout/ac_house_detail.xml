@@ -283,7 +283,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="7dp"
                             android:gravity="center_vertical"
-                            android:text="返佣比例"
+                            android:text="佣金比例"
                             android:textColor="@color/txt_light_gray"
                             android:textSize="14sp"/>
                     </LinearLayout>

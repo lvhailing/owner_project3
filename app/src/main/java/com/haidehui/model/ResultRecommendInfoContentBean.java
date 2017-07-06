@@ -5,9 +5,9 @@ import com.haidehui.network.types.IMouldType;
 
 public class ResultRecommendInfoContentBean implements IMouldType {
 
-	private String recommendCode;
-	private String total;
-	private String totalAmount;
+	private String recommendCode; // 推荐码
+	private String total; // 推荐朋友总数
+	private String totalAmount; // 推荐奖励金额
 
 	public String getRecommendCode() {
 		return recommendCode;

@@ -49,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dip"
-            android:src="@mipmap/img_logo"
+            android:layout_marginTop="60dip"
+            android:src="@mipmap/img_logo_login"
             />
 
         <TextView
@@ -66,7 +66,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
+            android:layout_marginTop="60dip"
             android:orientation="vertical"
             >
 

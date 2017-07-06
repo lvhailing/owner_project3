@@ -51,20 +51,19 @@ import onekeyshare.PlatformListFakeActivity;
  * 推荐好友
  * Created by hasee on 2017/6/13.
  */
-public class RecommendActivity extends BaseActivity implements View.OnClickListener{
+public class RecommendActivity extends BaseActivity implements View.OnClickListener {
 
-
-    private TextView tv_recommend_all_friend;       //  邀请好友数
-    private TextView tv_recommend_all_acount;       //  好友为我赚取金额
-    private ImageView iv_recommend_invite_code;     //  我的邀请二维码
-    private TextView tv_recommend_mycode;           //  我的推荐码
-    private TextView tv_recommend_btn;              //  邀请好友
-    private TextView tv_recommend_rule;             //  邀请规则
-    private TextView tv_recommend_record;           //  邀请记录
+    private TextView tv_recommend_all_friend; // 邀请好友数
+    private TextView tv_recommend_all_acount; // 好友为我赚取金额
+    private ImageView iv_recommend_invite_code; // 我的邀请二维码
+    private TextView tv_recommend_mycode; // 我的推荐码
+    private TextView tv_recommend_btn; // 邀请好友
+    private TextView tv_recommend_rule;  // 邀请规则
+    private TextView tv_recommend_record; // 邀请记录
 
     private final static String CACHE = "/dafuweng/imgs";
     private int QR_WIDTH = 360, QR_HEIGHT = 360;
-    private String recommendCode = "";              //  邀请码
+    private String recommendCode = "";  //  邀请码
     private String way;
     private Context context;
 
@@ -77,6 +76,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         initTopTitle();
         initView();
         initData();
+
         try {
             saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "dafuweng.png");
         } catch (Exception e) {
@@ -85,8 +85,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-    public void initView(){
-
+    public void initView() {
         context = this;
         bean = new ResultRecommendInfoContentBean();
 
@@ -104,17 +103,14 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-    public void initData(){
-
+    public void initData() {
         getRecommendData();
-
     }
 
-    public void setView(){
-
-        tv_recommend_all_friend.setText(bean.getTotal()+"位朋友为我赚取了");
-        tv_recommend_all_acount.setText("￥"+bean.getTotalAmount()+"元");
-        tv_recommend_mycode.setText("我的推荐码："+recommendCode);
+    public void setView() {
+        tv_recommend_all_friend.setText(bean.getTotal() + "位朋友为我赚取了");
+        tv_recommend_all_acount.setText("￥" + bean.getTotalAmount() + "元");
+        tv_recommend_mycode.setText("我的推荐码：" + recommendCode);
 
         StringBuffer randomNum = new StringBuffer();
         for (int i = 0; i < 6; i++) {
@@ -126,27 +122,21 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 //                + "/scanQRCode/" + randomNum, bitmap);
 
         createQRImage(iv_recommend_invite_code, Urls.URL + "register/" + recommendCode + "/recommend", bitmap);
-
     }
 
     private void getRecommendData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-
         param.put("userId", userId);
 
-        HtmlRequest.getRecommendInfo(RecommendActivity.this, param,new BaseRequester.OnRequestListener() {
-
+        HtmlRequest.getRecommendInfo(RecommendActivity.this, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 bean = (ResultRecommendInfoContentBean) params.result;
                 if (bean != null) {
                     recommendCode = bean.getRecommendCode();
-
                     setView();
-
                 } else {
-                    Toast.makeText(RecommendActivity.this, "加载失败，请确认网络通畅",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(RecommendActivity.this, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -154,10 +144,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.setting_recommend_title))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.setting_recommend_title)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -204,39 +191,31 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
-
-            case R.id.tv_recommend_btn:     //  邀请朋友
+        switch (view.getId()) {
+            case R.id.tv_recommend_btn: // 邀请朋友
                 ShareSDK.initSDK(this);
                 sharedSDK();
                 break;
 
-            case R.id.tv_recommend_rule:        //  邀请规则
-
-                Intent i_rule = new Intent(this,RecommendRuleActivity.class);
+            case R.id.tv_recommend_rule: // 邀请规则
+                Intent i_rule = new Intent(this, RecommendRuleActivity.class);
                 startActivity(i_rule);
-
                 break;
 
-            case R.id.tv_recommend_record:      //  邀请记录
-
-                Intent i_record = new Intent(this,RecommendRecordActivity.class);
-                i_record.putExtra("recommendCode",recommendCode);
+            case R.id.tv_recommend_record: // 邀请记录
+                Intent i_record = new Intent(this, RecommendRecordActivity.class);
+                i_record.putExtra("recommendCode", recommendCode);
                 startActivity(i_record);
-
                 break;
 
             default:
 
                 break;
-
-
         }
 
     }
 
     private void sharedSDK() {
-
         final OnekeyShare oks = new OnekeyShare();
         // 关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -352,26 +331,24 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
 //                Toast.makeText(context,"--------"+platform.getName(),Toast.LENGTH_SHORT).show();
 
-                if(platform.getName().equals("WechatMoments")){
+                if (platform.getName().equals("WechatMoments")) {
 
 
-                }else if(platform.getName().equals("Wechat")){
+                } else if (platform.getName().equals("Wechat")) {
 
 
-                }else if(platform.getName().equals("QZone")){
+                } else if (platform.getName().equals("QZone")) {
 
 
-                }else if(platform.getName().equals("SinaWeibo")){
+                } else if (platform.getName().equals("SinaWeibo")) {
 
 
-                }else if(platform.getName().equals("ShortMessage")){
+                } else if (platform.getName().equals("ShortMessage")) {
 
 
-                }else if(platform.getName().equals("QQ")){
+                } else if (platform.getName().equals("QQ")) {
 
                 }
-
-
             }
 
             @Override
@@ -385,15 +362,12 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-
 //        oks.getCallback();
 
         if (!TextUtils.isEmpty(recommendCode)) {
             // 启动分享GUI
             oks.show(this);
         }
-
-
     }
 
 
@@ -408,8 +382,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 
             // 图像数据转换，使用了矩阵转换
-            BitMatrix bitMatrix = new QRCodeWriter().encode(url,
-                    BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
+            BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 //            bitMatrix = deleteWhite(bitMatrix);//删除白边
             bitMatrix = updateBit(bitMatrix, 10);  //生成新的bitMatrix
 
@@ -429,8 +402,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                 }
             }
             // 生成二维码图片的格式，使用ARGB_8888
-            Bitmap bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT,
-                    Bitmap.Config.ARGB_8888);
+            Bitmap bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
 
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
 
@@ -454,18 +426,17 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         resMatrix.clear();
         for (int i = 0; i < resWidth; i++) {
             for (int j = 0; j < resHeight; j++) {
-                if (matrix.get(i + rec[0], j + rec[1]))
-                    resMatrix.set(i, j);
+                if (matrix.get(i + rec[0], j + rec[1])) resMatrix.set(i, j);
             }
         }
         return resMatrix;
     }
 
-    private BitMatrix updateBit(BitMatrix matrix, int margin){
+    private BitMatrix updateBit(BitMatrix matrix, int margin) {
 
-        int tempM = margin*2;
+        int tempM = margin * 2;
 
-        int[] rec = matrix.getEnclosingRectangle();   //获取二维码图案的属性
+        int[] rec = matrix.getEnclosingRectangle();  // 获取二维码图案的属性
 
         int resWidth = rec[2] + tempM;
 
@@ -475,22 +446,16 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
         resMatrix.clear();
 
-        for(int i= margin; i < resWidth- margin; i++){   //循环，将二维码图案绘制到新的bitMatrix中
-
-            for(int j=margin; j < resHeight-margin; j++){
-
-                if(matrix.get(i-margin + rec[0], j-margin + rec[1])){
-
-                    resMatrix.set(i,j);
+        for (int i = margin; i < resWidth - margin; i++) {  // 循环，将二维码图案绘制到新的bitMatrix中
+            for (int j = margin; j < resHeight - margin; j++) {
+                if (matrix.get(i - margin + rec[0], j - margin + rec[1])) {
+                    resMatrix.set(i, j);
 
                 }
-
             }
-
         }
 
         return resMatrix;
-
     }
 
     /**
@@ -512,7 +477,6 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 //        return newImage;
 //
 //    }
-
 
 
     /**
@@ -561,14 +525,12 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     }
 
 
-
     /**
      * 保存图片的方法 保存到sdcard
      *
      * @throws Exception
      */
-    public static void saveImage(Bitmap bitmap, String imageName)
-            throws Exception {
+    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
         String filePath = isExistsFilePath();
         FileOutputStream fos = null;
         File file = new File(filePath, imageName);
@@ -585,6 +547,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
     /**
      * 获取sd卡的缓存路径， 一般在卡中sdCard就是这个目录
      *
@@ -592,8 +555,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
      */
     public static String getSDPath() {
         File sdDir = null;
-        boolean sdCardExist = Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
+        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
         if (sdCardExist) {
             sdDir = Environment.getExternalStorageDirectory();// 获取根目录
         } else {

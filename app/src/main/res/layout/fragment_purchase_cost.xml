@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="14dp"
-        android:text="1.一旦确定购买房产，需缴付定金\n2.10天左右，签署购房协议，付首付\n3.泰国买房的总的税费是房价的1%"
+        android:text="1.一旦确定购买房产，需缴付定金\n2.10日内，签署购房协议，付首付\n3.泰国买房的总的税费是房价的1%"
         android:textColor="@color/txt_black"
         android:textSize="14sp"/>
 
