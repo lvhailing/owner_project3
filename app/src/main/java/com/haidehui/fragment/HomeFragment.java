@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +85,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
 //        Log.i("hh", "首页---Fragment----onResume");
 
-        context = getActivity();
         resetScrollViewSmooth();
     }
 
@@ -256,6 +254,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      * 请求轮播图数据
      */
     private void freshVP() {
+        if (context == null) {
+            return;
+        }
         if (rollViewPager == null) {
             //第一次从后台获取到数据
             rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
