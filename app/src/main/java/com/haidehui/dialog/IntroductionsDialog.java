@@ -49,7 +49,7 @@ public class IntroductionsDialog extends Dialog implements
 		setContentView(mView);
 		// 设置window属性
 		lp = getWindow().getAttributes();
-		lp.dimAmount = 0.6f; // 去背景遮盖
+		lp.dimAmount = 0.8f; // 去背景遮盖
 		lp.alpha = 1.0f;
 //		int[] wh = initWithScreenWidthAndHeight(mContext);
 		lp.width = ViewGroup.LayoutParams.MATCH_PARENT;

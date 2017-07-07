@@ -35,6 +35,7 @@ public class PreviewAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
+
         final PicturePreviewPageView pageView = new PicturePreviewPageView(container.getContext());
         pageView.setMaxScale(15);
         ImageLoader.getInstance().loadImageLocalOrNet(urls.get(position), new OnBitmapGetListener() {

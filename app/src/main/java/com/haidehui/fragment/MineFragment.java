@@ -58,7 +58,7 @@ import android.widget.ImageView;
 public class MineFragment extends Fragment implements OnClickListener {
     private Context context;
     private View mView;
-    private RelativeLayout layout_email;
+    private ImageView img_email;
     private TextView tv_messageTotal;
     private RelativeLayout layout_my_info;
     private TextView tv_realName;
@@ -117,7 +117,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         bean = new ResultMessageInfoContentBean();
 
         context = getActivity();
-        layout_email = (RelativeLayout) mView.findViewById(R.id.layout_email);
+        img_email = (ImageView) mView.findViewById(R.id.img_email);
         tv_messageTotal = (TextView) mView.findViewById(R.id.tv_messageTotal);
         layout_my_info = (RelativeLayout) mView.findViewById(R.id.layout_my_info);
         tv_realName = (TextView) mView.findViewById(R.id.tv_realName);
@@ -137,7 +137,8 @@ public class MineFragment extends Fragment implements OnClickListener {
     }
 
     private void initData() {
-        layout_email.setOnClickListener(this);
+        img_email.setOnClickListener(this);
+        tv_messageTotal.setOnClickListener(this);
         layout_my_info.setOnClickListener(this);
         tv_customer_info.setOnClickListener(this);
         tv_customer_follow.setOnClickListener(this);
@@ -172,7 +173,8 @@ public class MineFragment extends Fragment implements OnClickListener {
             status = data.getCheckStatus();
         }
         switch (v.getId()) {
-            case R.id.layout_email:// 跳转邮件
+            case R.id.tv_messageTotal:
+            case R.id.img_email:// 跳转邮件
                 Intent i_message = new Intent(context, MessageActivity.class); // 消息页面
                 startActivity(i_message);
 
@@ -258,6 +260,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         if (messageInt > 9) {
             tv_messageTotal.setVisibility(View.VISIBLE);
             tv_messageTotal.setText("9+");
+            tv_messageTotal.setTextSize(10f);
         } else {
             if (messageInt == 0) {
                 tv_messageTotal.setVisibility(View.GONE);

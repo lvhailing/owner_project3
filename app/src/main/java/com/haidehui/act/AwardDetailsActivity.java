@@ -122,6 +122,9 @@ public class AwardDetailsActivity extends BaseActivity implements View.OnClickLi
         }
         if(data.getRewardStatus().equals("sended")){
             tv_rewardStatus.setText("已完成");
+            layout_tradeCode.setVisibility(View.VISIBLE);
+            layout_projectName.setVisibility(View.VISIBLE);
+            layout_houseNum.setVisibility(View.VISIBLE);
         }else{
             tv_rewardStatus.setText("已发放");
             layout_tradeCode.setVisibility(View.GONE);

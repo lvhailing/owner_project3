@@ -9,7 +9,7 @@ public class Urls {
     public static String URL_OUTER_NET_DEBUG = "http://123.126.102.219:21083/";
 
     // 正式环境IP
-    public static String URL_OFFICIAL = "https://jdhapp.cf360.com/";
+    public static String URL_OFFICIAL = "https://hwapp.cf360.com/";
 
     //代树理
     public static final String URL_DSL = "http://192.168.1.106:9999/overseasProperty-app/";
