@@ -1,8 +1,12 @@
 package com.haidehui.photo_preview;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
+import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,14 +38,20 @@ public class PreviewAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, final int position) {
+    public Object instantiateItem(final ViewGroup container, final int position) {
 
         final PicturePreviewPageView pageView = new PicturePreviewPageView(container.getContext());
         pageView.setMaxScale(15);
         ImageLoader.getInstance().loadImageLocalOrNet(urls.get(position), new OnBitmapGetListener() {
             @Override
             public void getBitmap(Bitmap bitmap) {
-                pageView.setOriginImage(ImageSource.cachedBitmap(bitmap));
+//                Log.i("aabb", "可用内存：" + getAvailMemory(container.getContext()));
+//                Log.i("aabb", "压缩前：图片大小" + (bitmap.getByteCount() / 1024) + "KB，宽度为" + bitmap.getWidth() + "，高度为" + bitmap.getHeight());
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2 / 3, bitmap.getHeight()*2 / 3, true);
+//                Log.i("aabb", "压缩后：图片大小" + (scaledBitmap.getByteCount() / 1024) + "KB,宽度为" + scaledBitmap.getWidth() + ",高度为" + scaledBitmap.getHeight());
+
+                pageView.setOriginImage(ImageSource.cachedBitmap(scaledBitmap));
             }
         });
         pageView.setBackgroundColor(Color.TRANSPARENT);
@@ -52,8 +62,17 @@ public class PreviewAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+        container.removeView((PicturePreviewPageView) object);
     }
 
+    private String getAvailMemory(Context context) {// 获取android当前可用内存大小
+
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(mi);
+        //mi.availMem; 当前系统的可用内存
+
+        return Formatter.formatFileSize(context, mi.availMem);// 将获取的内存大小规格化
+    }
 
 }
