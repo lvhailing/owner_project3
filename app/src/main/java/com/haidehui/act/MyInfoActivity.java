@@ -144,7 +144,14 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_name.setText(realName);
         if (!TextUtils.isEmpty(headPhoto)) {
-            new ImageViewService().execute(headPhoto);
+            File file = new File(IMG_PATH);
+
+            if(file.exists()){
+               Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
+                img_photo.setImageBitmap(bitmap);
+            }else{
+                new ImageViewService().execute(headPhoto);
+            }
         } else {
             img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
@@ -199,11 +206,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
     private Uri saveBitmap2(Bitmap bm) {
-        File tmpDir = new File(IMG_PATH_TWO);
+        File tmpDir = new File(IMG_PATH);
         if (!tmpDir.exists()) {
             tmpDir.mkdirs();
         }
-        File img = new File(IMG_PATH_TWO + "Test.png");
+        File img = new File(IMG_PATH + "Test.png");
         try {
             FileOutputStream fos = new FileOutputStream(img);
             bm.compress(Bitmap.CompressFormat.PNG, 70, fos);
