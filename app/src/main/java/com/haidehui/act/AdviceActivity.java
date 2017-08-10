@@ -3,9 +3,11 @@ package com.haidehui.act;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +22,6 @@ import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
 
-import java.util.LinkedHashMap;
 
 /**
  * 意见反馈
@@ -78,10 +79,12 @@ public class AdviceActivity extends BaseActivity implements View.OnClickListener
 
         content = advice_edt.getText().toString();
 
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
 
-        param.put("content", content);
+        ArrayMap<String, Object> param = new ArrayMap<>();
+
+
         param.put("userId", userId);
+        param.put("content", content);
 
         HtmlRequest.advice(AdviceActivity.this, param,new BaseRequester.OnRequestListener() {
 

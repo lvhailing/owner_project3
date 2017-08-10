@@ -1,6 +1,7 @@
 package com.haidehui.network;
 
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -99,6 +100,28 @@ public class HtmlRequest extends BaseRequester {
     }
 
     public static String getResult(Map<String, Object> param) {
+        Gson gson = new Gson();
+        Map<String, Object> sortMap = sortMap(param);
+//        Log.i("hh", "排序后的入参为：" + sortMap);
+        String str_md5 = gson.toJson(sortMap);
+        String md5 = MD5.stringToMD5(str_md5);
+
+        String result = null;
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", md5);
+            map.put("data", sortMap);
+            String encrypt = gson.toJson(map);
+//            Log.i("hh", "传给后台的入参为：" + encrypt);
+            result = DESUtil.encrypt(encrypt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
+    public static String getResult(ArrayMap<String, Object> param) {
         Gson gson = new Gson();
         Map<String, Object> sortMap = sortMap(param);
 //        Log.i("hh", "排序后的入参为：" + sortMap);
@@ -273,7 +296,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void advice(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void advice(final Context context, ArrayMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_ADAVICE;
 
@@ -315,6 +338,7 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
 
     /**
      * 找回密码
