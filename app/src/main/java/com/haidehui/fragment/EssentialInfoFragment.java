@@ -3,6 +3,7 @@ package com.haidehui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,14 +65,30 @@ public class EssentialInfoFragment extends Fragment {
     }
 
     public void refreshLayoutInfo(HouseDetail2B data) {
-        tv_house_name.setText(data.getName());
-        tv_house_function.setText(data.getFunction());
-        tv_house_type.setText(data.getCatagory());
-        tv_decoration_standard.setText(data.getDecorateStandard());
-        tv_house_year.setText(data.getTime());
-        tv_house_floor.setText(data.getStory());
-        tv_property_fee.setText(data.getPropertyFee());
-        tv_house_description.setText(data.getHouseDesc());
+        if (!TextUtils.isEmpty(data.getName())) {
+            tv_house_name.setText(data.getName());
+        }
+        if (!TextUtils.isEmpty(data.getFunction())) {
+            tv_house_function.setText(data.getFunction());
+        }
+        if (!TextUtils.isEmpty(data.getCatagory())) {
+            tv_house_type.setText(data.getCatagory());
+        }
+        if (!TextUtils.isEmpty(data.getDecorateStandard())) {
+            tv_decoration_standard.setText(data.getDecorateStandard());
+        }
+        if (!TextUtils.isEmpty(data.getTime())) {
+            tv_house_year.setText(data.getTime());
+        }
+        if (!TextUtils.isEmpty(data.getStory())) {
+            tv_house_floor.setText(data.getStory());
+        }
+        if (!TextUtils.isEmpty(data.getPropertyFee())) {
+            tv_property_fee.setText(data.getPropertyFee());
+        }
+        if (!TextUtils.isEmpty(data.getHouseDesc())) {
+            tv_house_description.setText(data.getHouseDesc());
+        }
     }
 
 

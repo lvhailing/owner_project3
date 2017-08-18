@@ -1344,7 +1344,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-//                    Log.i("hh", "房源详情:" + result);
+                    Log.i("hh", "房源详情:" + result);
 
                     Gson gson = new Gson();
                     HouseDetail1B b = gson.fromJson(result, HouseDetail1B.class);

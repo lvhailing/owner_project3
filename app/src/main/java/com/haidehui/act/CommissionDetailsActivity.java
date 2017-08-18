@@ -3,13 +3,11 @@ package com.haidehui.act;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.model.AccountBookCommission2B;
 import com.haidehui.model.CommissionDetails2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -95,7 +93,7 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         tv_commiStatus= (TextView) findViewById(R.id.tv_commiStatus);
         tv_serialNumber= (TextView) findViewById(R.id.tv_serialNumber);
         tv_tradeNum= (TextView) findViewById(R.id.tv_tradeNum);
-        tv_customerName= (TextView) findViewById(R.id.tv_customerName);
+        tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
         tv_customerMobile= (TextView) findViewById(R.id.tv_customerMobile);
         tv_emergencyName= (TextView) findViewById(R.id.tv_emergencyName);
         tv_emergencyMobile= (TextView) findViewById(R.id.tv_emergencyMobile);
@@ -195,9 +193,6 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         }else{
             tv_serviceFee.setText("--");
         }
-
-
-
 
     }
     @Override

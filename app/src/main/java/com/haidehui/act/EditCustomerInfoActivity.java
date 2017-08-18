@@ -2,7 +2,6 @@ package com.haidehui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,6 @@ import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
-import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
@@ -75,8 +73,8 @@ public class EditCustomerInfoActivity extends BaseActivity implements View.OnCli
         edt_phone= (EditText) findViewById(R.id.edt_phone);
         edt_email= (EditText) findViewById(R.id.edt_email);
         edt_location= (EditText) findViewById(R.id.edt_location);
-        edt_project= (EditText) findViewById(R.id.edt_project);
-        edt_room_number= (EditText) findViewById(R.id.edt_room_number);
+        edt_project= (EditText) findViewById(R.id.et_project);
+        edt_room_number= (EditText) findViewById(R.id.et_room_number);
         edt_area= (EditText) findViewById(R.id.edt_area);
         edt_total_amount= (EditText) findViewById(R.id.edt_total_amount);
         btn_save= (Button) findViewById(R.id.btn_save);

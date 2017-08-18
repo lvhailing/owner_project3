@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="帕诺拉普吉岛豪华海景公寓"
+                android:text="--"
                 android:textSize="16sp"/>
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="3卧1卫/100-125㎡"
+                android:text="--/--"
                 android:textColor="@color/txt_light_gray"
                 android:textSize="14sp"/>
 
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="80-112.5万元"
+                android:text="--"
                 android:textColor="@color/txt_orange"
                 android:textSize="14sp"/>
         </LinearLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -263,12 +264,24 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
             updateNum(0);
         }
 
-        tv_house_name.setText(houseDetail.getName());
-        tv_house_detail_price.setText(houseDetail.getPrice() + "万元");
-        tv_house_detail_area.setText(houseDetail.getArea());
-        tv_house_detail_house_type.setText(houseDetail.getHouseType());
-        tv_house_detail_commission_rate.setText(houseDetail.getCommissionRate());
-        tv_house_detail_address.setText(houseDetail.getLocation());
+        if (!TextUtils.isEmpty(houseDetail.getName())) {
+            tv_house_name.setText(houseDetail.getName());
+        }
+        if (!TextUtils.isEmpty(houseDetail.getPrice())) {
+            tv_house_detail_price.setText(houseDetail.getPrice() + "万元");
+        }
+        if (!TextUtils.isEmpty(houseDetail.getArea())) {
+            tv_house_detail_area.setText(houseDetail.getArea());
+        }
+        if (!TextUtils.isEmpty(houseDetail.getHouseType())) {
+            tv_house_detail_house_type.setText(houseDetail.getHouseType());
+        }
+        if (!TextUtils.isEmpty(houseDetail.getCommissionRate())) {
+            tv_house_detail_commission_rate.setText(houseDetail.getCommissionRate());
+        }
+        if (!TextUtils.isEmpty(houseDetail.getLocation())) {
+            tv_house_detail_address.setText(houseDetail.getLocation());
+        }
 
         essentialInfoFragment.refreshLayoutInfo(houseDetail);
 

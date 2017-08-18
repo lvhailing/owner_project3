@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +63,20 @@ public class OverseaProjectAdapter extends BaseAdapter {
         //加载图片
         ImageLoader.getInstance().displayImage(list.get(position).getPath(), holder.iv_oversea_house, options);
 
-        holder.tv_oversea_name.setText(list.get(position).getName());
-        holder.tv_oversea_price.setText(list.get(position).getPrice() + "万元起");
-        holder.tv_oversea_area.setText("面积" + list.get(position).getArea());
+        if (!TextUtils.isEmpty(list.get(position).getName())) {
+            holder.tv_oversea_name.setText(list.get(position).getName());
+        }
+        if (!TextUtils.isEmpty(list.get(position).getPrice())) {
+            holder.tv_oversea_price.setText(list.get(position).getPrice() + "万元起");
+        } else {
+            holder.tv_oversea_price.setText("--");
+        }
+        if (!TextUtils.isEmpty(list.get(position).getArea())) {
+            holder.tv_oversea_area.setText("面积" + list.get(position).getArea());
+        } else {
+            holder.tv_oversea_area.setText("--");
+
+        }
         return convertView;
     }
 

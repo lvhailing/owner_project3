@@ -149,7 +149,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edt_project"
+                android:id="@+id/et_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -179,7 +179,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edt_room_number"
+                android:id="@+id/et_room_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

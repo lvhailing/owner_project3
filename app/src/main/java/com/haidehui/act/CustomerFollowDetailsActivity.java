@@ -86,11 +86,11 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     }
 
     private void initView() {
-        tv_customerName= (TextView) findViewById(R.id.tv_customerName);
-        tv_customerPhone= (TextView) findViewById(R.id.tv_customerPhone);
-        edt_project= (EditText) findViewById(R.id.edt_project);
-        edt_room_number= (EditText) findViewById(R.id.edt_room_number);
-        edit_remark= (EditText) findViewById(R.id.edit_remark);
+        tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
+        tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
+        edt_project= (EditText) findViewById(R.id.et_project);
+        edt_room_number= (EditText) findViewById(R.id.et_room_number);
+        edit_remark= (EditText) findViewById(R.id.et_remark);
         btn_save= (Button) findViewById(R.id.btn_save);
         scrollview= (ScrollView) findViewById(R.id.scrollview);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);

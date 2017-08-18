@@ -29,7 +29,7 @@
                 android:textColor="@color/gray_dark"
                 android:textSize="16sp" />
             <TextView
-                android:id="@+id/tv_customerName"
+                android:id="@+id/tv_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/gray_d"
@@ -54,7 +54,7 @@
                 android:textColor="@color/gray_dark"
                 android:textSize="16sp" />
             <TextView
-                android:id="@+id/tv_customerPhone"
+                android:id="@+id/tv_customer_phone"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/gray_d"
@@ -82,7 +82,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edt_project"
+                android:id="@+id/et_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -112,7 +112,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/edt_room_number"
+                android:id="@+id/et_room_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -139,7 +139,7 @@
             ptr:ptrMode="disabled" />
 
         <EditText
-            android:id="@+id/edit_remark"
+            android:id="@+id/et_remark"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

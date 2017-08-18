@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +64,19 @@ public class ProductRoadShowAdapter extends BaseAdapter {
         //加载图片
         ImageLoader.getInstance().displayImage(list.get(position).getVideoPicture(), holder.iv_product_road_show, options);
 
-        holder.tv_product_road_show_title.setText(list.get(position).getVideoName());
-        holder.tv_release_time.setText("发布时间：" + list.get(position).getEditTime());
-        holder.tv_guest_speaker.setText("演讲嘉宾：" + list.get(position).getSpeaker());
+        if (!TextUtils.isEmpty(list.get(position).getVideoName())) {
+            holder.tv_product_road_show_title.setText(list.get(position).getVideoName());
+        }
+        if (!TextUtils.isEmpty(list.get(position).getEditTime())) {
+            holder.tv_release_time.setText("发布时间：" + list.get(position).getEditTime());
+        } else {
+            holder.tv_release_time.setText("发布时间：" + "--");
+        }
+        if (!TextUtils.isEmpty(list.get(position).getSpeaker())) {
+            holder.tv_guest_speaker.setText("演讲嘉宾：" + list.get(position).getSpeaker());
+        } else {
+            holder.tv_guest_speaker.setText("演讲嘉宾：" + "--");
+        }
 
 
         return convertView;

@@ -65,8 +65,8 @@ public class RengouDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
-        tv_customerName= (TextView) findViewById(R.id.tv_customerName);
-        tv_customerPhone= (TextView) findViewById(R.id.tv_customerPhone);
+        tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
+        tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
         tv_status= (TextView) findViewById(R.id.tv_status);
         tv_projectName= (TextView) findViewById(R.id.tv_projectName);
         tv_roomNumber= (TextView) findViewById(R.id.tv_roomNumber);

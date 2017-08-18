@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
             android:maxLines="2"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -51,7 +51,7 @@
             android:layout_marginLeft="11dp"
             android:maxLength="50"
             android:maxLines="1"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -76,7 +76,7 @@
             android:layout_marginLeft="11dp"
             android:maxLength="50"
             android:maxLines="1"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -124,7 +124,7 @@
             android:layout_marginLeft="11dp"
             android:maxLength="50"
             android:maxLines="1"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -149,7 +149,7 @@
             android:layout_marginLeft="11dp"
             android:maxLength="50"
             android:maxLines="1"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -174,7 +174,7 @@
             android:layout_marginLeft="11dp"
             android:maxLength="50"
             android:maxLines="1"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>
@@ -197,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text=""
+            android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
     </LinearLayout>

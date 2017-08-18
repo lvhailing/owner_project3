@@ -3,6 +3,7 @@ package com.haidehui.act;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -100,8 +101,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private void initView() {
         pid = getIntent().getStringExtra("pid");
 
-        rl_empty_house = (RelativeLayout)findViewById(R.id.rl_empty_house);
-        TextView tv_empty = (TextView)findViewById(R.id.tv_empty);
+        rl_empty_house = (RelativeLayout) findViewById(R.id.rl_empty_house);
+        TextView tv_empty = (TextView) findViewById(R.id.tv_empty);
         ImageView img_empty = (ImageView) findViewById(R.id.img_empty);
         tv_empty.setText("暂无相关房源");
         img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
@@ -178,14 +179,30 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         //加载顶部图片
         ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
 
-        tv_pro_house_name.setText(overseaProjectDetail.getName());
-        tv_pro_house_price.setText(overseaProjectDetail.getPrice() + "万元起");
-        tv_pro_house_area.setText("面积" + overseaProjectDetail.getArea());
-        tv_pro_position.setText(overseaProjectDetail.getLocation());
-        tv_pro_type.setText(overseaProjectDetail.getCategory());
-        tv_pro_count.setText(overseaProjectDetail.getTotal() + "套");
-        tv_pro_decoration_standard.setText(overseaProjectDetail.getDecorateStandard());
-        tv_pro_house_desc.setText(overseaProjectDetail.getProjectDesc());
+        if (!TextUtils.isEmpty(overseaProjectDetail.getName())) {
+            tv_pro_house_name.setText(overseaProjectDetail.getName());
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getPrice())) {
+            tv_pro_house_price.setText(overseaProjectDetail.getPrice() + "万元起");
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getArea())) {
+            tv_pro_house_area.setText("面积" + overseaProjectDetail.getArea());
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getLocation())) {
+            tv_pro_position.setText(overseaProjectDetail.getLocation());
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getCategory())) {
+            tv_pro_type.setText(overseaProjectDetail.getCategory());
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getTotal())) {
+            tv_pro_count.setText(overseaProjectDetail.getTotal() + "套");
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getDecorateStandard())) {
+            tv_pro_decoration_standard.setText(overseaProjectDetail.getDecorateStandard());
+        }
+        if (!TextUtils.isEmpty(overseaProjectDetail.getProjectDesc())) {
+            tv_pro_house_desc.setText(overseaProjectDetail.getProjectDesc());
+        }
 
 
         houseTypeImgList = overseaProjectDetail.getHouseTypeImg();
@@ -211,7 +228,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.rl_pro_house:   // 项目居室
                 if (!isShowHouse) {
                     ll_pro_house_photos.setVisibility(View.VISIBLE);
-                    tv_project_des.setText(overseaProjectDetail.getHouseType());
+                    if (!TextUtils.isEmpty(overseaProjectDetail.getHouseType())) {
+                        tv_project_des.setText(overseaProjectDetail.getHouseType());
+                    }
                     iv_project_click.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShowHouse = true;
                 } else {
@@ -223,7 +242,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.rl_pro_facilities:  // 配套设施
                 if (!isShowFacilities) { // 布局处于打开状态
                     ll_support_facilities.setVisibility(View.VISIBLE);
-                    tv_support_facilities_desc.setText(overseaProjectDetail.getSupportFacility());
+                    if (!TextUtils.isEmpty(overseaProjectDetail.getSupportFacility())) {
+                        tv_support_facilities_desc.setText(overseaProjectDetail.getSupportFacility());
+                    }
                     iv_support_facilities_click.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShowFacilities = true;
                 } else { // 关闭状态
@@ -235,7 +256,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.rl_pro_geographic_location:  // 地理位置
                 if (!isShowLocation) {
                     ll_geographic_location.setVisibility(View.VISIBLE);
-                    tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
+                    if (!TextUtils.isEmpty(overseaProjectDetail.getGeographyLocation())) {
+                        tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
+                    }
                     iv_geographic_location_click.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShowLocation = true;
                 } else {

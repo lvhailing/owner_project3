@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +62,12 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         //加载左侧图片
         ImageLoader.getInstance().displayImage(list.get(position).getPicture(), holder.iv_guide_photo, options);
 
-        holder.tv_guide_title.setText(list.get(position).getTitle());
-        holder.tv_guide_detail .setText(list.get(position).getBriefIntroduction());
+        if (!TextUtils.isEmpty(list.get(position).getTitle())) {
+            holder.tv_guide_title.setText(list.get(position).getTitle());
+        }
+        if (!TextUtils.isEmpty(list.get(position).getBriefIntroduction())) {
+            holder.tv_guide_detail.setText(list.get(position).getBriefIntroduction());
+        }
         return convertView;
     }
 

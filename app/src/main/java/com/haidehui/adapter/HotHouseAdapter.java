@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +67,15 @@ public class HotHouseAdapter extends BaseAdapter {
         String houseType = list.get(position).getHouseType();
         String area = list.get(position).getArea();
 
-        holder.tv_house_name.setText(list.get(position).getName());
-        holder.tv_house_area.setText(houseType + " / " + area);
-        holder.tv_house_price.setText(list.get(position).getPrice() + "万元");
+        if (!TextUtils.isEmpty(list.get(position).getName())) {
+            holder.tv_house_name.setText(list.get(position).getName());
+        }
+        if (!TextUtils.isEmpty(houseType) && !TextUtils.isEmpty(area)) {
+            holder.tv_house_area.setText(houseType + " / " + area);
+        }
+        if (!TextUtils.isEmpty(list.get(position).getPrice())) {
+            holder.tv_house_price.setText(list.get(position).getPrice() + "万元");
+        }
 
         return convertView;
     }
