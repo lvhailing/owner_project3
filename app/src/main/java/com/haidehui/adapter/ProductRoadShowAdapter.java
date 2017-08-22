@@ -66,6 +66,8 @@ public class ProductRoadShowAdapter extends BaseAdapter {
 
         if (!TextUtils.isEmpty(list.get(position).getVideoName())) {
             holder.tv_product_road_show_title.setText(list.get(position).getVideoName());
+        } else {
+            holder.tv_product_road_show_title.setText("--");
         }
         if (!TextUtils.isEmpty(list.get(position).getEditTime())) {
             holder.tv_release_time.setText("发布时间：" + list.get(position).getEditTime());

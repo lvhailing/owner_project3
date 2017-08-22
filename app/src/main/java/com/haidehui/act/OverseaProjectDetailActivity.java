@@ -171,7 +171,11 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
     // 图片切换时更新数字
     private void updateNum() {
-        tv_vp_page.setText(currentPos + 1 + "/" + houseTypeImgList.size());
+        if (houseTypeImgList.size() > 0) {
+            tv_vp_page.setText(currentPos + 1 + "/" + houseTypeImgList.size());
+        } else {
+            tv_vp_page.setText(0 + "/" + 0);
+        }
     }
 
 

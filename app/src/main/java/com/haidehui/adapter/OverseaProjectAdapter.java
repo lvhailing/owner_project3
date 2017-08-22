@@ -65,6 +65,8 @@ public class OverseaProjectAdapter extends BaseAdapter {
 
         if (!TextUtils.isEmpty(list.get(position).getName())) {
             holder.tv_oversea_name.setText(list.get(position).getName());
+        } else {
+            holder.tv_oversea_name.setText("--");
         }
         if (!TextUtils.isEmpty(list.get(position).getPrice())) {
             holder.tv_oversea_price.setText(list.get(position).getPrice() + "万元起");
@@ -75,7 +77,6 @@ public class OverseaProjectAdapter extends BaseAdapter {
             holder.tv_oversea_area.setText("面积" + list.get(position).getArea());
         } else {
             holder.tv_oversea_area.setText("--");
-
         }
         return convertView;
     }

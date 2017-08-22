@@ -1,6 +1,7 @@
 package com.haidehui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +63,26 @@ public class BoutiqueHouseAdapter extends BaseAdapter {
         //加载左侧图片
         ImageLoader.getInstance().displayImage(list.get(position).getPath(), holder.iv_boutique_house, options);
 
+        String name = list.get(position).getName();
         String houseType = list.get(position).getHouseType();
         String area = list.get(position).getArea();
+        String price = list.get(position).getPrice();
 
-        holder.tv_house_name.setText(list.get(position).getName());
-        holder.tv_house_area.setText(houseType + " / " + area);
-        holder.tv_house_price.setText(list.get(position).getPrice() + "万元");
+        if (!TextUtils.isEmpty(name)) {
+            holder.tv_house_name.setText(name);
+        } else {
+            holder.tv_house_name.setText("--");
+        }
+        if (!TextUtils.isEmpty(houseType) && !TextUtils.isEmpty(area)) {
+            holder.tv_house_area.setText(houseType + " / " + area);
+        } else {
+            holder.tv_house_area.setText("--");
+        }
+        if (!TextUtils.isEmpty(price)) {
+            holder.tv_house_price.setText(price + "万元");
+        } else {
+            holder.tv_house_price.setText("--");
+        }
 
         return convertView;
     }
@@ -78,5 +93,9 @@ public class BoutiqueHouseAdapter extends BaseAdapter {
         TextView tv_house_area;
         TextView tv_house_price;
 
+    }
+
+    public void setList(MouldList<HomeIndex3B> list) {
+        this.list = list;
     }
 }

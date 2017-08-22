@@ -62,11 +62,18 @@ public class InvestmentGuideAdapter extends BaseAdapter {
         //加载左侧图片
         ImageLoader.getInstance().displayImage(list.get(position).getPicture(), holder.iv_guide_photo, options);
 
-        if (!TextUtils.isEmpty(list.get(position).getTitle())) {
-            holder.tv_guide_title.setText(list.get(position).getTitle());
+        String title = list.get(position).getTitle();
+        String briefIntroduction = list.get(position).getBriefIntroduction();
+        if (!TextUtils.isEmpty(title)) {
+            holder.tv_guide_title.setText(title);
+        } else {
+            holder.tv_guide_title.setText("--");
         }
-        if (!TextUtils.isEmpty(list.get(position).getBriefIntroduction())) {
-            holder.tv_guide_detail.setText(list.get(position).getBriefIntroduction());
+
+        if (!TextUtils.isEmpty(briefIntroduction)) {
+            holder.tv_guide_detail.setText(briefIntroduction);
+        } else {
+            holder.tv_guide_detail.setText("--");
         }
         return convertView;
     }

@@ -40,12 +40,12 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
     private CustomerFollowDetailsAdapter adapter;
     private MouldList<ResultCustomerFollowDetailslistBean> detailsList;
     private ScrollView scrollview;
-    private Button btn_save;
+    private Button btn_save; // 保存
     private TextView tv_customer_name; // 客户姓名
     private TextView tv_customer_phone; // 客户电话
-    private EditText et_project; //
-    private EditText et_room_number; //
-    private EditText et_remark; //
+    private EditText et_project; // 项目
+    private EditText et_room_number; // 房号
+    private EditText et_remark; // 备注信息
     private ActivityStack stack;
 
     private String[] resultStr = new String[12];

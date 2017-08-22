@@ -66,15 +66,23 @@ public class HotHouseAdapter extends BaseAdapter {
 
         String houseType = list.get(position).getHouseType();
         String area = list.get(position).getArea();
+        String houseName = list.get(position).getName();
+        String price = list.get(position).getPrice();
 
-        if (!TextUtils.isEmpty(list.get(position).getName())) {
-            holder.tv_house_name.setText(list.get(position).getName());
+        if (!TextUtils.isEmpty(houseName)) {
+            holder.tv_house_name.setText(houseName);
+        } else {
+            holder.tv_house_name.setText("--");
         }
         if (!TextUtils.isEmpty(houseType) && !TextUtils.isEmpty(area)) {
             holder.tv_house_area.setText(houseType + " / " + area);
+        } else {
+            holder.tv_house_area.setText("--");
         }
-        if (!TextUtils.isEmpty(list.get(position).getPrice())) {
-            holder.tv_house_price.setText(list.get(position).getPrice() + "万元");
+        if (!TextUtils.isEmpty(price)) {
+            holder.tv_house_price.setText(price + "万元");
+        } else {
+            holder.tv_house_price.setText("--");
         }
 
         return convertView;

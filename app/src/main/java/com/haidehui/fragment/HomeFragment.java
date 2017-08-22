@@ -50,16 +50,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private MouldList<ResultCycleIndex2B> picList;
     private MyListView myListView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
-    private TextView tv_hot_house, tv_oversea_project, tv_customer_service; // 最热房源，海外项目，我的客服
+    private TextView tv_hot_house; // 最热房源
+    private TextView tv_oversea_project; // 海外项目
+    private TextView tv_customer_service; // 我的客服
     private LinearLayout ll_home_notice; // 公告布局
     private TextView tv_home_notice; // 公告标题
     private TextView tv_no_house; // 精品房源无数据时显示的提示语
     private Intent intent;
-    private MouldList<HomeIndex3B> BoutiqueHouseList = new MouldList<>();
+    private MouldList<HomeIndex3B> boutiqueHouseList = new MouldList<>(); // 精品房源列表
     private HomeIndex2B homeIndexData;
     private String userId;
     private MyRollViewPager rollViewPager;
-    private RelativeLayout rl_empty_house;
+    private RelativeLayout rl_empty_house; // 无精品房源 显示的布局
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     public void resetScrollViewSmooth() {
-        requestCycleIndex(); // 请求轮图数据
+        requestCycleIndex(); // 请求轮播图数据
         requestHomeIndexData(); // 请求首页数据
 
     }
@@ -102,6 +104,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
         ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
         tv_empty.setText("暂无精品房源");
+        rl_empty_house.setVisibility(View.GONE);
         img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
 
 
@@ -131,14 +134,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-//        requestCycleIndex(); // 请求轮图数据
-//        requestHomeIndexData(); // 请求首页数据
-
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(context, HouseDetailActivity.class);
-                intent.putExtra("hid", BoutiqueHouseList.get(position).getHid());
+                intent.putExtra("hid", boutiqueHouseList.get(position).getHid());
                 startActivity(intent);
             }
         });
@@ -204,25 +204,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 } else {
                     tv_home_notice.setText("暂无公告");
                 }
-                BoutiqueHouseList = homeIndexData.getList();
-                if (BoutiqueHouseList != null && BoutiqueHouseList.size() > 0) {
-                    myAdapter = new BoutiqueHouseAdapter(context, BoutiqueHouseList);
+                boutiqueHouseList = homeIndexData.getList();
+                if (myAdapter == null) {
+                    myAdapter = new BoutiqueHouseAdapter(context, boutiqueHouseList);
                     myListView.setAdapter(myAdapter);
-
+                } else {
+                    myAdapter.setList(boutiqueHouseList);
+                    myAdapter.notifyDataSetChanged();
+                }
+                if (boutiqueHouseList != null && boutiqueHouseList.size() > 0) {
+                    rl_empty_house.setVisibility(View.GONE);
                     myListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             scrollView.smoothScrollTo(0, 0);
                         }
                     }, 50);
-//                    scrollView.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//                            scrollView.scrollTo(0,0);
-//                        }
-//                    },100);
-
+                } else if (boutiqueHouseList != null && boutiqueHouseList.size() <= 0) {
+                    rl_empty_house.setVisibility(View.VISIBLE);
                 } else {
                     rl_empty_house.setVisibility(View.VISIBLE);
                 }

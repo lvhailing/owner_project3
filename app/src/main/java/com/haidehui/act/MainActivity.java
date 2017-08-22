@@ -246,28 +246,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     final ResultCheckVersionContentBean b = (ResultCheckVersionContentBean) params.result;
                     if (!TextUtils.isEmpty(b.getVersion())) {
                         if (!b.getVersion().equals(SystemInfo.sVersionName)) {
-
                             CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this, new CheckVersionDialog.OnCheckVersion() {
-
                                 @Override
                                 public void onConfim() {
                                     Intent updateIntent = new Intent(MainActivity.this, AppUpgradeService.class);
                                     updateIntent.putExtra("titleId", R.string.app_chinesename);
-                                    updateIntent.putExtra("downloadUrl",
-                                            // "http://114.113.238.90:40080/upload/app/vjinke.apk");
-//																ApplicationConsts.EC_HOST
-//																		+ b.getUrl()
-                                            b.getUrl());
+                                    updateIntent.putExtra("downloadUrl", b.getUrl());
                                     MainActivity.this.startService(updateIntent);
                                 }
 
                                 @Override
                                 public void onCancel() {
-
                                 }
                             }, "发现新版本,是否更新", b.getForcedUpgrade());
                             dialog.setCancelable(false);
-
                             dialog.show();
                         } else {
                             if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
@@ -325,8 +317,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_tab_home:  // 首页
-//                setSelect(0);
-                mViewPager.setCurrentItem(0);
+                setSelect(0);
+//                mViewPager.setCurrentItem(0);
                 break;
             case R.id.ll_tab_house_resources:  // 房源
 //                setSelect(1);
