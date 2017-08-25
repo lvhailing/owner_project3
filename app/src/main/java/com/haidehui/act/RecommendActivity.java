@@ -73,6 +73,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.ac_recommend);
+
         initTopTitle();
         initView();
         initData();
@@ -83,6 +84,27 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
+    }
+
+    private void initTopTitle() {
+        TitleBar title = (TitleBar) findViewById(R.id.rl_title);
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false)
+             .setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.setting_recommend_title))
+             .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+            @Override
+            public void onMenu(int id) {
+            }
+
+            @Override
+            public void onBack() {
+                finish();
+            }
+
+            @Override
+            public void onAction(int id) {
+
+            }
+        });
     }
 
     public void initView() {
@@ -141,27 +163,6 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             }
         });
     }
-
-    private void initTopTitle() {
-        TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.setting_recommend_title)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
-
-            @Override
-            public void onMenu(int id) {
-            }
-
-            @Override
-            public void onBack() {
-                finish();
-            }
-
-            @Override
-            public void onAction(int id) {
-
-            }
-        });
-    }
-
 
     @Override
     protected void onStart() {

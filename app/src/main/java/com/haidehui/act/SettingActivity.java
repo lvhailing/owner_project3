@@ -36,7 +36,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private RelativeLayout rl_setting_about;  //  关于我们
     private RelativeLayout rl_setting_version; //  版本号
     private TextView tv_setting_version_code;  //  版本号
-    private TextView tv_setting_logout;         //  退出登录
+    private TextView tv_setting_logout;  // 退出登录
 
     private ActivityStack stack;
 

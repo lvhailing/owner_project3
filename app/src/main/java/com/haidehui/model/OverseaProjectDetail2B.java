@@ -12,6 +12,8 @@ public class OverseaProjectDetail2B implements IMouldType {
     private String pid; // 项目编号
     private String projectImg; // 项目展示图片地址
     private String name; // 项目名字
+    private String chineseName; // 项目中文名称（8.25 新增字段）
+    private String city; // 项目所以地区（8.25 新增字段）
     private String price; // 项目价格
     private String area; // 项目面积
     private String location; // 项目位置
@@ -56,6 +58,22 @@ public class OverseaProjectDetail2B implements IMouldType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getChineseName() {
+        return chineseName;
+    }
+
+    public void setChineseName(String chineseName) {
+        this.chineseName = chineseName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getPrice() {
@@ -161,4 +179,5 @@ public class OverseaProjectDetail2B implements IMouldType {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
 }
