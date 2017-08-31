@@ -20,10 +20,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.adapter.RelatedHouseAdapter;
 import com.haidehui.common.Urls;
-import com.haidehui.model.OverseaProjectDetail2B;
-import com.haidehui.model.SubmitCustomer2B;
+import com.haidehui.model.Splash1B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -81,7 +79,10 @@ public class SplashActivity extends FragmentActivity {
                     Toast.makeText(SplashActivity.this, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                     return;
                 }
-                SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                Splash1B data = (Splash1B) params.result;
+                if (data.getCode().equals("0000")) {
+                    Toast.makeText(SplashActivity.this, "统计已发送给后台", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

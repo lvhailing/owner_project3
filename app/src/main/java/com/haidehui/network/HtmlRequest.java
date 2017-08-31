@@ -21,9 +21,9 @@ import com.haidehui.model.HouseDetail1B;
 import com.haidehui.model.HouseList1B;
 import com.haidehui.model.InvestmentGuide1B;
 import com.haidehui.model.MineData1B;
-import com.haidehui.model.PartnerIdentify1B;
 import com.haidehui.model.OverseaProjectDetail1B;
 import com.haidehui.model.OverseaProjectList1B;
+import com.haidehui.model.PartnerIdentify1B;
 import com.haidehui.model.ProductRoadshow1B;
 import com.haidehui.model.RenGou1B;
 import com.haidehui.model.RenGouDetails1B;
@@ -37,11 +37,11 @@ import com.haidehui.model.ResultRecommendInfoBean;
 import com.haidehui.model.ResultRecommendRecordBean;
 import com.haidehui.model.ResultSentSMSBean;
 import com.haidehui.model.ResultWithdrawInfoBean;
+import com.haidehui.model.Splash1B;
 import com.haidehui.model.SubmitCustomer1B;
 import com.haidehui.model.SubmitPartnerIdentify1B;
 import com.haidehui.model.Tracking1B;
 import com.haidehui.model.TrackingDetails1B;
-import com.haidehui.model.TrackingDetails2B;
 import com.haidehui.model.WithDrawDetails1B;
 import com.haidehui.network.http.SimpleHttpClient;
 import com.haidehui.uitls.DESUtil;
@@ -2665,8 +2665,8 @@ public class HtmlRequest extends BaseRequester {
                     }
                     String data = DESUtil.decrypt(result);
                     Gson gson = new Gson();
-                    SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
-                    return b.getData();
+                    Splash1B b = gson.fromJson(data, Splash1B.class);
+                    return b;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
