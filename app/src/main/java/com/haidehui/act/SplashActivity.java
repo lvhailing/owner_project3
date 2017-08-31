@@ -2,7 +2,6 @@ package com.haidehui.act;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -18,12 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.haidehui.R;
+import com.haidehui.adapter.RelatedHouseAdapter;
 import com.haidehui.common.Urls;
+import com.haidehui.model.OverseaProjectDetail2B;
+import com.haidehui.model.SubmitCustomer2B;
+import com.haidehui.network.BaseParams;
+import com.haidehui.network.BaseRequester;
+import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -45,6 +53,7 @@ public class SplashActivity extends FragmentActivity {
 
     public static final String APP_ID = "2882303761517425837";
     public static final String APP_KEY = "5191742577837";
+    private String userId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,29 @@ public class SplashActivity extends FragmentActivity {
         setContentView(R.layout.ac_splash);
         initView(PreferenceUtil.isFirst());
 
+        requestData();
+    }
+
+    private void requestData() {
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("userId", userId);
+
+        HtmlRequest.openApp(this, param, new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(SplashActivity.this, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+            }
+        });
 
     }
 
