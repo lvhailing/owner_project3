@@ -62,6 +62,7 @@ public class SplashActivity extends FragmentActivity {
         requestData();
     }
 
+    // 用于统计用户的登录情况
     private void requestData() {
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
@@ -76,12 +77,12 @@ public class SplashActivity extends FragmentActivity {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {
-                    Toast.makeText(SplashActivity.this, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(SplashActivity.this, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
                     return;
                 }
                 Splash1B data = (Splash1B) params.result;
                 if (data.getCode().equals("0000")) {
-                    Toast.makeText(SplashActivity.this, "统计已发送给后台", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(SplashActivity.this, "统计已发送给后台", Toast.LENGTH_LONG).show();
                 }
             }
         });

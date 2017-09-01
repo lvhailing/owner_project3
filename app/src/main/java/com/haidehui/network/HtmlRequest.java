@@ -2642,7 +2642,12 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-
+    /**
+     *  统计用户的登录
+     * @param context
+     * @param param  用户的id
+     * @param listener
+     */
     public static void openApp(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_APP_OPEN;

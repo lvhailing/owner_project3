@@ -12,7 +12,7 @@ public class Urls {
     public static String URL_OFFICIAL = "https://hwapp.cf360.com/";
 
     //代树理
-    public static final String URL_DSL = "http://192.168.1.106:9999/overseasProperty-app/";
+    public static final String URL_DSL = "http://192.168.1.106:9999/overseas-app/";
 
     //张亚磊
     public static final String URL_ZYL = "http://192.168.1.193:9999/overseas-app/";
@@ -27,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_OUTER_NET_DEBUG;
+    private static String EC_HOST = URL_DEBUG;
 
     /**
      * 登出
