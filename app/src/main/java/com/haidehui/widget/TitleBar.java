@@ -108,6 +108,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         // title.setOnClickListener(this);
         // leftImg.setOnClickListener(this);
         more.setOnClickListener(this);
+        iv_right_btn.setOnClickListener(this);
 
         options = ImageLoaderManager.initDisplayImageOptions(R.drawable.icons, R.drawable.icons, R.drawable.icons);
     }
@@ -454,8 +455,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // TODO Auto-generated method stub
-                    if (mListenter != null) {
-                        mListenter.onMenu(view.getId());
+                    if (mListener != null) {
+                        mListener.onMenu(view.getId());
                         menuWindow.dismiss();
                     }
                 }
@@ -503,8 +504,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (mListenter != null) {
-                        mListenter.onMenu(view.getId());
+                    if (mListener != null) {
+                        mListener.onMenu(view.getId());
                         titleMenuWindow.dismiss();
                     }
                 }
@@ -750,7 +751,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         }
     }
 
-    OnActionListener mListenter;
+    OnActionListener mListener;
 
     public interface OnActionListener {
         public void onAction(int id);
@@ -766,18 +767,18 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
      * @param l
      */
     public void setOnActionListener(OnActionListener l) {
-        this.mListenter = l;
+        this.mListener = l;
     }
 
     @Override
     public void onClick(View v) {
 
-        if (mListenter != null) {
+        if (mListener != null) {
             switch (v.getId()) {
                 case R.id.title_back:
                     // case R.id.top_title:
                     // case R.id.top_title_leftview:
-                    mListenter.onBack();
+                    mListener.onBack();
                     break;
                 case R.id.top_title_leftbtn:
                     Intent i = new Intent(mContext, WebActivity.class);
@@ -797,6 +798,16 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 // menuWindow.show();
                 // break;
                 // }
+
+                case R.id.iv_right_btn:
+                    Intent intent = new Intent(mContext, WebActivity.class);
+//                    i.putExtra("type", WebActivity.WEBTYPE_LOGO);
+                    intent.putExtra("title", logoName);
+                    intent.putExtra("url", url);
+                    if (!TextUtils.isEmpty(url)) {
+                        mContext.startActivity(intent);
+                    }
+                    break;
                 case R.id.rl_top_title_menu:
                 case R.id.iv_top_title_menu:
                 case R.id.top_title_menu: {
@@ -811,7 +822,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                     break;
                 }
                 default: {
-                    mListenter.onAction(v.getId());
+                    mListener.onAction(v.getId());
                 }
             }
         }
