@@ -61,6 +61,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
     private Context mContext;
     private DisplayImageOptions options;
     private TextView child;
+    private ImageView iv_right_btn;
 
     public TitleBar(Context context) {
         super(context);
@@ -93,6 +94,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         rl_top_title_menu = (RelativeLayout) findViewById(R.id.rl_top_title_menu);
         iv_top_title_menu = (ImageView) findViewById(R.id.iv_top_title_menu);
         tv_center = (TextView) findViewById(R.id.title_center);// 中间文字
+        iv_right_btn = (ImageView) findViewById(R.id.iv_right_btn);// 右侧分享按钮
 
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.move_rightlittle);
         animation.setFillAfter(true);
@@ -550,6 +552,16 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
     }
 
     /**
+     *  设置最右侧按钮
+     * @param drawable
+     * @return
+     */
+    public TitleBar setTitleRightButton(int drawable) {
+        iv_right_btn.setBackgroundResource(drawable);
+        return TitleBar.this;
+    }
+
+    /**
      * 设置LOGO显示图片及是否显示
      *
      * @param id
@@ -644,17 +656,6 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         leftImg.clearAnimation();
     }
 
-    /**
-     * 设置titlebar群聊人数
-     *
-     * @param text
-     * @return
-     *
-     *         public TitleBar setGroupCount(int count) { String text = ""; if
-     *         (count > 0) { text = "(" + count + ")";
-     *         tv_groupcount.setText(text); } else { tv_groupcount.setText("");
-     *         } return TitleBar.this; }
-     */
     /**
      * 设置标题文本
      *

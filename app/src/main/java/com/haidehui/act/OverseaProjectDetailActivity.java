@@ -107,7 +107,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
         title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-             .setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(true).setTitleRigterIcon(R.drawable.ic_share_title)
+             .setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(true).setTitleRightButton(R.drawable.ic_share_title)
              .setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
@@ -121,7 +121,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
             @Override
             public void onAction(int id) {
-
             }
         });
     }
