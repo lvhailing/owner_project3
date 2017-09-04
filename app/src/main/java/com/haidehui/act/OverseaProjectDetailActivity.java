@@ -13,7 +13,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.adapter.HouseDetailAdapter;
 import com.haidehui.adapter.RelatedHouseAdapter;
 import com.haidehui.model.OverseaProjectDetail2B;
@@ -28,7 +27,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * 海外项目详情
@@ -37,6 +35,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private ScrollView scrollView;
 
     private boolean isShowHouse = false; //刚进来此页面时，项目居室内容默认是不显示的
+    private boolean isShowPlan = false; //刚进来此页面时，项目规划内容默认是不显示的
     private boolean isShowFacilities = false; //刚进来此页面时，配套设施内容默认是不显示的
     private boolean isShowLocation = false; //刚进来此页面时，地理位置内容默认是不显示的
     private boolean isShowProjectMaterial = false; //刚进来此页面时，项目材料内容默认是不显示的
@@ -54,23 +53,28 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private TextView tv_pro_house_desc; // 项目描述
 
 
-    private ViewPager vp;
+    private ViewPager vp; // 项目居室 轮播图
+    private ViewPager vp2; // 项目规划 轮播图
     private int currentPos;
     private TextView tv_vp_page;
+    private TextView tv_vp2_page;
     private HouseDetailAdapter mAdapter; // 轮播图Adapter
 
     //  项目居室、配套设施、地理位置、项目材料  后面的箭头图标
     private ImageView iv_project_click;
+    private ImageView iv_project_plan_arrow;
     private ImageView iv_support_facilities_click;
     private ImageView iv_geographic_location_click;
     private ImageView iv_project_material;
 
-    private RelativeLayout rl_pro_house; // 项目居室 布局
+    private RelativeLayout rl_project_house; // 项目居室 布局
+    private RelativeLayout rl_project_plan; // 项目规划 布局
     private RelativeLayout rl_pro_facilities; //  配套设施 布局
     private RelativeLayout rl_pro_geographic_location; //  地理位置布局
     private RelativeLayout rl_project_material; // 项目材料布局
 
     private LinearLayout ll_pro_house_photos; // 项目居室 布局
+    private LinearLayout ll_project_plan_photos; // 项目规划 布局
     private LinearLayout ll_support_facilities; //  配套设施 布局
     private LinearLayout ll_geographic_location; //  地理位置 布局
     private LinearLayout ll_project_material; // 项目材料 布局
@@ -86,6 +90,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
     private RelatedHouseAdapter myAdapter; // 相关房源 Adapter
     private RelativeLayout rl_empty_house;// 相关房源没数据时显示的提示语
+
 
 
     @Override
@@ -133,11 +138,13 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         iv_oversea_detail = (ImageView) findViewById(R.id.iv_oversea_detail);
         iv_project_click = (ImageView) findViewById(R.id.iv_project_click);
+        iv_project_plan_arrow = (ImageView) findViewById(R.id.iv_project_plan_arrow);
         iv_support_facilities_click = (ImageView) findViewById(R.id.iv_support_facilities_click);
         iv_geographic_location_click = (ImageView) findViewById(R.id.iv_geographic_location_click);
         iv_project_material = (ImageView) findViewById(R.id.iv_project_material);
 
-        rl_pro_house = (RelativeLayout) findViewById(R.id.rl_pro_house);
+        rl_project_house = (RelativeLayout) findViewById(R.id.rl_project_house);
+        rl_project_plan = (RelativeLayout) findViewById(R.id.rl_project_plan);
         rl_pro_facilities = (RelativeLayout) findViewById(R.id.rl_pro_facilities);
         rl_pro_geographic_location = (RelativeLayout) findViewById(R.id.rl_pro_geographic_location);
         rl_project_material = (RelativeLayout) findViewById(R.id.rl_project_material);
@@ -158,6 +165,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         tv_geographic_location_desc = (TextView) findViewById(R.id.tv_geographic_location_desc);
 
         ll_pro_house_photos = (LinearLayout) findViewById(R.id.ll_pro_house_photos);
+        ll_project_plan_photos = (LinearLayout) findViewById(R.id.ll_project_plan_photos);
         ll_support_facilities = (LinearLayout) findViewById(R.id.ll_support_facilities);
         ll_geographic_location = (LinearLayout) findViewById(R.id.ll_geographic_location);
         ll_project_material = (LinearLayout) findViewById(R.id.ll_project_material);
@@ -166,16 +174,20 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         project_material_list = (MyListView) findViewById(R.id.project_material_list);
 
         vp = (ViewPager) findViewById(R.id.vp);
+        vp2 = (ViewPager) findViewById(R.id.vp2);
         tv_vp_page = (TextView) findViewById(R.id.tv_vp_page);
+        tv_vp2_page = (TextView) findViewById(R.id.tv_vp2_page);
 
-        rl_pro_house.setOnClickListener(this);
+        rl_project_house.setOnClickListener(this);
+        rl_project_plan.setOnClickListener(this);
         rl_pro_facilities.setOnClickListener(this);
         rl_pro_geographic_location.setOnClickListener(this);
     }
 
     private void initData() {
-        requestDetailData();
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+        requestDetailData(); // 获取海外项目详情页数据
+
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 相关房源列表 点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(mContext, HouseDetailActivity.class);
@@ -252,6 +264,14 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
         updateNum();
 
+        vp2.setAdapter(mAdapter);
+        vp2.setOnPageChangeListener(new MyOnPageChangeListener());
+        vp2.setCurrentItem(currentPos);
+
+        updateNum();
+
+
+
     }
 
     @Override
@@ -264,7 +284,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_pro_house:   // 项目居室
+            case R.id.rl_project_house:   // 项目居室
                 if (!isShowHouse) {
                     ll_pro_house_photos.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(overseaProjectDetail.getHouseType())) {
@@ -276,6 +296,17 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                     isShowHouse = false;
                     ll_pro_house_photos.setVisibility(View.GONE);
                     iv_project_click.setBackgroundResource(R.mipmap.icon_oversea_down);
+                }
+                break;
+            case R.id.rl_project_plan:   // 项目规划
+                if (!isShowPlan) {
+                    ll_project_plan_photos.setVisibility(View.VISIBLE);
+                    iv_project_plan_arrow.setBackgroundResource(R.mipmap.icon_oversea_up);
+                    isShowPlan = true;
+                } else {
+                    isShowPlan = false;
+                    ll_project_plan_photos.setVisibility(View.GONE);
+                    iv_project_plan_arrow.setBackgroundResource(R.mipmap.icon_oversea_down);
                 }
                 break;
             case R.id.rl_pro_facilities:  // 配套设施
