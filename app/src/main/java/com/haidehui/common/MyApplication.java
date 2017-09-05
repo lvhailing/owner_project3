@@ -20,6 +20,8 @@ import com.haidehui.uitls.CityDataHelper;
 import java.io.InputStream;
 import java.util.HashSet;
 
+import cn.sharesdk.framework.ShareSDK;
+
 public class MyApplication extends Application {
     private static MyApplication instance;
     public static String mAppId;
@@ -60,6 +62,10 @@ public class MyApplication extends Application {
         dataHelper = CityDataHelper.getInstance(this);
         InputStream in = this.getResources().openRawResource(R.raw.province);
         dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
+
+        //sharesdk 初始化
+
+        ShareSDK.initSDK(instance);
     }
 
     public interface NetListener {

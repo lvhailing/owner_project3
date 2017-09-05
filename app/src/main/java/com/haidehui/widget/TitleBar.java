@@ -1,15 +1,12 @@
 package com.haidehui.widget;
 
 import android.annotation.SuppressLint;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -30,26 +27,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.haidehui.act.WebActivity;
-import com.haidehui.common.Urls;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.haidehui.R;
+import com.haidehui.act.WebActivity;
 import com.haidehui.uitls.ImageLoaderManager;
+import com.haidehui.uitls.ShareUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.uitls.ViewUtils;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import onekeyshare.OnekeyShare;
-import onekeyshare.PlatformListFakeActivity;
 
 public class TitleBar extends RelativeLayout implements OnClickListener {
 
@@ -75,7 +63,6 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
     private DisplayImageOptions options;
     private TextView child;
     private ImageView iv_right_btn;
-    private String way;
 
     public TitleBar(Context context) {
         super(context);
@@ -273,8 +260,10 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             throw new RuntimeException("action container is full,limit is 2");
         }
         TextView child = new TextView(mContext);
-        if (act.text > 0) child.setText(act.text);
-        if (act.id > 0) child.setId(act.id);
+        if (act.text > 0)
+            child.setText(act.text);
+        if (act.id > 0)
+            child.setId(act.id);
         // child.setBackgroundResource(act.background);
         Drawable drawable = mContext.getResources().getDrawable(act.background);
         // / 这一步必须要做,否则不会显示.
@@ -814,8 +803,9 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 // }
 
                 case R.id.iv_right_btn:
-                    ShareSDK.initSDK(mContext);
-                    sharedSDK();
+                    //启动分享
+                    String url = "https://www.baidu.com/";
+                    ShareUtil.sharedSDK(mContext, url);
                     break;
                 case R.id.rl_top_title_menu:
                 case R.id.iv_top_title_menu:
@@ -835,161 +825,6 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 }
             }
         }
-    }
-
-    private void sharedSDK() {
-        final OnekeyShare oks = new OnekeyShare();
-        // 关闭sso授权
-        oks.disableSSOWhenAuthorize();
-
-        oks.setOnShareButtonClickListener(new PlatformListFakeActivity.OnShareButtonClickListener() {
-
-            @Override
-            public void onClick(View v, List<Object> checkPlatforms) {
-                String string = checkPlatforms.toString();
-                oks.setSilent(false);
-//                StringBuffer randomNum = new StringBuffer();
-//                for (int i = 0; i < 6; i++) {
-//                    int t = (int) (Math.random() * 10);
-//                    randomNum.append(t);
-//                }
-//                StringBuffer randomNum2 = new StringBuffer();
-//                for (int i = 0; i < 6; i++) {
-//                    int t = (int) (Math.random() * 10);
-//                    randomNum2.append(t);
-//                }
-                String url = "https://www.baidu.com/";
-                if (string.contains("WechatMoments")) {
-                    way = "weixin";            //微信朋友圈
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                    oks.setTitle(mContext.getString(R.string.login_title));
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
-                } else if (string.contains("Wechat")) {
-                    way = "weixinFr";        //微信好友
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-                    oks.setTitle(mContext.getString(R.string.login_title));
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-//					oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
-                } else if (string.contains("QZone")) {
-                    way = "Qzone";
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                } else if (string.contains("SinaWeibo")) {
-                    way = "sinablog";
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-//					oks.setTitleUrl(url);
-                    oks.setUrl(url);
-
-                    oks.setSilent(false);
-                } else if (string.contains("TencentWeibo")) {
-                    way = "tencentblog";
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                } else if (string.contains("QQ")) {
-                    way = "QQ";
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-//					oks.setTitleUrl(url);
-                    // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-                    // oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-                    // url仅在微信（包括好友和朋友圈）中使用
-                    oks.setUrl(url);
-                    // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-                    // oks.setComment("我是测试评论文本");
-                    // site是分享此内容的网站名称，仅在QQ空间使用
-                    oks.setSite(mContext.getString(R.string.app_name));
-                    // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-                    oks.setSiteUrl(url);
-                } else if (string.contains("Email")) {
-                    way = "email";
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                } else if (string.contains("ShortMessage")) {
-                    way = "sms";
-                    oks.setText(mContext.getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                }
-            }
-
-        });
-
-        // 分享时Notification的图标和文字 2.5.9以后的版本不调用此方法
-        // oks.setNotification(R.drawable.ic_launcher,
-        // getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-
-        oks.setTitle(mContext.getString(R.string.share));
-//		oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");//确保SDcard下面存在此张图片
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-
-        // oks.setTitleUrl("http://www.vjinke.com");
-
-        // text是分享文本，所有平台都需要这个字段
-        Bitmap enableLogo = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.logo_lianjie);
-        String label = "复制链接";
-        View.OnClickListener listener = new View.OnClickListener() {
-            public void onClick(View v) {
-                StringBuffer randomNum = new StringBuffer();
-                for (int i = 0; i < 6; i++) {
-                    int t = (int) (Math.random() * 10);
-                    randomNum.append(t);
-                }
-                ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText("https://www.baidu.com/");
-                Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
-            }
-        };
-        oks.setCustomerLogo(enableLogo, enableLogo, label, listener);
-
-        oks.setCallback(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                Toast.makeText(context,"--------"+platform.getName(),Toast.LENGTH_SHORT).show();
-
-                if (platform.getName().equals("WechatMoments")) {
-
-
-                } else if (platform.getName().equals("Wechat")) {
-
-
-                } else if (platform.getName().equals("QZone")) {
-
-
-                } else if (platform.getName().equals("SinaWeibo")) {
-
-
-                } else if (platform.getName().equals("ShortMessage")) {
-
-
-                } else if (platform.getName().equals("QQ")) {
-
-                }
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-
-            }
-        });
-
-//        oks.getCallback();
-
-//        if (!TextUtils.isEmpty(recommendCode)) {
-//        }
-            // 启动分享GUI
-            oks.show(mContext);
     }
 
     public void refeshMenu() {
@@ -1055,8 +890,10 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             } else {
                 holder.redImg.setVisibility(View.GONE);
             }
-            if (act.text > 0) holder.text.setText(act.text);
-            if (act.id > 0) convertView.setId(act.id);
+            if (act.text > 0)
+                holder.text.setText(act.text);
+            if (act.id > 0)
+                convertView.setId(act.id);
             if (act.left_img != 0) {
                 holder.img.setImageResource(act.left_img);
 
@@ -1164,7 +1001,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 holder = (Holder) convertView.getTag();
             }
             // TextView t = new TextView(mContext);
-            if (act.text > 0) holder.text.setText(act.text);
+            if (act.text > 0)
+                holder.text.setText(act.text);
             if (act.id > 0) {
                 convertView.setId(act.id);
             }
