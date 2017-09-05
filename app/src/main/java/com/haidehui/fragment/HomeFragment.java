@@ -260,6 +260,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             //第一次从后台获取到数据
             rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
             rollViewPager.setCycle(true);
+            rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
+                @Override
+                public void onMyClick(int position) {
+
+                }
+            });
             rollViewPager.startRoll();
             ll_vp.addView(rollViewPager);
         } else {
