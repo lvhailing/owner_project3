@@ -166,7 +166,7 @@ public class MyRollViewPager extends ViewPager {
         }
     }
 
-    private class MyPagerAdapter extends PagerAdapter {
+    public class MyPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {

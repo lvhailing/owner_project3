@@ -118,8 +118,7 @@
             android:id="@+id/iv_right_btn"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/ic_share_title"/>
+            android:layout_marginRight="12dp"/>
     </LinearLayout>
 
     <View

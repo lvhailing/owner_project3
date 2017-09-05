@@ -39,7 +39,7 @@ import com.haidehui.widget.MyRollViewPager;
 import java.util.HashMap;
 
 /**
- * 底部导航---首页
+ * 首页模块
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private View mView;

@@ -38,15 +38,15 @@ import java.util.Map;
 
 public class SignActivity extends BaseActivity implements View.OnClickListener{
 
-    private EditText et_sign_phone;        //  用户名
-    private TextView tv_sign_get_verify_code;       //  获取验证码
-    private EditText et_sign_verify_code;       //  验证码
-    private EditText et_sign_password;      //  密码
-    private EditText et_sign_real_name;     //  真实姓名
-    private EditText et_sign_recommendation;        //  推荐码
-    private CheckBox signup_checkbox;       //  同意协议
-    private TextView signup_web;        //  服务协议
-    private Button btn_sign;        //  立即注册
+    private EditText et_sign_phone; //  用户名
+    private TextView tv_sign_get_verify_code; //  获取验证码
+    private EditText et_sign_verify_code; //  验证码
+    private EditText et_sign_password; //  密码
+    private EditText et_sign_real_name; //  真实姓名
+    private EditText et_sign_recommendation; //  推荐码
+    private CheckBox signup_checkbox; //  同意协议
+    private TextView signup_web; //  服务协议
+    private Button btn_sign;  //  立即注册
 
     private String mobile = "";
     private String verifyCode = "";
@@ -70,12 +70,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
         initTopTitle();
         initView();
 
-
-
     }
 
     public void initView(){
-
         context = this;
 
         et_sign_phone = (EditText) findViewById(R.id.et_sign_phone);
@@ -96,11 +93,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
         mHandler = new MyHandler();
         btnString = getResources().getString(R.string.sign_getsms_again);
 
-
-
         checkNull();
-
-
 
     }
 
@@ -157,7 +150,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
 
-            case R.id.btn_sign:         //      立即注册
+            case R.id.btn_sign: //  立即注册
                 if(StringUtil.checkPassword(password)){
                     signup();
                 }else{
@@ -166,8 +159,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
 
                 break;
 
-            case R.id.signup_web:       //  海德汇协议
-
+            case R.id.signup_web: // 海德汇协议
                 Intent i_service = new Intent(SignActivity.this,WebActivity.class);
                 i_service.putExtra("type", WebActivity.WEBTYPE_SIGN_AGREEMENT);
                 i_service.putExtra("title", getResources().getString(R.string.setting_sign_agreement));

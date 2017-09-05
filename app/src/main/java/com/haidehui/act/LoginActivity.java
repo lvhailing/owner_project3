@@ -29,12 +29,12 @@ import java.util.Observer;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener,Observer {
 
-    private EditText et_login_phone;        //  用户名
-    private EditText et_login_password;     //  密码
-    private Button btn_login;       //  登录
-    private TextView tv_login_forget_password;      //  忘记密码
-    private TextView tv_login_sign;     //  注册
-    private LinearLayout ll_login_phone_service;        //  客服电话
+    private EditText et_login_phone; //  用户名
+    private EditText et_login_password; //  密码
+    private Button btn_login; //  登录
+    private TextView tv_login_forget_password; //  忘记密码
+    private TextView tv_login_sign; //  注册
+    private LinearLayout ll_login_phone_service; //  客服电话
     private ResultUserLoginContentBean bean;
     public static String GOTOMAIN = "1000";
     private String resultCode = "";
@@ -180,30 +180,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_login:
-
                 String username = et_login_phone.getText().toString();
                 String password = et_login_password.getText().toString();
-                UserLogin.getInstance()
-                        .userlogining(LoginActivity.this, username, password, "");
+                UserLogin.getInstance().userlogining(LoginActivity.this, username, password, "");
 
                 break;
 
             case R.id.tv_login_forget_password:
-                Intent i_findpassword = new Intent(this,FindPasswordActivity.class);
-                startActivity(i_findpassword);
+                Intent i_find_password = new Intent(this,FindPasswordActivity.class);
+                startActivity(i_find_password);
                 break;
 
             case R.id.tv_login_sign:
-
                 Intent i_sign = new Intent(this,SignActivity.class);
                 startActivity(i_sign);
 
                 break;
 
             case R.id.ll_login_phone_service:
-
-                Intent i_phone = new Intent(Intent.ACTION_DIAL,
-                        Uri.parse("tel:"+getString(R.string.phone_number)));
+                Intent i_phone = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+getString(R.string.phone_number)));
                 i_phone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_phone);
 

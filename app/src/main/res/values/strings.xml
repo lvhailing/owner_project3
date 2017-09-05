@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">大富翁</string>
+    <string name="app_name">海德汇</string>
     <string name="app_id">dafuweng</string>
-    <string name="app_chinesename">大富翁版本更新</string>
+    <string name="app_chinesename">海德汇版本更新</string>
     <!-- 登录 -->
 
     <string name="login_title">您身边的海外配置管家</string>
@@ -20,7 +20,7 @@
     <string name="sign_recommendation">推荐码</string>
     <string name="sign_get_verify">获取验证码</string>
     <string name="sign_agree">我已阅读并同意</string>
-    <string name="sign_web">《大富翁》</string>
+    <string name="sign_web">《海德汇》</string>
     <string name="sign_agree_two">服务协议。</string>
     <string name="sign_btn_name">立即注册</string>
     <string name="sign_getsms_again">重新获取</string>
@@ -53,10 +53,10 @@
     <string name="setting_change_gesture_password">修改手势密码</string>
     <string name="setting_change_password">修改登录密码</string>
     <string name="setting_service_agreement">服务协议</string>
-    <string name="setting_sign_agreement">大富翁协议</string>
+    <string name="setting_sign_agreement">海德汇协议</string>
     <string name="setting_privacy_agreement">隐私协议</string>
     <string name="setting_advice">意见反馈</string>
-    <string name="setting_invite">推荐大富翁APP给朋友</string>
+    <string name="setting_invite">推荐海德汇APP给朋友</string>
     <string name="setting_about">关于我们</string>
     <string name="setting_version">版本号</string>
     <string name="setting_change_phone_first">请输入当前登录密码</string>
@@ -81,8 +81,8 @@
     <string name="setting_recommend_rule">推荐规则</string>
     <string name="setting_recommend_record">推荐记录</string>
     <string name="setting_recommend_des">推荐说明：</string>
-    <string name="setting_recommend_des_1">1、您注册大富翁成功后会自动生成一个您的专属推荐码。</string>
-    <string name="setting_recommend_des_2">2、您可以通过微信、微信朋友圈、新浪微博、QQ、短信、扫描二维码等方式分享给您的好友，也可以让您身边的好友在注册大富翁时，输入您的推荐码。</string>
+    <string name="setting_recommend_des_1">1、您注册海德汇成功后会自动生成一个您的专属推荐码。</string>
+    <string name="setting_recommend_des_2">2、您可以通过微信、微信朋友圈、新浪微博、QQ、短信、扫描二维码等方式分享给您的好友，也可以让您身边的好友在注册海德汇时，输入您的推荐码。</string>
     <string name="setting_recommend_des_3">3、好友通过推荐链接或输入您的推荐码成功注册后则您和您的好友将建立推荐与被推荐关系，推荐的好友成单后，您可以获得相应金额的推荐奖励。</string>
     <string name="setting_recommend_des_4">4、若您的好友注册时未填写您的推荐码或未通过您的推荐链接注册，则推荐关系不成立。</string>
     <string name="setting_recommend_record_name">推荐好友成单获得推荐奖励！</string>
@@ -136,7 +136,7 @@
 
 
     <!-- 邀请好友内容 -->
-    <string name="shared_message">大富翁致力于打造最专业的客户服务，提供最前沿的海外产品，组织最舒适的线下体验，承办全方位的社交活动！</string>
+    <string name="shared_message">海德汇致力于打造最专业的客户服务，提供最前沿的海外产品，组织最舒适的线下体验，承办全方位的社交活动！</string>
 
 
     <!-- 客服电话 -->

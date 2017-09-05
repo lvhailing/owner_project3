@@ -128,7 +128,6 @@ public class SplashActivity extends FragmentActivity {
         ImageView iv = (ImageView) findViewById(R.id.splash_img);
         mViewPager = (ViewPager) findViewById(R.id.splashviewpager);
 
-
         iv.setVisibility(View.VISIBLE);
         mViewPager.setVisibility(View.GONE);
         iv.setBackgroundResource(R.mipmap.splash);
