@@ -804,8 +804,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
 
                 case R.id.iv_right_btn:
                     //启动分享
-                    String url = "https://www.baidu.com/";
-                    ShareUtil.sharedSDK(mContext, url);
+//                    String url = "https://www.baidu.com/";
+//                    ShareUtil.sharedSDK(mContext, url);
                     break;
                 case R.id.rl_top_title_menu:
                 case R.id.iv_top_title_menu:

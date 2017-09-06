@@ -134,6 +134,9 @@
             android:name=".act.WebActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".act.WebForShareActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".act.RecommendActivity"
             android:screenOrientation="portrait"/>
         <activity

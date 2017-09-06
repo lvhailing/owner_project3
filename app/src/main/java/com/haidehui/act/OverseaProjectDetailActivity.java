@@ -13,10 +13,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.adapter.AttachmentAdapter;
 import com.haidehui.adapter.HouseDetailAdapter;
+import com.haidehui.adapter.HouseDetailPlanImgAdapter;
 import com.haidehui.adapter.RelatedHouseAdapter;
 import com.haidehui.model.OverseaProjectDetail2B;
-import com.haidehui.model.OverseaProjectDetail3B;
+import com.haidehui.model.OverseaProjectDetailHouseList3B;
+import com.haidehui.model.OverseaProjectDetailPdfList3B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -55,7 +58,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
     private ViewPager vp; // 项目居室 轮播图
     private ViewPager vp2; // 项目规划 轮播图
-    private int currentPos;
+    private int currentPos; // 项目居室图 当前位置
+    private int currentPlanImgPos; // 项目规划图 当前位置
     private TextView tv_vp_page;
     private TextView tv_vp2_page;
     private HouseDetailAdapter mAdapter; // 轮播图Adapter
@@ -82,15 +86,19 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private TextView tv_support_facilities_desc; //  配套设施 的描述
     private TextView tv_geographic_location_desc; //  地理位置 的描述
     private MyListView project_material_list; // 用于展示项目材料的list
+    private MouldList<OverseaProjectDetailPdfList3B> attachmentList;
+    private AttachmentAdapter attachmentAdapter;
 
     private String pid;
     private OverseaProjectDetail2B overseaProjectDetail;
-    private ArrayList<String> houseTypeImgList;
+    private ArrayList<String> houseTypeImgList; // 项目居室图片
     private MyListView myListView; // 相关房源列表
-    private MouldList<OverseaProjectDetail3B> relatedhouseList; // 相关房源列表
+    private MouldList<OverseaProjectDetailHouseList3B> relatedhouseList; // 相关房源列表
     private RelatedHouseAdapter myAdapter; // 相关房源 Adapter
     private RelativeLayout rl_empty_house;// 相关房源没数据时显示的提示语
-
+    private ArrayList<String> projectPlanImgList; // 项目规划图片
+    private HouseDetailAdapter houseDetailAdapter;
+    private HouseDetailPlanImgAdapter houseDetailPlanImgAdapter;
 
 
     @Override
@@ -106,9 +114,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-             .setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title)
-             .setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -181,6 +187,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         rl_project_plan.setOnClickListener(this);
         rl_pro_facilities.setOnClickListener(this);
         rl_pro_geographic_location.setOnClickListener(this);
+        rl_project_material.setOnClickListener(this);
     }
 
     private void initData() {
@@ -210,12 +217,34 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         }
     }
 
-    // 图片切换时更新数字
+    private class MyPlanImgOnPageChangeListener implements ViewPager.OnPageChangeListener {
+        public void onPageScrollStateChanged(int arg0) {
+        }
+
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        public void onPageSelected(int position) {
+            currentPlanImgPos = position;
+            updateProjectPlanImgNum();
+        }
+    }
+
+    // 项目居室图片切换时更新数字
     private void updateNum() {
         if (houseTypeImgList.size() > 0) {
             tv_vp_page.setText(currentPos + 1 + "/" + houseTypeImgList.size());
         } else {
             tv_vp_page.setText(0 + "/" + 0);
+        }
+    }
+
+    // 项目规划图片切换时更新数字
+    private void updateProjectPlanImgNum() {
+        if (projectPlanImgList.size() > 0) {
+            tv_vp2_page.setText(currentPlanImgPos + 1 + "/" + projectPlanImgList.size());
+        } else {
+            tv_vp2_page.setText(0 + "/" + 0);
         }
     }
 
@@ -255,20 +284,23 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             tv_pro_house_desc.setText(overseaProjectDetail.getProjectDesc());
         }
 
+        // 项目居室图
         houseTypeImgList = overseaProjectDetail.getHouseTypeImg();
-        mAdapter = new HouseDetailAdapter(mContext, houseTypeImgList);
-        vp.setAdapter(mAdapter);
+        houseDetailAdapter = new HouseDetailAdapter(mContext, houseTypeImgList);
+        vp.setAdapter(houseDetailAdapter);
         vp.setOnPageChangeListener(new MyOnPageChangeListener());
         vp.setCurrentItem(currentPos);
 
         updateNum();
 
-        vp2.setAdapter(mAdapter);
-        vp2.setOnPageChangeListener(new MyOnPageChangeListener());
-        vp2.setCurrentItem(currentPos);
+        // 项目规划图
+        projectPlanImgList = overseaProjectDetail.getProjectPlanImg();
+        houseDetailPlanImgAdapter = new HouseDetailPlanImgAdapter(mContext, projectPlanImgList);
+        vp2.setAdapter(houseDetailPlanImgAdapter);
+        vp2.setOnPageChangeListener(new MyPlanImgOnPageChangeListener());
+        vp2.setCurrentItem(currentPlanImgPos);
 
-        updateNum();
-
+        updateProjectPlanImgNum();
 
 
     }
@@ -339,10 +371,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             case R.id.rl_project_material: // 项目材料
                 if (!isShowProjectMaterial) {
                     ll_project_material.setVisibility(View.VISIBLE);
-                    // Todo 等后台接口好了修改此处代码
-                    /*if (!TextUtils.isEmpty(overseaProjectDetail.getGeographyLocation())) {
-                        tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
-                    }*/
                     iv_project_material.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShowProjectMaterial = true;
                 } else {
@@ -367,6 +395,11 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                 if (params != null) {
                     overseaProjectDetail = (OverseaProjectDetail2B) params.result;
                     if (overseaProjectDetail != null) {
+                        attachmentList = overseaProjectDetail.getAttachment();
+                        if (attachmentList != null && attachmentList.size() > 0) {
+                            attachmentAdapter = new AttachmentAdapter(mContext, attachmentList);
+                            project_material_list.setAdapter(attachmentAdapter);
+                        }
                         relatedhouseList = overseaProjectDetail.getList();
                         if (relatedhouseList != null && relatedhouseList.size() > 0) {
                             myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);

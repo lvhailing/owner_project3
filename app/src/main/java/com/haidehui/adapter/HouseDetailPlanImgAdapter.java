@@ -14,14 +14,14 @@ import java.util.List;
 
 import static com.haidehui.uitls.ImageLoaderManager.options;
 
-// 房源详情页居室轮播图Adapter
-public class HouseDetailAdapter extends PagerAdapter {
+// 房源详情页项目规划轮播图Adapter
+public class HouseDetailPlanImgAdapter extends PagerAdapter {
     private final Context context;
     private List<String> urls = null;
     private ImageViewListener mImageViewListener;
 
 
-    public HouseDetailAdapter(Context context, List<String> urls) {
+    public HouseDetailPlanImgAdapter(Context context, List<String> urls) {
         this.context = context;
         this.urls = urls;
     }

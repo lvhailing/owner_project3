@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.model.HomeIndex3B;
-import com.haidehui.model.OverseaProjectDetail3B;
+import com.haidehui.model.OverseaProjectDetailHouseList3B;
 import com.haidehui.network.types.MouldList;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -19,12 +18,12 @@ import static com.haidehui.uitls.ImageLoaderManager.options;
 
 // 海外项目详情页--相关房源 Adapter
 public class RelatedHouseAdapter extends BaseAdapter {
-    private MouldList<OverseaProjectDetail3B> list;
+    private MouldList<OverseaProjectDetailHouseList3B> list;
     private Context context;
     private LayoutInflater inflater;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public RelatedHouseAdapter(Context context, MouldList<OverseaProjectDetail3B> list) {
+    public RelatedHouseAdapter(Context context, MouldList<OverseaProjectDetailHouseList3B> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);

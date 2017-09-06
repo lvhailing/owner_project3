@@ -2,7 +2,6 @@ package com.haidehui.act;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,23 +17,25 @@ import com.haidehui.R;
 import com.haidehui.common.Urls;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.uitls.ActivityStack;
+import com.haidehui.uitls.ShareUtil;
 
 
 public class WebActivity extends Activity implements View.OnClickListener {
     private WebView mWebview;
     private String type = null;
     private String url = null;
-    public static final String WEBTYPE_INVESTMENT_GUIDE_DETAILS = "investment_guide_details"; // 投资指南详情
-    public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
+//    public static final String WEBTYPE_INVESTMENT_GUIDE_DETAILS = "investment_guide_details"; // 投资指南详情
+//    public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
     public static final String WEBTYPE_NOTICE = "noticedetail "; // 公告详情/其他消息详情
     public static final String WEBTYPE_SERVICE_AGREEMENT = "service_agreement "; // 服务协议
-    public static final String WEBTYPE_SIGN_AGREEMENT = "sign_agreement "; // 大富翁协议
+    public static final String WEBTYPE_SIGN_AGREEMENT = "sign_agreement "; // 海德汇协议
     public static final String WEBTYPE_ABOUT_US = "about_us "; // 关于我们
     public static final String WEBTYPE_VERSION = "version "; // 版本号
 
     public String title;
-    private TextView tv_web_title;
-    private ImageView id_img_back;
+    private TextView tv_web_title; // 标题
+    private ImageView iv_back; // 返回按钮
+    private ImageView iv_btn_share; // 分享按钮
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +55,11 @@ public class WebActivity extends Activity implements View.OnClickListener {
 
         mWebview = (WebView) findViewById(R.id.webview_web);
         tv_web_title = (TextView) findViewById(R.id.tv_web_title);
-        id_img_back = (ImageView) findViewById(R.id.id_img_back);
-        id_img_back.setOnClickListener(this);
+        iv_back = (ImageView) findViewById(R.id.iv_back);
+        iv_btn_share = (ImageView) findViewById(R.id.iv_btn_share);
+
+        iv_back.setOnClickListener(this);
+        iv_btn_share.setOnClickListener(this);
 
         mWebview.getSettings().setSupportZoom(true);
         // 设置出现缩放工具
@@ -74,25 +78,18 @@ public class WebActivity extends Activity implements View.OnClickListener {
         mWebview.addJavascriptInterface(new MyJavaScriptinterface(), "click");
 
 
-        if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
-            url = Urls.URL_INVESTMENTGUIDE_DETAIL + getIntent().getExtras().getString("id");
-            tv_web_title.setText(getIntent().getExtras().getString("title"));
-        } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
-            url = Urls.URL_ROADSHOWVIDEO_VIEW + getIntent().getExtras().getString("id");
-            tv_web_title.setText(getIntent().getExtras().getString("title"));
-        }else if (type.equals(WEBTYPE_NOTICE)) { // 公告详情
+        if (type.equals(WEBTYPE_NOTICE)) { // 公告详情
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_SERVICE_AGREEMENT)) {
             tv_web_title.setText(getIntent().getExtras().getString("title"));
-        }else if (type.equals(WEBTYPE_ABOUT_US)) {
+        } else if (type.equals(WEBTYPE_ABOUT_US)) { // 关于我们
             tv_web_title.setText(getIntent().getExtras().getString("title"));
 
-        }else if (type.equals(WEBTYPE_SIGN_AGREEMENT)) {
+        } else if (type.equals(WEBTYPE_SIGN_AGREEMENT)) { // 海德汇协议
             tv_web_title.setText(getIntent().getExtras().getString("title"));
 
-        }else if (type.equals(WEBTYPE_VERSION)) {
+        } else if (type.equals(WEBTYPE_VERSION)) { // 版本号
             tv_web_title.setText(getIntent().getExtras().getString("title"));
-
         }
 
 
@@ -135,7 +132,7 @@ public class WebActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.id_img_back:
+            case R.id.iv_back:
                 finish();
                 break;
         }

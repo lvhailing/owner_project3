@@ -61,7 +61,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_recommend_rule;  // 邀请规则
     private TextView tv_recommend_record; // 邀请记录
 
-    private final static String CACHE = "/dafuweng/imgs";
+//    private final static String CACHE = "/dafuweng/imgs";
     private int QR_WIDTH = 360, QR_HEIGHT = 360;
     private String recommendCode = "";  //  邀请码
     private String way;
@@ -78,11 +78,11 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         initView();
         initData();
 
-        try {
-            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "dafuweng.png");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "dafuweng.png");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -244,7 +244,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                     oks.setTitle(getString(R.string.login_title));
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
+                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 } else if (string.contains("Wechat")) {
                     way = "weixinFr";        //微信好友
                     oks.setText(getString(R.string.shared_message) + url);
@@ -252,7 +252,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
 //					oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
+                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 } else if (string.contains("QZone")) {
                     way = "Qzone";
                     oks.setText(getString(R.string.shared_message) + url);
@@ -531,23 +531,23 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
      *
      * @throws Exception
      */
-    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
-        String filePath = isExistsFilePath();
-        FileOutputStream fos = null;
-        File file = new File(filePath, imageName);
-        try {
-            fos = new FileOutputStream(file);
-            if (null != fos) {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
-                fos.flush();
-                fos.close();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
+//        String filePath = isExistsFilePath();
+//        FileOutputStream fos = null;
+//        File file = new File(filePath, imageName);
+//        try {
+//            fos = new FileOutputStream(file);
+//            if (null != fos) {
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+//                fos.flush();
+//                fos.close();
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 获取sd卡的缓存路径， 一般在卡中sdCard就是这个目录
@@ -570,18 +570,18 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
      *
      * @return filePath
      */
-    private static String isExistsFilePath() {
-        String filePath = getSDPath() + CACHE;
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        return filePath;
-    }
+//    private static String isExistsFilePath() {
+//        String filePath = getSDPath() + CACHE;
+//        File file = new File(filePath);
+//        if (!file.exists()) {
+//            file.mkdirs();
+//        }
+//        return filePath;
+//    }
 
-    private Bitmap drawableToBitamp(Drawable drawable) {
-        BitmapDrawable bd = (BitmapDrawable) drawable;
-        return bd.getBitmap();
-    }
+//    private Bitmap drawableToBitamp(Drawable drawable) {
+//        BitmapDrawable bd = (BitmapDrawable) drawable;
+//        return bd.getBitmap();
+//    }
 
 }

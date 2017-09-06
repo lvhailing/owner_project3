@@ -20,8 +20,10 @@ import android.widget.Toast;
 import com.haidehui.R;
 import com.haidehui.act.HotHouseListActivity;
 import com.haidehui.act.HouseDetailActivity;
+import com.haidehui.act.OverseaProjectDetailActivity;
 import com.haidehui.act.OverseaProjectListActivity;
 import com.haidehui.act.WebActivity;
+import com.haidehui.act.WebForShareActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.common.Urls;
 import com.haidehui.model.HomeIndex2B;
@@ -62,6 +64,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String userId;
     private MyRollViewPager rollViewPager;
     private RelativeLayout rl_empty_house; // 无精品房源 显示的布局
+    private ResultCycleIndex2B cycleIndex2B; //  ResultCycleIndex2B 类型的对象
+    private String linkType; // 轮播图跳转类型（url:h5页面跳转、appProject:app项目详情、appHouse:app房源详情、appVideo:路演视频详情、appInvestGuide:投资指南、none:无跳转）
+    private String target; // url时是链接，其他情况为相关id
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -263,7 +268,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
                 @Override
                 public void onMyClick(int position) {
+                    if (picList != null && picList.size() > 0) {
+                        cycleIndex2B = picList.get(position);
+                        linkType = cycleIndex2B.getLinkType();
+                        target = cycleIndex2B.getTargetUrl();
 
+                        if (linkType.equals("url")) { // 跳转h5网页
+                            intent = new Intent(context, WebForShareActivity.class);
+                            intent.putExtra("type", WebForShareActivity.WEBTYPE_HTML);
+                            intent.putExtra("url",target );
+                            startActivity(intent);
+                        } else if (linkType.equals("appProject")) { // 海外项目详情
+                            intent = new Intent(context, OverseaProjectDetailActivity.class);
+                            intent.putExtra("pid", target);
+                            startActivity(intent);
+                        } else if (linkType.equals("appHouse")) { // 房源详情
+                            intent = new Intent(context, HouseDetailActivity.class);
+                            intent.putExtra("hid", target);
+                            startActivity(intent);
+                        } else if (linkType.equals("appVideo")) { // 路演视频详情
+                            intent = new Intent(context,  WebForShareActivity.class);
+                            intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
+                            intent.putExtra("id", target);
+                            intent.putExtra("title", "产品路演详情");
+                            startActivity(intent);
+                        }else if (linkType.equals("appInvestGuide")) { // 投资指南详情
+                            intent = new Intent(context,  WebForShareActivity.class);
+                            intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                            intent.putExtra("id", target);
+                            intent.putExtra("title", "投资指南详情");
+                            startActivity(intent);
+                        } else if (linkType.equals("none")) { // 无跳转
+                        }
+                    }
                 }
             });
             rollViewPager.startRoll();

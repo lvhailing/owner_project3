@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initView() {
         title = (TitleBar) findViewById(R.id.rl_title);
         title.setVisibility(View.GONE);
+
         mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
         ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
         ll_tab_house_resources = (LinearLayout) findViewById(R.id.ll_tab_house_resources);

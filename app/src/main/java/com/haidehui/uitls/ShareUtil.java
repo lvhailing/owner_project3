@@ -24,10 +24,13 @@ import cn.sharesdk.framework.PlatformActionListener;
 import onekeyshare.OnekeyShare;
 import onekeyshare.PlatformListFakeActivity;
 
+/**
+ *  分享时调用的方法
+ */
 public final class ShareUtil {
-    private static String way;    //渠道标志
+    private static String way;    // 渠道标志
 
-    public static void sharedSDK(final Context context, final String url) {
+    public static void sharedSDK(final Context context, final String title, final String text, final String url) {
         final OnekeyShare oks = new OnekeyShare();
 
         oks.disableSSOWhenAuthorize();// 关闭sso授权
@@ -39,40 +42,43 @@ public final class ShareUtil {
                 oks.setSilent(false);
                 if (string.contains("WechatMoments")) {
                     way = "weixin";            //微信朋友圈
-                    oks.setText(context.getString(R.string.shared_message) + url);
+                    oks.setText(text);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
-                    oks.setTitle(context.getString(R.string.login_title));
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
+                    oks.setTitle(title);
+                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 } else if (string.contains("Wechat")) {
                     way = "weixinFr";        //微信好友
-                    oks.setText(context.getString(R.string.shared_message) + url);
-                    oks.setTitle(context.getString(R.string.login_title));
+                    oks.setText(text);
+                    oks.setTitle(title);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
 //					oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/dafuweng/imgs/dafuweng.png");
+                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 } else if (string.contains("QZone")) {
                     way = "Qzone";
-                    oks.setText(context.getString(R.string.shared_message) + url);
+                    oks.setText(text);
+                    oks.setTitle(title);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 } else if (string.contains("SinaWeibo")) {
                     way = "sinablog";
-                    oks.setText(context.getString(R.string.shared_message) + url);
+                    oks.setText(text);
 //					oks.setTitleUrl(url);
                     oks.setUrl(url);
 
                     oks.setSilent(false);
                 } else if (string.contains("TencentWeibo")) {
                     way = "tencentblog";
-                    oks.setText(context.getString(R.string.shared_message) + url);
+                    oks.setText(text);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 } else if (string.contains("QQ")) {
                     way = "QQ";
-                    oks.setText(context.getString(R.string.shared_message) + url);
-//					oks.setTitleUrl(url);
+                    oks.setText(text);
+                    oks.setTitle(title);
+                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+					oks.setTitleUrl(url);
                     // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
                     // oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
                     // url仅在微信（包括好友和朋友圈）中使用
@@ -82,15 +88,15 @@ public final class ShareUtil {
                     // site是分享此内容的网站名称，仅在QQ空间使用
                     oks.setSite(context.getString(R.string.app_name));
                     // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-                    oks.setSiteUrl(url);
+//                    oks.setSiteUrl(url);
                 } else if (string.contains("Email")) {
                     way = "email";
-                    oks.setText(context.getString(R.string.shared_message) + url);
+                    oks.setText(text);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 } else if (string.contains("ShortMessage")) {
                     way = "sms";
-                    oks.setText(context.getString(R.string.shared_message) + url);
+                    oks.setText(text);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 }
@@ -120,7 +126,7 @@ public final class ShareUtil {
                     randomNum.append(t);
                 }
                 ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText("https://www.baidu.com/");
+                cm.setText(url);
                 Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
             }
         };

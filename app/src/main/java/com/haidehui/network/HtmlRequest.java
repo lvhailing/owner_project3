@@ -20,6 +20,7 @@ import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.HouseDetail1B;
 import com.haidehui.model.HouseList1B;
 import com.haidehui.model.InvestmentGuide1B;
+import com.haidehui.model.InvestmentGuideDetail1B;
 import com.haidehui.model.MineData1B;
 import com.haidehui.model.OverseaProjectDetail1B;
 import com.haidehui.model.OverseaProjectList1B;
@@ -37,6 +38,7 @@ import com.haidehui.model.ResultRecommendInfoBean;
 import com.haidehui.model.ResultRecommendRecordBean;
 import com.haidehui.model.ResultSentSMSBean;
 import com.haidehui.model.ResultWithdrawInfoBean;
+import com.haidehui.model.RoadShowDetail1B;
 import com.haidehui.model.Splash1B;
 import com.haidehui.model.SubmitCustomer1B;
 import com.haidehui.model.SubmitPartnerIdentify1B;
@@ -1168,7 +1170,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "首页轮播图:" + data);
+                    Log.i("hh", "首页轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -1546,6 +1548,54 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
+     *  获取投资指南详情(接口)
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getInvestmentGuideDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_INVESTMENTGUIDE_DETAIL_APP;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    String data = DESUtil.decrypt(result);
+                    Log.i("hh", "投资指南详情数据:" + data);
+
+                    Gson gson = new Gson();
+                    InvestmentGuideDetail1B b = gson.fromJson(data, InvestmentGuideDetail1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
+
+    /**
      * 发现-- 路演列表
      *
      * @param context
@@ -1578,6 +1628,49 @@ public class HtmlRequest extends BaseRequester {
 
                     Gson gson = new Gson();
                     ProductRoadshow1B b = gson.fromJson(data, ProductRoadshow1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
+
+
+    public static void getRoadShowDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ROADSHOWVIDEO_DETAIL;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    String data = DESUtil.decrypt(result);
+                    Log.i("hh", "路演详情数据:" + data);
+
+                    Gson gson = new Gson();
+                    RoadShowDetail1B b = gson.fromJson(data, RoadShowDetail1B.class);
                     return b.getData();
                 } catch (Exception e) {
                     e.printStackTrace();

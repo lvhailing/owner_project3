@@ -5,6 +5,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,9 +31,15 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.haidehui.act.RecommendActivity.getSDPath;
 
 
 public class SplashActivity extends FragmentActivity {
@@ -52,12 +61,19 @@ public class SplashActivity extends FragmentActivity {
     public static final String APP_ID = "2882303761517425837";
     public static final String APP_KEY = "5191742577837";
     private String userId = null;
+    private final static String CACHE = "/haidehui/imgs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_splash);
         initView(PreferenceUtil.isFirst());
+
+        try {
+            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "haidehui.png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         requestData();
     }
@@ -89,6 +105,47 @@ public class SplashActivity extends FragmentActivity {
 
     }
 
+    /**
+     * 保存图片的方法 保存到sdcard
+     *
+     * @throws Exception
+     */
+    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
+        String filePath = isExistsFilePath();
+        FileOutputStream fos = null;
+        File file = new File(filePath, imageName);
+        try {
+            fos = new FileOutputStream(file);
+            if (null != fos) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取缓存文件夹目录 如果不存在创建 否则则创建文件夹
+     *
+     * @return filePath
+     */
+    private static String isExistsFilePath() {
+        String filePath = getSDPath() + CACHE;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return filePath;
+    }
+
+    private Bitmap drawableToBitamp(Drawable drawable) {
+        BitmapDrawable bd = (BitmapDrawable) drawable;
+        return bd.getBitmap();
+    }
 
     private boolean shouldInit() {
         ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
