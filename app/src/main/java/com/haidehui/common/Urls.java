@@ -198,6 +198,9 @@ public class Urls {
     // 海外项目详情
     public static final String URL_PROJECT_DETAIL = EC_HOST + "project/detail";
 
+    // 海外项目详情 分享
+    public static final String URL_PROJECT_H5_DETAIL = EC_HOST + "project/h5/detail";
+
     // 房源
     public static final String URL_HOUSE_LIST = EC_HOST + "house/list";
 

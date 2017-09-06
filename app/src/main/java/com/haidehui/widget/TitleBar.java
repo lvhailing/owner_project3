@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.haidehui.R;
 import com.haidehui.act.WebActivity;
+import com.haidehui.common.Urls;
 import com.haidehui.uitls.ImageLoaderManager;
 import com.haidehui.uitls.ShareUtil;
 import com.haidehui.uitls.SystemInfo;
@@ -63,6 +64,9 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
     private DisplayImageOptions options;
     private TextView child;
     private ImageView iv_right_btn;
+    private String shareId;
+    private String shareTitle;
+    private String shareText;
 
     public TitleBar(Context context) {
         super(context);
@@ -536,10 +540,6 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         return TitleBar.this;
     }
 
-    public void sert() {
-        // titleMenus.get(0).
-    }
-
     /**
      * 设置最左侧的指示图标资源
      *
@@ -804,8 +804,10 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
 
                 case R.id.iv_right_btn:
                     //启动分享
-//                    String url = "https://www.baidu.com/";
-//                    ShareUtil.sharedSDK(mContext, url);
+                    if (!TextUtils.isEmpty(shareId)) {
+                        String url = Urls.URL_PROJECT_H5_DETAIL +"/"+ shareId;
+                        ShareUtil.sharedSDK(mContext, shareTitle, shareText, url);
+                    }
                     break;
                 case R.id.rl_top_title_menu:
                 case R.id.iv_top_title_menu:
@@ -825,6 +827,13 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 }
             }
         }
+    }
+
+    public void setOverseaProjectDetailActivityPid(String pId, String title, String text) {
+        // OverseaProjectDetailActivity 独有的id
+        this.shareId = pId;
+        this.shareTitle = title;
+        this.shareText = text;
     }
 
     public void refeshMenu() {

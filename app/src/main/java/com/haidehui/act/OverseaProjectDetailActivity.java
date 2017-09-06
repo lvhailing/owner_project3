@@ -99,6 +99,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private ArrayList<String> projectPlanImgList; // 项目规划图片
     private HouseDetailAdapter houseDetailAdapter;
     private HouseDetailPlanImgAdapter houseDetailPlanImgAdapter;
+    private TitleBar titleBar;
 
 
     @Override
@@ -106,15 +107,17 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.ac_oversea_project_detail);
 
-        initTopTitle();
+        pid = getIntent().getStringExtra("pid");
         initView();
         initData();
+        initTopTitle();
     }
 
     private void initTopTitle() {
-        TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-        title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
+        titleBar = (TitleBar) findViewById(R.id.rl_title);
+        titleBar.showLeftImg(true);
+
+        titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -132,7 +135,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     }
 
     private void initView() {
-        pid = getIntent().getStringExtra("pid");
 
         rl_empty_house = (RelativeLayout) findViewById(R.id.rl_empty_house);
         TextView tv_empty = (TextView) findViewById(R.id.tv_empty);
@@ -414,6 +416,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                             rl_empty_house.setVisibility(View.VISIBLE);
                         }
                         setView();
+
+                        //设置分享参数
+                        titleBar.setOverseaProjectDetailActivityPid(pid, overseaProjectDetail.getChineseName(), overseaProjectDetail.getProjectDesc());
                     }
                 }
             }
