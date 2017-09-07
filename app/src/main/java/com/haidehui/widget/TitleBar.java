@@ -65,8 +65,10 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
     private TextView child;
     private ImageView iv_right_btn;
     private String shareId;
-    private String shareTitle;
-    private String shareText;
+    private String shareTitle; // 分享出去时显示的标题
+    private String shareText; // 分享出去时显示的描述
+    private String flag; // 判断是从房源详情页、还是项目详情页过来的
+    private String shareUrl; // 分享时用到的url
 
     public TitleBar(Context context) {
         super(context);
@@ -264,10 +266,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             throw new RuntimeException("action container is full,limit is 2");
         }
         TextView child = new TextView(mContext);
-        if (act.text > 0)
-            child.setText(act.text);
-        if (act.id > 0)
-            child.setId(act.id);
+        if (act.text > 0) child.setText(act.text);
+        if (act.id > 0) child.setId(act.id);
         // child.setBackgroundResource(act.background);
         Drawable drawable = mContext.getResources().getDrawable(act.background);
         // / 这一步必须要做,否则不会显示.
@@ -804,9 +804,13 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
 
                 case R.id.iv_right_btn:
                     //启动分享
+                    if (flag.equals("1000")) {
+                        shareUrl = Urls.URL_PROJECT_H5_DETAIL + "/" + shareId;
+                    } else if (flag.equals("1001")) {
+                        shareUrl = Urls.URL_HOUSE_H5_DETAIL + "/" + shareId;
+                    }
                     if (!TextUtils.isEmpty(shareId)) {
-                        String url = Urls.URL_PROJECT_H5_DETAIL +"/"+ shareId;
-                        ShareUtil.sharedSDK(mContext, shareTitle, shareText, url);
+                        ShareUtil.sharedSDK(mContext, shareTitle, shareText, shareUrl);
                     }
                     break;
                 case R.id.rl_top_title_menu:
@@ -829,11 +833,21 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
         }
     }
 
-    public void setOverseaProjectDetailActivityPid(String pId, String title, String text) {
-        // OverseaProjectDetailActivity 独有的id
-        this.shareId = pId;
+    /**
+     * 启动分享时所需参数（从activity传过来）
+     *
+     * @param id
+     * @param title 分享出去显示的标题
+     * @param text  分享出去显示的简单描述
+     */
+    public void setActivityParameters(String id, String title, String text) {
+        this.shareId = id;
         this.shareTitle = title;
         this.shareText = text;
+    }
+
+    public void setFromActivity(String flag) {
+        this.flag = flag;
     }
 
     public void refeshMenu() {
@@ -899,10 +913,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             } else {
                 holder.redImg.setVisibility(View.GONE);
             }
-            if (act.text > 0)
-                holder.text.setText(act.text);
-            if (act.id > 0)
-                convertView.setId(act.id);
+            if (act.text > 0) holder.text.setText(act.text);
+            if (act.id > 0) convertView.setId(act.id);
             if (act.left_img != 0) {
                 holder.img.setImageResource(act.left_img);
 
@@ -1010,8 +1022,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 holder = (Holder) convertView.getTag();
             }
             // TextView t = new TextView(mContext);
-            if (act.text > 0)
-                holder.text.setText(act.text);
+            if (act.text > 0) holder.text.setText(act.text);
             if (act.id > 0) {
                 convertView.setId(act.id);
             }

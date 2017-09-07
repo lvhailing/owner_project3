@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 //        Log.i("hh", "首页---Fragment----onResume");
-
+        scrollView.smoothScrollTo(0, 0);
         resetScrollViewSmooth();
     }
 
@@ -276,7 +276,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         if (linkType.equals("url")) { // 跳转h5网页
                             intent = new Intent(context, WebForShareActivity.class);
                             intent.putExtra("type", WebForShareActivity.WEBTYPE_HTML);
-                            intent.putExtra("url",target );
+                            intent.putExtra("url", target);
                             startActivity(intent);
                         } else if (linkType.equals("appProject")) { // 海外项目详情
                             intent = new Intent(context, OverseaProjectDetailActivity.class);
@@ -287,13 +287,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             intent.putExtra("hid", target);
                             startActivity(intent);
                         } else if (linkType.equals("appVideo")) { // 路演视频详情
-                            intent = new Intent(context,  WebForShareActivity.class);
+                            intent = new Intent(context, WebForShareActivity.class);
                             intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
                             intent.putExtra("id", target);
                             intent.putExtra("title", "产品路演详情");
                             startActivity(intent);
-                        }else if (linkType.equals("appInvestGuide")) { // 投资指南详情
-                            intent = new Intent(context,  WebForShareActivity.class);
+                        } else if (linkType.equals("appInvestGuide")) { // 投资指南详情
+                            intent = new Intent(context, WebForShareActivity.class);
                             intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
                             intent.putExtra("id", target);
                             intent.putExtra("title", "投资指南详情");

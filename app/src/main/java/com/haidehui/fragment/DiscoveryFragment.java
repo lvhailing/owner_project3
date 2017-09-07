@@ -1,6 +1,7 @@
 package com.haidehui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -12,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
+import com.haidehui.act.HouseDetailActivity;
+import com.haidehui.act.OverseaProjectDetailActivity;
+import com.haidehui.act.WebForShareActivity;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -41,6 +45,10 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     public InvestmentGuideFragment investmentGuideFr;
     public ProductRoadshowFragment roadShowFr;
     private MyRollViewPager rollViewPager;
+    private ResultCycleIndex2B cycleIndex2B;
+    private String linkType;
+    private String target;
+    private Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -198,6 +206,44 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
             //第一次从后台获取到数据
             rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
             rollViewPager.setCycle(true);
+            rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
+                @Override
+                public void onMyClick(int position) {
+                    if (picList != null && picList.size() > 0) {
+                        cycleIndex2B = picList.get(position);
+                        linkType = cycleIndex2B.getLinkType();
+                        target = cycleIndex2B.getTargetUrl();
+
+                        if (linkType.equals("url")) { // 跳转h5网页
+                            intent = new Intent(context, WebForShareActivity.class);
+                            intent.putExtra("type", WebForShareActivity.WEBTYPE_HTML);
+                            intent.putExtra("url", target);
+                            startActivity(intent);
+                        } else if (linkType.equals("appProject")) { // 海外项目详情
+                            intent = new Intent(context, OverseaProjectDetailActivity.class);
+                            intent.putExtra("pid", target);
+                            startActivity(intent);
+                        } else if (linkType.equals("appHouse")) { // 房源详情
+                            intent = new Intent(context, HouseDetailActivity.class);
+                            intent.putExtra("hid", target);
+                            startActivity(intent);
+                        } else if (linkType.equals("appVideo")) { // 路演视频详情
+                            intent = new Intent(context, WebForShareActivity.class);
+                            intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
+                            intent.putExtra("id", target);
+                            intent.putExtra("title", "产品路演详情");
+                            startActivity(intent);
+                        } else if (linkType.equals("appInvestGuide")) { // 投资指南详情
+                            intent = new Intent(context, WebForShareActivity.class);
+                            intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                            intent.putExtra("id", target);
+                            intent.putExtra("title", "投资指南详情");
+                            startActivity(intent);
+                        } else if (linkType.equals("none")) { // 无跳转
+                        }
+                    }
+                }
+            });
             rollViewPager.startRoll();
             ll_vp.addView(rollViewPager);
         } else {

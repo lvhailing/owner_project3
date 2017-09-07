@@ -53,6 +53,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private Intent intent;
     private int currentPage;
     private int flag = 1;
+    private TitleBar titleBar;
 
 
     @Override
@@ -66,13 +67,16 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initTopTitle() {
-        TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-        title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        titleBar = (TitleBar) findViewById(R.id.rl_title);
+        titleBar.showLeftImg(true);
+        titleBar.setFromActivity("1001");
+        titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
+                .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
             }
+
 
             @Override
             public void onBack() {
@@ -238,6 +242,9 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                     houseDetail = (HouseDetail2B) params.result;
                     if (houseDetail != null) {
                         setView();
+
+                        //设置分享参数
+                        titleBar.setActivityParameters(hid, houseDetail.getName(),houseDetail.getHouseDesc());
                     }
                 }
             }

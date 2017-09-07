@@ -27,12 +27,14 @@ import java.util.HashMap;
 
 
 public class WebForShareActivity extends Activity implements View.OnClickListener {
-    private WebView mWebview;
+    private WebView mWebView;
     private String type = null;
     private String url = null;
     public static final String WEBTYPE_INVESTMENT_GUIDE_DETAILS = "investment_guide_details"; // 投资指南详情
     public static final String WEBTYPE_ROADSHOW_DETAILS = "roadshow_details "; // 路演详情
     public static final String WEBTYPE_HTML = "html "; // h5网页
+    public static final String WEBTYPE_PROJECT_MATERIAL_DETAIL = "project_material_detail "; // 项目材料预览
+
 
     public String title;
     private TextView tv_web_title; // 标题
@@ -112,7 +114,7 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
         ActivityStack stack = ActivityStack.getActivityManage();
         stack.addActivity(this);
 
-        mWebview = (WebView) findViewById(R.id.webview_web);
+        mWebView = (WebView) findViewById(R.id.webview_web);
         tv_web_title = (TextView) findViewById(R.id.tv_web_title);
         iv_back = (ImageView) findViewById(R.id.iv_back);
         iv_btn_share = (ImageView) findViewById(R.id.iv_btn_share);
@@ -120,21 +122,21 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
         iv_back.setOnClickListener(this);
         iv_btn_share.setOnClickListener(this);
 
-        mWebview.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setSupportZoom(true);
         // 设置出现缩放工具
-        mWebview.getSettings().setBuiltInZoomControls(true);
-        mWebview.setWebViewClient(new WebViewClient() {
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
         });
-        mWebview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
-        mWebview.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+        mWebView.getSettings().setUseWideViewPort(true);
 
-        mWebview.getSettings().setJavaScriptEnabled(true);
-        mWebview.addJavascriptInterface(new MyJavaScriptinterface(), "click");
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.addJavascriptInterface(new MyJavaScriptinterface(), "click");
 
 
         if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
@@ -147,14 +149,32 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_HTML)) { // 打开H5网页
 
+        } else if (type.equals(WEBTYPE_PROJECT_MATERIAL_DETAIL)) {
+            tv_web_title.setText(getIntent().getExtras().getString("title"));
         }
 
 
         HtmlRequest.synCookies(this, url);
 
-        mWebview.loadUrl(url);
+        mWebView.loadUrl(url);
 
     }
+
+//    private void loadPDF1(){
+//        mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.getSettings().setSupportZoom(true);
+//        mWebView.getSettings().setDomStorageEnabled(true);
+//        mWebView.getSettings().setAllowFileAccess(true);
+//        mWebView.getSettings().setPluginsEnabled(true);
+//        mWebView.getSettings().setUseWideViewPort(true);
+//        mWebView.getSettings().setBuiltInZoomControls(true);
+//        mWebView.requestFocus();
+//        mWebView.getSettings().setLoadWithOverviewMode(true);
+//        mWebView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+//        String pdfUrl = "http:xxx.pdf";
+//        mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" +pdfUrl);
+//
+//    }
 
     public class MyJavaScriptinterface {
         @JavascriptInterface
@@ -209,7 +229,7 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
     @Override
     protected void onPause() {
         super.onPause();
-        mWebview.reload();
+        mWebView.reload();
     }
 
     @Override

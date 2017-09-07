@@ -187,6 +187,18 @@ public class MyRollViewPager extends ViewPager {
         public Object instantiateItem(ViewGroup container, final int position) {
             final SimpleDraweeView iv = new SimpleDraweeView(context);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
+            iv.setAdjustViewBounds(true);
+//            iv.setMaxWidth(750);
+//            iv.setMaxHeight(396);
+
+//            int screenWidth = getScreenWidth(this);
+//            ViewGroup.LayoutParams lp = testImage.getLayoutParams();
+//            lp.width = screenWidth;
+//            lp.height = LayoutParams.WRAP_CONTENT;
+//            testImage.setLayoutParams(lp);
+//
+//            testImage.setMaxWidth(screenWidth);
+//            testImage.setMaxHeight(screenWidth * 5); 这里其实可以根据需求而定，我这里测试为最大宽度的5倍
 
             if (picList != null && picList.size() > 0) {
                 //后台返回了地址集合

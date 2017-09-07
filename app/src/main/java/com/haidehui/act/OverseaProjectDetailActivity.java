@@ -17,6 +17,7 @@ import com.haidehui.adapter.AttachmentAdapter;
 import com.haidehui.adapter.HouseDetailAdapter;
 import com.haidehui.adapter.HouseDetailPlanImgAdapter;
 import com.haidehui.adapter.RelatedHouseAdapter;
+import com.haidehui.common.Urls;
 import com.haidehui.model.OverseaProjectDetail2B;
 import com.haidehui.model.OverseaProjectDetailHouseList3B;
 import com.haidehui.model.OverseaProjectDetailPdfList3B;
@@ -24,6 +25,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.SystemInfo;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -100,6 +102,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private HouseDetailAdapter houseDetailAdapter;
     private HouseDetailPlanImgAdapter houseDetailPlanImgAdapter;
     private TitleBar titleBar;
+    private String projectPath;
+    private String projectMaterialName;
 
 
     @Override
@@ -116,7 +120,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private void initTopTitle() {
         titleBar = (TitleBar) findViewById(R.id.rl_title);
         titleBar.showLeftImg(true);
-
+        titleBar.setFromActivity("1000");
         titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
@@ -135,7 +139,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     }
 
     private void initView() {
-
         rl_empty_house = (RelativeLayout) findViewById(R.id.rl_empty_house);
         TextView tv_empty = (TextView) findViewById(R.id.tv_empty);
         ImageView img_empty = (ImageView) findViewById(R.id.img_empty);
@@ -194,6 +197,19 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
     private void initData() {
         requestDetailData(); // 获取海外项目详情页数据
+
+        project_material_list.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 项目材料列表 点击监听
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Intent intent = new Intent(mContext, WebForShareActivity.class);
+                intent.putExtra("type", WebForShareActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
+//                intent.putExtra("url", attachmentList.get(position).getPath());
+                intent.putExtra("url", Urls.URL_VIEW_PDF + attachmentList.get(position).getPath());
+                intent.putExtra("title", attachmentList.get(position).getName());
+                startActivity(intent);
+
+            }
+        });
 
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 相关房源列表 点击监听
             @Override
@@ -397,11 +413,14 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                 if (params != null) {
                     overseaProjectDetail = (OverseaProjectDetail2B) params.result;
                     if (overseaProjectDetail != null) {
+                        // 项目材料
                         attachmentList = overseaProjectDetail.getAttachment();
                         if (attachmentList != null && attachmentList.size() > 0) {
                             attachmentAdapter = new AttachmentAdapter(mContext, attachmentList);
                             project_material_list.setAdapter(attachmentAdapter);
                         }
+
+                        // 相关房源
                         relatedhouseList = overseaProjectDetail.getList();
                         if (relatedhouseList != null && relatedhouseList.size() > 0) {
                             myAdapter = new RelatedHouseAdapter(mContext, relatedhouseList);
@@ -418,7 +437,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                         setView();
 
                         //设置分享参数
-                        titleBar.setOverseaProjectDetailActivityPid(pid, overseaProjectDetail.getChineseName(), overseaProjectDetail.getProjectDesc());
+                        titleBar.setActivityParameters(pid, overseaProjectDetail.getChineseName(), overseaProjectDetail.getProjectDesc());
                     }
                 }
             }

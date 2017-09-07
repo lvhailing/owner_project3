@@ -58,11 +58,11 @@ public class AttachmentAdapter extends BaseAdapter {
         }
 
 
-        String name = list.get(position).getName();
-        String houseType = list.get(position).getPath();
+      String  projectMaterialName = list.get(position).getName();
+      String  projectPath = list.get(position).getPath();
 
-        if (!TextUtils.isEmpty(name)) {
-            holder.tv_attachment_name.setText(name+".pdf");
+        if (!TextUtils.isEmpty(projectMaterialName)) {
+            holder.tv_attachment_name.setText(projectMaterialName);
         } else {
             holder.tv_attachment_name.setText("--");
         }
