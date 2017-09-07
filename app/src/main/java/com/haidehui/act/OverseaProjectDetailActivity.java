@@ -201,10 +201,10 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         project_material_list.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 项目材料列表 点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Intent intent = new Intent(mContext, WebForShareActivity.class);
+                Intent intent = new Intent(mContext, WebForPdfActivity.class);
                 intent.putExtra("type", WebForShareActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
-//                intent.putExtra("url", attachmentList.get(position).getPath());
-                intent.putExtra("url", Urls.URL_VIEW_PDF + attachmentList.get(position).getPath());
+                intent.putExtra("url", attachmentList.get(position).getPath());
+//                intent.putExtra("url", Urls.URL_VIEW_PDF + attachmentList.get(position).getPath());
                 intent.putExtra("title", attachmentList.get(position).getName());
                 startActivity(intent);
 

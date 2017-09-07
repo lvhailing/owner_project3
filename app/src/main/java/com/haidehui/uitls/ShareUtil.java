@@ -96,7 +96,7 @@ public final class ShareUtil {
                     oks.setUrl(url);
                 } else if (string.contains("ShortMessage")) {
                     way = "sms";
-                    oks.setText(text);
+                    oks.setText(text+url);
                     oks.setTitleUrl(url);
                     oks.setUrl(url);
                 }
