@@ -24,8 +24,7 @@
     <RelativeLayout
         android:id="@+id/viewpager_layout"
         android:layout_width="match_parent"
-        android:minHeight="190dp"
-        android:layout_height="190dp">
+        android:layout_height="160dp">
 
         <LinearLayout
             android:id="@+id/ll_vp"

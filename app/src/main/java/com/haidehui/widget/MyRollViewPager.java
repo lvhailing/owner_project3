@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -14,7 +14,6 @@ import com.haidehui.R;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.photo_preview.fresco.ImageLoader;
-import com.haidehui.uitls.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,21 +185,15 @@ public class MyRollViewPager extends ViewPager {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            final SimpleDraweeView iv = new SimpleDraweeView(context);
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            iv.setAdjustViewBounds(true);
-//            iv.setMaxWidth(750);
-            iv.setMaxHeight(ViewUtils.dip2px(context,140));
-            iv.setMinimumHeight(ViewUtils.dip2px(context,140));
-
+            final SimpleDraweeView simpleDraweeView = (SimpleDraweeView) LayoutInflater.from(context).inflate(R.layout.simple_drawee_view_item, null);
 
             if (picList != null && picList.size() > 0) {
                 //后台返回了地址集合
-                ImageLoader.getInstance().loadImageLocalOrNet(iv, picList.get(position % picList.size()).getPicture());
+                ImageLoader.getInstance().loadImageLocalOrNet(simpleDraweeView, picList.get(position % picList.size()).getPicture());
 
                 //设置了点击回调，则回调activity
                 if (myClickListener != null) {
-                    iv.setOnClickListener(new OnClickListener() {
+                    simpleDraweeView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             myClickListener.onMyClick(position % picList.size());
@@ -209,12 +202,12 @@ public class MyRollViewPager extends ViewPager {
                 }
             } else {
                 // 取默认图片
-                iv.setBackgroundResource(ids[position % ids.length]);
+                simpleDraweeView.setBackgroundResource(ids[position % ids.length]);
             }
 
-            container.addView(iv);
+            container.addView(simpleDraweeView);
 
-            return iv;
+            return simpleDraweeView;
         }
 
         @Override
