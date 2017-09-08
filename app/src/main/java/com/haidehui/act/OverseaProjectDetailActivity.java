@@ -30,6 +30,7 @@ import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -202,9 +203,24 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(mContext, WebForPdfActivity.class);
-                intent.putExtra("type", WebForShareActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
-                intent.putExtra("url", attachmentList.get(position).getPath());
-//                intent.putExtra("url", Urls.URL_VIEW_PDF + attachmentList.get(position).getPath());
+                intent.putExtra("type", WebForPdfActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
+//                intent.putExtra("url", attachmentList.get(position).getPath());
+//                String nameEncode=attachmentList.get(position).getName();
+//                String pathUrlEncode=attachmentList.get(position).getPath();
+//                try{
+//                    if(!TextUtils.isEmpty(nameEncode)){
+//                        nameEncode= URLEncoder.encode(nameEncode,"UTF-8");
+//                        nameEncode= URLEncoder.encode(nameEncode,"UTF-8");
+//                    }
+//                    if(!TextUtils.isEmpty(pathUrlEncode)){
+//                        pathUrlEncode= URLEncoder.encode(pathUrlEncode,"UTF-8");
+//                        pathUrlEncode=URLEncoder.encode(pathUrlEncode,"UTF-8");
+//                    }
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                }
+//                intent.putExtra("url", Urls.URL_VIEW_PDF +nameEncode+"&&path="+pathUrlEncode);
+                intent.putExtra("url",attachmentList.get(position).getPath() );
                 intent.putExtra("title", attachmentList.get(position).getName());
                 startActivity(intent);
 
