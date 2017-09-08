@@ -14,6 +14,7 @@ import com.haidehui.R;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.photo_preview.fresco.ImageLoader;
+import com.haidehui.uitls.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,16 +190,9 @@ public class MyRollViewPager extends ViewPager {
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
             iv.setAdjustViewBounds(true);
 //            iv.setMaxWidth(750);
-//            iv.setMaxHeight(396);
+            iv.setMaxHeight(ViewUtils.dip2px(context,140));
+            iv.setMinimumHeight(ViewUtils.dip2px(context,140));
 
-//            int screenWidth = getScreenWidth(this);
-//            ViewGroup.LayoutParams lp = testImage.getLayoutParams();
-//            lp.width = screenWidth;
-//            lp.height = LayoutParams.WRAP_CONTENT;
-//            testImage.setLayoutParams(lp);
-//
-//            testImage.setMaxWidth(screenWidth);
-//            testImage.setMaxHeight(screenWidth * 5); 这里其实可以根据需求而定，我这里测试为最大宽度的5倍
 
             if (picList != null && picList.size() > 0) {
                 //后台返回了地址集合

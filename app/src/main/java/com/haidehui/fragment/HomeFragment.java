@@ -35,6 +35,7 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
+import com.haidehui.uitls.ViewUtils;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.MyRollViewPager;
 
@@ -124,6 +125,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //        tv_no_house = (TextView) mView.findViewById(R.id.tv_no_house);
         myListView = (MyListView) mView.findViewById(R.id.lv);
 
+//        ll_vp.setMaxHeight(ViewUtils.dip2px(context,140));
+        ll_vp.setMinimumHeight(ViewUtils.dip2px(context,140));
         tv_hot_house.setOnClickListener(this);
         tv_oversea_project.setOnClickListener(this);
         tv_customer_service.setOnClickListener(this);
