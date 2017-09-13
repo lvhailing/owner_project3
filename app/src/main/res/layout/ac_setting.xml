@@ -233,36 +233,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_setting_invite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dip"
-            android:background="@color/bg_white"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dip"
-                android:text="@string/setting_invite"
-                android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="8dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/rl_setting_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -20,24 +20,26 @@ import java.util.List;
  */
 public class CityDataHelper {
     public static String DATABASES_DIR;//数据库目录路径
-    public static String DATABASE_NAME="province.db";//要复制的数据库名
+    public static String DATABASE_NAME = "province.db";//要复制的数据库名
     private static CityDataHelper dataHelper;
-    private CityDataHelper(Context context){
-        DATABASES_DIR="/data/data/"+context.getPackageName()+"/databases/";
+
+    private CityDataHelper(Context context) {
+        DATABASES_DIR = "/data/data/" + context.getPackageName() + "/databases/";
     }
-    public static CityDataHelper getInstance(Context context){
-        if(dataHelper==null){
-            dataHelper=new CityDataHelper(context);
+
+    public static CityDataHelper getInstance(Context context) {
+        if (dataHelper == null) {
+            dataHelper = new CityDataHelper(context);
         }
         return dataHelper;
     }
+
     /**
-     *
      * @param inStream
-     * @param fileNme 文件名
-     * @param newPath 要复制到的文件夹路径
+     * @param fileNme  文件名
+     * @param newPath  要复制到的文件夹路径
      */
-    public void copyFile(InputStream inStream,String fileNme, String newPath) {
+    public void copyFile(InputStream inStream, String fileNme, String newPath) {
         try {
             int bytesum = 0;
             int byteread = 0;
@@ -48,8 +50,8 @@ public class CityDataHelper {
                 file.mkdir();
             }
             //如果文件存在覆盖
-            File newFile=new File(newPath+File.separator+fileNme);
-            if(newFile.exists()){
+            File newFile = new File(newPath + File.separator + fileNme);
+            if (newFile.exists()) {
                 newFile.delete();
                 newFile.createNewFile();
             }
@@ -72,29 +74,28 @@ public class CityDataHelper {
 
     /**
      * 打开数据库文件
+     *
      * @return
      */
-    public SQLiteDatabase openDataBase(){
-        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(
-                DATABASES_DIR+DATABASE_NAME, null);
+    public SQLiteDatabase openDataBase() {
+        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(DATABASES_DIR + DATABASE_NAME, null);
         return database;
     }
 
     /**
-     *
      * @param db
      * @return 查询所有的省
      */
-    public List<ProvinceModel> getProvice(SQLiteDatabase db){
-        String sql="SELECT * FROM t_address_province ORDER BY id";
-        Cursor cursor = db.rawQuery(sql,null);
-        List<ProvinceModel> list=new ArrayList<ProvinceModel>();
+    public List<ProvinceModel> getProvice(SQLiteDatabase db) {
+        String sql = "SELECT * FROM t_address_province ORDER BY id";
+        Cursor cursor = db.rawQuery(sql, null);
+        List<ProvinceModel> list = new ArrayList<ProvinceModel>();
 
-        if (cursor!=null&&cursor.getCount() > 0) {
-            while (cursor.moveToNext()){
-                ProvinceModel provinceModel=new ProvinceModel();
-                provinceModel.ID=cursor.getString(cursor.getColumnIndex("id"));
-                provinceModel.NAME=cursor.getString(cursor.getColumnIndex("name"));
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                ProvinceModel provinceModel = new ProvinceModel();
+                provinceModel.ID = cursor.getString(cursor.getColumnIndex("id"));
+                provinceModel.NAME = cursor.getString(cursor.getColumnIndex("name"));
                 provinceModel.CODE = cursor.getString(cursor.getColumnIndex("code"));
                 list.add(provinceModel);
             }
@@ -104,21 +105,22 @@ public class CityDataHelper {
 
     /**
      * 根据省code查询所有的市
+     *
      * @param db
      * @param code
      * @return
      */
-    public List<CityModel> getCityByParentId(SQLiteDatabase db,String code){
-        String sql="SELECT * FROM t_address_city WHERE provinceCode=? ORDER BY id";
-        Cursor cursor = db.rawQuery(sql,new String[]{code});
-        List<CityModel> list=new ArrayList<CityModel>();
+    public List<CityModel> getCityByParentId(SQLiteDatabase db, String code) {
+        String sql = "SELECT * FROM t_address_city WHERE provinceCode=? ORDER BY id";
+        Cursor cursor = db.rawQuery(sql, new String[]{code});
+        List<CityModel> list = new ArrayList<CityModel>();
 
-        if (cursor!=null&&cursor.getCount() > 0) {
+        if (cursor != null && cursor.getCount() > 0) {
 
-            while (cursor.moveToNext()){
-                CityModel cityModel=new CityModel();
-                cityModel.ID=cursor.getString(cursor.getColumnIndex("id"));
-                cityModel.NAME=cursor.getString(cursor.getColumnIndex("name"));
+            while (cursor.moveToNext()) {
+                CityModel cityModel = new CityModel();
+                cityModel.ID = cursor.getString(cursor.getColumnIndex("id"));
+                cityModel.NAME = cursor.getString(cursor.getColumnIndex("name"));
                 cityModel.CODE = cursor.getString(cursor.getColumnIndex("code"));
                 list.add(cityModel);
             }
@@ -128,19 +130,20 @@ public class CityDataHelper {
 
     /**
      * 根据市code查询所有的区
+     *
      * @param db
      * @param code
      * @return
      */
-    public List<DistrictModel> getDistrictById(SQLiteDatabase db,String code){
-        String sql="SELECT * FROM t_address_town WHERE cityCode=? ORDER BY id ";
-        Cursor cursor = db.rawQuery(sql,new String[]{code});
-        List<DistrictModel> list=new ArrayList<DistrictModel>();
-        if (cursor!=null&&cursor.getCount() > 0) {
-            while (cursor.moveToNext()){
-                DistrictModel districtModel=new DistrictModel();
-                districtModel.ID=cursor.getString(cursor.getColumnIndex("id"));
-                districtModel.NAME=cursor.getString(cursor.getColumnIndex("name"));
+    public List<DistrictModel> getDistrictById(SQLiteDatabase db, String code) {
+        String sql = "SELECT * FROM t_address_town WHERE cityCode=? ORDER BY id ";
+        Cursor cursor = db.rawQuery(sql, new String[]{code});
+        List<DistrictModel> list = new ArrayList<DistrictModel>();
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                DistrictModel districtModel = new DistrictModel();
+                districtModel.ID = cursor.getString(cursor.getColumnIndex("id"));
+                districtModel.NAME = cursor.getString(cursor.getColumnIndex("name"));
                 districtModel.CODE = cursor.getString(cursor.getColumnIndex("code"));
                 list.add(districtModel);
             }

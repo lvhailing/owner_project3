@@ -27,6 +27,7 @@ import com.haidehui.act.MessageActivity;
 import com.haidehui.act.MyBankActivity;
 import com.haidehui.act.MyInfoActivity;
 import com.haidehui.act.PartnerIdentifyActivity;
+import com.haidehui.act.RecommendActivity;
 import com.haidehui.act.RenGouStatusActivity;
 import com.haidehui.act.SettingActivity;
 import com.haidehui.model.MineData2B;
@@ -84,6 +85,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/";
     private int messageInt;
     private String status; // 认证状态
+    private RelativeLayout rl_recommend; // 推荐海德汇APP给朋友
 
 
     @Override
@@ -92,7 +94,6 @@ public class MineFragment extends Fragment implements OnClickListener {
             mView = inflater.inflate(R.layout.fragment_mine, container, false);
             try {
                 initView(mView);
-                initData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -130,13 +131,11 @@ public class MineFragment extends Fragment implements OnClickListener {
         layout_indentify = (RelativeLayout) mView.findViewById(R.id.layout_identify);
         layout_account_book = (RelativeLayout) mView.findViewById(R.id.layout_account_book);
         rl_mine_mybankcard = (RelativeLayout) mView.findViewById(R.id.rl_mine_mybankcard);
+        rl_recommend = (RelativeLayout) mView.findViewById(R.id.rl_recommend);
         rl_mine_setting = (RelativeLayout) mView.findViewById(R.id.rl_mine_setting);
         img_sign = (ImageView) mView.findViewById(R.id.img_sign);
 
 
-    }
-
-    private void initData() {
         img_email.setOnClickListener(this);
         tv_messageTotal.setOnClickListener(this);
         layout_my_info.setOnClickListener(this);
@@ -146,8 +145,8 @@ public class MineFragment extends Fragment implements OnClickListener {
         layout_indentify.setOnClickListener(this);
         layout_account_book.setOnClickListener(this);
         rl_mine_mybankcard.setOnClickListener(this);
+        rl_recommend.setOnClickListener(this);
         rl_mine_setting.setOnClickListener(this);
-
     }
 
     @Override
@@ -217,7 +216,11 @@ public class MineFragment extends Fragment implements OnClickListener {
                     i_mybank.putExtra("checkStatus",status);
                     startActivity(i_mybank);
                 break;
+            case R.id.rl_recommend: // // 推荐海德汇APP给朋友
+                Intent i_recommend = new Intent(context, RecommendActivity.class);
+                startActivity(i_recommend);
 
+                break;
             case R.id.rl_mine_setting:
                 Intent i_setting = new Intent(context, SettingActivity.class); //  设置页面
                 startActivity(i_setting);

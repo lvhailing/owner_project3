@@ -32,7 +32,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private RelativeLayout rl_setting_privacy_agreement; // 隐私协议
     private RelativeLayout rl_setting_advice;  // 意见反馈
-    private RelativeLayout rl_setting_invite;  //  推荐朋友
     private RelativeLayout rl_setting_about;  //  关于我们
     private RelativeLayout rl_setting_version; //  版本号
     private TextView tv_setting_version_code;  //  版本号
@@ -63,7 +62,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         rl_setting_service_agreement = (RelativeLayout) findViewById(R.id.rl_setting_service_agreement);
         rl_setting_privacy_agreement = (RelativeLayout) findViewById(R.id.rl_setting_privacy_agreement);
         rl_setting_advice = (RelativeLayout) findViewById(R.id.rl_setting_advice);
-        rl_setting_invite = (RelativeLayout) findViewById(R.id.rl_setting_invite);
         rl_setting_about = (RelativeLayout) findViewById(R.id.rl_setting_about);
         rl_setting_version = (RelativeLayout) findViewById(R.id.rl_setting_version);
 
@@ -77,7 +75,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         rl_setting_service_agreement.setOnClickListener(this);
         rl_setting_privacy_agreement.setOnClickListener(this);
         rl_setting_advice.setOnClickListener(this);
-        rl_setting_invite.setOnClickListener(this);
         rl_setting_about.setOnClickListener(this);
         rl_setting_version.setOnClickListener(this);
         tv_setting_logout.setOnClickListener(this);
@@ -215,12 +212,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.rl_setting_advice:  // 意见反馈
                 Intent i_advice = new Intent(SettingActivity.this, AdviceActivity.class);
                 startActivity(i_advice);
-
-                break;
-
-            case R.id.rl_setting_invite: // 邀请好友
-                Intent i_recommend = new Intent(SettingActivity.this, RecommendActivity.class);
-                startActivity(i_recommend);
 
                 break;
 

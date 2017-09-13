@@ -305,14 +305,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/img_bankcard"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/img_bankcard"
                     android:text="我的银行卡"
                     android:textColor="@color/gray_dark"
@@ -323,6 +321,40 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/arrow"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/bg_white"
+                android:padding="10dp" >
+
+                <ImageView
+                    android:id="@+id/iv_recommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/img_bankcard"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_recommend"
+                    android:text="@string/setting_invite"
+                    android:textColor="@color/txt_gray"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/arrow"/>
             </RelativeLayout>

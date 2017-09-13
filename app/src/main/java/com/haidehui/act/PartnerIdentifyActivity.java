@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -89,44 +90,23 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
     private int photoType = 1;
     private boolean isID,isCard;
-    /**
-     * 表示选择的是相册--2
-     */
-    private static int GALLERY_REQUEST_CODE = 2;
-    /**
-     * 表示选择的是裁剪--3
-     */
-    private static int CROP_REQUEST_CODE = 3;
+    private static int GALLERY_REQUEST_CODE = 2; // 表示选择的是相册--2
+    private static int CROP_REQUEST_CODE = 3; // 表示选择的是裁剪--3
 
     private Bitmap newZoomImage;
     private MyHandler mHandler;
     private Thread mthread;
+    private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/";  // 图片保存SD卡位置
+    public static final int SELECT_PIC_BY_TACK_PHOTO = 1; // 使用照相机拍照获取图片
+    public static final int SELECT_PIC_BY_PICK_PHOTO = 2; // 使用相册中的图片
 
-    /**
-     * 图片保存SD卡位置
-     */
-    private final static String IMG_PATH = Environment
-            .getExternalStorageDirectory() + "/haidehui/imgs/";
-
-
-    /***
-     * 使用照相机拍照获取图片
-     */
-    public static final int SELECT_PIC_BY_TACK_PHOTO = 1;
-    /***
-     * 使用相册中的图片
-     */
-    public static final int SELECT_PIC_BY_PICK_PHOTO = 2;
-
-    /**获取到的图片路径*/
-    private String picPath;
-
+    private String picPath; // 获取到的图片路径
     private Uri photoUri;
-
     private static final String TAG = "PartnerIdentifyActivity";
 
     private ArrayList<String> list;
     private PartnerIdentify2B data;
+    private TextView tv_customer_service_telephone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +116,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         mthread = new Thread(myRunnable);
         initTopTitle();
         initView();
-        initData();
         requestData();
     }
 
@@ -180,10 +159,11 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         tv_remark= (TextView) findViewById(R.id.tv_remark);
         layout_delete=(RelativeLayout) findViewById(R.id.layout_delete);
         img_delete= (ImageView) findViewById(R.id.img_delete);
+        tv_customer_service_telephone= (TextView) findViewById(R.id.tv_customer_service_telephone);
+        tv_customer_service_telephone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); // 下划线
+        tv_customer_service_telephone.getPaint().setAntiAlias(true);//抗锯齿
+        tv_customer_service_telephone.setLinkTextColor(getResources().getColor(R.color.txt_orange));
 
-
-    }
-    private void initData() {
         layout_address.setOnClickListener(this);
         layout_identity_card.setOnClickListener(this);
         layout_card.setOnClickListener(this);
@@ -376,7 +356,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.layout_address:
+            case R.id.layout_address: // 选择所在地
                 SelectAddressDialog dialog=new SelectAddressDialog(this, new SelectAddressDialog.OnExitChanged() {
                     @Override
                     public void onConfim(String selectText) {
