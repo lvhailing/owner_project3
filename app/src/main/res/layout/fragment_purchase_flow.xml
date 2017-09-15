@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:gravity="center"
-                android:text="缴付定金"
+                android:text="缴付订金"
                 android:textColor="@color/txt_black"
                 android:textSize="16sp"/>
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="一旦确定购买房产需缴付定金"
+                android:text="一旦确定购买房产需缴付订金"
                 android:textColor="@color/txt_light_gray"
                 android:textSize="14sp"/>
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="10日内签署购房协议付首付"
+                android:text="14天左右签署购房协议付首付"
                 android:textColor="@color/txt_light_gray"
                 android:textSize="14sp"/>
 

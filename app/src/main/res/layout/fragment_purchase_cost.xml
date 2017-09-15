@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="14dp"
-        android:text="1.一旦确定购买房产，需缴付定金\n2.10日内，签署购房协议，付首付\n3.泰国买房的总的税费是房价的1%"
+        android:text="1.一旦确定购买房产，需缴付订金50000-100000泰铢\n2.14天左右，签署购房协议，付首付\n3.泰国买房的总税费是房价的1-3%"
         android:textColor="@color/txt_black"
         android:textSize="14sp"/>
 
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="14dp"
-        android:text="1.泰国申请养老签证的条件：\n(1)年龄满50周岁；\n(2)在泰国的个人银行帐户内有至少80万泰铢的存款"
+        android:text="1.泰国申请养老签证的条件：\n(1)年龄满50周岁\n(2)在泰国的个人银行帐户内有至少80万泰铢的存款"
         android:textColor="@color/txt_black"
         android:textSize="14sp"/>
 
@@ -48,7 +48,7 @@
         android:paddingBottom="60dp"
         android:layout_marginTop="14dp"
         android:lineSpacingExtra="14dp"
-        android:text="2.需要准备的材料有：\n(1)申请人护照；\n(2)申请人泰国个人帐户80万泰铢的存款证明"
+        android:text="2.需要准备的材料有：\n(1)申请人护照\n(2)申请人泰国个人帐户80万泰铢的存款证明"
         android:textColor="@color/txt_black"
         android:textSize="14sp"/>
 </LinearLayout>

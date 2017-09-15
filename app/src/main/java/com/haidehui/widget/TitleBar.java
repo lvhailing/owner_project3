@@ -31,7 +31,9 @@ import android.widget.TextView;
 import com.haidehui.R;
 import com.haidehui.act.WebActivity;
 import com.haidehui.common.Urls;
+import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.ImageLoaderManager;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ShareUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.uitls.ViewUtils;
@@ -69,6 +71,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
     private String shareText; // 分享出去时显示的描述
     private String flag; // 判断是从房源详情页、还是项目详情页过来的
     private String shareUrl; // 分享时用到的url
+    private String userId = null;
 
     public TitleBar(Context context) {
         super(context);
@@ -803,11 +806,24 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 // }
 
                 case R.id.iv_right_btn:
+                    try {
+                        userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     //启动分享
                     if (flag.equals("1000")) {
-                        shareUrl = Urls.URL_PROJECT_H5_DETAIL + "/" + shareId;
+                        if (!PreferenceUtil.isLogin()) { // 用户没登录
+                            shareUrl = Urls.URL_PROJECT_H5_DETAIL + "/" + shareId + "/0";
+                        } else {  // 用户登录,分享时要拼上用户的userId
+                            shareUrl = Urls.URL_PROJECT_H5_DETAIL + "/" + shareId + "/" + userId;
+                        }
                     } else if (flag.equals("1001")) {
-                        shareUrl = Urls.URL_HOUSE_H5_DETAIL + "/" + shareId;
+                        if (!PreferenceUtil.isLogin()) { // 用户没登录
+                            shareUrl = Urls.URL_HOUSE_H5_DETAIL + "/" + shareId + "/0";
+                        } else { // 用户登录,分享时要拼上用户的userId
+                            shareUrl = Urls.URL_HOUSE_H5_DETAIL + "/" + shareId + "/" + userId;
+                        }
                     }
                     if (!TextUtils.isEmpty(shareId)) {
                         ShareUtil.sharedSDK(mContext, shareTitle, shareText, shareUrl);

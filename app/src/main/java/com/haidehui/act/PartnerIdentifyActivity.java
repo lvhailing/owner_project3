@@ -89,7 +89,8 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private ImageView img_delete;
 
     private int photoType = 1;
-    private boolean isID,isCard;
+    private boolean isID;
+    private boolean isCard;
     private static int GALLERY_REQUEST_CODE = 2; // 表示选择的是相册--2
     private static int CROP_REQUEST_CODE = 3; // 表示选择的是裁剪--3
 
@@ -395,7 +396,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 i_card.putExtra("currentPos", 0);
                 startActivity(i_card);
                 break;
-            case R.id.btn_submit:
+            case R.id.btn_submit: // 提交认证
                 String workProvince=tv_workProvince.getText().toString();
                 String workUnit=edt_workUnit.getText().toString();
                 String email=edt_email.getText().toString();
@@ -410,10 +411,10 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                                             Toast.makeText(PartnerIdentifyActivity.this, "请上传身份证正面", Toast.LENGTH_SHORT).show();
                                             return;
                                         }
-                                        if (isCard == false) {
-                                            Toast.makeText(PartnerIdentifyActivity.this, "请上传名片", Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
+//                                        if (isCard == false) {
+//                                            Toast.makeText(PartnerIdentifyActivity.this, "请上传名片", Toast.LENGTH_SHORT).show();
+//                                            return;
+//                                        }
 
                                         requestSubmitData(email, idNo, userId, workProvince, workUnit);
                                     } else {

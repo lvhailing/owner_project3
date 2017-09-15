@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *  事业合伙人认证页--- 选择地区 Dialog
  */
 public class SelectAddressDialog extends Dialog implements DialogInterface.OnCancelListener, DialogInterface.OnDismissListener, OnWheelChangedListener {
 
@@ -69,7 +69,6 @@ public class SelectAddressDialog extends Dialog implements DialogInterface.OnCan
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mView = inflater.inflate(R.layout.dialog_select_address, null);
@@ -101,6 +100,7 @@ public class SelectAddressDialog extends Dialog implements DialogInterface.OnCan
         provinceView.addChangingListener(this);
         cityView.addChangingListener(this);
         districtView.addChangingListener(this);
+
         initData();
     }
 
@@ -131,7 +131,6 @@ public class SelectAddressDialog extends Dialog implements DialogInterface.OnCan
     };
 
     private void ondismiss() {
-
     }
 
     @Override
@@ -165,12 +164,10 @@ public class SelectAddressDialog extends Dialog implements DialogInterface.OnCan
         if (this.isShowing()) {
             this.dismiss();
         }
-
     }
 
     /**
      * 获取当前window width,height
-     *
      * @param context
      * @return
      */
@@ -184,12 +181,11 @@ public class SelectAddressDialog extends Dialog implements DialogInterface.OnCan
     }
 
     public interface OnExitChanged {
-        public void onConfim(String selectText);
+        void onConfim(String selectText);
 
-        public void onCancel();
+        void onCancel();
 
     }
-
 
     private void initData() {
         //初始化数据

@@ -1,9 +1,15 @@
 package com.haidehui.act;
 
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -11,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.adapter.AttachmentAdapter;
@@ -26,10 +33,17 @@ import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.SystemInfo;
+import com.haidehui.widget.FileManager;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,6 +119,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private TitleBar titleBar;
     private String projectPath;
     private String projectMaterialName;
+    private String url = null;
+    private TextView tv_no_project_material; // 暂无相关材料
 
 
     @Override
@@ -174,6 +190,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         tv_project_des = (TextView) findViewById(R.id.tv_project_des);
         tv_support_facilities_desc = (TextView) findViewById(R.id.tv_support_facilities_desc);
         tv_geographic_location_desc = (TextView) findViewById(R.id.tv_geographic_location_desc);
+        tv_no_project_material = (TextView) findViewById(R.id.tv_no_project_material);
 
         ll_pro_house_photos = (LinearLayout) findViewById(R.id.ll_pro_house_photos);
         ll_project_plan_photos = (LinearLayout) findViewById(R.id.ll_project_plan_photos);
@@ -202,27 +219,33 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         project_material_list.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 项目材料列表 点击监听
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Intent intent = new Intent(mContext, WebActivity.class);
-                intent.putExtra("type", WebActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
-                intent.putExtra("url", attachmentList.get(position).getPath());
-                String nameEncode=attachmentList.get(position).getName();
-                String pathUrlEncode=attachmentList.get(position).getPath();
-                try{
-                    if(!TextUtils.isEmpty(nameEncode)){
-                        nameEncode= URLEncoder.encode(nameEncode,"UTF-8");
-                        nameEncode= URLEncoder.encode(nameEncode,"UTF-8");
-                    }
-                    if(!TextUtils.isEmpty(pathUrlEncode)){
-                        pathUrlEncode= URLEncoder.encode(pathUrlEncode,"UTF-8");
-                        pathUrlEncode=URLEncoder.encode(pathUrlEncode,"UTF-8");
-                    }
-                }catch (Exception e){
-                    System.out.println(e);
-                }
-                intent.putExtra("url", Urls.URL_VIEW_PDF +nameEncode+"&&path="+pathUrlEncode);
+//                Intent intent = new Intent(mContext, WebActivity.class);
+//                intent.putExtra("type", WebActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
+//                intent.putExtra("url", attachmentList.get(position).getPath());
+//                在线打开的代码
+//                String nameEncode=attachmentList.get(position).getName();
+//                String pathUrlEncode=attachmentList.get(position).getPath();
+//                try{
+//                    if(!TextUtils.isEmpty(nameEncode)){
+//                        nameEncode= URLEncoder.encode(nameEncode,"UTF-8");
+//                        nameEncode= URLEncoder.encode(nameEncode,"UTF-8");
+//                    }
+//                    if(!TextUtils.isEmpty(pathUrlEncode)){
+//                        pathUrlEncode= URLEncoder.encode(pathUrlEncode,"UTF-8");
+//                        pathUrlEncode=URLEncoder.encode(pathUrlEncode,"UTF-8");
+//                    }
+//                }catch (Exception e){
+//                    System.out.println(e);
+//                }
+//                intent.putExtra("url", Urls.URL_VIEW_PDF +nameEncode+"&&path="+pathUrlEncode);
 //                intent.putExtra("url",attachmentList.get(position).getPath() );
-                intent.putExtra("title", attachmentList.get(position).getName());
-                startActivity(intent);
+//                intent.putExtra("title", attachmentList.get(position).getName());
+//                startActivity(intent);
+
+                // 调用第三方打开pdf
+                url = attachmentList.get(position).getPath();
+                DownloaderTask task = new DownloaderTask();
+                task.execute(url);
 
             }
         });
@@ -389,7 +412,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                 }
                 break;
             case R.id.rl_pro_geographic_location:  // 地理位置
-                if (!isShowLocation) {
+                if (!isShowLocation) { // 布局处于打开状态
                     ll_geographic_location.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(overseaProjectDetail.getGeographyLocation())) {
                         tv_geographic_location_desc.setText(overseaProjectDetail.getGeographyLocation());
@@ -403,8 +426,11 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                 }
                 break;
             case R.id.rl_project_material: // 项目材料
-                if (!isShowProjectMaterial) {
+                if (!isShowProjectMaterial) { // 布局处于打开状态
                     ll_project_material.setVisibility(View.VISIBLE);
+                    if (attachmentList != null && attachmentList.size() <= 0) {
+                        tv_no_project_material.setVisibility(View.VISIBLE);
+                    }
                     iv_project_material.setBackgroundResource(R.mipmap.icon_oversea_up);
                     isShowProjectMaterial = true;
                 } else {
@@ -452,11 +478,177 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                         }
                         setView();
 
-                        //设置分享参数
+                        // 设置分享参数
                         titleBar.setActivityParameters(pid, overseaProjectDetail.getChineseName(), overseaProjectDetail.getProjectDesc());
                     }
                 }
             }
         });
     }
+
+
+    private class DownloaderTask extends AsyncTask<String, Void, File> {
+        public DownloaderTask() {
+        }
+
+        @Override
+        protected File doInBackground(String... params) {
+            String url1 = params[0];
+            if (url1 == null || url1.equals("")) {
+                return null;
+            }
+            String fileName = System.currentTimeMillis() + url1.substring(url1.lastIndexOf("."));
+            File file = null;
+            String pathName = FileManager.getSecondDir(OverseaProjectDetailActivity.this, "contract") + File.separator + fileName;
+            try {
+                URL url = new URL(url1);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(10 * 1000);
+
+                connection.connect();
+                if (connection.getResponseCode() == 200) {
+                    int fileLength = connection.getContentLength();
+                    if (fileLength <= 0) {
+                        return null;
+                    }
+                    file = new File(pathName);
+                    if (!file.exists()) {
+                        file.createNewFile();
+                    }
+                    InputStream inputStream = connection.getInputStream();
+                    ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[2048];
+                    while (true) {
+                        int len = inputStream.read(buffer);
+                        if (len == -1) {
+                            break;
+                        }
+                        arrayOutputStream.write(buffer, 0, len);
+                    }
+                    arrayOutputStream.close();
+                    inputStream.close();
+                    byte[] data = arrayOutputStream.toByteArray();
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    fileOutputStream.write(data);
+                    fileOutputStream.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            return file;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onPostExecute(File result) {
+            super.onPostExecute(result);
+            closeProgressDialog();
+            if (result == null) {
+                Toast t = Toast.makeText(getApplicationContext(), "连接错误！请稍后再试！", Toast.LENGTH_LONG);
+                t.setGravity(Gravity.CENTER, 0, 0);
+                t.show();
+                return;
+            }
+
+            try {
+                //呼唤第三方打开
+                Intent intent = getFileIntent(result);
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "您尚未安装" + end + "阅读器 ， 建议您到应用市场下载", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgressDialog();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
+    public Intent getFileIntent(File file) {
+        Uri uri = Uri.fromFile(file);
+        long a = file.length();
+        System.out.println(a);
+        String type = getMIMEType(file);
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(uri, type);
+        return intent;
+    }
+
+    private String end = "";
+
+    private String getMIMEType(File f) {
+        String type = "";
+        String fName = f.getName();
+        end = fName.substring(fName.lastIndexOf(".") + 1, fName.length()).toLowerCase();
+
+	      /* 依扩展名的类型决定MimeType */
+        if (end.equals("pdf")) {
+            type = "application/pdf";//
+        } else if (end.equals("m4a") || end.equals("mp3") || end.equals("mid") || end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
+            type = "audio/*";
+        } else if (end.equals("3gp") || end.equals("mp4")) {
+            type = "video/*";
+        } else if (end.equals("jpg") || end.equals("gif") || end.equals("png") || end.equals("jpeg") || end.equals("bmp")) {
+            type = "image/*";
+        } else if (end.equals("apk")) {
+            /* android.permission.INSTALL_PACKAGES */
+            type = "application/vnd.android.package-archive";
+        }
+//	      else if(end.equals("pptx")||end.equals("ppt")){
+//	    	  type = "application/vnd.ms-powerpoint";
+//	      }else if(end.equals("docx")||end.equals("doc")){
+//	    	  type = "application/vnd.ms-word";
+//	      }else if(end.equals("xlsx")||end.equals("xls")){
+//	    	  type = "application/vnd.ms-excel";
+//	      }
+        else {
+//	    	  /*如果无法直接打开，就跳出软件列表给用户选择 */
+            type = "*/*";
+        }
+        return type;
+    }
+
+
+    private ProgressDialog mDialog;
+
+    private void showProgressDialog() {
+        if (mDialog == null) {
+            mDialog = new ProgressDialog(this);
+            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);//设置风格为圆形进度条
+            mDialog.setMessage("正在加载 ，请等待...");
+            mDialog.setIndeterminate(false);//设置进度条是否为不明确
+            mDialog.setCancelable(true);//设置进度条是否可以按退回键取消
+            mDialog.setCanceledOnTouchOutside(false);
+            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    mDialog = null;
+                }
+            });
+            mDialog.show();
+        }
+    }
+
+    private void closeProgressDialog() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+            mDialog = null;
+        }
+    }
+
+
 }

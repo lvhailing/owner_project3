@@ -54,7 +54,7 @@ import com.haidehui.widget.CircularImage;
 import android.widget.ImageView;
 
 /**
- * 底部导航 我的
+ * 底部导航--- 我的模块
  */
 public class MineFragment extends Fragment implements OnClickListener {
     private Context context;

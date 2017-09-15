@@ -27,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9999/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_OUTER_NET_DEBUG;
+    private static String EC_HOST = URL_OFFICIAL;
 
     /**
      * 登出
@@ -204,7 +204,7 @@ public class Urls {
     public static final String URL_PROJECT_DETAIL = EC_HOST + "project/detail";
 
     // 海外项目详情 分享
-    public static final String URL_PROJECT_H5_DETAIL = EC_HOST + "project/h5/detail";
+    public static final String URL_PROJECT_H5_DETAIL = EC_HOST + "project/h5/detail/";
 
     // 房源
     public static final String URL_HOUSE_LIST = EC_HOST + "house/list";

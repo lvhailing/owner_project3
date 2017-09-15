@@ -141,9 +141,8 @@
 
     <!-- 客服电话 -->
 
-    <string name="phone_number_format">8610-65186881</string>
-    <string name="phone_number">8610-65186881</string>
-    <string name="adviser_phone_num">01052297188</string>
+    <string name="phone_number_format">+86 10-65186883</string>
+    <string name="phone_number">+86 10-65186883</string>
 
     <string name="net_fail_text">当前网络不可用，点此检查网络设置</string>
     <string name="title_null"></string>

@@ -131,7 +131,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/img_business"/>
+                    android:src="@mipmap/ic_business"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="5dp"
-                    android:drawableTop="@mipmap/img_rengou_state"
+                    android:drawableTop="@mipmap/ic_subscription_state"
                     android:gravity="center_horizontal"
                     android:text="认购状态"
                     android:textSize="13sp"/>
@@ -217,7 +217,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/img_identify"/>
+                    android:src="@mipmap/ic_certification"/>
 
                 <TextView
                     android:id="@+id/tv_identify"
@@ -262,7 +262,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/img_account_book"/>
+                    android:src="@mipmap/ic_account_book"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -306,7 +306,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/img_bankcard"/>
+                    android:src="@mipmap/ic_bank_card"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -339,7 +339,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/img_bankcard"/>
+                    android:src="@mipmap/ic_invite"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -375,7 +375,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/img_set"/>
+                    android:src="@mipmap/ic_set"/>
 
                 <TextView
                     android:layout_width="wrap_content"
