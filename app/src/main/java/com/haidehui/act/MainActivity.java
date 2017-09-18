@@ -267,16 +267,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 if (destDir == null) {
                                     destDir = new File(Environment.getExternalStorageDirectory().getPath() + MyApplication.mDownloadPath);
                                 }
-                                if (destDir.exists() || destDir.mkdirs()) {
-                                    destFile = new File(destDir.getPath() + "/" + URLEncoder.encode("http://114.113.238.90:40080/upload/app/vjinke.apk"));
-                                    if (destFile.exists() && destFile.isFile() && checkApkFile(destFile.getPath())) {
-                                        destFile.delete();
-                                    }
-                                }
                             }
                         }
-
-                    } else {
 
                     }
 
