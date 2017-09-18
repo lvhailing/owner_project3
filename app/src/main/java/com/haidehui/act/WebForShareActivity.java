@@ -2,11 +2,14 @@ package com.haidehui.act;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -49,6 +52,7 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
     private String roadShowTime; // 发布时间
     private String id;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +142,14 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
         mWebview.getSettings().setJavaScriptEnabled(true);
         mWebview.addJavascriptInterface(new MyJavaScriptinterface(), "click");
 
+        /**
+         * 解决Android 5.0以后，WebView默认不支持同时加载Https和Http混合模式，
+         * 当一个安全的站点（https）去加载一个非安全的站点（http）时，需要配置Webview加载内容的混合模式
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mWebview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
 
         if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
             iv_btn_share.setVisibility(View.VISIBLE);
@@ -203,7 +215,7 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
                     ShareUtil.sharedSDK(this, investMentGuideTitle, investMentGuideBrief, url);
                 } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
                     String text = speaker + roadShowTime;
-                    url = Urls.URL_ROADSHOWVIDEO_VIEW +id;
+                    url = Urls.URL_ROADSHOWVIDEO_VIEW + id;
                     ShareUtil.sharedSDK(this, roadShowDetailTitle, text, url);
                 }
                 break;
