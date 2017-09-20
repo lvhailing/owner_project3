@@ -297,7 +297,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_left"
                     android:autoLink="all"
-                    android:text="+86 10-65186881"
+                    android:text="+86 10-65186883"
                     android:textSize="13sp"/>
             </RelativeLayout>
         </LinearLayout>
