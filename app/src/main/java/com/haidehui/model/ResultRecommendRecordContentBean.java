@@ -6,7 +6,7 @@ import com.haidehui.network.types.MouldList;
 
 public class ResultRecommendRecordContentBean implements IMouldType {
 
-	private String total;
+	private String total; // 邀请到的好友总数
 
 	private MouldList<ResultRecommendRecordItemContentBean>	recommendList;
 

@@ -4,7 +4,7 @@
     <string name="app_chinesename">海德汇版本更新</string>
     <!-- 登录 -->
 
-    <string name="login_title">您身边的海外配置管家</string>
+    <string name="login_title">一站式海外资产配置平台</string>
     <string name="login_phone">手机号：</string>
     <string name="login_password">密码：</string>
     <string name="login_forget_password">忘记密码？</string>
@@ -56,7 +56,7 @@
     <string name="setting_sign_agreement">海德汇协议</string>
     <string name="setting_privacy_agreement">隐私协议</string>
     <string name="setting_advice">意见反馈</string>
-    <string name="setting_invite">推荐海德汇APP给朋友</string>
+    <string name="setting_invite">推荐APP给朋友</string>
     <string name="setting_about">关于我们</string>
     <string name="setting_version">版本号</string>
     <string name="setting_change_phone_first">请输入当前登录密码</string>

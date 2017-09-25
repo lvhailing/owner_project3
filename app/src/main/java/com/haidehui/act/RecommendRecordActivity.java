@@ -25,12 +25,10 @@ import java.util.LinkedHashMap;
  * 邀请记录
  * Created by hasee on 2017/6/13.
  */
-public class RecommendRecordActivity extends BaseActivity{
-
-
+public class RecommendRecordActivity extends BaseActivity {
     private ViewSwitcher vs_recommend_record;
-    private TextView tv_recommend_friends;          //  邀请好友数
-    private ListView lv_recommend_record;       //
+    private TextView tv_recommend_friends;  //  邀请好友数
+    private ListView lv_recommend_record;  // 推荐记录列表
     private MouldList<ResultRecommendRecordItemContentBean> list;
     private Context context;
     private ResultRecommendRecordContentBean bean;
@@ -40,78 +38,17 @@ public class RecommendRecordActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.ac_recommend_record);
+
         initTopTitle();
         initView();
         initData();
 
     }
 
-    public void initView(){
-        context = this;
-        list = new MouldList<ResultRecommendRecordItemContentBean>();
-        bean = new ResultRecommendRecordContentBean();
-
-        recommendCode = getIntent().getStringExtra("recommendCode");
-        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
-        tv_recommend_friends = (TextView) findViewById(R.id.tv_recommend_friends);
-        lv_recommend_record = (ListView) findViewById(R.id.lv_recommend_record);
-
-        vs_recommend_record.setDisplayedChild(0);
-
-
-    }
-
-    public void initData(){
-
-
-        getRecommendData();
-
-//        test();
-
-
-    }
-
-    public void setView(){
-
-        tv_recommend_friends.setText("推荐好友"+bean.getTotal()+"位");
-
-        RecommendRecordAdapter recordAdapter = new RecommendRecordAdapter(context,list);
-
-        lv_recommend_record.setAdapter(recordAdapter);
-
-    }
-
-    private void getRecommendData() {
-        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-
-
-        param.put("userId", userId);
-        param.put("recommendCode", recommendCode);
-//        param.put("userId", "17031409341310256680");
-
-        HtmlRequest.getRecommendRecord(RecommendRecordActivity.this, param,new BaseRequester.OnRequestListener() {
-
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                bean = (ResultRecommendRecordContentBean) params.result;
-                if (bean != null) {
-                    list = bean.getRecommendList();
-                    setView();
-
-                } else {
-                    Toast.makeText(RecommendRecordActivity.this, "加载失败，请确认网络通畅",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.setting_recommend_record))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+             .setCenterText(getResources().getString(R.string.setting_recommend_record)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -129,6 +66,57 @@ public class RecommendRecordActivity extends BaseActivity{
         });
     }
 
+    public void initView() {
+        context = this;
+        list = new MouldList<ResultRecommendRecordItemContentBean>();
+        bean = new ResultRecommendRecordContentBean();
+
+        recommendCode = getIntent().getStringExtra("recommendCode");
+        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
+        tv_recommend_friends = (TextView) findViewById(R.id.tv_recommend_friends);
+        lv_recommend_record = (ListView) findViewById(R.id.lv_recommend_record);
+
+        vs_recommend_record.setDisplayedChild(0);
+
+
+    }
+
+    public void initData() {
+        getRecommendData();
+//        test();
+    }
+
+    public void setView() {
+        tv_recommend_friends.setText("推荐好友" + bean.getTotal() + "位");
+
+        RecommendRecordAdapter recordAdapter = new RecommendRecordAdapter(context, list);
+        lv_recommend_record.setAdapter(recordAdapter);
+
+    }
+
+    /**
+     * 获取邀请记录信息
+     */
+    private void getRecommendData() {
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("userId", userId);
+        param.put("recommendCode", recommendCode);
+
+        HtmlRequest.getRecommendRecord(RecommendRecordActivity.this, param, new BaseRequester.OnRequestListener() {
+
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                bean = (ResultRecommendRecordContentBean) params.result;
+                if (bean != null) {
+                    list = bean.getRecommendList();
+                    setView();
+                } else {
+                    Toast.makeText(RecommendRecordActivity.this, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
 //    public void test(){
 //        list = new MouldList<ResultMessageContentBean>();
 //        for(int i=0;i<10;i++){
@@ -141,33 +129,5 @@ public class RecommendRecordActivity extends BaseActivity{
 //        }
 //
 //    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-
-
 
 }
