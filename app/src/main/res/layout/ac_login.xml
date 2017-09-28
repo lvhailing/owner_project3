@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/bg_white"
-
     >
 
     <LinearLayout
@@ -16,14 +15,12 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingBottom="20dip"
-
         >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/img_phone_service"
-
             />
 
         <TextView
@@ -31,19 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/phone_number_format"
-            android:textColor="@color/txt_orange"
-
-            />
-
+            android:textColor="@color/txt_orange"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -75,27 +69,15 @@
                 android:layout_height="34dip"
                 android:layout_marginLeft="25dip"
                 android:layout_marginRight="25dip"
-                android:gravity="bottom"
-                >
+                android:gravity="bottom">
 
                 <ImageView
                     android:id="@+id/iv_login_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/img_login_phone_number"
-                    />
-                <!-- <TextView
-                     android:id="@+id/tv_login_phone"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/login_phone"
-                     android:layout_toRightOf="@id/iv_login_phone"
-                     android:layout_marginLeft="10dip"
-                     android:textSize="15sp"
-                     android:textColor="@color/txt_gray_d"
-                     android:layout_centerVertical="true"
-                     />-->
+                    android:src="@mipmap/img_login_phone_number"/>
+
                 <EditText
                     android:id="@+id/et_login_phone"
                     android:layout_width="match_parent"
@@ -107,12 +89,9 @@
                     android:hint="手机号"
                     android:inputType="phone"
                     android:maxLength="11"
-                    android:textSize="15sp"
                     android:textColor="@color/txt_gray_d"
                     android:textCursorDrawable="@drawable/color_cursor"
-                    />
-
-
+                    android:textSize="15sp"/>
             </RelativeLayout>
 
             <ImageView
@@ -121,8 +100,7 @@
                 android:layout_marginLeft="25dip"
                 android:layout_marginRight="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@color/bg_gray"
-                />
+                android:src="@color/bg_gray"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -130,28 +108,14 @@
                 android:layout_marginLeft="25dip"
                 android:layout_marginRight="25dip"
                 android:layout_marginTop="5dip"
-                android:gravity="bottom"
-                >
+                android:gravity="bottom">
 
                 <ImageView
                     android:id="@+id/iv_login_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/img_login_password"
-                    />
-
-                <!--  <TextView
-                      android:id="@+id/tv_login_password"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_centerVertical="true"
-                      android:layout_marginLeft="10dip"
-                      android:layout_toRightOf="@id/iv_login_password"
-                      android:text="@string/login_password"
-                      android:textColor="@color/txt_gray_d"
-                      android:textSize="15sp"
-                      />-->
+                    android:src="@mipmap/img_login_password"/>
 
                 <EditText
                     android:id="@+id/et_login_password"
@@ -164,10 +128,9 @@
                     android:hint="密码"
                     android:inputType="textPassword"
                     android:maxLength="20"
-                    android:textSize="15sp"
                     android:textColor="@color/txt_gray_d"
                     android:textCursorDrawable="@drawable/color_cursor"
-                    />
+                    android:textSize="15sp"/>
             </RelativeLayout>
 
             <ImageView
@@ -176,9 +139,7 @@
                 android:layout_marginLeft="25dip"
                 android:layout_marginRight="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@color/bg_gray"
-                />
-
+                android:src="@color/bg_gray"/>
         </LinearLayout>
 
         <Button
@@ -191,16 +152,14 @@
             android:background="@drawable/shape_center_gray"
             android:text="@string/login_name"
             android:textColor="@color/txt_white"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
             android:layout_marginRight="25dip"
-            android:layout_marginTop="10dip"
-            >
+            android:layout_marginTop="10dip">
 
             <TextView
                 android:id="@+id/tv_login_forget_password"
@@ -208,8 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:text="@string/login_forget_password"
-                android:textColor="@color/txt_gray"
-                />
+                android:textColor="@color/txt_gray"/>
 
             <TextView
                 android:id="@+id/tv_login_sign"
@@ -218,10 +176,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="2dip"
                 android:text="@string/login_sign"
-                android:textColor="@color/txt_gray"
-                />
+                android:textColor="@color/txt_gray"/>
         </RelativeLayout>
     </LinearLayout>
-
 
 </RelativeLayout>

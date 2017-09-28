@@ -54,7 +54,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
     private String realName = "";
     private String recommendation = "";
 
-
     private boolean smsflag = true;
     private boolean flag = true;
     private MyHandler mHandler;
@@ -149,7 +148,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
             case R.id.btn_sign: //  立即注册
                 if(StringUtil.checkPassword(password)){
                     signup();
@@ -158,7 +156,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                 }
 
                 break;
-
             case R.id.signup_web: // 海德汇协议
                 Intent i_service = new Intent(SignActivity.this,WebActivity.class);
                 i_service.putExtra("type", WebActivity.WEBTYPE_SIGN_AGREEMENT);
@@ -167,8 +164,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                 startActivity(i_service);
 
                 break;
-            case R.id.tv_sign_get_verify_code:          //  获取验证码
-
+            case R.id.tv_sign_get_verify_code:  // 获取验证码
                 if(!TextUtils.isEmpty(mobile.trim())){
                     if(StringUtil.isMobileNO(mobile)){
                         tv_sign_get_verify_code.setClickable(false);
@@ -176,7 +172,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
                     }else{
                         Toast.makeText(context,"请输入正确的手机号",Toast.LENGTH_SHORT).show();
                     }
-
                 }else{
                     Toast.makeText(context,"请输入手机号",Toast.LENGTH_SHORT).show();
                 }
@@ -188,8 +183,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener{
             default:
 
                 break;
-
-
         }
 
     }

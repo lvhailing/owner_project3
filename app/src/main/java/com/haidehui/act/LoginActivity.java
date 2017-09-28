@@ -27,7 +27,7 @@ import java.util.Observer;
  * Created by hasee on 2017/6/6.
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener,Observer {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, Observer {
 
     private EditText et_login_phone; //  用户名
     private EditText et_login_password; //  密码
@@ -46,13 +46,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         initTopTitle();
         initView();
 
-
-
     }
 
-    public void initView(){
-
-
+    public void initView() {
         resultCode = getIntent().getStringExtra("GOTOMAIN");
 
         PreferenceUtil.setAutoLoginPwd("");
@@ -92,16 +88,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(editable)){
+                if (TextUtils.isEmpty(editable)) {
 
                     btn_login.setClickable(false);
                     btn_login.setBackgroundResource(R.drawable.shape_center_gray);
 
-                }else {
-                    if(TextUtils.isEmpty(et_login_password.getText().toString())){
+                } else {
+                    if (TextUtils.isEmpty(et_login_password.getText().toString())) {
                         btn_login.setClickable(false);
                         btn_login.setBackgroundResource(R.drawable.shape_center_gray);
-                    }else{
+                    } else {
                         btn_login.setClickable(true);
                         btn_login.setBackgroundResource(R.drawable.shape_center_orange);
                     }
@@ -113,24 +109,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         et_login_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(TextUtils.isEmpty(editable)){
+                if (TextUtils.isEmpty(editable)) {
                     btn_login.setClickable(false);
                     btn_login.setBackgroundResource(R.drawable.shape_center_gray);
-                }else{
-                    if(TextUtils.isEmpty(et_login_phone.getText().toString())){
+                } else {
+                    if (TextUtils.isEmpty(et_login_phone.getText().toString())) {
                         btn_login.setClickable(false);
                         btn_login.setBackgroundResource(R.drawable.shape_center_gray);
-                    }else{
+                    } else {
                         btn_login.setClickable(true);
                         btn_login.setBackgroundResource(R.drawable.shape_center_orange);
                     }
@@ -140,13 +134,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         });
 
-
     }
 
-    public void initTopTitle(){
+    public void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -178,27 +170,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_login:
+        switch (view.getId()) {
+            case R.id.btn_login: // 登录
                 String username = et_login_phone.getText().toString();
                 String password = et_login_password.getText().toString();
                 UserLogin.getInstance().userlogining(LoginActivity.this, username, password, "");
 
                 break;
 
-            case R.id.tv_login_forget_password:
-                Intent i_find_password = new Intent(this,FindPasswordActivity.class);
+            case R.id.tv_login_forget_password: // 忘记密码
+                Intent i_find_password = new Intent(this, FindPasswordActivity.class);
                 startActivity(i_find_password);
                 break;
 
-            case R.id.tv_login_sign:
-                Intent i_sign = new Intent(this,SignActivity.class);
+            case R.id.tv_login_sign: // 注册
+                Intent i_sign = new Intent(this, SignActivity.class);
                 startActivity(i_sign);
 
                 break;
 
-            case R.id.ll_login_phone_service:
-                Intent i_phone = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+getString(R.string.phone_number)));
+            case R.id.ll_login_phone_service: // 客服电话
+                Intent i_phone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.phone_number)));
                 i_phone.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_phone);
 
@@ -218,27 +210,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         bean = (ResultUserLoginContentBean) data;
         if (bean != null) {
             if (Boolean.parseBoolean(bean.getFlag())) {
-                if(!TextUtils.isEmpty(resultCode)){
-                    if(resultCode.equals(GOTOMAIN)){            //  登录完成跳至主页
-
+                if (!TextUtils.isEmpty(resultCode)) {
+                    if (resultCode.equals(GOTOMAIN)) {  //  登录完成跳至主页
                         Intent iMain = new Intent(LoginActivity.this, MainActivity.class);
                         iMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(iMain);
                         finish();
-
-                    }else{
-
-
+                    } else {
                         finish();
                     }
-                }else{
+                } else {
                     finish();
                 }
-
-
             } else {
-                Toast.makeText(LoginActivity.this, bean.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, bean.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }

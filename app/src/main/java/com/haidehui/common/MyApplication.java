@@ -63,8 +63,7 @@ public class MyApplication extends Application {
         InputStream in = this.getResources().openRawResource(R.raw.province);
         dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
 
-        //sharesdk 初始化
-
+        //ShareSDK 初始化
         ShareSDK.initSDK(instance);
     }
 

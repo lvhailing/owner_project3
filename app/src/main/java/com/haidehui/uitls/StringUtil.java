@@ -133,14 +133,15 @@ public class StringUtil {
 
     /**
      * 银行卡前后留四位
+     *
      * @param bankNum
      * @return
      */
-    public static String encryBankNum(String bankNum){
+    public static String encryBankNum(String bankNum) {
         StringBuffer sb = new StringBuffer();
         sb.append(bankNum.substring(0, 4));
         sb.append(" **** **** ");
-        sb.append(bankNum.substring(bankNum.length()-4, bankNum.length()));
+        sb.append(bankNum.substring(bankNum.length() - 4, bankNum.length()));
 
         return sb.toString();
     }
@@ -374,7 +375,9 @@ public class StringUtil {
 		 */
         // String telRegex = "[1][34578]\\d{9}";//
         // "[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
-        String telRegex = "^((145|147)|(15[^4])|(17[6-8])|((13|18)[0-9]))\\d{8}$";
+//        String telRegex = "^((145|147)|(15[^4])|(17[6-8])|((13|18)[0-9]))\\d{8}$";
+//        String telRegex = " ^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\\d{8}$";
+        String telRegex = "^[1](3|4|5|6|7|8|9)[0-9]{9}$";
         if (TextUtils.isEmpty(mobiles)) return false;
         else return mobiles.matches(telRegex);
     }
@@ -672,6 +675,7 @@ public class StringUtil {
         String regex = "^(-?[1-9]\\d*\\.?\\d*)|(-?0\\.\\d*[1-9])|(-?[0])|(-?[0]\\.\\d*)$";
         return value.matches(regex);
     }
+
     /**
      * 修改账本三个按钮方法
      *
@@ -680,36 +684,37 @@ public class StringUtil {
      */
     public static void changeButtonStyleThree(TextView btn_one, TextView btn_two, TextView btn_three, int btn, Resources mResource) {
 
-       if (btn == btn_one.getId()) {
-           btn_one.setBackgroundResource(R.drawable.shape_center_white);
-           btn_one.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+        if (btn == btn_one.getId()) {
+            btn_one.setBackgroundResource(R.drawable.shape_center_white);
+            btn_one.setTextColor(mResource.getColor(R.color.bg_btn_orange));
 
-           btn_two.setBackgroundResource(R.drawable.shape_center_light_gray);
-           btn_two.setTextColor(mResource.getColor(R.color.gray_d));
+            btn_two.setBackgroundResource(R.drawable.shape_center_light_gray);
+            btn_two.setTextColor(mResource.getColor(R.color.gray_d));
 
-           btn_three.setBackgroundResource(R.drawable.shape_center_light_gray);
-           btn_three.setTextColor(mResource.getColor(R.color.gray_d));
+            btn_three.setBackgroundResource(R.drawable.shape_center_light_gray);
+            btn_three.setTextColor(mResource.getColor(R.color.gray_d));
         } else if (btn == btn_two.getId()) {
-           btn_two.setBackgroundResource(R.drawable.shape_center_white);
-           btn_two.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+            btn_two.setBackgroundResource(R.drawable.shape_center_white);
+            btn_two.setTextColor(mResource.getColor(R.color.bg_btn_orange));
 
-           btn_one.setBackgroundResource(R.drawable.shape_center_light_gray);
-           btn_one.setTextColor(mResource.getColor(R.color.gray_d));
+            btn_one.setBackgroundResource(R.drawable.shape_center_light_gray);
+            btn_one.setTextColor(mResource.getColor(R.color.gray_d));
 
-           btn_three.setBackgroundResource(R.drawable.shape_center_light_gray);
-           btn_three.setTextColor(mResource.getColor(R.color.gray_d));
-        }else if (btn == btn_three.getId()) {
-           btn_three.setBackgroundResource(R.drawable.shape_center_white);
-           btn_three.setTextColor(mResource.getColor(R.color.bg_btn_orange));
+            btn_three.setBackgroundResource(R.drawable.shape_center_light_gray);
+            btn_three.setTextColor(mResource.getColor(R.color.gray_d));
+        } else if (btn == btn_three.getId()) {
+            btn_three.setBackgroundResource(R.drawable.shape_center_white);
+            btn_three.setTextColor(mResource.getColor(R.color.bg_btn_orange));
 
-           btn_two.setBackgroundResource(R.drawable.shape_center_light_gray);
-           btn_two.setTextColor(mResource.getColor(R.color.gray_d));
+            btn_two.setBackgroundResource(R.drawable.shape_center_light_gray);
+            btn_two.setTextColor(mResource.getColor(R.color.gray_d));
 
-           btn_one.setBackgroundResource(R.drawable.shape_center_light_gray);
-           btn_one.setTextColor(mResource.getColor(R.color.gray_d));
-       }
+            btn_one.setBackgroundResource(R.drawable.shape_center_light_gray);
+            btn_one.setTextColor(mResource.getColor(R.color.gray_d));
+        }
 
     }
+
     /**
      * 修改认购状态三个按钮方法
      *
@@ -730,7 +735,7 @@ public class StringUtil {
             btn_one.setTextColor(mResource.getColor(R.color.gray_d));
 
             btn_three.setTextColor(mResource.getColor(R.color.gray_d));
-        }else if (btn == btn_three.getId()) {
+        } else if (btn == btn_three.getId()) {
             btn_three.setTextColor(mResource.getColor(R.color.bg_btn_orange));
 
             btn_two.setTextColor(mResource.getColor(R.color.gray_d));
@@ -739,8 +744,10 @@ public class StringUtil {
         }
 
     }
+
     /**
      * 验证是否属于与email格式
+     *
      * @param strEmail
      * @return
      */
