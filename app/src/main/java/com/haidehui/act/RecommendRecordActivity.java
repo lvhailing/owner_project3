@@ -29,7 +29,7 @@ import java.util.LinkedHashMap;
  * Created by hasee on 2017/6/13.
  */
 public class RecommendRecordActivity extends BaseActivity {
-    private ViewSwitcher vs_recommend_record;
+//    private ViewSwitcher vs_recommend_record;
     private TextView tv_recommend_friends;  //  邀请好友数
     private PullToRefreshListView listView;  // 推荐记录列表
     private MouldList<ResultRecommendRecordItemContentBean> totalList = new MouldList<>();
@@ -75,14 +75,14 @@ public class RecommendRecordActivity extends BaseActivity {
         context = this;
 
         recommendCode = getIntent().getStringExtra("recommendCode");
-        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
+//        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
         tv_recommend_friends = (TextView) findViewById(R.id.tv_recommend_friends);
         listView = (PullToRefreshListView) findViewById(R.id.lv_recommend_record);
 
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(listView);
 
-        vs_recommend_record.setDisplayedChild(0);
+//        vs_recommend_record.setDisplayedChild(0);
 
 
     }

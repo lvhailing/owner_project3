@@ -90,10 +90,10 @@
                     android:layout_marginTop="10dip"
                     android:divider="@color/bg_white"
                     android:dividerHeight="0dp"/>-->
-            <ViewSwitcher
+           <!-- <ViewSwitcher
                 android:id="@+id/vs_recommend_record"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent">-->
 
                 <com.handmark.pulltorefresh.library.PullToRefreshListView
                     xmlns:ptr="http://schemas.android.com/apk/res-auto"
@@ -105,7 +105,7 @@
                     android:scrollbars="none"
                     ptr:ptrAnimationStyle="flip"
                     ptr:ptrMode="both"/>
-            </ViewSwitcher>
+            <!--</ViewSwitcher>-->
         </LinearLayout>
 
     </LinearLayout>
