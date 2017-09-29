@@ -31,7 +31,6 @@ public class RecommendRecordActivity extends BaseActivity {
     private TextView tv_recommend_friends;  //  邀请好友数
     private PullToRefreshListView listView;  // 推荐记录列表
     private MouldList<ResultRecommendRecordItemContentBean> totalList = new MouldList<>();
-    private Context context;
     private String recommendCode = "";
     private int currentPage = 1;    //当前页
     private RecommendRecordAdapter recordAdapter;
@@ -69,23 +68,22 @@ public class RecommendRecordActivity extends BaseActivity {
     }
 
     public void initView() {
-        context = this;
-
         recommendCode = getIntent().getStringExtra("recommendCode");
-//        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
+
+        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
         tv_recommend_friends = (TextView) findViewById(R.id.tv_recommend_friends);
         listView = (PullToRefreshListView) findViewById(R.id.lv_recommend_record);
 
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(listView);
 
-//        vs_recommend_record.setDisplayedChild(0);
+        vs_recommend_record.setDisplayedChild(0);
 
 
     }
 
     public void initData() {
-        recordAdapter = new RecommendRecordAdapter(context, totalList);
+        recordAdapter = new RecommendRecordAdapter(mContext, totalList);
         listView.setAdapter(recordAdapter);
 
         getRecommendData();
@@ -107,9 +105,9 @@ public class RecommendRecordActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        currentPage = 1;
-        getRecommendData();
-        listView.getRefreshableView().setSelection(0);
+//        currentPage = 1;
+//        getRecommendData();
+//        listView.getRefreshableView().setSelection(0);
     }
 
     public void setView() {
@@ -124,45 +122,53 @@ public class RecommendRecordActivity extends BaseActivity {
         param.put("userId", userId);
         param.put("recommendCode", recommendCode);
         param.put("page", currentPage + "");
+        try {
+            HtmlRequest.getRecommendRecord(RecommendRecordActivity.this, param, new BaseRequester.OnRequestListener() {
+                @Override
+                public void onRequestFinished(BaseParams params) {
+                    if (params.result == null) {
+                        vs_recommend_record.setDisplayedChild(1);
+                        Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                        listView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                listView.onRefreshComplete();
+                            }
+                        }, 1000);
+                        return;
+                    }
+                    bean = (ResultRecommendRecordContentBean) params.result;
+                    MouldList<ResultRecommendRecordItemContentBean> everyList = bean.getRecommendList();
+                    setView();
+                    if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
+                        Toast.makeText(mContext, "已显示全部", Toast.LENGTH_SHORT).show();
+                    }
 
-        HtmlRequest.getRecommendRecord(RecommendRecordActivity.this, param, new BaseRequester.OnRequestListener() {
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                if (params.result == null) {
-                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    if (currentPage == 1) {
+                        //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
+                        totalList.clear();
+                    }
+
+                    totalList.addAll(everyList);
+                    if (totalList.size() == 0) {
+                        vs_recommend_record.setDisplayedChild(1);
+                    } else {
+                        vs_recommend_record.setDisplayedChild(0);
+                    }
+                    //刷新数据
+                    recordAdapter.notifyDataSetChanged();
+
                     listView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             listView.onRefreshComplete();
                         }
                     }, 1000);
-                    return;
                 }
-                bean = (ResultRecommendRecordContentBean) params.result;
-                MouldList<ResultRecommendRecordItemContentBean> everyList = bean.getRecommendList();
-                setView();
-                if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
-                    Toast.makeText(mContext, "已显示全部", Toast.LENGTH_SHORT).show();
-                }
-
-                if (currentPage == 1) {
-                    //刚进来时 加载第一页数据，或下拉刷新 重新加载数据 。这两种情况之前的数据都清掉
-                    totalList.clear();
-                }
-
-                totalList.addAll(everyList);
-
-                //刷新数据
-                recordAdapter.notifyDataSetChanged();
-
-                listView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        listView.onRefreshComplete();
-                    }
-                }, 1000);
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //    public void test(){

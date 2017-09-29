@@ -675,7 +675,7 @@ public class HtmlRequest extends BaseRequester {
                 try {
                     Gson json = new Gson();
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "获取邀请记录信息:" + data);
+                    Log.i("hh", "获取邀请记录信息:" + data);
                     ResultRecommendRecordBean b = json.fromJson(data, ResultRecommendRecordBean.class);
                     return b.getData();
 

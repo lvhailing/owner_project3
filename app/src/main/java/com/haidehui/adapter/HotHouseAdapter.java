@@ -2,6 +2,7 @@ package com.haidehui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class HotHouseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i("sss", "position :" + position + " item :" + list.get(position));
         Holder holder = null;
         if (convertView == null) {
             holder = new Holder();
