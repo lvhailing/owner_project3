@@ -651,7 +651,7 @@ public class HtmlRequest extends BaseRequester {
      * @param listener
      * @return
      */
-    public static void getRecommendRecord(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
+    public static void getRecommendRecord(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_GETRECOMMEND_RECORD;
 
