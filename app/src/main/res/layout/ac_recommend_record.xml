@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ViewSwitcher
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vs_recommend_record"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:layout_height="fill_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,29 +83,13 @@
                     android:textColor="@color/txt_gray"/>
             </LinearLayout>
 
-            <!--    <ListView
-                    android:id="@+id/lv_recommend_record"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    android:divider="@color/bg_white"
-                    android:dividerHeight="0dp"/>-->
-           <!-- <ViewSwitcher
-                android:id="@+id/vs_recommend_record"
+            <ListView
+                android:id="@+id/lv_recommend_record"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent">-->
-
-                <com.handmark.pulltorefresh.library.PullToRefreshListView
-                    xmlns:ptr="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/lv_recommend_record"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:divider="@color/bg_line"
-                    android:dividerHeight="0dp"
-                    android:scrollbars="none"
-                    ptr:ptrAnimationStyle="flip"
-                    ptr:ptrMode="both"/>
-            <!--</ViewSwitcher>-->
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:divider="@color/bg_white"
+                android:dividerHeight="0dp"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -120,4 +104,4 @@
             android:text="@string/message_nodata"/>
     </RelativeLayout>
 
-</LinearLayout>
+</ViewSwitcher>

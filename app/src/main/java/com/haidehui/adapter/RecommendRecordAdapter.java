@@ -2,7 +2,6 @@ package com.haidehui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,6 @@ public class RecommendRecordAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         Holder holder = null;
         if(view==null){
-            Log.i("hh", "我走了！！" );
             holder = new Holder();
             view = inflater.inflate(R.layout.ac_recommend_record_item,null);
             holder.tv_recommend_record_friend = (TextView) view.findViewById(R.id.tv_recommend_record_friend);
@@ -75,13 +73,19 @@ public class RecommendRecordAdapter extends BaseAdapter{
             holder.tv_recommend_record_account.setText("0.00");
         }
 
+
+
         return view;
     }
 
     class Holder{
+
         private TextView tv_recommend_record_friend;
         private TextView tv_recommend_record_level;
         private TextView tv_recommend_record_account;
+
+
+
     }
 
 }
