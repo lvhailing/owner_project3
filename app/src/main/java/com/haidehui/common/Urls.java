@@ -27,7 +27,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9998/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_OFFICIAL;
+    private static String EC_HOST = URL_OUTER_NET_DEBUG;
 
     /**
      * 登出
