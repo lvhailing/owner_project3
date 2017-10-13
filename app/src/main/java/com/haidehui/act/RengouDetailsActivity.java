@@ -21,16 +21,15 @@ import android.widget.TextView;
 public class RengouDetailsActivity extends BaseActivity implements View.OnClickListener {
     private String id;
 
-    private TextView tv_customerName;
-    private TextView tv_customerPhone;
-    private TextView tv_status;
-    private TextView tv_projectName;
-    private TextView tv_roomNumber;
-    private TextView tv_downpaymentAmount;
+    private TextView tv_customerName; // 客户姓名
+    private TextView tv_customerPhone; // 联系电话
+    private TextView tv_status; // 认购状态
+    private TextView tv_projectName; // 项目名称
+    private TextView tv_roomNumber; // 认购房号
+    private TextView tv_downpaymentAmount; // 定金金额
 
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.ac_rengou_details);
@@ -59,22 +58,22 @@ public class RengouDetailsActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onAction(int id) {
-
             }
         });
     }
 
     private void initView() {
+        id=getIntent().getStringExtra("id");
+
         tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
         tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
         tv_status= (TextView) findViewById(R.id.tv_status);
         tv_projectName= (TextView) findViewById(R.id.tv_projectName);
-        tv_roomNumber= (TextView) findViewById(R.id.tv_roomNumber);
+        tv_roomNumber= (TextView) findViewById(R.id.tv_room_number);
         tv_downpaymentAmount= (TextView) findViewById(R.id.tv_downpaymentAmount);
     }
 
     private void initData() {
-        id=getIntent().getStringExtra("id");
         requestData();
     }
 

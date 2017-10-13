@@ -165,6 +165,19 @@
     <string name="title_add_customer_follow">添加跟踪</string>
     <string name="title_edit_info">修改客户信息</string>
 
+    <!-- 认购的三种状态 -->
+    <string name="btn_subscribed">已认购</string>
+    <string name="btn_transfer_contract">转签约</string>
+    <string name="btn_unsubscribed">已退订</string>
+
+    <!--认购详情-->
+    <string name="rengou_detail_customer_name">客户姓名</string>
+    <string name="rengou_detail_phone">联系电话</string>
+    <string name="rengou_detail_status">认购状态:</string>
+    <string name="rengou_detail_project_name">项目名称:</string>
+    <string name="rengou_detail_room_num">认购房号:</string>
+    <string name="rengou_detail_deposit_amount">定金金额:</string>
+
 
 
 

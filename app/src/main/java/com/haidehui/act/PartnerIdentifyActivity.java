@@ -1,10 +1,8 @@
 package com.haidehui.act;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -43,10 +41,6 @@ import com.haidehui.network.http.RequestParams;
 import com.haidehui.photo_preview.PhotoPreviewAcForOne;
 import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import org.apache.http.Header;
 
@@ -150,7 +144,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         layout_address= (RelativeLayout) findViewById(R.id.layout_address);
         tv_workProvince= (TextView) findViewById(R.id.tv_workProvince);
         edt_workUnit= (EditText) findViewById(R.id.edt_workUnit);
-        edt_email= (EditText) findViewById(R.id.edt_email);
+        edt_email= (EditText) findViewById(R.id.et_email);
         edt_idNo=(EditText) findViewById(R.id.edt_idNo);
         layout_identity_card= (RelativeLayout) findViewById(R.id.layout_identity_card);
         img_identity_card= (ImageView) findViewById(R.id.img_identity_card);

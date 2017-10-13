@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:paddingBottom="10dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,23 +24,24 @@
                 android:layout_height="wrap_content"
                 android:text="客户姓名"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/edt_name"
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:hint="输入客户姓名"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@color/white"
                 android:gravity="right"
+                android:hint="输入客户姓名"
                 android:maxLength="20"
                 android:singleLine="true"
-                android:layout_centerVertical="true"
                 android:textColor="@color/gray_dark"
-                android:textSize="15sp"
-                android:layout_toRightOf="@+id/tv_name"
-                android:background="@color/white" />
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,22 +55,23 @@
                 android:layout_height="wrap_content"
                 android:text="联系电话"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/edt_phone"
+                android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入联系电话"
-                android:gravity="right"
-                android:singleLine="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/gray_dark"
-                android:textSize="15sp"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_phone"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:gravity="right"
+                android:hint="输入联系电话"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,28 +85,30 @@
                 android:layout_height="wrap_content"
                 android:text="电子邮箱"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/edt_email"
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入邮箱地址"
-                android:gravity="right"
-                android:singleLine="true"
                 android:layout_centerVertical="true"
-                android:textColor="@color/gray_dark"
-                android:textSize="15sp"
-                android:maxLength="30"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_email"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:gravity="right"
+                android:hint="输入邮箱地址"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="购买意向"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,23 +122,24 @@
                 android:layout_height="wrap_content"
                 android:text="房产所在地"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/edt_location"
+                android:id="@+id/et_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入房产所在国家"
-                android:gravity="right"
-                android:singleLine="true"
-                android:maxLength="20"
                 android:layout_centerVertical="true"
-                android:textColor="@color/gray_dark"
-                android:textSize="15sp"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_location"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:gravity="right"
+                android:hint="输入房产所在国家"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,23 +153,24 @@
                 android:layout_height="wrap_content"
                 android:text="项目"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
                 android:id="@+id/et_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_project"
+                android:background="@color/white"
+                android:gravity="right"
                 android:hint="输入项目名称"
                 android:maxLength="20"
-                android:gravity="right"
                 android:singleLine="true"
-                android:layout_centerVertical="true"
                 android:textColor="@color/gray_dark"
-                android:textSize="15sp"
-                android:layout_toRightOf="@+id/tv_project"
-                android:background="@color/white" />
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -176,23 +184,24 @@
                 android:layout_height="wrap_content"
                 android:text="房号"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
                 android:id="@+id/et_room_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入房产房号"
-                android:gravity="right"
-                android:singleLine="true"
-                android:maxLength="20"
                 android:layout_centerVertical="true"
-                android:textColor="@color/gray_dark"
-                android:textSize="15sp"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_room_number"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:gravity="right"
+                android:hint="输入房产房号"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -206,23 +215,24 @@
                 android:layout_height="wrap_content"
                 android:text="面积"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/edt_area"
+                android:id="@+id/et_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入房产面积"
-                android:gravity="right"
-                android:singleLine="true"
-                android:maxLength="20"
                 android:layout_centerVertical="true"
-                android:textColor="@color/gray_dark"
-                android:textSize="15sp"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_area"
-                android:background="@color/white" />
+                android:background="@color/white"
+                android:gravity="right"
+                android:hint="输入房产面积"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColor="@color/gray_dark"
+                android:textSize="15sp"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,33 +246,33 @@
                 android:layout_height="wrap_content"
                 android:text="总价"
                 android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <EditText
-                android:id="@+id/edt_total_amount"
+                android:id="@+id/et_total_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:hint="输入房产总价"
+                android:layout_toRightOf="@+id/tv_total_amount"
+                android:background="@color/white"
                 android:gravity="right"
+                android:hint="输入房产总价"
                 android:maxLength="20"
                 android:singleLine="true"
-                android:layout_centerVertical="true"
                 android:textColor="@color/gray_dark"
-                android:textSize="15sp"
-                android:layout_toRightOf="@+id/tv_total_amount"
-                android:background="@color/white" />
+                android:textSize="15sp"/>
         </RelativeLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_save"
+        android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:background="@drawable/shape_center_orange"
         android:text="立即提交"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_center_orange"/>
+        android:textColor="@color/white"/>
 </RelativeLayout>

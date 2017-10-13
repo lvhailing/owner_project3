@@ -29,7 +29,7 @@ public class EditCustomerInfoActivity extends BaseActivity implements View.OnCli
     private EditText edt_room_number;
     private EditText edt_area;
     private EditText edt_total_amount;
-    private Button btn_save;
+    private Button btn_submit;
     private CustomerDetails2B data;
     private String customerId;
 
@@ -69,26 +69,26 @@ public class EditCustomerInfoActivity extends BaseActivity implements View.OnCli
     }
 
     private void initView() {
-        edt_name= (EditText) findViewById(R.id.edt_name);
-        edt_phone= (EditText) findViewById(R.id.edt_phone);
-        edt_email= (EditText) findViewById(R.id.edt_email);
-        edt_location= (EditText) findViewById(R.id.edt_location);
+        edt_name= (EditText) findViewById(R.id.et_name);
+        edt_phone= (EditText) findViewById(R.id.et_phone);
+        edt_email= (EditText) findViewById(R.id.et_email);
+        edt_location= (EditText) findViewById(R.id.et_location);
         edt_project= (EditText) findViewById(R.id.et_project);
         edt_room_number= (EditText) findViewById(R.id.et_room_number);
-        edt_area= (EditText) findViewById(R.id.edt_area);
-        edt_total_amount= (EditText) findViewById(R.id.edt_total_amount);
-        btn_save= (Button) findViewById(R.id.btn_save);
+        edt_area= (EditText) findViewById(R.id.et_area);
+        edt_total_amount= (EditText) findViewById(R.id.et_total_amount);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
 
     }
     private void initData() {
         customerId=getIntent().getStringExtra("customerId");
-        btn_save.setOnClickListener(this);
+        btn_submit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_save:
+            case R.id.btn_submit:
                 String houseLocation=edt_location.getText().toString();
                 String houseProject=edt_project.getText().toString();
                 String roomNumber=edt_room_number.getText().toString();
