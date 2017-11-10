@@ -8,6 +8,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.haidehui.R;
 import com.haidehui.network.http.APNManager;
 import com.haidehui.photo_preview.fresco.ImageLoader;
@@ -21,6 +24,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 
 import cn.sharesdk.framework.ShareSDK;
+import okhttp3.OkHttpClient;
 
 public class MyApplication extends Application {
     private static MyApplication instance;

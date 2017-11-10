@@ -44,6 +44,7 @@ public class ImageLoaderManager {
                 .discCacheFileNameGenerator(new Md5FileNameGenerator())
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .writeDebugLogs() // Remove
+                .imageDownloader(new AuthImageDownloader(context)) // 用于支持加载https类型图片；
                 .build();
         ImageLoader.getInstance().init(config);
     }

@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.facebook.cache.disk.DiskCacheConfig;
@@ -43,8 +44,16 @@ import com.haidehui.photo_preview.LogUtil;
 import com.haidehui.uitls.FileUtil;
 
 import java.io.File;
+import java.security.cert.CertificateException;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
 
@@ -181,7 +190,7 @@ public class FrescoUtil {
         };
 
         ImagePipelineConfig frescoConfig = OkHttpImagePipelineConfigFactory
-                .newBuilder(context, new OkHttpClient.Builder().build())
+                .newBuilder(context, getUnsafeOkHttpClient())
                 .setBitmapsConfig(BITMAP_COMFIG)
                 .setRequestListeners(listeners)
                 //修改内存图片缓存数量，空间策略（这个方式有点恶心）
@@ -197,6 +206,48 @@ public class FrescoUtil {
                 .build();
         return frescoConfig;
     }
+
+    public static OkHttpClient getUnsafeOkHttpClient() {
+        try {
+            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
+
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
+
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            }};
+
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                //如果大于等于24（7.0），友情提示
+                builder.sslSocketFactory(sslSocketFactory);
+            }
+
+            builder.hostnameVerifier(new HostnameVerifier() {
+
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+
+            return builder.build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void getBitmapFromFresco(String url, final OnBitmapGetListener listener) {
         getBitmapFromFresco(url, false, listener);

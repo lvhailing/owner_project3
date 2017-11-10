@@ -16,7 +16,7 @@ import com.haidehui.uitls.StringUtil;
 import java.io.File;
 
 /**
- * 图片加载封装
+ *  （Fresco）图片加载封装类
  */
 
 public class ImageLoader {
