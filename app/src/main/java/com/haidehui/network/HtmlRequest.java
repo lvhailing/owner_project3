@@ -1262,7 +1262,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-//                    Log.i("hh", "最热房源列表数据:" + result);
+                    Log.i("hh", "最热房源列表数据:" + result);
 
                     Gson gson = new Gson();
                     HotHouse1B b = gson.fromJson(result, HotHouse1B.class);

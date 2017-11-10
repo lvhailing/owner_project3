@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import com.haidehui.common.MyApplication;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.SystemInfo;
+import com.mob.tools.network.SSLSocketFactoryEx;
 
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -69,6 +70,12 @@ import org.apache.http.protocol.SyncBasicHttpContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -146,9 +153,38 @@ public class AsyncHttpClient {
         // String.format("android-async-http/%s (http://loopj.com/android-async-http)",
         // VERSION));
 
+        KeyStore trustStore = null;
+        try {
+            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        try {
+            trustStore.load(null, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        }
+
+        SSLSocketFactory sf = null;
+        try {
+            sf = new SSLSocketFactoryEx(trustStore);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (UnrecoverableKeyException e) {
+            e.printStackTrace();
+        }
+        sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-        schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+        schemeRegistry.register(new Scheme("https",sf, 443));
         ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, schemeRegistry);
 
         httpContext = new SyncBasicHttpContext(new BasicHttpContext());
