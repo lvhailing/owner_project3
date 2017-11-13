@@ -6,15 +6,16 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.haidehui.photo_preview.ScaleImageView.ImageSource;
-import com.haidehui.photo_preview.fresco.ImageLoader;
-import com.haidehui.photo_preview.fresco.OnBitmapGetListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.util.List;
+
+import static com.haidehui.uitls.ImageLoaderManager.options;
 
 /**
  * 阅览页面适配器
@@ -42,18 +43,32 @@ public class PreviewAdapter extends PagerAdapter {
 
         final PicturePreviewPageView pageView = new PicturePreviewPageView(container.getContext());
         pageView.setMaxScale(15);
-        ImageLoader.getInstance().loadImageLocalOrNet(urls.get(position), new OnBitmapGetListener() {
+        //fresco的加载图片（以bitmap形式加载）
+//        ImageLoader.getInstance().loadImageLocalOrNet(urls.get(position), new OnBitmapGetListener() {
+//            @Override
+//            public void getBitmap(Bitmap bitmap) {
+////                Log.i("aabb", "可用内存：" + getAvailMemory(container.getContext()));
+////                Log.i("aabb", "压缩前：图片大小" + (bitmap.getByteCount() / 1024) + "KB，宽度为" + bitmap.getWidth() + "，高度为" + bitmap.getHeight());
+//
+//                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2 / 3, bitmap.getHeight()*2 / 3, true);
+////                Log.i("aabb", "压缩后：图片大小" + (scaledBitmap.getByteCount() / 1024) + "KB,宽度为" + scaledBitmap.getWidth() + ",高度为" + scaledBitmap.getHeight());
+//
+//                pageView.setOriginImage(ImageSource.cachedBitmap(scaledBitmap));
+//            }
+//        });
+
+        //ImageLoader的加载图片（以bitmap形式加载）（同步加载）
+//        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(urls.get(position), options);
+
+        //ImageLoader的加载图片（以bitmap形式加载）（异步加载）
+        ImageLoader.getInstance().loadImage(urls.get(position), options, new SimpleImageLoadingListener() {
             @Override
-            public void getBitmap(Bitmap bitmap) {
-//                Log.i("aabb", "可用内存：" + getAvailMemory(container.getContext()));
-//                Log.i("aabb", "压缩前：图片大小" + (bitmap.getByteCount() / 1024) + "KB，宽度为" + bitmap.getWidth() + "，高度为" + bitmap.getHeight());
-
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2 / 3, bitmap.getHeight()*2 / 3, true);
-//                Log.i("aabb", "压缩后：图片大小" + (scaledBitmap.getByteCount() / 1024) + "KB,宽度为" + scaledBitmap.getWidth() + ",高度为" + scaledBitmap.getHeight());
-
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() * 2 / 3, bitmap.getHeight() * 2 / 3, true);
                 pageView.setOriginImage(ImageSource.cachedBitmap(scaledBitmap));
             }
         });
+
         pageView.setBackgroundColor(Color.TRANSPARENT);
         container.addView(pageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         pageView.setTag(position);
