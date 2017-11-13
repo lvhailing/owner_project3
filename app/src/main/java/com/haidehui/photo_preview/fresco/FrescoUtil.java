@@ -229,10 +229,15 @@ public class FrescoUtil {
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                //如果大于等于24（7.0），友情提示
-                builder.sslSocketFactory(sslSocketFactory);
+            try {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    //如果小于23（6.0），6.0以上手机不需要这一句
+                    builder.sslSocketFactory(sslSocketFactory);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
 
             builder.hostnameVerifier(new HostnameVerifier() {
 

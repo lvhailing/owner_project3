@@ -257,7 +257,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
             mAdapter = new HouseDetailAdapter(mContext, houseImgList);
             mAdapter.setOnImageListener(new HouseDetailAdapter.ImageViewListener() {
                 @Override
-                public void onImageClick(int postion) {
+                public void onImageClick(int postion) { // 顶部轮播图点击监听
                     Intent intent = new Intent(mContext, PhotoPreviewAc.class);
                     intent.putStringArrayListExtra("urls", houseImgList);
                     intent.putExtra("currentPos", currentPage);

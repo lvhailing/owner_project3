@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
@@ -136,6 +138,16 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
                 return true;
             }
         });
+
+        //解决 WebView不支持加载Https
+        mWebview.setWebViewClient(new WebViewClient() {
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                //handler.cancel(); // Android默认的处理方式
+                handler.proceed();  // 接受所有网站的证书
+                //handleMessage(Message msg); // 进行其他处理
+            }
+        });
+
         mWebview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
         mWebview.getSettings().setUseWideViewPort(true);
 
