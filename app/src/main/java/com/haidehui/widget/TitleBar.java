@@ -805,7 +805,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 // break;
                 // }
 
-                case R.id.iv_right_btn:
+                case R.id.iv_right_btn: // 分享按钮
                     try {
                         userId = DESUtil.decrypt(PreferenceUtil.getUserId());
                     } catch (Exception e) {

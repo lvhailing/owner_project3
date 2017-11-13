@@ -138,7 +138,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         titleBar = (TitleBar) findViewById(R.id.rl_title);
         titleBar.showLeftImg(true);
         titleBar.setFromActivity("1000");
-        titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
+        titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
+                 .setCenterText(getResources().getString(R.string.title_oversea_project_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title)
+                 .setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
