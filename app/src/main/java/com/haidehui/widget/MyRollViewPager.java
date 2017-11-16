@@ -220,7 +220,7 @@ public class MyRollViewPager extends ViewPager {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             //回收超出范围的iv
-            container.removeView((SimpleDraweeView) object);
+            container.removeView((ImageView) object);
         }
     }
 
