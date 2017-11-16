@@ -309,7 +309,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
 
     private void setView() {
-        //加载顶部图片
+        // ImageLoader 加载顶部图片
         ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
 
         if (!TextUtils.isEmpty(overseaProjectDetail.getName())) {

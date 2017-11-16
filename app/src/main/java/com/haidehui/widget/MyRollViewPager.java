@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -185,15 +186,21 @@ public class MyRollViewPager extends ViewPager {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            final SimpleDraweeView simpleDraweeView = (SimpleDraweeView) LayoutInflater.from(context).inflate(R.layout.simple_drawee_view_item, null);
+//            final SimpleDraweeView simpleDraweeView = (SimpleDraweeView) LayoutInflater.from(context).inflate(R.layout.simple_drawee_view_item, null);
 
+            ImageView imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             if (picList != null && picList.size() > 0) {
                 //后台返回了地址集合
-                ImageLoader.getInstance().loadImageLocalOrNet(simpleDraweeView, picList.get(position % picList.size()).getPicture());
+                //fresco的加载图片
+//                ImageLoader.getInstance().loadImageLocalOrNet(simpleDraweeView, picList.get(position % picList.size()).getPicture());
+
+                // ImageLoader 加载图片
+                com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(picList.get(position % picList.size()).getPicture(), imageView);
 
                 //设置了点击回调，则回调activity
                 if (myClickListener != null) {
-                    simpleDraweeView.setOnClickListener(new OnClickListener() {
+                    imageView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             myClickListener.onMyClick(position % picList.size());
@@ -202,12 +209,12 @@ public class MyRollViewPager extends ViewPager {
                 }
             } else {
                 // 取默认图片
-                simpleDraweeView.setBackgroundResource(ids[position % ids.length]);
+                imageView.setBackgroundResource(ids[position % ids.length]);
             }
 
-            container.addView(simpleDraweeView);
+            container.addView(imageView);
 
-            return simpleDraweeView;
+            return imageView;
         }
 
         @Override
