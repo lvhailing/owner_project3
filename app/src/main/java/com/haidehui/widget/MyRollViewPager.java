@@ -19,6 +19,8 @@ import com.haidehui.photo_preview.fresco.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.haidehui.uitls.ImageLoaderManager.options;
+
 /**
  * 轮播图 自定义的ViewPager
  */
@@ -196,7 +198,7 @@ public class MyRollViewPager extends ViewPager {
 //                ImageLoader.getInstance().loadImageLocalOrNet(simpleDraweeView, picList.get(position % picList.size()).getPicture());
 
                 // ImageLoader 加载图片
-                com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(picList.get(position % picList.size()).getPicture(), imageView);
+                com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(picList.get(position % picList.size()).getPicture(), imageView, options);
 
                 //设置了点击回调，则回调activity
                 if (myClickListener != null) {
