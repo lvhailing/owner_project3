@@ -188,6 +188,7 @@ public class MyRollViewPager extends ViewPager {
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
+            //fresco加载图片,要加载的布局
 //            final SimpleDraweeView simpleDraweeView = (SimpleDraweeView) LayoutInflater.from(context).inflate(R.layout.simple_drawee_view_item, null);
 
             ImageView imageView = new ImageView(context);
