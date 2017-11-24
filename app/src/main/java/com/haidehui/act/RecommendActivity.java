@@ -65,7 +65,6 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 //    private final static String CACHE = "/dafuweng/imgs";
     private int QR_WIDTH = 360, QR_HEIGHT = 360;
     private String recommendCode = "";  //  邀请码
-    private String way;
     private Context context;
 
     private ResultRecommendInfoContentBean bean;

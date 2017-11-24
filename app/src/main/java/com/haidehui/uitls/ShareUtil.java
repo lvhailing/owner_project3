@@ -30,8 +30,6 @@ import onekeyshare.ShareContentCustomizeCallback;
  *  分享时调用的方法
  */
 public final class ShareUtil {
-    private static String way;    // 渠道标志
-
     public static void sharedSDK(final Context context, final String title, final String text, final String url) {
         final OnekeyShare oks = new OnekeyShare();
 
