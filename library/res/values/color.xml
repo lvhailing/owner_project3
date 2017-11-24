@@ -6,4 +6,6 @@
     <color name="gray_d">#ff999999</color>
     <color name="bg_top">#F5F5F5</color>
 
+    <color name="bg_blue">#4f75ff</color>
+
 </resources>

@@ -44,8 +44,9 @@ import java.util.List;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.favorite.WechatFavorite;
 import onekeyshare.OnekeyShare;
-import onekeyshare.PlatformListFakeActivity;
+import onekeyshare.ShareContentCustomizeCallback;
 
 /**
  * 推荐好友
@@ -140,9 +141,6 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             randomNum.append(t);
         }
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.img_logo_recommend_code);
-//        createQRImage(iv_myperson_invite_code, ApplicationConsts.URL_DEBUG_M + "vjinke/" + inviteBean.getRecommendCode()
-//                + "/scanQRCode/" + randomNum, bitmap);
-
         createQRImage(iv_recommend_invite_code, Urls.URL + "register/" + recommendCode + "/recommend", bitmap);
     }
 
@@ -194,15 +192,12 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
         switch (view.getId()) {
             case R.id.tv_recommend_btn: // 邀请朋友
-                ShareSDK.initSDK(this);
                 sharedSDK();
                 break;
-
             case R.id.tv_recommend_rule: // 邀请规则
                 Intent i_rule = new Intent(this, RecommendRuleActivity.class);
                 startActivity(i_rule);
                 break;
-
             case R.id.tv_recommend_record: // 邀请记录
                 Intent i_record = new Intent(this, RecommendRecordActivity.class);
                 i_record.putExtra("recommendCode", recommendCode);
@@ -210,108 +205,83 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                 break;
 
             default:
-
                 break;
         }
-
     }
 
     private void sharedSDK() {
         final OnekeyShare oks = new OnekeyShare();
         // 关闭sso授权
         oks.disableSSOWhenAuthorize();
+        oks.addHiddenPlatform(WechatFavorite.NAME);// 隐藏微信收藏；
 
-        oks.setOnShareButtonClickListener(new PlatformListFakeActivity.OnShareButtonClickListener() {
-
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            //自定义分享的回调想要函数
             @Override
-            public void onClick(View v, List<Object> checkPlatforms) {
-                String string = checkPlatforms.toString();
-                oks.setSilent(false);
-                StringBuffer randomNum = new StringBuffer();
-                for (int i = 0; i < 6; i++) {
-                    int t = (int) (Math.random() * 10);
-                    randomNum.append(t);
-                }
-                StringBuffer randomNum2 = new StringBuffer();
-                for (int i = 0; i < 6; i++) {
-                    int t = (int) (Math.random() * 10);
-                    randomNum2.append(t);
-                }
+            public void onShare(Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
                 String url = Urls.URL + "register/" + recommendCode + "/recommend";
-                if (string.contains("WechatMoments")) {
-                    way = "weixin";            //微信朋友圈
-                    oks.setText(getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                    oks.setTitle(getString(R.string.login_title));
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
-                } else if (string.contains("Wechat")) {
-                    way = "weixinFr";        //微信好友
-                    oks.setText(getString(R.string.shared_message) + url);
-                    oks.setTitle(getString(R.string.login_title));
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-//					oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");
-                    oks.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
-                } else if (string.contains("QZone")) {
-                    way = "Qzone";
-                    oks.setText(getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                } else if (string.contains("SinaWeibo")) {
-                    way = "sinablog";
-                    oks.setText(getString(R.string.shared_message) + url);
-//					oks.setTitleUrl(url);
-                    oks.setUrl(url);
 
-                    oks.setSilent(false);
-                } else if (string.contains("TencentWeibo")) {
-                    way = "tencentblog";
-                    oks.setText(getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                } else if (string.contains("QQ")) {
-                    way = "QQ";
-                    oks.setText(getString(R.string.shared_message) + url);
-//					oks.setTitleUrl(url);
-                    // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-                    // oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-                    // url仅在微信（包括好友和朋友圈）中使用
-                    oks.setUrl(url);
-                    // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-                    // oks.setComment("我是测试评论文本");
-                    // site是分享此内容的网站名称，仅在QQ空间使用
-                    oks.setSite(getString(R.string.app_name));
-                    // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-                    oks.setSiteUrl(url);
-                } else if (string.contains("Email")) {
-                    way = "email";
-                    oks.setText(getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
-                } else if (string.contains("ShortMessage")) {
-                    way = "sms";
-                    oks.setText(getString(R.string.shared_message) + url);
-                    oks.setTitleUrl(url);
-                    oks.setUrl(url);
+                //点击微信好友
+                if("Wechat".equals(platform.getName())){
+                    //微信分享应用 ,此功能需要微信绕开审核，需要使用项目中的wechatdemo.keystore进行签名打包
+                    //由于Onekeyshare没有关于应用分享的参数如setShareType等，我们需要通过自定义 分享来实现
+                    //比如下面设置了setTitle,可以覆盖oks.setTitle里面的title值
+                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setUrl(url);
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+//                    paramsToShare.setExtInfo("应用信息");
+//                    paramsToShare.setFilePath("xxxxx.apk");
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 }
-            }
 
+                //点击微信朋友圈
+                if("WechatMoments".equals(platform.getName())){
+                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setUrl(url);
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                }
+
+                //点击QQ空间
+                if ("QZone".equals(platform.getName())){
+//                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                }
+
+                //点击QQ
+                if ("QQ".equals(platform.getName())) {
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setUrl(url);
+                    paramsToShare.setSite(context.getString(R.string.app_name));
+                }
+                //点击信息
+                if ("ShortMessage".equals(platform.getName())) {
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setUrl(url);
+                }
+
+            }
         });
 
-        // 分享时Notification的图标和文字 2.5.9以后的版本不调用此方法
-        // oks.setNotification(R.drawable.ic_launcher,
-        // getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-
         oks.setTitle(getString(R.string.share));
-//		oks.setImagePath("/sdcard/vjinke/imgs/test.jpg");//确保SDcard下面存在此张图片
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-
         // oks.setTitleUrl("http://www.vjinke.com");
 
-        // text是分享文本，所有平台都需要这个字段
-        Bitmap enableLogo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.logo_lianjie);
+        // 自定义分享按钮
+        Bitmap enableLogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.ssdk_logo_lianjie);
         String label = "复制链接";
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -325,7 +295,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                 Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
             }
         };
-        oks.setCustomerLogo(enableLogo, enableLogo, label, listener);
+        oks.setCustomerLogo(enableLogo, label, listener);
 
         oks.setCallback(new PlatformActionListener() {
             @Override
@@ -334,18 +304,13 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
                 if (platform.getName().equals("WechatMoments")) {
 
-
                 } else if (platform.getName().equals("Wechat")) {
-
 
                 } else if (platform.getName().equals("QZone")) {
 
-
                 } else if (platform.getName().equals("SinaWeibo")) {
 
-
                 } else if (platform.getName().equals("ShortMessage")) {
-
 
                 } else if (platform.getName().equals("QQ")) {
 
@@ -354,16 +319,12 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-
             }
 
             @Override
             public void onCancel(Platform platform, int i) {
-
             }
         });
-
-//        oks.getCallback();
 
         if (!TextUtils.isEmpty(recommendCode)) {
             // 启动分享GUI
@@ -434,51 +395,34 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     }
 
     private BitMatrix updateBit(BitMatrix matrix, int margin) {
-
         int tempM = margin * 2;
-
         int[] rec = matrix.getEnclosingRectangle();  // 获取二维码图案的属性
-
         int resWidth = rec[2] + tempM;
-
         int resHeight = rec[3] + tempM;
-
         BitMatrix resMatrix = new BitMatrix(resWidth, resHeight); // 按照自定义边框生成新的BitMatrix
-
         resMatrix.clear();
 
         for (int i = margin; i < resWidth - margin; i++) {  // 循环，将二维码图案绘制到新的bitMatrix中
             for (int j = margin; j < resHeight - margin; j++) {
                 if (matrix.get(i - margin + rec[0], j - margin + rec[1])) {
                     resMatrix.set(i, j);
-
                 }
             }
         }
-
         return resMatrix;
     }
 
     /**
-
      * 图片放大缩小
-
      */
 
 //    public static BufferedImage  zoomInImage(BufferedImage  originalImage, int width, int height){
-//
 //        BufferedImage newImage = new BufferedImage(width,height,originalImage.getType());
-//
 //        Graphics g = newImage.getGraphics();
-//
 //        g.drawImage(originalImage, 0,0,width,height,null);
-//
 //        g.dispose();
-//
 //        return newImage;
-//
 //    }
-
 
     /**
      * 在二维码中间添加Logo图案

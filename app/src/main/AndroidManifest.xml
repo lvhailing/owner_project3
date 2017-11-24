@@ -47,13 +47,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
-            <intent-filter>
-                <data android:scheme="tencent100371282"/>
-                <action android:name="android.intent.action.VIEW"/>
+            <!-- ShareSDK3.1.0版本之前才需要在MobUIShell下面注册此意图，3.1.0版本之后（包含3.1.0）不需要注册此intent-->
+            <!--<intent-filter>-->
+                <!--<data android:scheme="tencent100371282"/>-->
+                <!--<action android:name="android.intent.action.VIEW"/>-->
 
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <!--<category android:name="android.intent.category.BROWSABLE"/>-->
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+            <!--</intent-filter>-->
 
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
@@ -76,6 +77,21 @@
             android:name=".act.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+
+        <!--（3.1.0版本之后（包含3.1.0）才需要注册此Activity）如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，-->
+        <!--须要在此处添加一个回调activity， 对ACTION_VIEW事件的过滤器，其中的scheme是“tencent”前缀再开发者应用-->
+        <!--的加上appId。如果此Activity和过滤器不设置，则分享结束以后不能得到正确的回调。-->
+        <activity
+            android:name="cn.sharesdk.tencent.qq.ReceiveActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100371282" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".wxapi.WXEntryActivity"

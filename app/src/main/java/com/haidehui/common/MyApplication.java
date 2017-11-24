@@ -19,6 +19,7 @@ import com.haidehui.uitls.NetworkUtils;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.uitls.CityDataHelper;
+import com.mob.MobSDK;
 
 import java.io.InputStream;
 import java.util.HashSet;
@@ -68,7 +69,11 @@ public class MyApplication extends Application {
         dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
 
         //ShareSDK 初始化
-        ShareSDK.initSDK(instance);
+//        ShareSDK.initSDK(instance);
+
+        //3.X版本以上含3.X版本，ShareSDK 初始化
+        // 通过代码注册你的AppKey和AppSecret
+        MobSDK.init(instance, "1ea86a798f5d6", "69d1ab82675b878c6061887a6ab49279");
     }
 
     public interface NetListener {
