@@ -199,7 +199,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_customer_service.setOnClickListener(this);
         tv_home_notice.setOnClickListener(this);
         ll_home_notice.setOnClickListener(this);
-
         tv_company_tab1.setOnClickListener(this);
         tv_team_tab2.setOnClickListener(this);
         tv_platform_tab3.setOnClickListener(this);
