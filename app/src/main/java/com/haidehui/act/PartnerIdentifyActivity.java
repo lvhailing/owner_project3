@@ -139,7 +139,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        tv_realName= (TextView) findViewById(R.id.tv_realName);
+        tv_realName= (TextView) findViewById(R.id.tv_real_name);
         tv_mobile= (TextView) findViewById(R.id.tv_mobile);
         layout_address= (RelativeLayout) findViewById(R.id.layout_address);
         tv_workProvince= (TextView) findViewById(R.id.tv_workProvince);

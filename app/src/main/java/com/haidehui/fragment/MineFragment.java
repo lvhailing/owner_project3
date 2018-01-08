@@ -10,14 +10,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
@@ -48,9 +46,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import com.haidehui.uitls.StringUtil;
-import com.haidehui.widget.CircularImage;
-
 import android.widget.ImageView;
 
 /**
@@ -60,24 +55,24 @@ public class MineFragment extends Fragment implements OnClickListener {
     private Context context;
     private View mView;
     private ImageView img_email;
-    private TextView tv_messageTotal;
-    private RelativeLayout layout_my_info;
-    private TextView tv_realName;
+    private TextView tv_message_total; // 消息总数
+    private RelativeLayout rl_my_info; // 个人信息布局
+    private TextView tv_real_name; // 用户姓名
     private TextView tv_code;
-    private TextView tv_totalCommission;
+    private TextView tv_total_commission;
     private TextView tv_customer_info;
     private TextView tv_customer_follow;
     private TextView tv_rengou_state;
     private RelativeLayout layout_indentify;
     private RelativeLayout layout_account_book;
-    private RelativeLayout rl_mine_mybankcard;      //  我的银行卡
-    private RelativeLayout rl_mine_setting;         //  设置
-    private String checkStatus = "init";     //  认证状态
+    private RelativeLayout rl_mine_mybankcard; // 我的银行卡
+    private RelativeLayout rl_mine_setting;    // 设置
+    private String checkStatus = "init";   // 认证状态
     private String userId = "";
-    private ResultMessageInfoContentBean bean;       //  消息参数
+    private ResultMessageInfoContentBean bean;  // 消息参数
     private MineData2B data;
 //    private CircularImage img_photo;
-    private ImageView img_photo;
+    private ImageView img_photo; // 头像
     private ImageView img_sign;
     /**
      * 图片保存SD卡位置
@@ -119,11 +114,11 @@ public class MineFragment extends Fragment implements OnClickListener {
 
         context = getActivity();
         img_email = (ImageView) mView.findViewById(R.id.img_email);
-        tv_messageTotal = (TextView) mView.findViewById(R.id.tv_messageTotal);
-        layout_my_info = (RelativeLayout) mView.findViewById(R.id.layout_my_info);
-        tv_realName = (TextView) mView.findViewById(R.id.tv_realName);
+        tv_message_total = (TextView) mView.findViewById(R.id.tv_message_total);
+        rl_my_info = (RelativeLayout) mView.findViewById(R.id.rl_my_info);
+        tv_real_name = (TextView) mView.findViewById(R.id.tv_real_name);
         tv_code = (TextView) mView.findViewById(R.id.tv_code);
-        tv_totalCommission = (TextView) mView.findViewById(R.id.tv_totalCommission);
+        tv_total_commission = (TextView) mView.findViewById(R.id.tv_total_commission);
         img_photo = (ImageView) mView.findViewById(R.id.img_photo);
         tv_customer_info = (TextView) mView.findViewById(R.id.tv_customer_info);
         tv_customer_follow = (TextView) mView.findViewById(R.id.tv_customer_follow);
@@ -137,8 +132,8 @@ public class MineFragment extends Fragment implements OnClickListener {
 
 
         img_email.setOnClickListener(this);
-        tv_messageTotal.setOnClickListener(this);
-        layout_my_info.setOnClickListener(this);
+        tv_message_total.setOnClickListener(this);
+        rl_my_info.setOnClickListener(this);
         tv_customer_info.setOnClickListener(this);
         tv_customer_follow.setOnClickListener(this);
         tv_rengou_state.setOnClickListener(this);
@@ -172,13 +167,13 @@ public class MineFragment extends Fragment implements OnClickListener {
             status = data.getCheckStatus();
         }
         switch (v.getId()) {
-            case R.id.tv_messageTotal:
+            case R.id.tv_message_total:
             case R.id.img_email:// 跳转邮件
                 Intent i_message = new Intent(context, MessageActivity.class); // 消息页面
                 startActivity(i_message);
 
                 break;
-            case R.id.layout_my_info://跳转我的信息
+            case R.id.rl_my_info://跳转我的信息
                 if (data != null) {
                     if (data.getHeadPhoto() != null && data.getRealName() != null) {
                         Intent i_my_info = new Intent(context, MyInfoActivity.class);
@@ -212,17 +207,17 @@ public class MineFragment extends Fragment implements OnClickListener {
                 break;
 
             case R.id.rl_mine_mybankcard:  // 我的银行卡
-                    Intent i_mybank = new Intent(context, MyBankActivity.class);          //  我的银行卡
+                    Intent i_mybank = new Intent(context, MyBankActivity.class);
                     i_mybank.putExtra("checkStatus",status);
                     startActivity(i_mybank);
                 break;
-            case R.id.rl_recommend: // // 推荐海德汇APP给朋友
+            case R.id.rl_recommend: // 推荐海德汇APP给朋友
                 Intent i_recommend = new Intent(context, RecommendActivity.class);
                 startActivity(i_recommend);
 
                 break;
-            case R.id.rl_mine_setting:
-                Intent i_setting = new Intent(context, SettingActivity.class); //  设置页面
+            case R.id.rl_mine_setting:  // 设置页面
+                Intent i_setting = new Intent(context, SettingActivity.class);
                 startActivity(i_setting);
 
                 break;
@@ -261,21 +256,21 @@ public class MineFragment extends Fragment implements OnClickListener {
             messageInt = Integer.parseInt(data.getMessageTotal());
         }
         if (messageInt > 9) {
-            tv_messageTotal.setVisibility(View.VISIBLE);
-            tv_messageTotal.setText("9+");
-            tv_messageTotal.setTextSize(10f);
+            tv_message_total.setVisibility(View.VISIBLE);
+            tv_message_total.setText("9+");
+            tv_message_total.setTextSize(10f);
         } else {
             if (messageInt == 0) {
-                tv_messageTotal.setVisibility(View.GONE);
+                tv_message_total.setVisibility(View.GONE);
             } else {
-                tv_messageTotal.setVisibility(View.VISIBLE);
-                tv_messageTotal.setText(data.getMessageTotal());
+                tv_message_total.setVisibility(View.VISIBLE);
+                tv_message_total.setText(data.getMessageTotal());
             }
 
         }
-        tv_realName.setText(data.getRealName());
+        tv_real_name.setText(data.getRealName());
         tv_code.setText("我的推荐码："+data.getRecommendCode());
-        tv_totalCommission.setText(data.getTotalCommission() + "元");
+        tv_total_commission.setText(data.getTotalCommission() + "元");
 
         String url = data.getHeadPhoto();
         if (!TextUtils.isEmpty(url)) {
