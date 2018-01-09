@@ -35,6 +35,7 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
+import com.haidehui.widget.MyExpandViewPager;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.MyRollViewPager;
 import com.nineoldandroids.view.ViewPropertyAnimator;
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView tv_company_tab1; // 公司
     private TextView tv_team_tab2; // 团队
     private TextView tv_platform_tab3; // 平台
-    private ViewPager vp;
+    private MyExpandViewPager expandViewPager;
     private View v_line; // 公司、团队、平台下面的横线
     private ArrayList<Fragment> fragments;
     private int screenWidth; // 屏幕宽度
@@ -142,7 +143,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_company_tab1 = (TextView) mView.findViewById(R.id.tv_company_tab1);
         tv_team_tab2 = (TextView) mView.findViewById(R.id.tv_team_tab2);
         tv_platform_tab3 = (TextView) mView.findViewById(R.id.tv_platform_tab3);
-        vp = (ViewPager) mView.findViewById(R.id.vp);
+        expandViewPager = (MyExpandViewPager) mView.findViewById(R.id.vp);
         v_line = mView.findViewById(R.id.line);
 
         // 默认设置第0个title状态
@@ -164,7 +165,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         v_line.getLayoutParams().width = line_width;
         v_line.requestLayout();
 
-        vp.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
+        expandViewPager.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
             @Override
             public int getCount() {
                 return fragments.size();
@@ -176,7 +177,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        expandViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int arg0) {
                 setTabTitleStyle(arg0);
@@ -283,21 +284,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_company_tab1:  // 公司
                 setTabTitleStyle(0);
                 setLineStyle(0);
-                vp.setCurrentItem(0);
+                expandViewPager.setCurrentItem(0);
 //                investmentGuideFr.upDateInvestmentGuideList();
 
                 break;
             case R.id.tv_team_tab2: // 团队
                 setTabTitleStyle(1);
                 setLineStyle(1);
-                vp.setCurrentItem(1);
+                expandViewPager.setCurrentItem(1);
 //                roadShowFr.upDateRoadShowList();
 
                 break;
             case R.id.tv_platform_tab3: // 平台
                 setTabTitleStyle(2);
                 setLineStyle(2);
-                vp.setCurrentItem(2);
+                expandViewPager.setCurrentItem(2);
 //                roadShowFr.upDateRoadShowList();
 
                 break;

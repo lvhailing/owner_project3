@@ -180,12 +180,11 @@
                     android:background="@color/txt_orange"/>
             </RelativeLayout>
 
-            <android.support.v4.view.ViewPager
+            <com.haidehui.widget.MyExpandViewPager
                 android:id="@+id/vp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-            </android.support.v4.view.ViewPager>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
