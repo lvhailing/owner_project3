@@ -21,6 +21,7 @@ import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.CustomerInfoActivity;
 import com.haidehui.act.CustomerTrackingActivity;
+import com.haidehui.act.ExplainOrderActivity;
 import com.haidehui.act.MessageActivity;
 import com.haidehui.act.MyBankActivity;
 import com.haidehui.act.MyInfoActivity;
@@ -81,6 +82,8 @@ public class MineFragment extends Fragment implements OnClickListener {
     private int messageInt;
     private String status; // 认证状态
     private RelativeLayout rl_recommend; // 推荐海德汇APP给朋友
+    private RelativeLayout rl_explain_order; // 预约说明会
+    private RelativeLayout rl_business_partner; // 我的事业合伙人
 
 
     @Override
@@ -114,22 +117,25 @@ public class MineFragment extends Fragment implements OnClickListener {
 
         context = getActivity();
         img_email = (ImageView) mView.findViewById(R.id.img_email);
+        img_photo = (ImageView) mView.findViewById(R.id.img_photo);
+        img_sign = (ImageView) mView.findViewById(R.id.img_sign);
+
         tv_message_total = (TextView) mView.findViewById(R.id.tv_message_total);
-        rl_my_info = (RelativeLayout) mView.findViewById(R.id.rl_my_info);
         tv_real_name = (TextView) mView.findViewById(R.id.tv_real_name);
         tv_code = (TextView) mView.findViewById(R.id.tv_code);
         tv_total_commission = (TextView) mView.findViewById(R.id.tv_total_commission);
-        img_photo = (ImageView) mView.findViewById(R.id.img_photo);
         tv_customer_info = (TextView) mView.findViewById(R.id.tv_customer_info);
         tv_customer_follow = (TextView) mView.findViewById(R.id.tv_customer_follow);
         tv_rengou_state = (TextView) mView.findViewById(R.id.tv_rengou_state);
+
+        rl_my_info = (RelativeLayout) mView.findViewById(R.id.rl_my_info);
         layout_indentify = (RelativeLayout) mView.findViewById(R.id.layout_identify);
         layout_account_book = (RelativeLayout) mView.findViewById(R.id.layout_account_book);
         rl_mine_mybankcard = (RelativeLayout) mView.findViewById(R.id.rl_mine_mybankcard);
         rl_recommend = (RelativeLayout) mView.findViewById(R.id.rl_recommend);
         rl_mine_setting = (RelativeLayout) mView.findViewById(R.id.rl_mine_setting);
-        img_sign = (ImageView) mView.findViewById(R.id.img_sign);
-
+        rl_explain_order = (RelativeLayout) mView.findViewById(R.id.rl_explain_order);
+        rl_business_partner = (RelativeLayout) mView.findViewById(R.id.rl_business_partner);
 
         img_email.setOnClickListener(this);
         tv_message_total.setOnClickListener(this);
@@ -142,6 +148,8 @@ public class MineFragment extends Fragment implements OnClickListener {
         rl_mine_mybankcard.setOnClickListener(this);
         rl_recommend.setOnClickListener(this);
         rl_mine_setting.setOnClickListener(this);
+        rl_explain_order.setOnClickListener(this);
+        rl_business_partner.setOnClickListener(this);
     }
 
     @Override
@@ -195,6 +203,10 @@ public class MineFragment extends Fragment implements OnClickListener {
             case R.id.tv_rengou_state://跳转认购状态
                 Intent i_rengou = new Intent(context, RenGouStatusActivity.class);
                 startActivity(i_rengou);
+                break;
+            case R.id.rl_explain_order://跳转预约说明会
+                Intent intent = new Intent(context, ExplainOrderActivity.class);
+                startActivity(intent);
                 break;
             case R.id.layout_identify://跳转事业合伙人认证
                 Intent i_identify = new Intent(context, PartnerIdentifyActivity.class);

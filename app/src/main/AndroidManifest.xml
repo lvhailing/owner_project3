@@ -230,6 +230,12 @@
             android:name=".act.RenGouStatusActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".act.ExplainOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.AddCustomerActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".act.CustomerFollowDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity

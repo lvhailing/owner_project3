@@ -4,18 +4,18 @@
     <string name="app_chinesename">海德汇版本更新</string>
 
     <!--首页（公司、团队、平台等介绍）-->
-    <string name="company_introduction">北京君德聚富投资顾问有限公司，自成立以来致力于为国内高净值人群提供专业化、个性化、全方位的海外资产配置服务。
+    <string name="company_introduction">&#160;&#160;&#160;&#160;北京君德聚富投资顾问有限公司，自成立以来致力于为国内高净值人群提供专业化、个性化、全方位的海外资产配置服务。
         作为北京君德财富投资管理股份有限公司的控股子公司君德聚富，让客户充分感受到一站式配置服务的便利，并且秉承一心一意为客户服务的理念，累计服务客户6000多人，
         客户资产管理规模达到60多亿。致力于做海外资产配置的领航者，持续为客户创造价值！</string>
-    <string name="company_introduction1">君德聚富合作的机构有： 中国银行、招商银行、中国工商银行、汇丰银行、渣打银行、曼谷银行、大成银行、开泰银行、友邦保险、
+    <string name="company_introduction1">&#160;&#160;&#160;&#160;君德聚富合作的机构有： 中国银行、招商银行、中国工商银行、汇丰银行、渣打银行、曼谷银行、大成银行、开泰银行、友邦保险、
         保成保险、中银保险、著名开发商BLUE SKY、经典项目CITYGATE、THE ROOM、潮州商会、大使馆、领事馆取得深度的合作。</string>
 
-    <string name="team_introduction">君德海外团队成员拥有广泛的海内外房地产行业人脉、丰富的金融资产管理经验和独立的互联网技术开发能力。核心团队由资深海外房地
+    <string name="team_introduction">&#160;&#160;&#160;&#160;君德海外团队成员拥有广泛的海内外房地产行业人脉、丰富的金融资产管理经验和独立的互联网技术开发能力。核心团队由资深海外房地
         产人士与国内资产管理行业专家组成，熟悉海外房产市场，有能力对上游产品及下游渠道实行严格的风控甄选及精准获取，并凭借对行业动态的专业掌控及解读，充分发挥平台
         的专业价值，维持平台合伙人的长久黏性。同时在海外拥有一支强大的服务团队，在海外享受高端的客户体验服务。</string>
 
-    <string name="platform_introduction">君德海外事业合伙人平台产品体系分为七大板块：全球海外房产、海外保险、全球移民、高端医疗、海外高尔夫、海外旅游，留学及就业服务。</string>
-    <string name="platform_introduction1">君德海外事业合伙人平台提供的服务种类包括：产品培训及销售咨询服务，销售体系搭建建议，人才支持，互联网营销支持，海外签约旅游考察安排，
+    <string name="platform_introduction">&#160;&#160;&#160;&#160;君德海外事业合伙人平台产品体系分为七大板块：全球海外房产、海外保险、全球移民、高端医疗、海外高尔夫、海外旅游，留学及就业服务。</string>
+    <string name="platform_introduction1">&#160;&#160;&#160;&#160;君德海外事业合伙人平台提供的服务种类包括：产品培训及销售咨询服务，销售体系搭建建议，人才支持，互联网营销支持，海外签约旅游考察安排，
         海外房产管理等一系列专业海外资产配置周边服务。</string>
 
     <!-- 登录 -->
@@ -165,6 +165,8 @@
     <string name="title_house_detail">房源详情</string>
     <string name="title_my_info">我的信息</string>
     <string name="title_customer_info">客户信息</string>
+    <string name="title_explain_order">预约说明会</string>
+    <string name="title_add_customer">新增客户</string>
     <string name="title_submit_info">添加客户信息</string>
     <string name="title_partner_identify">事业合伙人认证</string>
     <string name="title_account_book">账本</string>

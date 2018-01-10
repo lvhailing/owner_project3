@@ -11,6 +11,7 @@ import com.haidehui.R;
 
 /**
  * Created by junde on 2018/1/5.
+ * 公司介绍
  */
 public class CompanyFragment extends Fragment{
     private View mView;

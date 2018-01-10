@@ -203,7 +203,7 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/layout_identify"
+                android:id="@+id/rl_explain_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -211,7 +211,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/img_identify"
+                    android:id="@+id/iv_explain_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -220,22 +220,22 @@
                     android:src="@mipmap/ic_certification"/>
 
                 <TextView
-                    android:id="@+id/tv_identify"
+                    android:id="@+id/tv_explain_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/img_identify"
-                    android:text="事业合伙人认证"
+                    android:layout_toRightOf="@+id/iv_explain_order"
+                    android:text="预约说明会"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
                 <ImageView
-                    android:id="@+id/img_sign"
+                    android:id="@+id/iv_sign_explain_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/tv_identify"
+                    android:layout_toRightOf="@+id/tv_explain_order"
                     android:src="@mipmap/img_unidentify"/>
 
                 <ImageView
@@ -326,12 +326,57 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layout_identify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/img_identify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_certification"/>
+
+                <TextView
+                    android:id="@+id/tv_identify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/img_identify"
+                    android:text="事业合伙人认证"
+                    android:textColor="@color/gray_dark"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:id="@+id/img_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tv_identify"
+                    android:src="@mipmap/img_unidentify"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/arrow"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/rl_recommend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/bg_white"
-                android:padding="10dp" >
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/iv_recommend"
@@ -347,6 +392,40 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_recommend"
                     android:text="@string/setting_invite"
+                    android:textColor="@color/txt_gray"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/arrow"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_business_partner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/bg_white"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_business_partner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_invite"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_business_partner"
+                    android:text="我的事业合伙人"
                     android:textColor="@color/txt_gray"
                     android:textSize="16sp"/>
 
