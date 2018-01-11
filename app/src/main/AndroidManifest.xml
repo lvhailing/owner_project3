@@ -233,6 +233,9 @@
             android:name=".act.ExplainOrderActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".act.MyBusinessPartnerActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".act.AddCustomerActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -257,6 +260,13 @@
 
         <activity
             android:name=".photo_preview.PhotoPreviewAcForOne"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".act.RecommendDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.EditExplainOrderInfoActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name=".service.AppUpgradeService"/>

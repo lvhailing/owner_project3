@@ -15,6 +15,7 @@ import com.haidehui.model.AwardDetails1B;
 import com.haidehui.model.CommissionDetails1B;
 import com.haidehui.model.CustomerDetails1B;
 import com.haidehui.model.CustomerInfo1B;
+import com.haidehui.model.ExplainOrder1B;
 import com.haidehui.model.HomeIndex1B;
 import com.haidehui.model.HotHouse1B;
 import com.haidehui.model.HouseDetail1B;
@@ -22,6 +23,7 @@ import com.haidehui.model.HouseList1B;
 import com.haidehui.model.InvestmentGuide1B;
 import com.haidehui.model.InvestmentGuideDetail1B;
 import com.haidehui.model.MineData1B;
+import com.haidehui.model.OneLevelRecommendation1B;
 import com.haidehui.model.OverseaProjectDetail1B;
 import com.haidehui.model.OverseaProjectList1B;
 import com.haidehui.model.PartnerIdentify1B;
@@ -1668,7 +1670,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "路演详情数据:" + data);
+//                    Log.i("hh", "路演详情数据:" + data);
 
                     Gson gson = new Gson();
                     RoadShowDetail1B b = gson.fromJson(data, RoadShowDetail1B.class);
@@ -2125,6 +2127,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "事业合伙人认证:" + data);
                     Gson gson = new Gson();
                     PartnerIdentify1B b = gson.fromJson(data, PartnerIdentify1B.class);
                     return b.getData();
@@ -2583,6 +2586,8 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "客户跟踪详情:" + data);
+
                     Gson gson = new Gson();
                     TrackingDetails1B b = gson.fromJson(data, TrackingDetails1B.class);
                     return b.getData();
@@ -2780,4 +2785,143 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
+    /**
+     *  我的事业合伙人  一级推荐列表
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getOneLevelRecData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ACCOUNT_RECOMMEND_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+
+                if (isCancelled() || result == null) {
+                    return null;
+                }
+                try {
+                    String data = DESUtil.decrypt(result);
+                    Log.i("hh", "一级推荐列表:" + data);
+
+                    Gson gson = new Gson();
+                    OneLevelRecommendation1B b = gson.fromJson(data, OneLevelRecommendation1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+
+        });
+    }
+
+    /**
+     *  预约说明会-列表
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getExplainOrderData(final Context context, Map<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ACCOUNT_CUSTOMER_APPOINTMENT_LIST;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Gson gson = new Gson();
+                    ExplainOrder1B b = gson.fromJson(data, ExplainOrder1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 预约说明会新增客户信息
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getAddExplainOrderCustomerInFo(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ACCOUNT_CUSTOMER_APPOINTMENT_ADD_SAVE;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Log.i("hh", "预约说明会新增或保存客户：" + data);
+                    Gson gson = new Gson();
+                    SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
 }

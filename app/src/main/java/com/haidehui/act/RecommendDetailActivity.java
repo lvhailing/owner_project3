@@ -39,7 +39,9 @@ import com.haidehui.network.http.AsyncHttpClient;
 import com.haidehui.network.http.AsyncHttpResponseHandler;
 import com.haidehui.network.http.RequestParams;
 import com.haidehui.photo_preview.PhotoPreviewAcForOne;
-import com.haidehui.uitls.StringUtil;
+import com.haidehui.uitls.DESUtil;
+import com.haidehui.uitls.PreferenceUtil;
+import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.widget.TitleBar;
 
 import org.apache.http.Header;
@@ -57,15 +59,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import com.haidehui.widget.SelectPhotoDialog;
-import com.haidehui.uitls.PreferenceUtil;
-import com.haidehui.uitls.DESUtil;
-import com.haidehui.uitls.IdCardCheckUtils;
 
 /**
- *  事业合伙人认证
+ *  事业合伙人推荐详情
  */
-public class PartnerIdentifyActivity extends BaseActivity implements View.OnClickListener {
+public class RecommendDetailActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_realName;
     private TextView tv_mobile;
     private RelativeLayout layout_address;
@@ -77,7 +75,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private ImageView img_identity_card;
     private RelativeLayout layout_card;
     private ImageView img_card;
-    private Button btn_submit;
     private TextView tv_remark;
     private RelativeLayout layout_delete;
     private ImageView img_delete;
@@ -102,11 +99,12 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private ArrayList<String> list;
     private PartnerIdentify2B data;
     private TextView tv_customer_service_telephone;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_partner_identify);
+        baseSetContentView(R.layout.activity_recommend_detail);
 
         mHandler = new MyHandler();
         mthread = new Thread(myRunnable);
@@ -140,6 +138,8 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
+        userId = getIntent().getStringExtra(userId);
+
         tv_realName= (TextView) findViewById(R.id.tv_real_name);
         tv_mobile= (TextView) findViewById(R.id.tv_mobile);
         layout_address= (RelativeLayout) findViewById(R.id.layout_address);
@@ -151,19 +151,13 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         img_identity_card= (ImageView) findViewById(R.id.img_identity_card);
         layout_card= (RelativeLayout) findViewById(R.id.layout_card);
         img_card= (ImageView) findViewById(R.id.img_card);
-        btn_submit= (Button) findViewById(R.id.btn_submit);
         tv_remark= (TextView) findViewById(R.id.tv_remark);
         layout_delete=(RelativeLayout) findViewById(R.id.layout_delete);
         img_delete= (ImageView) findViewById(R.id.img_delete);
-        tv_customer_service_telephone= (TextView) findViewById(R.id.tv_customer_service_telephone);
-        tv_customer_service_telephone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); // 下划线
-        tv_customer_service_telephone.getPaint().setAntiAlias(true);//抗锯齿
-        tv_customer_service_telephone.setLinkTextColor(getResources().getColor(R.color.txt_orange));
 
         layout_address.setOnClickListener(this);
         layout_identity_card.setOnClickListener(this);
         layout_card.setOnClickListener(this);
-        btn_submit.setOnClickListener(this);
         img_delete.setOnClickListener(this);
         img_identity_card.setOnClickListener(this);
         img_card.setOnClickListener(this);
@@ -239,8 +233,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 layout_card.setClickable(false);
                 img_identity_card.setClickable(true);
                 img_card.setClickable(true);
-                btn_submit.setClickable(false);
-                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
             }else if ("success".equals(data.getCheckStatus())){//success状态  已认证置灰  不能编辑  身份证照片可以看
                 layout_address.setClickable(false);
                 edt_workUnit.setFocusable(false);
@@ -250,9 +242,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 layout_card.setClickable(false);
                 img_identity_card.setClickable(true);
                 img_card.setClickable(true);
-                btn_submit.setClickable(false);
-                btn_submit.setText("已认证");
-                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
 
                 if(!TextUtils.isEmpty(data.getIdNo())) {
                     try {
@@ -474,8 +463,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                                 layout_card.setClickable(false);
                                 img_identity_card.setClickable(true);
                                 img_card.setClickable(true);
-                                btn_submit.setClickable(false);
-                                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
                             }else{
                                 Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -523,7 +510,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 			photoUri = Uri.fromFile(temp);//获取文件的Uri*/
             ContentValues values = new ContentValues();
             photoUri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             /**-----------------*/
             startActivityForResult(intent, SELECT_PIC_BY_TACK_PHOTO);
         }else{
@@ -549,7 +536,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
             if (photoUri != null) {
                 try {
-                    photoBmp = getBitmapFormUri(PartnerIdentifyActivity.this, photoUri);
+                    photoBmp = getBitmapFormUri(RecommendDetailActivity.this, photoUri);
                     if (photoBmp!=null){
                         dialog.setmLoadingTip("正在上传照片，请稍后……");
                         startLoading();
@@ -574,7 +561,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             if (mImageCaptureUri != null) {
 
                 try {
-                    photoBmp = getBitmapFormUri(PartnerIdentifyActivity.this, mImageCaptureUri);
+                    photoBmp = getBitmapFormUri(RecommendDetailActivity.this, mImageCaptureUri);
                     newZoomImage = photoBmp;
                     sendImage(photoBmp);
                 } catch (IOException e) {

@@ -227,7 +227,6 @@
                     android:scaleType="centerInside"
                     android:src="@mipmap/img_default_picture"/>
 
-
                 <ImageView
                     android:id="@+id/img_arrow_identity_card"
                     android:layout_width="wrap_content"
@@ -264,7 +263,6 @@
                     android:scaleType="centerInside"
                     android:src="@mipmap/img_default_picture"/>
 
-
                 <ImageView
                     android:id="@+id/img_arrow_card"
                     android:layout_width="wrap_content"
@@ -276,42 +274,8 @@
                     android:src="@mipmap/arrow"/>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_customer_service_telephone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:id="@+id/tv_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="若有问题您可拨打客服电话："
-                    android:textColor="@color/gray_dark"
-                    android:textSize="13sp"/>
-
-                <TextView
-                    android:id="@+id/tv_customer_service_telephone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_left"
-                    android:autoLink="all"
-                    android:text="@string/phone_number"
-                    android:textSize="13sp"/>
-            </RelativeLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/shape_center_orange"
-            android:text="提交认证"
-            android:textColor="@color/white"/>
     </RelativeLayout>
 
     <RelativeLayout

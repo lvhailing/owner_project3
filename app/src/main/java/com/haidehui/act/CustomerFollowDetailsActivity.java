@@ -34,7 +34,7 @@ import java.util.HashMap;
  *  跟踪详情
  */
 public class CustomerFollowDetailsActivity extends BaseActivity implements View.OnClickListener {
-    private MyListView lv_follow_detail;
+//    private MyListView lv_follow_detail;
     private CustomerFollowDetailsAdapter adapter;
     private MouldList<ResultCustomerFollowDetailslistBean> detailsList=new MouldList<>();
     private ScrollView scrollview;
@@ -45,8 +45,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private TextView tv_customerPhone;
     private EditText edt_project;
     private EditText edt_room_number;
-    private EditText edit_remark;
-    private Button btn_save;
+//    private EditText edit_remark;
+//    private Button btn_save;
 
     private String[] checkStr=new String[12];
     private String[] resultStr=new String[12];
@@ -90,31 +90,31 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
         edt_project= (EditText) findViewById(R.id.et_project);
         edt_room_number= (EditText) findViewById(R.id.et_room_number);
-        edit_remark= (EditText) findViewById(R.id.et_remark);
-        btn_save= (Button) findViewById(R.id.btn_save);
-        scrollview= (ScrollView) findViewById(R.id.scrollview);
-        lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
-        lv_follow_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-
-            }
-        });
+//        edit_remark= (EditText) findViewById(R.id.et_remark);
+//        btn_save= (Button) findViewById(R.id.btn_save);
+//        scrollview= (ScrollView) findViewById(R.id.scrollview);
+//        lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
+//        lv_follow_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//                                    long arg3) {
+//
+//            }
+//        });
     }
     private void initData() {
-        btn_save.setOnClickListener(this);
+//        btn_save.setOnClickListener(this);
         customerId=getIntent().getStringExtra("customerId");
         customerTrackingId=getIntent().getStringExtra("customerTrackingId");
         requestData();
-        scrollview.post(new Runnable() {
-            @Override
-            public void run() {
-
-                scrollview.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
+//        scrollview.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                scrollview.fullScroll(ScrollView.FOCUS_UP);
+//            }
+//        });
         edt_project.requestFocusFromTouch();
     }
 
@@ -142,106 +142,106 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         tv_customerPhone.setText(data.getCustomerPhone());
         edt_project.setText(data.getHouseProject());
         edt_room_number.setText(data.getRoomNumber());
-        edit_remark.setText(data.getTrackingRemark());
+//        edit_remark.setText(data.getTrackingRemark());
 
-        if ("true".equals(data.getTelephoneContactedAndIntroductionProject())) {
-            checkStr[0] = "true";
-        }else{
-            checkStr[0] = "false";
-        }
-        if ("true".equals(data.getProjectMaterialsAndAnsweredQuestion())) {
-            checkStr[1] = "true";
-        }else{
-            checkStr[1] = "false";
-        }
-        if ("true".equals(data.getInterviewedAndDetailedIntroductionProject())) {
-            checkStr[2] = "true";
-        }else{
-            checkStr[2] = "false";
-        }
-        if ("true".equals(data.getProductPromotionAndDeepUnderstanding())) {
-            checkStr[3] = "true";
-        }else{
-            checkStr[3] = "false";
-        }
-        if ("true".equals(data.getRevisitCustomerAndAnsweredQuestion())) {
-            checkStr[4] = "true";
-        }else{
-            checkStr[4] = "false";
-        }
-        if ("true".equals(data.getConfirmCondoTourPlan())) {
-            checkStr[5] = "true";
-        }else{
-            checkStr[5] = "false";
-        }
-        if ("true".equals(data.getFullPaymentFrontmoneyAndSelectedRoomNum())) {
-            checkStr[6] = "true";
-        }else{
-            checkStr[6] = "false";
-        }
-        if ("true".equals(data.getOfficalSignature())) {
-            checkStr[7] = "true";
-        }else{
-            checkStr[7] = "false";
-        }
-        if ("true".equals(data.getFullPaymentDownpayment())) {
-            checkStr[8] = "true";
-        }else{
-            checkStr[8] = "false";
-        }
-        if ("true".equals(data.getRecommendOtherCustomers())) {
-            checkStr[9] = "true";
-        }else{
-            checkStr[9] = "false";
-        }
-        if ("true".equals(data.getContactedOtherCustomers())) {
-            checkStr[10] = "true";
-        }else{
-            checkStr[10] = "false";
-        }
-        if ("true".equals(data.getRecommendOtherCustomersSuccess())) {
-            checkStr[11] = "true";
-        }else{
-            checkStr[11] = "false";
-        }
-        resultStr=checkStr;
-        put(checkStr);
+//        if ("true".equals(data.getTelephoneContactedAndIntroductionProject())) {
+//            checkStr[0] = "true";
+//        }else{
+//            checkStr[0] = "false";
+//        }
+//        if ("true".equals(data.getProjectMaterialsAndAnsweredQuestion())) {
+//            checkStr[1] = "true";
+//        }else{
+//            checkStr[1] = "false";
+//        }
+//        if ("true".equals(data.getInterviewedAndDetailedIntroductionProject())) {
+//            checkStr[2] = "true";
+//        }else{
+//            checkStr[2] = "false";
+//        }
+//        if ("true".equals(data.getProductPromotionAndDeepUnderstanding())) {
+//            checkStr[3] = "true";
+//        }else{
+//            checkStr[3] = "false";
+//        }
+//        if ("true".equals(data.getRevisitCustomerAndAnsweredQuestion())) {
+//            checkStr[4] = "true";
+//        }else{
+//            checkStr[4] = "false";
+//        }
+//        if ("true".equals(data.getConfirmCondoTourPlan())) {
+//            checkStr[5] = "true";
+//        }else{
+//            checkStr[5] = "false";
+//        }
+//        if ("true".equals(data.getFullPaymentFrontmoneyAndSelectedRoomNum())) {
+//            checkStr[6] = "true";
+//        }else{
+//            checkStr[6] = "false";
+//        }
+//        if ("true".equals(data.getOfficalSignature())) {
+//            checkStr[7] = "true";
+//        }else{
+//            checkStr[7] = "false";
+//        }
+//        if ("true".equals(data.getFullPaymentDownpayment())) {
+//            checkStr[8] = "true";
+//        }else{
+//            checkStr[8] = "false";
+//        }
+//        if ("true".equals(data.getRecommendOtherCustomers())) {
+//            checkStr[9] = "true";
+//        }else{
+//            checkStr[9] = "false";
+//        }
+//        if ("true".equals(data.getContactedOtherCustomers())) {
+//            checkStr[10] = "true";
+//        }else{
+//            checkStr[10] = "false";
+//        }
+//        if ("true".equals(data.getRecommendOtherCustomersSuccess())) {
+//            checkStr[11] = "true";
+//        }else{
+//            checkStr[11] = "false";
+//        }
+//        resultStr=checkStr;
+//        put(checkStr);
     }
-    private void put(String[] checkStr){
-        String[] detailsStr = new String[]{
-                "已电话联络客户，简单介绍项目",
-                "已发项目资料，回答客户疑问",
-                "已和客户面谈，详细介绍项目",
-                "客户已参加公司推介会，深度了解项目",
-                "再次回访客户，回答客户疑问",
-                "客户确定赴实地看房团行程",
-                "客户已全额支付购房定金，选好房号",
-                "客户已正式签署合同",
-                "客户已全额支付购买房屋首付款",
-                "签约成功客户转介绍客户",
-                "已和转介绍客户联络",
-                "转介绍客户成功"
-        };
-        for (int i=0 ;i<detailsStr.length;i++ ){
-            ResultCustomerFollowDetailslistBean bean=new ResultCustomerFollowDetailslistBean();
-            bean.setDetails(detailsStr[i]);
-            bean.setIsChecked(checkStr[i]);
-            detailsList.add(bean);
-        }
-        adapter = new CustomerFollowDetailsAdapter(CustomerFollowDetailsActivity.this, detailsList, new CustomerFollowDetailsAdapter.OnEditListener() {
-            @Override
-            public void onCheckBox(int position, boolean isChecked) {
-                if (isChecked) {
-                    resultStr[position]="true";
-                } else {
-                    resultStr[position]="false";
-                }
-            }
-        });
-        lv_follow_detail.setAdapter(adapter);
-        setListViewHeightBasedOnChildren(CustomerFollowDetailsActivity.this, lv_follow_detail, 0);
-
-    }
+//    private void put(String[] checkStr){
+//        String[] detailsStr = new String[]{
+//                "已电话联络客户，简单介绍项目",
+//                "已发项目资料，回答客户疑问",
+//                "已和客户面谈，详细介绍项目",
+//                "客户已参加公司推介会，深度了解项目",
+//                "再次回访客户，回答客户疑问",
+//                "客户确定赴实地看房团行程",
+//                "客户已全额支付购房定金，选好房号",
+//                "客户已正式签署合同",
+//                "客户已全额支付购买房屋首付款",
+//                "签约成功客户转介绍客户",
+//                "已和转介绍客户联络",
+//                "转介绍客户成功"
+//        };
+//        for (int i=0 ;i<detailsStr.length;i++ ){
+//            ResultCustomerFollowDetailslistBean bean=new ResultCustomerFollowDetailslistBean();
+//            bean.setDetails(detailsStr[i]);
+//            bean.setIsChecked(checkStr[i]);
+//            detailsList.add(bean);
+//        }
+//        adapter = new CustomerFollowDetailsAdapter(CustomerFollowDetailsActivity.this, detailsList, new CustomerFollowDetailsAdapter.OnEditListener() {
+//            @Override
+//            public void onCheckBox(int position, boolean isChecked) {
+//                if (isChecked) {
+//                    resultStr[position]="true";
+//                } else {
+//                    resultStr[position]="false";
+//                }
+//            }
+//        });
+//        lv_follow_detail.setAdapter(adapter);
+//        setListViewHeightBasedOnChildren(CustomerFollowDetailsActivity.this, lv_follow_detail, 0);
+//
+//    }
 
     /**
      * 修改客户跟踪
@@ -288,33 +288,33 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_save:
-                String houseProject=edt_project.getText().toString();
-                String roomNumber=edt_room_number.getText().toString();
-                String remark=edit_remark.getText().toString();
-                int m=0;
-                if (!TextUtils.isEmpty(houseProject)){
-                    if (!TextUtils.isEmpty(roomNumber)){
-                        for (int i=0;i<resultStr.length;i++){
-                            if (resultStr[i].equals("false")){
-                                m+=1;
-                            }
-                        }
-                        if (m==12){
-                            Toast.makeText(mContext, "请选择跟踪进度", Toast.LENGTH_LONG).show();
-                        }else{
-                            submitData(resultStr,houseProject,roomNumber,remark);
-                        }
-
-                    }else{
-                        Toast.makeText(mContext, "请输入房产房号", Toast.LENGTH_LONG).show();
-                        edt_room_number.requestFocusFromTouch();
-                    }
-                }else{
-                    Toast.makeText(mContext, "请输入项目名称", Toast.LENGTH_LONG).show();
-                    edt_project.requestFocusFromTouch();
-                }
-                break;
+//            case R.id.btn_save:
+//                String houseProject=edt_project.getText().toString();
+//                String roomNumber=edt_room_number.getText().toString();
+////                String remark=edit_remark.getText().toString();
+//                int m=0;
+//                if (!TextUtils.isEmpty(houseProject)){
+//                    if (!TextUtils.isEmpty(roomNumber)){
+//                        for (int i=0;i<resultStr.length;i++){
+//                            if (resultStr[i].equals("false")){
+//                                m+=1;
+//                            }
+//                        }
+//                        if (m==12){
+//                            Toast.makeText(mContext, "请选择跟踪进度", Toast.LENGTH_LONG).show();
+//                        }else{
+//                            submitData(resultStr,houseProject,roomNumber,remark);
+//                        }
+//
+//                    }else{
+//                        Toast.makeText(mContext, "请输入房产房号", Toast.LENGTH_LONG).show();
+//                        edt_room_number.requestFocusFromTouch();
+//                    }
+//                }else{
+//                    Toast.makeText(mContext, "请输入项目名称", Toast.LENGTH_LONG).show();
+//                    edt_project.requestFocusFromTouch();
+//                }
+//                break;
         }
     }
     /**

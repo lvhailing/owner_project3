@@ -24,6 +24,7 @@ import com.haidehui.act.CustomerTrackingActivity;
 import com.haidehui.act.ExplainOrderActivity;
 import com.haidehui.act.MessageActivity;
 import com.haidehui.act.MyBankActivity;
+import com.haidehui.act.MyBusinessPartnerActivity;
 import com.haidehui.act.MyInfoActivity;
 import com.haidehui.act.PartnerIdentifyActivity;
 import com.haidehui.act.RecommendActivity;
@@ -223,10 +224,14 @@ public class MineFragment extends Fragment implements OnClickListener {
                     i_mybank.putExtra("checkStatus",status);
                     startActivity(i_mybank);
                 break;
+            case R.id.rl_business_partner:  // 跳转推荐列表
+                    Intent intent1 = new Intent(context, MyBusinessPartnerActivity.class);
+                    startActivity(intent1);
+                break;
+
             case R.id.rl_recommend: // 推荐海德汇APP给朋友
                 Intent i_recommend = new Intent(context, RecommendActivity.class);
                 startActivity(i_recommend);
-
                 break;
             case R.id.rl_mine_setting:  // 设置页面
                 Intent i_setting = new Intent(context, SettingActivity.class);

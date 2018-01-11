@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,11 +16,11 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.adapter.CustomerInfoAdapter;
+import com.haidehui.adapter.ExplainOrderAdapter;
 import com.haidehui.dialog.BasicDialog;
 import com.haidehui.dialog.DatePickDialog;
-import com.haidehui.model.CustomerInfo2B;
-import com.haidehui.model.CustomerInfo3B;
+import com.haidehui.model.ExplainOrder2B;
+import com.haidehui.model.ExplainOrder3B;
 import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -42,26 +41,22 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 
 /**
- * （我的模块）预约说明会--> 新增客户
+ * 预约说明会客户信息修改
  */
-public class AddCustomerActivity extends BaseActivity implements View.OnClickListener {
+public class EditExplainOrderInfoActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText et_name_customer; // 客户姓名
     private EditText et_phone; // 联系电话
     private RelativeLayout rl_date_participation; // 参加日期 布局
     private TextView tv_date; // 参加日期 展示
-    private Button btn_submit;
+    private Button btn_save;
 
     private long currentTime = System.currentTimeMillis();
     private String date;
-    private String customerName;
-    private String customerPhone;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.activity_add_customer);
+        baseSetContentView(R.layout.activity_save_customer);
 
         initTopTitle();
         initView();
@@ -70,7 +65,9 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_add_customer)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false)
+             .setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_edit_customer_info))
+             .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -92,18 +89,47 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
         et_phone = (EditText) findViewById(R.id.et_phone);
         rl_date_participation = (RelativeLayout) findViewById(R.id.rl_date_participation);
         tv_date = (TextView) findViewById(R.id.tv_date);
-        btn_submit = (Button) findViewById(R.id.btn_submit);
+        btn_save = (Button) findViewById(R.id.btn_save);
 
         rl_date_participation.setOnClickListener(this);
-        btn_submit.setOnClickListener(this);
+        btn_save.setOnClickListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        requestData(userId, customerName, customerPhone, date);
     }
 
+    /**
+     * 保存客户修改数据
+     */
+    private void requestData(String userId, String customerName, String customerPhone, String meetingTime) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("userId", userId);
+        param.put("customerName", customerName);
+        param.put("customerPhone", customerPhone);
+        param.put("meetingTime", date);
+
+        HtmlRequest.getAddExplainOrderCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                if ("true".equals(data.getFlag())) {
+                    Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(EditExplainOrderInfoActivity.this, CustomerInfoActivity.class);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -111,9 +137,9 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
             case R.id.rl_date_participation:
                 showDatePickerDialog();
                 break;
-            case R.id.btn_submit:  // 立即提交
-                customerName = et_name_customer.getText().toString();
-                customerPhone = et_phone.getText().toString();
+            case R.id.btn_save:
+                String customerName = et_name_customer.getText().toString();
+                String customerPhone = et_phone.getText().toString();
 
                 if (TextUtils.isEmpty(customerName)) {
                     Toast.makeText(mContext, "请输入客户姓名", Toast.LENGTH_LONG).show();
@@ -158,7 +184,7 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
             Date selectDate = simpleDateFormat.parse(selectedDate);
             if (currentTime > selectDate.getTime()) {
                 //选择的时间必须是从今天开始包含今天
-                Toast.makeText(AddCustomerActivity.this, "时间只能是今天或今天以后", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditExplainOrderInfoActivity.this, "时间只能是今天或今天以后", Toast.LENGTH_SHORT).show();
                 return false;
             }
         } catch (ParseException e) {
@@ -167,33 +193,4 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
 
         return true;
     }
-
-    private void requestData(String userId, String customerName, String customerPhone, String meetingTime) {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("userId", userId);
-        param.put("customerName", customerName);
-        param.put("customerPhone", customerPhone);
-        param.put("meetingTime", date);
-
-        HtmlRequest.getAddExplainOrderCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
-            @Override
-            public void onRequestFinished(BaseParams params) {
-                if (params.result == null) {
-                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                SubmitCustomer2B data = (SubmitCustomer2B) params.result;
-                if ("true".equals(data.getFlag())) {
-                    Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
-
-                    Intent intent = new Intent(AddCustomerActivity.this, CustomerInfoActivity.class);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
 }

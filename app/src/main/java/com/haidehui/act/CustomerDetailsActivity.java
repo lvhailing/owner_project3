@@ -25,11 +25,11 @@ import android.text.TextUtils;
  */
 public class CustomerDetailsActivity extends BaseActivity implements View.OnClickListener {
     private ImageView img_back;
-    private ImageView img_add_follow;
+//    private ImageView img_add_follow;
     private String customerId;
     private TextView tv_name;
     private TextView tv_phone;
-    private TextView tv_email;
+//    private TextView tv_email;
     private TextView tv_location;
     private TextView tv_project;
     private TextView tv_room_number;
@@ -59,10 +59,10 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
         stack.addActivity(this);
 
         img_back= (ImageView) findViewById(R.id.img_back);
-        img_add_follow= (ImageView) findViewById(R.id.img_add_follow);
+//        img_add_follow= (ImageView) findViewById(R.id.img_add_follow);
         tv_name= (TextView) findViewById(R.id.tv_name);
         tv_phone= (TextView) findViewById(R.id.tv_phone);
-        tv_email= (TextView) findViewById(R.id.tv_email);
+//        tv_email= (TextView) findViewById(R.id.tv_email);
         tv_location= (TextView) findViewById(R.id.tv_location);
         tv_project= (TextView) findViewById(R.id.tv_project);
         tv_room_number= (TextView) findViewById(R.id.tv_room_number);
@@ -75,7 +75,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
     private void initData() {
         customerId=getIntent().getStringExtra("customerId");
         img_back.setOnClickListener(this);
-        img_add_follow.setOnClickListener(this);
+//        img_add_follow.setOnClickListener(this);
         requestData();
     }
     private void requestData() {
@@ -99,7 +99,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
     private void setData(CustomerDetails2B data) {
         tv_name.setText(data.getCustomerName());
         tv_phone.setText(data.getCustomerPhone());
-        tv_email.setText(data.getCustomerEmail());
+//        tv_email.setText(data.getCustomerEmail());
 
         if (TextUtils.isEmpty(data.getHouseLocation())){
             tv_location.setText("--");
@@ -135,11 +135,11 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
             case R.id.img_back:
                 finish();
                 break;
-            case R.id.img_add_follow:
-                Intent intent = new Intent(CustomerDetailsActivity.this, AddCustomerFollowActivity.class);
-                intent.putExtra("customerId", data.getCustomerId());
-                startActivity(intent);
-                break;
+//            case R.id.img_add_follow:
+//                Intent intent = new Intent(CustomerDetailsActivity.this, AddCustomerFollowActivity.class);
+//                intent.putExtra("customerId", data.getCustomerId());
+//                startActivity(intent);
+//                break;
         }
     }
 

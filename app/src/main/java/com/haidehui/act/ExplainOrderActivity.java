@@ -14,9 +14,12 @@ import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.CustomerInfoAdapter;
+import com.haidehui.adapter.ExplainOrderAdapter;
 import com.haidehui.dialog.BasicDialog;
 import com.haidehui.model.CustomerInfo2B;
 import com.haidehui.model.CustomerInfo3B;
+import com.haidehui.model.ExplainOrder2B;
+import com.haidehui.model.ExplainOrder3B;
 import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -37,8 +40,8 @@ import java.util.LinkedHashMap;
  */
 public class ExplainOrderActivity extends BaseActivity implements View.OnClickListener {
     private PullToRefreshListView lv_explain_order;
-    private CustomerInfoAdapter adapter;
-    private MouldList<CustomerInfo3B> totalList = new MouldList<>();
+    private ExplainOrderAdapter adapter;
+    private MouldList<ExplainOrder3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
     private Button btn_add_customers;
     private static int mDelId = 0;
@@ -87,7 +90,7 @@ public class ExplainOrderActivity extends BaseActivity implements View.OnClickLi
         vs = (ViewSwitcher) findViewById(R.id.vs);
         tv_empty = (TextView) findViewById(R.id.tv_empty);
         img_empty = (ImageView) findViewById(R.id.img_empty);
-        tv_empty.setText("暂无客户信息");
+        tv_empty.setText("暂无参会客户");
         img_empty.setBackgroundResource(R.mipmap.empty_customerinfo);
 
         btn_add_customers = (Button) findViewById(R.id.btn_add_customers);
@@ -95,15 +98,15 @@ public class ExplainOrderActivity extends BaseActivity implements View.OnClickLi
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(lv_explain_order);
 
-        lv_explain_order.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-                Intent intent = new Intent(ExplainOrderActivity.this, CustomerDetailsActivity.class);
-                intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
-                startActivity(intent);
-            }
-        });
+//        lv_explain_order.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+//                Intent intent = new Intent(ExplainOrderActivity.this, CustomerDetailsActivity.class);
+//                intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
+//                startActivity(intent);
+//            }
+//        });
         lv_explain_order.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -112,13 +115,13 @@ public class ExplainOrderActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onDelete() {
                         mDelId = position - 1;
-                        customerId = totalList.get(position - 1).getCustomerId();
+                        customerId = totalList.get(position - 1).getUserId();
                         showDialog();
                     }
                     @Override
                     public void onEdit() {
-                        customerId = totalList.get(position - 1).getCustomerId();
-                        Intent intent = new Intent(mContext, EditCustomerInfoActivity.class);
+                        customerId = totalList.get(position - 1).getUserId();
+                        Intent intent = new Intent(mContext, EditExplainOrderInfoActivity.class);
                         intent.putExtra("customerId", customerId);
                         startActivity(intent);
                     }
@@ -144,9 +147,8 @@ public class ExplainOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
-        status = getIntent().getStringExtra("checkStatus");
         btn_add_customers.setOnClickListener(this);
-        adapter = new CustomerInfoAdapter(ExplainOrderActivity.this, totalList);
+        adapter = new ExplainOrderAdapter(ExplainOrderActivity.this, totalList);
         lv_explain_order.setAdapter(adapter);
         requestListData();
     }
@@ -197,15 +199,15 @@ public class ExplainOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     * 请求列表数据
+     * 请求预约客户列表数据
      */
     private void requestListData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
-        param.put("page", currentPage + "");
         param.put("userId", userId);
+        param.put("page", currentPage + "");
 
         try {
-            HtmlRequest.getCustomerInfoList(mContext, param, new BaseRequester.OnRequestListener() {
+            HtmlRequest.getExplainOrderData(mContext, param, new BaseRequester.OnRequestListener() {
                 @Override
                 public void onRequestFinished(BaseParams params) {
                     if (params.result == null) {
@@ -219,8 +221,8 @@ public class ExplainOrderActivity extends BaseActivity implements View.OnClickLi
                         }, 1000);
                         return;
                     }
-                    CustomerInfo2B data = (CustomerInfo2B) params.result;
-                    MouldList<CustomerInfo3B> everyList = data.getList();
+                    ExplainOrder2B data = (ExplainOrder2B) params.result;
+                    MouldList<ExplainOrder3B> everyList = data.getList();
 
                     if ((everyList == null || everyList.size() == 0) && currentPage != 1) {
                         Toast.makeText(mContext, "已显示全部", Toast.LENGTH_SHORT).show();

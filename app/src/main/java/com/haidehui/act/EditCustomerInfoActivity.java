@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class EditCustomerInfoActivity extends BaseActivity implements View.OnClickListener {
     private EditText edt_name;
     private EditText edt_phone;
-    private EditText edt_email;
+//    private EditText edt_email;
     private EditText edt_location;
     private EditText edt_project;
     private EditText edt_room_number;
@@ -71,7 +71,7 @@ public class EditCustomerInfoActivity extends BaseActivity implements View.OnCli
     private void initView() {
         edt_name= (EditText) findViewById(R.id.et_name);
         edt_phone= (EditText) findViewById(R.id.et_phone);
-        edt_email= (EditText) findViewById(R.id.et_email);
+//        edt_email= (EditText) findViewById(R.id.et_email);
         edt_location= (EditText) findViewById(R.id.et_location);
         edt_project= (EditText) findViewById(R.id.et_project);
         edt_room_number= (EditText) findViewById(R.id.et_room_number);
@@ -120,11 +120,11 @@ public class EditCustomerInfoActivity extends BaseActivity implements View.OnCli
     private void setData(CustomerDetails2B data) {
         edt_name.setText(data.getCustomerName());
         edt_phone.setText(data.getCustomerPhone());
-        edt_email.setText(data.getCustomerEmail());
+//        edt_email.setText(data.getCustomerEmail());
         //以上不能编辑
         edt_name.setFocusable(false);
         edt_phone.setFocusable(false);
-        edt_email.setFocusable(false);
+//        edt_email.setFocusable(false);
 
         edt_location.setText(data.getHouseLocation());
         edt_project.setText(data.getHouseProject());

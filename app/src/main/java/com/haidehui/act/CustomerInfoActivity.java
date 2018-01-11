@@ -97,30 +97,28 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(lv_customer_info);
 
-        lv_customer_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        lv_customer_info.setOnItemClickListener(new AdapterView.OnItemClickListener() { // item 点击监听 跳转到客户信息详情页
             @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position,
-                                    long id) {
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                 Intent intent = new Intent(CustomerInfoActivity.this, CustomerDetailsActivity.class);
                 intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
                 startActivity(intent);
             }
         });
-        lv_customer_info.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv_customer_info.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() { // item长按点击监听
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 EditCustomerInfoDialog mDialog = new EditCustomerInfoDialog(mContext, new EditCustomerInfoDialog.OnSelectPhotoChanged() {
                     @Override
-                    public void onDelete() {
+                    public void onDelete() { // 删除
                         mDelId = position - 1;
                         customerId = totalList.get(position - 1).getCustomerId();
                         showDialog();
                     }
 
                     @Override
-                    public void onEdit() {
+                    public void onEdit() { // 修改
                         customerId = totalList.get(position - 1).getCustomerId();
                         Intent intent = new Intent(mContext, EditCustomerInfoActivity.class);
                         intent.putExtra("customerId", customerId);

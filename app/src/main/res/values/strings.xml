@@ -106,7 +106,6 @@
     <string name="setting_logout">退出登录</string>
 
     <!-- 手势密码 -->
-
     <string name="gesture_edit_title">解锁</string>
     <string name="forget_gesture_code">忘记手势密码</string>
     <string name="setup_gesture_pattern">绘制解锁图案</string>
@@ -125,9 +124,7 @@
     <string name="title_gestureset">设置手势密码</string>
 
     <!-- 我的银行卡 -->
-
     <string name="mybank_title">我的银行卡</string>
-
     <string name="mybank_add_card">添加银行卡</string>
     <string name="mybank_add_card_verify_code">输入短信验证码</string>
     <string name="mybank_add_card_real_name">输入您的真实姓名</string>
@@ -140,7 +137,6 @@
     <string name="mybank_add_nodata">暂未添加银行卡</string>
 
     <!-- 提现 -->
-
     <string name="withdraw_choose_bank_title">选择提现账户</string>
     <string name="withdraw_confirm_input">请输入提现金额</string>
     <string name="withdraw_input_verify">请输入短信验证码</string>
@@ -167,6 +163,7 @@
     <string name="title_customer_info">客户信息</string>
     <string name="title_explain_order">预约说明会</string>
     <string name="title_add_customer">新增客户</string>
+    <string name="title_edit_customer_info">客户信息</string>
     <string name="title_submit_info">添加客户信息</string>
     <string name="title_partner_identify">事业合伙人认证</string>
     <string name="title_account_book">账本</string>
@@ -175,10 +172,11 @@
     <string name="title_withdraw_details">提现详情</string>
     <string name="title_rengou_status">认购状态</string>
     <string name="title_customer_follow">客户跟踪</string>
-    <string name="title_customer_follow_details">跟踪信息</string>
+    <string name="title_customer_follow_details">跟踪详情</string>
     <string name="title_rengou_details">认购详情</string>
     <string name="title_add_customer_follow">添加跟踪</string>
     <string name="title_edit_info">修改客户信息</string>
+    <string name="title_business_partner">我的事业合伙人</string>
 
     <!-- 认购的三种状态 -->
     <string name="btn_subscribed">已认购</string>
@@ -192,6 +190,10 @@
     <string name="rengou_detail_project_name">项目名称:</string>
     <string name="rengou_detail_room_num">认购房号:</string>
     <string name="rengou_detail_deposit_amount">定金金额:</string>
+
+    <!--跟踪详情-->
+    <string name="tracking_information">已电话联络客户，简单介绍项目；\n已发项目资料，回答客户疑问；\n已和客户面谈，详细介绍项目；
+        \n客户已参加公司推介会,深度了解项目；\n再次回访客户，回答客户疑问；\n客户确定赴实地看房团行程；</string>
 
 
 

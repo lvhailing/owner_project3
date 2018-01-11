@@ -1,169 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_light"
-    android:paddingBottom="10dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/gray_light"
+              android:orientation="vertical">
 
-<ScrollView
-        android:id="@+id/scrollview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    android:layout_marginBottom="45dip"
-        android:scrollbars="none">
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@color/white"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="客户姓名"
-                android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
-            <TextView
-                android:id="@+id/tv_customer_name"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/gray_d"
-                android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:padding="10dp">
 
-        </RelativeLayout>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_light"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@color/white"
-            android:layout_marginRight="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="联系电话"
-                android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
-            <TextView
-                android:id="@+id/tv_customer_phone"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/gray_d"
-                android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"/>
+            android:text="客户姓名"
+            android:textColor="@color/gray_dark"
+            android:textSize="16sp"/>
 
-        </RelativeLayout>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/gray_light"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
+            android:id="@+id/tv_customer_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:background="@color/white"
-            android:padding="10dp">
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/gray_d"/>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_project"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="项目"
-                android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"/>
 
-            <EditText
-                android:id="@+id/et_project"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入项目名称"
-                android:maxLength="20"
-                android:gravity="right"
-                android:singleLine="true"
-                android:textColor="@color/gray_dark"
-                android:layout_centerVertical="true"
-                android:textSize="15sp"
-                android:layout_toRightOf="@+id/tv_project"
-                android:background="@color/white" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:background="@color/white"
-            android:padding="10dp">
+            android:text="联系电话"
+            android:textColor="@color/gray_dark"
+            android:textSize="16sp"/>
 
-            <TextView
-                android:id="@+id/tv_room_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="房号"
-                android:textColor="@color/gray_dark"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tv_customer_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/gray_d"/>
+    </RelativeLayout>
 
-            <EditText
-                android:id="@+id/et_room_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:hint="输入房产房号"
-                android:gravity="right"
-                android:singleLine="true"
-                android:maxLength="20"
-                android:layout_centerVertical="true"
-                android:textColor="@color/gray_dark"
-                android:textSize="15sp"
-                android:layout_toRightOf="@+id/tv_room_number"
-                android:background="@color/white" />
-        </RelativeLayout>
-        <com.haidehui.widget.MyListView
-            xmlns:ptr="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/lv_follow_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/gray_light"
-            android:scrollbars="none"
-            android:dividerHeight="1dp"
-            android:listSelector="#00000000"
-            ptr:ptrAnimationStyle="flip"
-            ptr:ptrMode="disabled" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/gray_light"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_project"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="项目"
+            android:textColor="@color/gray_dark"
+            android:textSize="16sp"/>
 
         <EditText
-            android:id="@+id/et_remark"
-            android:layout_width="fill_parent"
+            android:id="@+id/et_project"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/tv_project"
             android:background="@color/white"
-            android:hint="请输入您的备注信息！"
-            android:maxLength="500"
-            android:minLines="10"
-            android:gravity="top"
-            android:padding="8dip"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="57dp"
-            android:inputType="textMultiLine"
-            android:textSize="15.0sp"
-            />
+            android:gravity="right"
+            android:hint="输入项目名称"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_room_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="房号"
+            android:textColor="@color/gray_dark"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/et_room_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/tv_room_number"
+            android:background="@color/white"
+            android:gravity="right"
+            android:hint="输入房产房号"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="跟踪信息"
+        android:textColor="@color/gray_dark"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/tracking_information"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/gray_dark"
+            android:textSize="14sp"/>
+
 
     </LinearLayout>
-    </ScrollView>
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:text="保存"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shape_center_orange"/>
-</RelativeLayout>
+
+    <!--<com.haidehui.widget.MyListView-->
+    <!--xmlns:ptr="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/lv_follow_detail"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:divider="@color/gray_light"-->
+    <!--android:dividerHeight="1dp"-->
+    <!--android:listSelector="#00000000"-->
+    <!--android:scrollbars="none"-->
+    <!--ptr:ptrAnimationStyle="flip"-->
+    <!--ptr:ptrMode="disabled"/>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_remark"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/white"-->
+    <!--android:hint="请输入您的备注信息！"-->
+    <!--android:maxLength="500"-->
+    <!--android:minLines="10"-->
+    <!--android:gravity="top"-->
+    <!--android:padding="8dip"-->
+    <!--android:layout_marginTop="1dp"-->
+    <!--android:layout_marginBottom="57dp"-->
+    <!--android:inputType="textMultiLine"-->
+    <!--android:textSize="15.0sp"-->
+    <!--/>-->
+
+</LinearLayout>
+    <!--<Button-->
+    <!--android:id="@+id/btn_save"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="42dp"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:text="保存"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:background="@drawable/shape_center_orange"/>-->

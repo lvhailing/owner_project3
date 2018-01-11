@@ -115,53 +115,54 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> arg0, View view, int position,
-                                    long id) {
+            public void onItemClick(AdapterView<?> arg0, View view, int position,    long id) {
                 Intent intent = new Intent(mContext, CustomerFollowDetailsActivity.class);
                 intent.putExtra("customerId", totalList.get(position - 1).getCustomerId());
                 intent.putExtra("customerTrackingId", totalList.get(position - 1).getCustomerTrackingId());
                 startActivityForResult(intent,1000);
             }
         });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mDelId = position - 1;
-                customerId = totalList.get(position - 1).getCustomerId();
-                customerTrackingId = totalList.get(position - 1).getCustomerTrackingId();
-                showDialog();
-                return true;
-            }
-        });
-    }
-    protected void showDialog() {
-        BasicDialog dialog=new BasicDialog(mContext, new BasicDialog.OnBasicChanged() {
-            @Override
-            public void onConfim() {
-                deleteItem();
-            }
 
-            @Override
-            public void onCancel() {
-            }
-        },"确认删除吗？","确认");
-        dialog.show();
+        // 2018.01.4 改版去掉长按删除功能
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                mDelId = position - 1;
+//                customerId = totalList.get(position - 1).getCustomerId();
+//                customerTrackingId = totalList.get(position - 1).getCustomerTrackingId();
+//                showDialog();
+//                return true;
+//            }
+//        });
     }
+//    protected void showDialog() {
+//        BasicDialog dialog=new BasicDialog(mContext, new BasicDialog.OnBasicChanged() {
+//            @Override
+//            public void onConfim() {
+//                deleteItem();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//            }
+//        },"确认删除吗？","确认");
+//        dialog.show();
+//    }
     /**
      * 删除Item
      */
-    private void deleteItem() {
-        int size = totalList.size();
-        if (size > 0) {
-            totalList.remove(mDelId);
-            mAdapter.notifyDataSetChanged();
-
-            deleteData(customerTrackingId);
-            if (totalList.size()==0){
-                vs.setDisplayedChild(1);
-            }
-        }
-    }
+//    private void deleteItem() {
+//        int size = totalList.size();
+//        if (size > 0) {
+//            totalList.remove(mDelId);
+//            mAdapter.notifyDataSetChanged();
+//
+//            deleteData(customerTrackingId);
+//            if (totalList.size()==0){
+//                vs.setDisplayedChild(1);
+//            }
+//        }
+//    }
 
     private void deleteData(String customerTrackingId) {
         HashMap<String, Object> param = new HashMap<>();
