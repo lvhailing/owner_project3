@@ -139,10 +139,11 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_tracking_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/tracking_information"
+            android:text=""
             android:lineSpacingExtra="3dp"
             android:textColor="@color/gray_dark"
             android:textSize="14sp"/>

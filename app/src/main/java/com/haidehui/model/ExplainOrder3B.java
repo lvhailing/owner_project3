@@ -4,17 +4,17 @@ package com.haidehui.model;
 import com.haidehui.network.types.IMouldType;
 
 public class ExplainOrder3B implements IMouldType {
-	private String userId; //用户id
+	private String id; //预约说明会id
 	private String customerName; //客户姓名
 	private String customerPhone; //客户电话
 	private String meetingTime; //参加日期（yyyy-mm-dd）
 
-	public String getUserId() {
-		return userId;
+	public String getId() {
+		return id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getCustomerName() {

@@ -2540,6 +2540,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "客户跟踪列表:" + data);
                     Gson gson = new Gson();
                     Tracking1B b = gson.fromJson(data, Tracking1B.class);
                     return b.getData();
@@ -2861,6 +2862,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "预约说明会列表:" + data);
                     Gson gson = new Gson();
                     ExplainOrder1B b = gson.fromJson(data, ExplainOrder1B.class);
                     return b.getData();
@@ -2906,7 +2908,54 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "预约说明会新增或保存客户：" + data);
+                    Log.i("hh", "预约说明会新增、编辑完保存客户：" + data);
+                    Gson gson = new Gson();
+                    SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 预约说明会列表  删除客户信息
+     *
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void deleteExplainOrderListItem(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ACCOUNT_CUSTOMER_APPOINTMENT_DELETE;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Log.i("hh", "预约说明会列表  删除客户信息：" + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();

@@ -230,7 +230,7 @@
             android:name=".act.RenGouStatusActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.ExplainOrderActivity"
+            android:name=".act.ExplainOrderListActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".act.MyBusinessPartnerActivity"

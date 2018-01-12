@@ -50,6 +50,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 
     private String[] checkStr=new String[12];
     private String[] resultStr=new String[12];
+    private TextView tv_tracking_info; // 客户跟踪信息
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private void initView() {
         tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
         tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
+        tv_tracking_info= (TextView) findViewById(R.id.tv_tracking_info);
         edt_project= (EditText) findViewById(R.id.et_project);
         edt_room_number= (EditText) findViewById(R.id.et_room_number);
 //        edit_remark= (EditText) findViewById(R.id.et_remark);
@@ -118,6 +121,9 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         edt_project.requestFocusFromTouch();
     }
 
+    /**
+     *  请求跟踪详情数据
+     */
     private void requestData() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerTrackingId", customerTrackingId);
@@ -142,6 +148,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         tv_customerPhone.setText(data.getCustomerPhone());
         edt_project.setText(data.getHouseProject());
         edt_room_number.setText(data.getRoomNumber());
+        tv_tracking_info.setText(data.getTempTracking());
 //        edit_remark.setText(data.getTrackingRemark());
 
 //        if ("true".equals(data.getTelephoneContactedAndIntroductionProject())) {

@@ -101,7 +101,6 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        requestData(userId, customerName, customerPhone, date);
     }
 
 
@@ -184,7 +183,7 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
                 }
                 SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                 if ("true".equals(data.getFlag())) {
-                    Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(AddCustomerActivity.this, CustomerInfoActivity.class);
                     setResult(RESULT_OK, intent);

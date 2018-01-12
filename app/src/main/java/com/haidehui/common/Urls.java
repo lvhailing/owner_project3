@@ -28,7 +28,7 @@ public class Urls {
     public static final String URL_FYM = "http://192.168.1.164:9998/overseas-app/";
 
     // 调试，上线时只需改此处环境即可
-    private static String EC_HOST = URL_DEBUG;
+    private static String EC_HOST = URL_FYM;
 
     /**
      * 登出
@@ -314,4 +314,7 @@ public class Urls {
 
     //预约说明会新增客户信息
     public static final String URL_ACCOUNT_CUSTOMER_APPOINTMENT_ADD_SAVE = EC_HOST + "account/customer/appointment/add/save";
+
+    //预约说明会删除客户信息
+    public static final String URL_ACCOUNT_CUSTOMER_APPOINTMENT_DELETE = EC_HOST + "account/customer/appointment/delete";
 }

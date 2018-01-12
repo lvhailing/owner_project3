@@ -21,15 +21,15 @@ import java.util.HashMap;
  *  修改客户信息
  */
 public class EditCustomerInfoActivity extends BaseActivity implements View.OnClickListener {
-    private EditText edt_name;
-    private EditText edt_phone;
+    private EditText edt_name; // 客户姓名
+    private EditText edt_phone; // 联系电话
 //    private EditText edt_email;
-    private EditText edt_location;
-    private EditText edt_project;
-    private EditText edt_room_number;
-    private EditText edt_area;
-    private EditText edt_total_amount;
-    private Button btn_submit;
+    private EditText edt_location; // 房产所在地
+    private EditText edt_project; // 项目名称
+    private EditText edt_room_number; // 房号
+    private EditText edt_area; // 面积
+    private EditText edt_total_amount; // 总价
+    private Button btn_submit; // 立即提交
     private CustomerDetails2B data;
     private String customerId;
 

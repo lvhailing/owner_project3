@@ -22,6 +22,7 @@ public class TrackingDetails2B implements IMouldType {
     private String trackingRemark;
     private String houseProject;
     private String roomNumber;
+    private String tempTracking;// 跟踪信息（2018.01.04改版增加）
 
     public String getConfirmCondoTourPlan() {
         return confirmCondoTourPlan;
@@ -165,5 +166,13 @@ public class TrackingDetails2B implements IMouldType {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public String getTempTracking() {
+        return tempTracking;
+    }
+
+    public void setTempTracking(String tempTracking) {
+        this.tempTracking = tempTracking;
     }
 }

@@ -189,7 +189,7 @@ public class CustomerTrackingActivity extends BaseActivity implements View.OnCli
     }
 
     /**
-     * 请求列表数据
+     * 请求客户跟踪列表数据
      */
     private void requestListData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();

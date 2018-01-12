@@ -49,10 +49,15 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     private EditText et_phone; // 联系电话
     private RelativeLayout rl_date_participation; // 参加日期 布局
     private TextView tv_date; // 参加日期 展示
-    private Button btn_save;
+    private Button btn_save; // 保存
 
     private long currentTime = System.currentTimeMillis();
     private String date;
+    private String customerName;
+    private String customerPhone;
+    private String itemId;
+    private String meetingTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,11 +90,20 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     }
 
     private void initView() {
+        itemId = getIntent().getStringExtra("id");
+        customerName = getIntent().getStringExtra("customerName");
+        customerPhone = getIntent().getStringExtra("customerPhone");
+        meetingTime = getIntent().getStringExtra("meetingTime");
+
         et_name_customer = (EditText) findViewById(R.id.et_name_customer);
         et_phone = (EditText) findViewById(R.id.et_phone);
         rl_date_participation = (RelativeLayout) findViewById(R.id.rl_date_participation);
         tv_date = (TextView) findViewById(R.id.tv_date);
         btn_save = (Button) findViewById(R.id.btn_save);
+
+        et_name_customer.setText(customerName);
+        et_phone.setText(customerPhone);
+        tv_date.setText(meetingTime);
 
         rl_date_participation.setOnClickListener(this);
         btn_save.setOnClickListener(this);
@@ -103,12 +117,13 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     /**
      * 保存客户修改数据
      */
-    private void requestData(String userId, String customerName, String customerPhone, String meetingTime) {
+    private void requestData(String userId, String customerAppointmentId,String customerName, String customerPhone, String meetingTime) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("userId", userId);
+        param.put("customerAppointmentId", itemId);
         param.put("customerName", customerName);
         param.put("customerPhone", customerPhone);
-        param.put("meetingTime", date);
+        param.put("meetingTime", meetingTime);
 
         HtmlRequest.getAddExplainOrderCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
             @Override
@@ -119,9 +134,9 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
                 }
                 SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                 if ("true".equals(data.getFlag())) {
-                    Toast.makeText(mContext, data.getMsg(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(EditExplainOrderInfoActivity.this, CustomerInfoActivity.class);
+                    Intent intent = new Intent(EditExplainOrderInfoActivity.this, ExplainOrderListActivity.class);
                     setResult(RESULT_OK, intent);
                     finish();
                 } else {
@@ -134,12 +149,12 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_date_participation:
+            case R.id.rl_date_participation: // 选择日期
                 showDatePickerDialog();
                 break;
-            case R.id.btn_save:
-                String customerName = et_name_customer.getText().toString();
-                String customerPhone = et_phone.getText().toString();
+            case R.id.btn_save: // 保存
+                customerName = et_name_customer.getText().toString();
+                customerPhone = et_phone.getText().toString();
 
                 if (TextUtils.isEmpty(customerName)) {
                     Toast.makeText(mContext, "请输入客户姓名", Toast.LENGTH_LONG).show();
@@ -151,12 +166,11 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
                     et_name_customer.requestFocusFromTouch();
                     return;
                 }
-                if (TextUtils.isEmpty(date)) {
+                if (TextUtils.isEmpty(meetingTime)) {
                     Toast.makeText(mContext, "请选择参加日期", Toast.LENGTH_LONG).show();
-                    et_name_customer.requestFocusFromTouch();
                     return;
                 }
-                requestData(userId, customerName, customerPhone, date);
+                requestData(userId,itemId,customerName, customerPhone, meetingTime);
                 break;
         }
     }

@@ -21,7 +21,7 @@ import com.haidehui.R;
 import com.haidehui.act.AccountBookActivity;
 import com.haidehui.act.CustomerInfoActivity;
 import com.haidehui.act.CustomerTrackingActivity;
-import com.haidehui.act.ExplainOrderActivity;
+import com.haidehui.act.ExplainOrderListActivity;
 import com.haidehui.act.MessageActivity;
 import com.haidehui.act.MyBankActivity;
 import com.haidehui.act.MyBusinessPartnerActivity;
@@ -206,7 +206,7 @@ public class MineFragment extends Fragment implements OnClickListener {
                 startActivity(i_rengou);
                 break;
             case R.id.rl_explain_order://跳转预约说明会
-                Intent intent = new Intent(context, ExplainOrderActivity.class);
+                Intent intent = new Intent(context, ExplainOrderListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.layout_identify://跳转事业合伙人认证
