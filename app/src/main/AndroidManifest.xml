@@ -237,7 +237,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".act.AddCustomerActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/custom_date_picker_dialog"/>
         <activity
             android:name=".act.CustomerFollowDetailsActivity"
             android:screenOrientation="portrait"/>
@@ -267,7 +268,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".act.EditExplainOrderInfoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/custom_date_picker_dialog"/>
 
         <service android:name=".service.AppUpgradeService"/>
 

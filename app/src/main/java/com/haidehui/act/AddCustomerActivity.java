@@ -126,7 +126,6 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
                 }
                 if (TextUtils.isEmpty(date)) {
                     Toast.makeText(mContext, "请选择参加日期", Toast.LENGTH_LONG).show();
-                    et_name_customer.requestFocusFromTouch();
                     return;
                 }
                 requestData(userId, customerName, customerPhone, date);
@@ -155,7 +154,7 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
         try {
             Date selectDate = simpleDateFormat.parse(selectedDate);
-            if (currentTime > selectDate.getTime()) {
+            if (currentTime < selectDate.getTime()) {
                 //选择的时间必须是从今天开始包含今天
                 Toast.makeText(AddCustomerActivity.this, "时间只能是今天或今天以后", Toast.LENGTH_SHORT).show();
                 return false;

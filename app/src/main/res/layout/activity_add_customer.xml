@@ -119,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
+                android:gravity="right"
                 android:layout_toLeftOf="@id/iv_arrow"
                 android:hint="请选择预参加日期"
                 android:text=""
