@@ -217,7 +217,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_certification"/>
+                    android:src="@mipmap/icon_explain_order"/>
 
                 <TextView
                     android:id="@+id/tv_explain_order"
@@ -228,15 +228,6 @@
                     android:text="预约说明会"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
-
-                <ImageView
-                    android:id="@+id/iv_sign_explain_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/tv_explain_order"
-                    android:src="@mipmap/img_unidentify"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -418,7 +409,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_invite"/>
+                    android:src="@mipmap/icon_business_partner"/>
 
                 <TextView
                     android:layout_width="wrap_content"
