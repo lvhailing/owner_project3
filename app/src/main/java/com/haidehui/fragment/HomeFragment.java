@@ -82,9 +82,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Fragment> fragments;
     private int screenWidth; // 屏幕宽度
     private int line_width; // 下划线宽度
-    private CompanyFragment companyFragment;
-    private TeamFragment teamFragment;
-    private PlatFormFragment platFormFragment;
+    private CompanyFragment companyFragment; // 公司
+    private TeamFragment teamFragment; // 团队
+    private PlatFormFragment platFormFragment; // 平台
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

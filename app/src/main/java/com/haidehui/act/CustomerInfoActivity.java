@@ -40,7 +40,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     private CustomerInfoAdapter adapter;
     private MouldList<CustomerInfo3B> totalList=new MouldList<>();
     private int currentPage = 1;    //当前页
-    private Button btn_submit;
+    private Button btn_submit; // 添加客户信息
     private static int mDelId = 0;
     private String customerId;
     private ViewSwitcher vs;

@@ -90,8 +90,8 @@ public class AddCustomerFollowActivity extends BaseActivity implements View.OnCl
         btn_save = (Button) findViewById(R.id.btn_save);
         tv_customer_name = (TextView) findViewById(R.id.tv_customer_name);
         tv_customer_phone = (TextView) findViewById(R.id.tv_customer_phone);
-        et_project = (EditText) findViewById(R.id.et_project);
-        et_room_number = (EditText) findViewById(R.id.et_room_number);
+        et_project = (EditText) findViewById(R.id.tv_project);
+        et_room_number = (EditText) findViewById(R.id.tv_room_number);
         et_remark = (EditText) findViewById(R.id.et_remark);
         lv_follow_detail = (MyListView) findViewById(R.id.lv_follow_detail);
 

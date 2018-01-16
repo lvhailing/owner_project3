@@ -207,6 +207,7 @@ public class MineFragment extends Fragment implements OnClickListener {
                 break;
             case R.id.rl_explain_order://跳转预约说明会
                 Intent intent = new Intent(context, ExplainOrderListActivity.class);
+                intent.putExtra("checkStatus",status);
                 startActivity(intent);
                 break;
             case R.id.layout_identify://跳转事业合伙人认证

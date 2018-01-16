@@ -70,25 +70,24 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tv_project"
+            android:id="@+id/tv_project_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="项目"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
 
-        <EditText
-            android:id="@+id/et_project"
+        <TextView
+            android:id="@+id/tv_project"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/tv_project"
+            android:layout_toRightOf="@+id/tv_project_left"
             android:background="@color/white"
             android:gravity="right"
-            android:hint="输入项目名称"
-            android:maxLength="20"
-            android:singleLine="true"
+            android:text=""
+            android:maxLength="30"
             android:textColor="@color/gray_dark"
             android:textSize="15sp"/>
     </RelativeLayout>
@@ -101,25 +100,24 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tv_room_number"
+            android:id="@+id/tv_room_number_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="房号"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
 
-        <EditText
-            android:id="@+id/et_room_number"
+        <TextView
+            android:id="@+id/tv_room_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/tv_room_number"
+            android:layout_toRightOf="@+id/tv_room_number_left"
             android:background="@color/white"
             android:gravity="right"
-            android:hint="输入房产房号"
-            android:maxLength="20"
-            android:singleLine="true"
+            android:text=""
+            android:maxLength="30"
             android:textColor="@color/gray_dark"
             android:textSize="15sp"/>
     </RelativeLayout>
@@ -144,10 +142,11 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text=""
+            android:maxLines="8"
+            android:maxLength="100"
             android:lineSpacingExtra="3dp"
             android:textColor="@color/gray_dark"
             android:textSize="14sp"/>
-
 
     </LinearLayout>
 

@@ -1530,7 +1530,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "投资指南列表数据:" + data);
+                    Log.i("hh", "投资指南列表数据:" + data);
 
                     Gson gson = new Gson();
                     InvestmentGuide1B b = gson.fromJson(data, InvestmentGuide1B.class);
@@ -1627,7 +1627,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "路演列表数据:" + data);
+                    Log.i("hh", "路演列表数据:" + data);
 
                     Gson gson = new Gson();
                     ProductRoadshow1B b = gson.fromJson(data, ProductRoadshow1B.class);
@@ -2174,6 +2174,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "提交--事业合伙人认证:" + data);
                     Gson gson = new Gson();
                     SubmitPartnerIdentify1B b = gson.fromJson(data, SubmitPartnerIdentify1B.class);
                     return b.getData();
@@ -2908,7 +2909,53 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "预约说明会新增、编辑完保存客户：" + data);
+                    Log.i("hh", "预约说明会新增客户调的接口：" + data);
+                    Gson gson = new Gson();
+                    SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
+                    return b.getData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+
+            @Override
+            public void onPostExecute(Object result, BaseParams params) {
+                params.result = result;
+                params.sendResult();
+            }
+        });
+    }
+
+    /**
+     * 预约说明会-编辑
+     * @param context
+     * @param param
+     * @param listener
+     */
+    public static void getEditExplainOrderCustomerInFo(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+        final String data = getResult(param);
+        final String url = Urls.URL_ACCOUNT_CUSTOMER_APPOINTMENT_EDIT_SAVE;
+
+        getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
+            @Override
+            public Object doTask(BaseParams params) {
+                SimpleHttpClient client = new SimpleHttpClient(context, SimpleHttpClient.RESULT_STRING);
+                HttpEntity entity = null;
+                try {
+                    entity = new StringEntity(data);
+                } catch (UnsupportedEncodingException e1) {
+                    e1.printStackTrace();
+                }
+                client.post(url, entity);
+                String result = (String) client.getResult();
+                try {
+                    if (isCancelled() || result == null) {
+                        return null;
+                    }
+                    String data = DESUtil.decrypt(result);
+                    Log.i("hh", "预约说明会修改客户信息时调的接口：" + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();

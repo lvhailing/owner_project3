@@ -73,12 +73,12 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private EditText edt_workUnit;
     private EditText edt_email;
     private EditText edt_idNo;
-    private RelativeLayout layout_identity_card;
-    private ImageView img_identity_card;
-    private RelativeLayout layout_card;
-    private ImageView img_card;
+    private RelativeLayout layout_identity_card; // 身份证正面  布局
+    private ImageView img_identity_card; // 身份证正面
+    private RelativeLayout layout_card; // 名片   布局
+    private ImageView img_card; // 名片
     private Button btn_submit;
-    private TextView tv_remark;
+    private TextView tv_remark; // 认证信息提示语
     private RelativeLayout layout_delete;
     private ImageView img_delete;
 

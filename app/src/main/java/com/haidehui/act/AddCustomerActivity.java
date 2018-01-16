@@ -107,7 +107,7 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_date_participation:
+            case R.id.rl_date_participation: // 选择参加日期
                 showDatePickerDialog();
                 break;
             case R.id.btn_submit:  // 立即提交
@@ -154,7 +154,7 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
         try {
             Date selectDate = simpleDateFormat.parse(selectedDate);
-            if (currentTime < selectDate.getTime()) {
+            if (currentTime - 24 * 60 * 60 * 1000 > selectDate.getTime()) {
                 //选择的时间必须是从今天开始包含今天
                 Toast.makeText(AddCustomerActivity.this, "时间只能是今天或今天以后", Toast.LENGTH_SHORT).show();
                 return false;

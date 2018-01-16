@@ -315,6 +315,9 @@ public class Urls {
     //预约说明会新增客户信息
     public static final String URL_ACCOUNT_CUSTOMER_APPOINTMENT_ADD_SAVE = EC_HOST + "account/customer/appointment/add/save";
 
+    //预约说明会修改客户信息
+    public static final String URL_ACCOUNT_CUSTOMER_APPOINTMENT_EDIT_SAVE = EC_HOST + "account/customer/appointment/edit/save";
+
     //预约说明会删除客户信息
     public static final String URL_ACCOUNT_CUSTOMER_APPOINTMENT_DELETE = EC_HOST + "account/customer/appointment/delete";
 }

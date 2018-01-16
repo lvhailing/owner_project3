@@ -70,9 +70,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false)
-             .setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_edit_customer_info))
-             .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_edit_customer_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -117,7 +115,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     /**
      * 保存客户修改数据
      */
-    private void requestData(String userId, String customerAppointmentId,String customerName, String customerPhone, String meetingTime) {
+    private void requestData(String userId, String customerAppointmentId, String customerName, String customerPhone, String meetingTime) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("userId", userId);
         param.put("customerAppointmentId", itemId);
@@ -125,7 +123,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
         param.put("customerPhone", customerPhone);
         param.put("meetingTime", meetingTime);
 
-        HtmlRequest.getAddExplainOrderCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.getEditExplainOrderCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {
@@ -170,11 +168,14 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
                     Toast.makeText(mContext, "请选择参加日期", Toast.LENGTH_LONG).show();
                     return;
                 }
-                requestData(userId,itemId,customerName, customerPhone, meetingTime);
+                requestData(userId, itemId, customerName, customerPhone, meetingTime);
                 break;
         }
     }
 
+    /**
+     * 日期选择对话框
+     */
     private void showDatePickerDialog() {
         DatePickDialog dialog = new DatePickDialog(this);
         dialog.setDateDialog(new DatePickDialog.MyCallback() {
@@ -196,7 +197,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
         try {
             Date selectDate = simpleDateFormat.parse(selectedDate);
-            if (currentTime > selectDate.getTime()) {
+            if (currentTime - 24 * 60 * 60 * 1000 > selectDate.getTime()) {
                 //选择的时间必须是从今天开始包含今天
                 Toast.makeText(EditExplainOrderInfoActivity.this, "时间只能是今天或今天以后", Toast.LENGTH_SHORT).show();
                 return false;

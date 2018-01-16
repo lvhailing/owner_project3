@@ -3,11 +3,8 @@ package com.haidehui.act;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -24,7 +21,6 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
-import com.haidehui.widget.MyListView;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
@@ -43,8 +39,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 
     private TextView tv_customerName;
     private TextView tv_customerPhone;
-    private EditText edt_project;
-    private EditText edt_room_number;
+    private TextView tv_project;
+    private TextView tv_room_number;
 //    private EditText edit_remark;
 //    private Button btn_save;
 
@@ -91,8 +87,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
         tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
         tv_tracking_info= (TextView) findViewById(R.id.tv_tracking_info);
-        edt_project= (EditText) findViewById(R.id.et_project);
-        edt_room_number= (EditText) findViewById(R.id.et_room_number);
+        tv_project = (TextView) findViewById(R.id.tv_project);
+        tv_room_number = (TextView) findViewById(R.id.tv_room_number);
 //        edit_remark= (EditText) findViewById(R.id.et_remark);
 //        btn_save= (Button) findViewById(R.id.btn_save);
 //        scrollview= (ScrollView) findViewById(R.id.scrollview);
@@ -118,7 +114,6 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 //                scrollview.fullScroll(ScrollView.FOCUS_UP);
 //            }
 //        });
-        edt_project.requestFocusFromTouch();
     }
 
     /**
@@ -146,8 +141,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private void setData(TrackingDetails2B data) {
         tv_customerName.setText(data.getCustomerName());
         tv_customerPhone.setText(data.getCustomerPhone());
-        edt_project.setText(data.getHouseProject());
-        edt_room_number.setText(data.getRoomNumber());
+        tv_project.setText(data.getHouseProject());
+        tv_room_number.setText(data.getRoomNumber());
         tv_tracking_info.setText(data.getTempTracking());
 //        edit_remark.setText(data.getTrackingRemark());
 
@@ -296,8 +291,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     public void onClick(View v) {
         switch (v.getId()){
 //            case R.id.btn_save:
-//                String houseProject=edt_project.getText().toString();
-//                String roomNumber=edt_room_number.getText().toString();
+//                String houseProject=tv_project.getText().toString();
+//                String roomNumber=tv_room_number.getText().toString();
 ////                String remark=edit_remark.getText().toString();
 //                int m=0;
 //                if (!TextUtils.isEmpty(houseProject)){
@@ -315,11 +310,11 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 //
 //                    }else{
 //                        Toast.makeText(mContext, "请输入房产房号", Toast.LENGTH_LONG).show();
-//                        edt_room_number.requestFocusFromTouch();
+//                        tv_room_number.requestFocusFromTouch();
 //                    }
 //                }else{
 //                    Toast.makeText(mContext, "请输入项目名称", Toast.LENGTH_LONG).show();
-//                    edt_project.requestFocusFromTouch();
+//                    tv_project.requestFocusFromTouch();
 //                }
 //                break;
         }

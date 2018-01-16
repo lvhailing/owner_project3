@@ -25,7 +25,7 @@ import android.text.TextUtils;
 public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnClickListener {
     private EditText et_name; // 客户姓名
     private EditText et_phone; // 电话
-    private EditText et_email; // 邮箱地址
+    //    private EditText et_email; // 邮箱地址    改版去掉了
     private EditText et_location; // 房产所在国家
     private EditText et_project; // 项目名称
     private EditText et_room_number; // 房产房号
@@ -45,8 +45,7 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-             .setCenterText(getResources().getString(R.string.title_submit_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_submit_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
             @Override
             public void onMenu(int id) {
             }
@@ -65,7 +64,7 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
     private void initView() {
         et_name = (EditText) findViewById(R.id.et_name);
         et_phone = (EditText) findViewById(R.id.et_phone);
-        et_email = (EditText) findViewById(R.id.et_email);
+//        et_email = (EditText) findViewById(R.id.et_email);
         et_location = (EditText) findViewById(R.id.et_location);
         et_project = (EditText) findViewById(R.id.et_project);
         et_room_number = (EditText) findViewById(R.id.et_room_number);
@@ -82,7 +81,7 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
             case R.id.btn_submit:  // 立即提交
                 String customerName = et_name.getText().toString();
                 String customerPhone = et_phone.getText().toString();
-                String customerEmail = et_email.getText().toString();
+//                String customerEmail = et_email.getText().toString();
                 String houseLocation = et_location.getText().toString();
                 String houseProject = et_project.getText().toString();
                 String roomNumber = et_room_number.getText().toString();
@@ -92,17 +91,17 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
                 if (!TextUtils.isEmpty(customerName)) {
                     if (!TextUtils.isEmpty(customerPhone)) {
                         if (StringUtil.isMobileNO(customerPhone)) {
-                            if (!TextUtils.isEmpty(customerEmail)) {
-                                if (StringUtil.isEmail(customerEmail)) {
-                                    requestData(area, customerEmail, customerName, customerPhone, houseLocation, houseProject, roomNumber, totalPrice);
-                                } else {
-                                    Toast.makeText(mContext, "请输入正确的邮箱地址", Toast.LENGTH_LONG).show();
-                                    et_email.requestFocusFromTouch();
-                                }
-                            } else {
-                                Toast.makeText(mContext, "请输入邮箱地址", Toast.LENGTH_LONG).show();
-                                et_email.requestFocusFromTouch();
-                            }
+//                            if (!TextUtils.isEmpty(customerEmail)) {
+//                                if (StringUtil.isEmail(customerEmail)) {
+//                                } else {
+//                                    Toast.makeText(mContext, "请输入正确的邮箱地址", Toast.LENGTH_LONG).show();
+//                                    et_email.requestFocusFromTouch();
+//                                }
+//                            } else {
+//                                Toast.makeText(mContext, "请输入邮箱地址", Toast.LENGTH_LONG).show();
+//                                et_email.requestFocusFromTouch();
+//                            }
+                            requestData(area, customerName, customerPhone, houseLocation, houseProject, roomNumber, totalPrice);
                         } else {
                             Toast.makeText(mContext, "请输入正确的联系电话", Toast.LENGTH_LONG).show();
                             et_phone.requestFocusFromTouch();
@@ -123,10 +122,10 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
     /**
      * 提交客户信息
      */
-    private void requestData(String area, String customerEmail, String customerName, String customerPhone, String houseLocation, String houseProject, String roomNumber, String totalPrice) {
+    private void requestData(String area, String customerName, String customerPhone, String houseLocation, String houseProject, String roomNumber, String totalPrice) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("area", area);
-        param.put("customerEmail", customerEmail);
+//        param.put("customerEmail", customerEmail);
         param.put("customerName", customerName);
         param.put("customerPhone", customerPhone);
         param.put("houseLocation", houseLocation);
