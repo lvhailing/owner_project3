@@ -73,8 +73,8 @@ public class EditCustomerInfoActivity extends BaseActivity implements View.OnCli
         edt_phone= (EditText) findViewById(R.id.et_phone);
 //        edt_email= (EditText) findViewById(R.id.et_email);
         edt_location= (EditText) findViewById(R.id.et_location);
-        edt_project= (EditText) findViewById(R.id.tv_project);
-        edt_room_number= (EditText) findViewById(R.id.tv_room_number);
+        edt_project= (EditText) findViewById(R.id.et_project);
+        edt_room_number= (EditText) findViewById(R.id.et_room_number);
         edt_area= (EditText) findViewById(R.id.et_area);
         edt_total_amount= (EditText) findViewById(R.id.et_total_amount);
         btn_submit = (Button) findViewById(R.id.btn_submit);

@@ -106,20 +106,20 @@ public class ExplainOrderListActivity extends BaseActivity implements View.OnCli
 //            }
 //        });
         /**
-         *  item 长按监听
+         *  item 长按监听   修改或删除
          */
         lv_explain_order.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 EditCustomerInfoDialog mDialog = new EditCustomerInfoDialog(mContext, new EditCustomerInfoDialog.OnSelectPhotoChanged() {
                     @Override
-                    public void onDelete() {
+                    public void onDelete() {  // 删除
                         mDelId = position - 1;
                         itemId = totalList.get(position - 1).getId();
                         showDialog();
                     }
                     @Override
-                    public void onEdit() {
+                    public void onEdit() {   // 修改
                         itemId = totalList.get(position - 1).getId();
                         Intent intent = new Intent(mContext, EditExplainOrderInfoActivity.class);
                         intent.putExtra("id", itemId);

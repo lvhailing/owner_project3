@@ -51,7 +51,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
     private TextView tv_date; // 参加日期 展示
     private Button btn_save; // 保存
 
-    private long currentTime = System.currentTimeMillis();
+//    private long currentTime = System.currentTimeMillis();
     private String date;
     private String customerName;
     private String customerPhone;
@@ -121,7 +121,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
         param.put("customerAppointmentId", itemId);
         param.put("customerName", customerName);
         param.put("customerPhone", customerPhone);
-        param.put("meetingTime", meetingTime);
+        param.put("meetingTime", date);
 
         HtmlRequest.getEditExplainOrderCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
             @Override
@@ -197,6 +197,7 @@ public class EditExplainOrderInfoActivity extends BaseActivity implements View.O
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
         try {
             Date selectDate = simpleDateFormat.parse(selectedDate);
+            long currentTime = System.currentTimeMillis();
             if (currentTime - 24 * 60 * 60 * 1000 > selectDate.getTime()) {
                 //选择的时间必须是从今天开始包含今天
                 Toast.makeText(EditExplainOrderInfoActivity.this, "时间只能是今天或今天以后", Toast.LENGTH_SHORT).show();
