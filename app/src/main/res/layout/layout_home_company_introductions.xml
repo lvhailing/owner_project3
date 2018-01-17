@@ -44,7 +44,6 @@
                 android:text="平台"
                 android:textColor="@color/txt_light_gray"
                 android:textSize="18sp"/>
-
         </LinearLayout>
 
         <View
