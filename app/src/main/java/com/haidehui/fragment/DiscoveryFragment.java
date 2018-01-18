@@ -107,7 +107,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         v_line.getLayoutParams().width = line_width;
         v_line.requestLayout();
 
-        vp.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
+        vp.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
                 return fragments.size();

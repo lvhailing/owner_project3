@@ -225,7 +225,7 @@ public class MineFragment extends Fragment implements OnClickListener {
                     i_mybank.putExtra("checkStatus",status);
                     startActivity(i_mybank);
                 break;
-            case R.id.rl_business_partner:  // 跳转推荐列表
+            case R.id.rl_business_partner:  // 点击我的事业合伙人 跳转推荐列表
                     Intent intent1 = new Intent(context, MyBusinessPartnerActivity.class);
                     startActivity(intent1);
                 break;

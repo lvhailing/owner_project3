@@ -3,6 +3,7 @@ package com.haidehui.act;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -27,12 +28,12 @@ import java.util.HashMap;
 
 
 /**
- *  跟踪详情
+ * 跟踪详情
  */
 public class CustomerFollowDetailsActivity extends BaseActivity implements View.OnClickListener {
-//    private MyListView lv_follow_detail;
+    //    private MyListView lv_follow_detail;
     private CustomerFollowDetailsAdapter adapter;
-    private MouldList<ResultCustomerFollowDetailslistBean> detailsList=new MouldList<>();
+    private MouldList<ResultCustomerFollowDetailslistBean> detailsList = new MouldList<>();
     private ScrollView scrollview;
     private String customerId;
     private String customerTrackingId;
@@ -44,8 +45,8 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 //    private EditText edit_remark;
 //    private Button btn_save;
 
-    private String[] checkStr=new String[12];
-    private String[] resultStr=new String[12];
+    private String[] checkStr = new String[12];
+    private String[] resultStr = new String[12];
     private TextView tv_tracking_info; // 客户跟踪信息
 
     @Override
@@ -62,10 +63,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.title_customer_follow_details))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_customer_follow_details)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -84,9 +82,9 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     }
 
     private void initView() {
-        tv_customerName= (TextView) findViewById(R.id.tv_customer_name);
-        tv_customerPhone= (TextView) findViewById(R.id.tv_customer_phone);
-        tv_tracking_info= (TextView) findViewById(R.id.tv_tracking_info);
+        tv_customerName = (TextView) findViewById(R.id.tv_customer_name);
+        tv_customerPhone = (TextView) findViewById(R.id.tv_customer_phone);
+        tv_tracking_info = (TextView) findViewById(R.id.tv_tracking_info);
         tv_project = (TextView) findViewById(R.id.tv_project);
         tv_room_number = (TextView) findViewById(R.id.tv_room_number);
 //        edit_remark= (EditText) findViewById(R.id.et_remark);
@@ -102,10 +100,11 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 //            }
 //        });
     }
+
     private void initData() {
 //        btn_save.setOnClickListener(this);
-        customerId=getIntent().getStringExtra("customerId");
-        customerTrackingId=getIntent().getStringExtra("customerTrackingId");
+        customerId = getIntent().getStringExtra("customerId");
+        customerTrackingId = getIntent().getStringExtra("customerTrackingId");
         requestData();
 //        scrollview.post(new Runnable() {
 //            @Override
@@ -117,7 +116,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     }
 
     /**
-     *  请求跟踪详情数据
+     * 请求跟踪详情数据
      */
     private void requestData() {
         HashMap<String, Object> param = new HashMap<>();
@@ -125,17 +124,16 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         param.put("customerId", customerId);
         param.put("userId", userId);
         HtmlRequest.getTrackingDetails(this, param, new BaseRequester.OnRequestListener() {
-                    @Override
-                    public void onRequestFinished(BaseParams params) {
-                        if (params.result == null) {
-                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        TrackingDetails2B data = (TrackingDetails2B) params.result;
-                        setData(data);
-                    }
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    return;
                 }
-        );
+                TrackingDetails2B data = (TrackingDetails2B) params.result;
+                setData(data);
+            }
+        });
     }
 
     private void setData(TrackingDetails2B data) {
@@ -143,7 +141,15 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         tv_customerPhone.setText(data.getCustomerPhone());
         tv_project.setText(data.getHouseProject());
         tv_room_number.setText(data.getRoomNumber());
-        tv_tracking_info.setText(data.getTempTracking());
+
+        String tempTracking = data.getTempTracking();
+        String[] items = tempTracking.split("；");  // 此处后台返回的分号用的是中文的，需注意
+        StringBuilder sb = new StringBuilder();
+        for (String s : items) {
+            sb.append(s + "；\n");
+        }
+        String item = sb.toString();
+        tv_tracking_info.setText(item);
 //        edit_remark.setText(data.getTrackingRemark());
 
 //        if ("true".equals(data.getTelephoneContactedAndIntroductionProject())) {
@@ -248,7 +254,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     /**
      * 修改客户跟踪
      */
-    private void submitData(String[] resultStr,String houseProject,String roomNumber,String trackingRemark) {
+    private void submitData(String[] resultStr, String houseProject, String roomNumber, String trackingRemark) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
         param.put("customerTrackingId", customerTrackingId);
@@ -270,26 +276,26 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         param.put("recommendOtherCustomersSuccess", resultStr[11]);
 
         HtmlRequest.editTracking(this, param, new BaseRequester.OnRequestListener() {
-                    @Override
-                    public void onRequestFinished(BaseParams params) {
-                        if (params.result == null) {
-                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        SubmitCustomer2B data = (SubmitCustomer2B) params.result;
-                        if ("true".equals(data.getFlag())){
-                            Toast.makeText(mContext, "修改成功", Toast.LENGTH_LONG).show();
-                            Intent intent=new Intent(mContext,CustomerTrackingActivity.class);
-                            setResult(RESULT_OK, intent);
-                            finish();
-                        }
-                    }
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    return;
                 }
-        );
+                SubmitCustomer2B data = (SubmitCustomer2B) params.result;
+                if ("true".equals(data.getFlag())) {
+                    Toast.makeText(mContext, "修改成功", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(mContext, CustomerTrackingActivity.class);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+        });
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 //            case R.id.btn_save:
 //                String houseProject=tv_project.getText().toString();
 //                String roomNumber=tv_room_number.getText().toString();
@@ -319,13 +325,14 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
 //                break;
         }
     }
+
     /**
      * 动态设置ListView的高度
+     *
      * @param listView
      */
-    public static void setListViewHeightBasedOnChildren(Context context,ListView listView,int dividerHeight) {
-        if(listView == null)
-            return;
+    public static void setListViewHeightBasedOnChildren(Context context, ListView listView, int dividerHeight) {
+        if (listView == null) return;
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
@@ -335,10 +342,10 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
-            totalHeight += (listItem.getMeasuredHeight()+dividerHeight);
+            totalHeight += (listItem.getMeasuredHeight() + dividerHeight);
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * listAdapter.getCount())+5;
+        params.height = totalHeight + (listView.getDividerHeight() * listAdapter.getCount()) + 5;
 
         listView.setLayoutParams(params);
     }

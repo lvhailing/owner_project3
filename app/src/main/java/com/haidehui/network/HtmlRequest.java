@@ -2101,7 +2101,7 @@ public class HtmlRequest extends BaseRequester {
 
     /**
      * 获取   置业顾问认证
-     *
+     *  （我的事业合伙人也调此接口）
      * @param context
      * @param param
      * @param listener

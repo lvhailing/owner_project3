@@ -138,7 +138,7 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        userId = getIntent().getStringExtra(userId);
+        userId = getIntent().getStringExtra("userId");
 
         tv_realName= (TextView) findViewById(R.id.tv_real_name);
         tv_mobile= (TextView) findViewById(R.id.tv_mobile);
@@ -188,19 +188,16 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
         tv_realName.setText(data.getRealName());
         tv_mobile.setText(data.getMobile());
 
-        if (!TextUtils.isEmpty(data.getWorkProvince())){
+        if (!TextUtils.isEmpty(data.getWorkProvince())){  // 工作所在地
             tv_workProvince.setText(data.getWorkProvince());
         }
-        if (!TextUtils.isEmpty(data.getWorkProvince())){
-            tv_workProvince.setText(data.getWorkProvince());
-        }
-        if (!TextUtils.isEmpty(data.getWorkUnit())){
+        if (!TextUtils.isEmpty(data.getWorkUnit())){  // 工作单位
             edt_workUnit.setText(data.getWorkUnit());
         }
-        if (!TextUtils.isEmpty(data.getEmail())){
+        if (!TextUtils.isEmpty(data.getEmail())){ // 邮箱
             edt_email.setText(data.getEmail());
         }
-        if (!TextUtils.isEmpty(data.getIdNo())){
+        if (!TextUtils.isEmpty(data.getIdNo())){ // 身份证号
             edt_idNo.setText(data.getIdNo());
         }
 

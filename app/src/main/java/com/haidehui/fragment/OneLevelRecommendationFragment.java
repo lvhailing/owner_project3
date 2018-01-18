@@ -72,8 +72,8 @@ public class OneLevelRecommendationFragment extends Fragment {
         vs = (ViewSwitcher) mView.findViewById(R.id.vs);
         TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
         ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
-        tv_empty.setText("暂未推荐");
-        img_empty.setBackgroundResource(R.mipmap.ic_empty_investment_guide);
+        tv_empty.setText("暂无推荐");
+        img_empty.setBackgroundResource(R.mipmap.icon_empty_recommendation);
 
         listView = (PullToRefreshListView) mView.findViewById(R.id.listview);
         //PullToRefreshListView  上滑加载更多及下拉刷新
@@ -121,7 +121,9 @@ public class OneLevelRecommendationFragment extends Fragment {
 //        listView.getRefreshableView().setSelection(0);
     }
 
-    // 获取一级推荐列表数据
+    /**
+     *  获取一级推荐列表数据
+     */
     private void requestOneLevelRecData() {
         userId = null;
         try {

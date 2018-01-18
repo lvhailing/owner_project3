@@ -18,6 +18,7 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import java.util.ArrayList;
 
 /**
+ *   一级、二级推荐人列表
  * Created by hong on 2018/1/11.
  */
 
