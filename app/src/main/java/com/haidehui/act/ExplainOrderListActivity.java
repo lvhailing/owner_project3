@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -82,6 +83,8 @@ public class ExplainOrderListActivity extends BaseActivity implements View.OnCli
     private void initView() {
         ActivityStack stack = ActivityStack.getActivityManage();
         stack.addActivity(this);
+
+        status=getIntent().getStringExtra("checkStatus");
 
         vs = (ViewSwitcher) findViewById(R.id.vs);
         tv_empty = (TextView) findViewById(R.id.tv_empty);
@@ -284,14 +287,12 @@ public class ExplainOrderListActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_customers: // 新增客户
-                Intent intent = new Intent(this, AddCustomerActivity.class);
+                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
+                    Intent intent = new Intent(this, AddCustomerActivity.class);
                     startActivityForResult(intent, 1000);
-//                if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
-//                    Intent intent = new Intent(this, SubmitCustomerInfoActivity.class);
-//                    startActivityForResult(intent, 1000);
-//                } else {
-//                    Toast.makeText(mContext, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
-//                }
+                } else {
+                    Toast.makeText(mContext, "请您通过事业合伙人认证后再进行相关操作!", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
         }

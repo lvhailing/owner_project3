@@ -2,6 +2,7 @@ package com.haidehui.act;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
+
+import static com.haidehui.R.id.tv_empty;
 
 /**
  * 邀请记录
@@ -70,9 +73,13 @@ public class RecommendRecordActivity extends BaseActivity {
     public void initView() {
         recommendCode = getIntent().getStringExtra("recommendCode");
 
-        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
         tv_recommend_friends = (TextView) findViewById(R.id.tv_recommend_friends);
         listView = (PullToRefreshListView) findViewById(R.id.lv_recommend_record);
+        vs_recommend_record = (ViewSwitcher) findViewById(R.id.vs_recommend_record);
+        TextView tv_empty = (TextView)findViewById(R.id.tv_empty);
+        ImageView img_empty = (ImageView)findViewById(R.id.img_empty);
+        tv_empty.setText("暂无推荐");
+        img_empty.setBackgroundResource(R.mipmap.icon_empty_recommendation);
 
         //PullToRefreshListView  上滑加载更多及下拉刷新
         ViewUtils.slideAndDropDown(listView);

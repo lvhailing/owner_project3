@@ -126,8 +126,8 @@
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
-                <EditText
-                    android:id="@+id/edt_workUnit"
+                <TextView
+                    android:id="@+id/tv_workUnit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -135,7 +135,6 @@
                     android:layout_toRightOf="@+id/tv_location"
                     android:background="@color/white"
                     android:gravity="right"
-                    android:hint="输入您的工作单位"
                     android:maxLength="30"
                     android:singleLine="true"
                     android:textColor="@color/gray_dark"
@@ -157,8 +156,8 @@
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
-                <EditText
-                    android:id="@+id/et_email"
+                <TextView
+                    android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -166,7 +165,6 @@
                     android:layout_toRightOf="@+id/tv_email_left"
                     android:background="@color/white"
                     android:gravity="right"
-                    android:hint="输入您的邮箱"
                     android:singleLine="true"
                     android:textColor="@color/gray_dark"
                     android:textSize="15sp"/>
@@ -187,8 +185,8 @@
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
-                <EditText
-                    android:id="@+id/edt_idNo"
+                <TextView
+                    android:id="@+id/tv_idNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -196,7 +194,6 @@
                     android:layout_toRightOf="@+id/tv_idNo_left"
                     android:background="@color/white"
                     android:gravity="right"
-                    android:hint="输入您的身份证号"
                     android:singleLine="true"
                     android:textColor="@color/gray_dark"
                     android:textSize="15sp"/>

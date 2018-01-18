@@ -57,13 +57,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
 import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.IdCardCheckUtils;
 
 /**
- *  事业合伙人认证
+ * 事业合伙人认证
  */
 public class PartnerIdentifyActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_realName;
@@ -118,10 +119,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null))
-                .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .setCenterText(getResources().getString(R.string.title_partner_identify))
-                .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_partner_identify)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -140,22 +138,22 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        tv_realName= (TextView) findViewById(R.id.tv_real_name);
-        tv_mobile= (TextView) findViewById(R.id.tv_mobile);
-        layout_address= (RelativeLayout) findViewById(R.id.layout_address);
-        tv_workProvince= (TextView) findViewById(R.id.tv_workProvince);
-        edt_workUnit= (EditText) findViewById(R.id.edt_workUnit);
-        edt_email= (EditText) findViewById(R.id.et_email);
-        edt_idNo=(EditText) findViewById(R.id.edt_idNo);
-        layout_identity_card= (RelativeLayout) findViewById(R.id.layout_identity_card);
-        img_identity_card= (ImageView) findViewById(R.id.img_identity_card);
-        layout_card= (RelativeLayout) findViewById(R.id.layout_card);
-        img_card= (ImageView) findViewById(R.id.img_card);
-        btn_submit= (Button) findViewById(R.id.btn_submit);
-        tv_remark= (TextView) findViewById(R.id.tv_remark);
-        layout_delete=(RelativeLayout) findViewById(R.id.layout_delete);
-        img_delete= (ImageView) findViewById(R.id.img_delete);
-        tv_customer_service_telephone= (TextView) findViewById(R.id.tv_customer_service_telephone);
+        tv_realName = (TextView) findViewById(R.id.tv_real_name);
+        tv_mobile = (TextView) findViewById(R.id.tv_mobile);
+        layout_address = (RelativeLayout) findViewById(R.id.layout_address);
+        tv_workProvince = (TextView) findViewById(R.id.tv_workProvince);
+        edt_workUnit = (EditText) findViewById(R.id.edt_workUnit);
+        edt_email = (EditText) findViewById(R.id.et_email);
+        edt_idNo = (EditText) findViewById(R.id.edt_idNo);
+        layout_identity_card = (RelativeLayout) findViewById(R.id.layout_identity_card);
+        img_identity_card = (ImageView) findViewById(R.id.img_identity_card);
+        layout_card = (RelativeLayout) findViewById(R.id.layout_card);
+        img_card = (ImageView) findViewById(R.id.img_card);
+        btn_submit = (Button) findViewById(R.id.btn_submit);
+        tv_remark = (TextView) findViewById(R.id.tv_remark);
+        layout_delete = (RelativeLayout) findViewById(R.id.layout_delete);
+        img_delete = (ImageView) findViewById(R.id.img_delete);
+        tv_customer_service_telephone = (TextView) findViewById(R.id.tv_customer_service_telephone);
         tv_customer_service_telephone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); // 下划线
         tv_customer_service_telephone.getPaint().setAntiAlias(true);//抗锯齿
         tv_customer_service_telephone.setLinkTextColor(getResources().getColor(R.color.txt_orange));
@@ -176,58 +174,54 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("userId", userId);
         HtmlRequest.getPartnerIdentify(this, param, new BaseRequester.OnRequestListener() {
-                    @Override
-                    public void onRequestFinished(BaseParams params) {
-                        if (params.result == null) {
-                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        data = (PartnerIdentify2B) params.result;
-                        setData(data);
-                    }
-
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    return;
                 }
-        );
+                data = (PartnerIdentify2B) params.result;
+                setData(data);
+            }
+
+        });
     }
 
     private void setData(PartnerIdentify2B data) {
         tv_realName.setText(data.getRealName());
         tv_mobile.setText(data.getMobile());
 
-        if (!TextUtils.isEmpty(data.getWorkProvince())){
+        if (!TextUtils.isEmpty(data.getWorkProvince())) {
             tv_workProvince.setText(data.getWorkProvince());
         }
-        if (!TextUtils.isEmpty(data.getWorkProvince())){
-            tv_workProvince.setText(data.getWorkProvince());
-        }
-        if (!TextUtils.isEmpty(data.getWorkUnit())){
+        if (!TextUtils.isEmpty(data.getWorkUnit())) {
             edt_workUnit.setText(data.getWorkUnit());
         }
-        if (!TextUtils.isEmpty(data.getEmail())){
+        if (!TextUtils.isEmpty(data.getEmail())) {
             edt_email.setText(data.getEmail());
         }
-        if (!TextUtils.isEmpty(data.getIdNo())){
+        if (!TextUtils.isEmpty(data.getIdNo())) {
             edt_idNo.setText(data.getIdNo());
         }
 
         String idCardUrl = data.getIdcardFront();
         String cardUrl = data.getBusiCardPhoto();
-        if (!TextUtils.isEmpty(idCardUrl)){
-            isID=true;
+        if (!TextUtils.isEmpty(idCardUrl)) {
+            isID = true;
             new ImageViewService().execute(idCardUrl);
         }
-        if (!TextUtils.isEmpty(cardUrl)){
-            isCard=true;
+        if (!TextUtils.isEmpty(cardUrl)) {
+            isCard = true;
             new ImageViewServiceCard().execute(cardUrl);
         }
 
-        if (!TextUtils.isEmpty(data.getCheckStatus())){
-            if ("init".equals(data.getCheckStatus())){
+        if (!TextUtils.isEmpty(data.getCheckStatus())) {
+            if ("init".equals(data.getCheckStatus())) {
 
                 img_identity_card.setClickable(false);
                 img_card.setClickable(false);
 
-            }else if ("submit".equals(data.getCheckStatus())){//待认证(提交认证信息待审核)  submit状态 所填内容不能编辑
+            } else if ("submit".equals(data.getCheckStatus())) {//待认证(提交认证信息待审核)  submit状态 所填内容不能编辑
                 layout_delete.setVisibility(View.VISIBLE);
                 tv_remark.setText("认证审核中，请您耐心等待我们的反馈！");
 
@@ -241,7 +235,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 img_card.setClickable(true);
                 btn_submit.setClickable(false);
                 btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
-            }else if ("success".equals(data.getCheckStatus())){//success状态  已认证置灰  不能编辑  身份证照片可以看
+            } else if ("success".equals(data.getCheckStatus())) {//success状态  已认证置灰  不能编辑  身份证照片可以看
                 layout_address.setClickable(false);
                 edt_workUnit.setFocusable(false);
                 edt_email.setFocusable(false);
@@ -254,19 +248,19 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 btn_submit.setText("已认证");
                 btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
 
-                if(!TextUtils.isEmpty(data.getIdNo())) {
+                if (!TextUtils.isEmpty(data.getIdNo())) {
                     try {
                         PreferenceUtil.setIdNo(DESUtil.encrypt(data.getIdNo()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                }else if ("fail".equals(data.getCheckStatus())){//内容可以编辑  身份证照片变成 可照相状态 提交认证可以点
+            } else if ("fail".equals(data.getCheckStatus())) {//内容可以编辑  身份证照片变成 可照相状态 提交认证可以点
                 layout_delete.setVisibility(View.VISIBLE);
                 tv_remark.setText("认证失败，请提交您的真实信息！");
-                edt_workUnit.requestFocusFromTouch();
-                edt_email.requestFocusFromTouch();
-                edt_idNo.requestFocusFromTouch();
+//                edt_workUnit.requestFocusFromTouch();
+//                edt_email.requestFocusFromTouch();
+//                edt_idNo.requestFocusFromTouch();
                 layout_identity_card.setClickable(true);
                 layout_card.setClickable(true);
                 img_identity_card.setClickable(false);
@@ -274,6 +268,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             }
         }
     }
+
     /**
      * 获取网落图片资源
      *
@@ -300,6 +295,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         }
 
     }
+
     /**
      * 获取网落图片资源
      *
@@ -326,6 +322,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         }
 
     }
+
     private Bitmap getImageBitmap(String url) {
         URL imgUrl = null;
         Bitmap bitmap = null;
@@ -344,11 +341,12 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         }
         return bitmap;
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.layout_address: // 选择所在地
-                SelectAddressDialog dialog=new SelectAddressDialog(this, new SelectAddressDialog.OnExitChanged() {
+                SelectAddressDialog dialog = new SelectAddressDialog(this, new SelectAddressDialog.OnExitChanged() {
                     @Override
                     public void onConfim(String selectText) {
                         tv_workProvince.setText(selectText);
@@ -387,10 +385,10 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 startActivity(i_card);
                 break;
             case R.id.btn_submit: // 提交认证
-                String workProvince=tv_workProvince.getText().toString();
-                String workUnit=edt_workUnit.getText().toString();
-                String email=edt_email.getText().toString();
-                String idNo=edt_idNo.getText().toString();
+                String workProvince = tv_workProvince.getText().toString();
+                String workUnit = edt_workUnit.getText().toString();
+                String email = edt_email.getText().toString();
+                String idNo = edt_idNo.getText().toString();
 //                if (!TextUtils.isEmpty(workProvince)){
 //                    if (!TextUtils.isEmpty(workUnit)){
 //                        if (!TextUtils.isEmpty(email)){
@@ -405,8 +403,24 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 ////                                            Toast.makeText(PartnerIdentifyActivity.this, "请上传名片", Toast.LENGTH_SHORT).show();
 ////                                            return;
 ////                                        }
-//
-                                        requestSubmitData(email, idNo, userId, workProvince, workUnit);
+                if (!TextUtils.isEmpty(email)) {
+                    if (!StringUtil.isEmail(email)) { // 邮箱不为空的前提要判断邮箱格式是否正确
+                        if (!TextUtils.isEmpty(idNo)) {
+                            if (!IdCardCheckUtils.isIdCard((idNo.toUpperCase()))) { // 身份证号不为空的前提要判断身份证格式是否正确
+                                Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    } else {
+                        Toast.makeText(mContext, "请输入正确的邮箱", Toast.LENGTH_LONG).show();
+                    }
+                }
+                requestSubmitData(email, idNo, userId, workProvince, workUnit);
+
+//                if (!TextUtils.isEmpty(idNo)) {  // 身份证号不为空的前提要判断身份证格式是否正确
+//                    if (!IdCardCheckUtils.isIdCard((idNo.toUpperCase()))) {
+//                        Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
+//                    }
+//                }
 //                                    } else {
 //                                        Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
 //                                        edt_idNo.requestFocusFromTouch();
@@ -445,7 +459,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     /**
      * 提交认证数据
      */
-    private void requestSubmitData(String email,String idNo,String userId,String workProvince,String workUnit) {
+    private void requestSubmitData(String email, String idNo, String userId, String workProvince, String workUnit) {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("email", email);
         param.put("idNo", idNo);
@@ -454,37 +468,37 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         param.put("workUnit", workUnit);
 
         HtmlRequest.submitPartnerIdentify(this, param, new BaseRequester.OnRequestListener() {
-                    @Override
-                    public void onRequestFinished(BaseParams params) {
-                        if (params.result == null) {
-                            Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        SubmitPartnerIdentify2B data = (SubmitPartnerIdentify2B) params.result;
-                            if ("true".equals(data.getFlag())){
-                                Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
-                                layout_delete.setVisibility(View.VISIBLE);
-                                tv_remark.setText("认证审核中，请您耐心等待我们的反馈！");
-
-                                layout_address.setClickable(false);
-                                edt_workUnit.setFocusable(false);
-                                edt_email.setFocusable(false);
-                                edt_idNo.setFocusable(false);
-                                layout_identity_card.setClickable(false);
-                                layout_card.setClickable(false);
-                                img_identity_card.setClickable(true);
-                                img_card.setClickable(true);
-                                btn_submit.setClickable(false);
-                                btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
-                            }else{
-                                Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                    }
+            @Override
+            public void onRequestFinished(BaseParams params) {
+                if (params.result == null) {
+                    Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+                    return;
                 }
-        );
+                SubmitPartnerIdentify2B data = (SubmitPartnerIdentify2B) params.result;
+                if ("true".equals(data.getFlag())) {
+                    Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
+                    layout_delete.setVisibility(View.VISIBLE);
+                    tv_remark.setText("认证审核中，请您耐心等待我们的反馈！");
+
+                    layout_address.setClickable(false);
+                    edt_workUnit.setFocusable(false);
+                    edt_email.setFocusable(false);
+                    edt_idNo.setFocusable(false);
+                    layout_identity_card.setClickable(false);
+                    layout_card.setClickable(false);
+                    img_identity_card.setClickable(true);
+                    img_card.setClickable(true);
+                    btn_submit.setClickable(false);
+                    btn_submit.setBackgroundResource(R.drawable.shape_center_gray);
+                } else {
+                    Toast.makeText(mContext, data.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
+
     private void selectPhoto() {
-        SelectPhotoDialog mDialog = new SelectPhotoDialog(this,new SelectPhotoDialog.OnSelectPhotoChanged() {
+        SelectPhotoDialog mDialog = new SelectPhotoDialog(this, new SelectPhotoDialog.OnSelectPhotoChanged() {
             @Override
             public void onAlbum() {//相册
 
@@ -508,8 +522,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private void takePhoto() {
         //执行拍照前，应该先判断SD卡是否存在
         String sdState = Environment.getExternalStorageState();
-        if(sdState.equals(Environment.MEDIA_MOUNTED))
-        {
+        if (sdState.equals(Environment.MEDIA_MOUNTED)) {
 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
             /***
@@ -517,8 +530,8 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
              * 这里使用的这种方式有一个好处就是获取的图片是拍照后的原图
              * 如果不实用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
              */
-			/*//设置图片的保存路径,作为全局变量
-			String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
+            /*//设置图片的保存路径,作为全局变量
+            String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
 			File temp = new File(imageFilePath);
 			photoUri = Uri.fromFile(temp);//获取文件的Uri*/
             ContentValues values = new ContentValues();
@@ -526,10 +539,11 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoUri);
             /**-----------------*/
             startActivityForResult(intent, SELECT_PIC_BY_TACK_PHOTO);
-        }else{
+        } else {
             Toast.makeText(this, "内存卡不存在", Toast.LENGTH_LONG).show();
         }
     }
+
     /***
      * 从相册中取图片
      */
@@ -550,7 +564,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             if (photoUri != null) {
                 try {
                     photoBmp = getBitmapFormUri(PartnerIdentifyActivity.this, photoUri);
-                    if (photoBmp!=null){
+                    if (photoBmp != null) {
                         dialog.setmLoadingTip("正在上传照片，请稍后……");
                         startLoading();
                     }
@@ -596,6 +610,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     /**
      * 通过uri获取图片并进行压缩
      *
@@ -611,8 +626,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         input.close();
         int originalWidth = onlyBoundsOptions.outWidth;
         int originalHeight = onlyBoundsOptions.outHeight;
-        if ((originalWidth == -1) || (originalHeight == -1))
-            return null;
+        if ((originalWidth == -1) || (originalHeight == -1)) return null;
         //图片分辨率以480x800为标准
         float hh = 800f;//这里设置高度为800f
         float ww = 480f;//这里设置宽度为480f
@@ -623,8 +637,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         } else if (originalWidth < originalHeight && originalHeight > hh) {//如果高度高的话根据宽度固定大小缩放
             be = (int) (originalHeight / hh);
         }
-        if (be <= 0)
-            be = 1;
+        if (be <= 0) be = 1;
         //比例压缩
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inSampleSize = be;//设置缩放比例
@@ -636,6 +649,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
         return compressImage(bitmap);//再进行质量压缩
     }
+
     /**
      * 质量压缩方法
      *
@@ -657,23 +671,22 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
         return bitmap;
     }
+
     /**
      * 选择图片后，获取图片的路径
+     *
      * @param requestCode
      * @param data
      */
-    private void doPhoto(int requestCode,Intent data)
-    {
-        if(requestCode == SELECT_PIC_BY_PICK_PHOTO )  //从相册取图片，有些手机有异常情况，请注意
+    private void doPhoto(int requestCode, Intent data) {
+        if (requestCode == SELECT_PIC_BY_PICK_PHOTO)  //从相册取图片，有些手机有异常情况，请注意
         {
-            if(data == null)
-            {
+            if (data == null) {
                 Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
                 return;
             }
             photoUri = data.getData();
-            if(photoUri == null )
-            {
+            if (photoUri == null) {
                 Toast.makeText(this, "选择图片文件出错", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -682,8 +695,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         ContentResolver cr = getContentResolver();
         Cursor cursor = cr.query(photoUri, pojo, null, null, null);
 //		Cursor cursor = managedQuery(photoUri, pojo, null, null,null);
-        if(cursor != null )
-        {
+        if (cursor != null) {
             int columnIndex = cursor.getColumnIndexOrThrow(pojo[0]);
             cursor.moveToFirst();
             picPath = cursor.getString(columnIndex);
@@ -691,20 +703,20 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         }
         Log.i(TAG, "imagePath = " + picPath);
 
-        if(picPath != null && ( picPath.endsWith(".png") || picPath.endsWith(".PNG") ||picPath.endsWith(".jpg") ||picPath.endsWith(".JPG")  ))
-        {
+        if (picPath != null && (picPath.endsWith(".png") || picPath.endsWith(".PNG") || picPath.endsWith(".jpg") || picPath.endsWith(".JPG"))) {
 
             Bitmap bm = BitmapFactory.decodeFile(picPath);
             newZoomImage = zoomImage(bm, 600, 300);
 
 //			sendImage(image2byte(picPath));
-        }else{
+        } else {
             Toast.makeText(this, "选择图片文件不正确", Toast.LENGTH_LONG).show();
         }
 
     }
+
     //图片到byte数组
-    public byte[] image2byte(String path){
+    public byte[] image2byte(String path) {
         byte[] data = null;
         FileInputStream input = null;
         try {
@@ -718,18 +730,15 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             data = output.toByteArray();
             output.close();
             input.close();
-        }
-        catch (FileNotFoundException ex1) {
+        } catch (FileNotFoundException ex1) {
             ex1.printStackTrace();
-        }
-        catch (IOException ex1) {
+        } catch (IOException ex1) {
             ex1.printStackTrace();
         }
         return data;
     }
 
-    public static Bitmap zoomImage(Bitmap bgimage, double newWidth,
-                                   double newHeight) {
+    public static Bitmap zoomImage(Bitmap bgimage, double newWidth, double newHeight) {
         // 获取这个图片的宽和高
         float width = bgimage.getWidth();
         float height = bgimage.getHeight();
@@ -740,14 +749,13 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         float scaleHeight = ((float) newHeight) / height;
         // 缩放图片动作
         matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
-                (int) height, matrix, true);
+        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width, (int) height, matrix, true);
         return bitmap;
     }
 
     private void sendImage(Bitmap bm) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG,100, stream);
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bytes = stream.toByteArray();
 
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
@@ -758,14 +766,14 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             String photoTypeStr = "";
             if (photoType == 1) {
                 idNoName = "iscardFrount.jpg";
-                photoTypeStr="idNoPhoto";
+                photoTypeStr = "idNoPhoto";
             } else if (photoType == 2) {
                 busiName = "busiCardPhoto.jpg";
-                photoTypeStr="cardPhoto";
+                photoTypeStr = "cardPhoto";
             }
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            if (photoType==1){
+            if (photoType == 1) {
                 params.add("photo", img);
                 params.add("name", idNoName);
             } else if (photoType == 2) {
@@ -777,8 +785,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
             String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers,
-                                      String content) {
+                public void onSuccess(int statusCode, Header[] headers, String content) {
                     super.onSuccess(statusCode, headers, content);
                     try {
                         mthread = new Thread(myRunnable);
@@ -829,8 +836,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     };
 
     private Uri saveBitmap(Bitmap bm) {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File tmpDir = new File(IMG_PATH);
             if (!tmpDir.exists()) {
                 tmpDir.mkdirs();

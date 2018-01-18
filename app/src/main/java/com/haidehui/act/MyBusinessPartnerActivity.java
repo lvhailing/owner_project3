@@ -18,7 +18,7 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 import java.util.ArrayList;
 
 /**
- *   一级、二级推荐人列表
+ * 一级、二级推荐人列表
  * Created by hong on 2018/1/11.
  */
 
@@ -47,9 +47,8 @@ public class MyBusinessPartnerActivity extends BaseActivity implements View.OnCl
     private void initTopTitle() {
         titleBar = (TitleBar) findViewById(R.id.rl_title);
         titleBar.showLeftImg(true);
-        titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false)
-                 .setIndicator(R.mipmap.icon_back).setCenterText(getResources().getString(R.string.title_business_partner))
-                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
+                 .setCenterText(getResources().getString(R.string.title_business_partner)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -123,41 +122,42 @@ public class MyBusinessPartnerActivity extends BaseActivity implements View.OnCl
         });
 
     }
-        // 修改文字的颜色
-        private void setTitleStyle(int pos) {
-            if (pos == 0) {
-                tv_one_level_recommendation.setTextColor(getResources().getColor(R.color.txt_orange));
-                tv_two_level_recommendation.setTextColor(getResources().getColor(R.color.txt_light_gray));
-            } else if (pos == 1) {
-                tv_one_level_recommendation.setTextColor(getResources().getColor(R.color.txt_light_gray));
-                tv_two_level_recommendation.setTextColor(getResources().getColor(R.color.txt_orange));
-            }
 
+    // 修改文字的颜色
+    private void setTitleStyle(int pos) {
+        if (pos == 0) {
+            tv_one_level_recommendation.setTextColor(getResources().getColor(R.color.txt_orange));
+            tv_two_level_recommendation.setTextColor(getResources().getColor(R.color.txt_light_gray));
+        } else if (pos == 1) {
+            tv_one_level_recommendation.setTextColor(getResources().getColor(R.color.txt_light_gray));
+            tv_two_level_recommendation.setTextColor(getResources().getColor(R.color.txt_orange));
         }
 
-        //控制线条滚动，每点击一次调用一次
-        private void setLineStyle(int pos) {
-            ViewPropertyAnimator.animate(v_line).translationX(screenWidth / 2 * pos).setDuration(300);
-        }
+    }
+
+    //控制线条滚动，每点击一次调用一次
+    private void setLineStyle(int pos) {
+        ViewPropertyAnimator.animate(v_line).translationX(screenWidth / 2 * pos).setDuration(300);
+    }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.tv_one_level_recommendation:  // 一级推荐
-        setTitleStyle(0);
-        setLineStyle(0);
-        vp.setCurrentItem(0);
+            case R.id.tv_one_level_recommendation:  // 一级推荐
+                setTitleStyle(0);
+                setLineStyle(0);
+                vp.setCurrentItem(0);
 //        investmentGuideFr.upDateInvestmentGuideList();
 
-        break;
-        case R.id.tv_two_level_recommendation: // 二级推荐
-        setTitleStyle(1);
-        setLineStyle(1);
-        vp.setCurrentItem(1);
+                break;
+            case R.id.tv_two_level_recommendation: // 二级推荐
+                setTitleStyle(1);
+                setLineStyle(1);
+                vp.setCurrentItem(1);
 //        roadShowFr.upDateRoadShowList();
 
-        break;
+                break;
         }
 
     }

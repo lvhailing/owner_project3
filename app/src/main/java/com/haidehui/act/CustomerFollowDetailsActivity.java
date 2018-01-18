@@ -145,8 +145,12 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
         String tempTracking = data.getTempTracking();
         String[] items = tempTracking.split("；");  // 此处后台返回的分号用的是中文的，需注意
         StringBuilder sb = new StringBuilder();
-        for (String s : items) {
-            sb.append(s + "；\n");
+        for (int i = 0; i < items.length; i++) {
+            if (i == items.length - 1) {
+                sb.append(items[i] + ";");
+            } else {
+                sb.append(items[i] + "；\n");
+            }
         }
         String item = sb.toString();
         tv_tracking_info.setText(item);
@@ -254,6 +258,7 @@ public class CustomerFollowDetailsActivity extends BaseActivity implements View.
     /**
      * 修改客户跟踪
      */
+
     private void submitData(String[] resultStr, String houseProject, String roomNumber, String trackingRemark) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
