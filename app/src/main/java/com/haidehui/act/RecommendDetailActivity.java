@@ -208,8 +208,16 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
         if (!TextUtils.isEmpty(data.getCheckStatus())) {
             if ("init".equals(data.getCheckStatus())) { // 未认证
 
-                img_identity_card.setClickable(false);
-                img_card.setClickable(false);
+                if (!TextUtils.isEmpty(idCardUrl)){
+                    img_identity_card.setClickable(true);
+                }else {
+                    img_identity_card.setClickable(false);
+                }
+                if (!TextUtils.isEmpty(cardUrl)) {
+                    img_card.setClickable(true);
+                } else {
+                    img_card.setClickable(false);
+                }
 
             } else if ("submit".equals(data.getCheckStatus())) {//待认证(提交认证信息待审核)  submit状态 所填内容不能编辑
                 layout_delete.setVisibility(View.VISIBLE);
@@ -217,13 +225,29 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
 
                 layout_identity_card.setClickable(false);
                 layout_card.setClickable(false);
-                img_identity_card.setClickable(true);
-                img_card.setClickable(true);
+                if (!TextUtils.isEmpty(idCardUrl)){
+                    img_identity_card.setClickable(true);
+                }else {
+                    img_identity_card.setClickable(false);
+                }
+                if (!TextUtils.isEmpty(cardUrl)) {
+                    img_card.setClickable(true);
+                } else {
+                    img_card.setClickable(false);
+                }
             } else if ("success".equals(data.getCheckStatus())) {//success状态  已认证置灰  不能编辑  身份证照片可以看
                 layout_identity_card.setClickable(false);
                 layout_card.setClickable(false);
+                if (!TextUtils.isEmpty(idCardUrl)){
                 img_identity_card.setClickable(true);
-                img_card.setClickable(true);
+                }else {
+                img_identity_card.setClickable(false);
+                }
+                if (!TextUtils.isEmpty(cardUrl)) {
+                    img_card.setClickable(true);
+                } else {
+                    img_card.setClickable(false);
+                }
 
                 if (!TextUtils.isEmpty(data.getIdNo())) {
                     try {
@@ -237,8 +261,16 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
                 tv_remark.setText("认证失败，请提交您的真实信息！");
                 layout_identity_card.setClickable(false);
                 layout_card.setClickable(false);
-                img_identity_card.setClickable(true);
-                img_card.setClickable(true);
+                if (!TextUtils.isEmpty(idCardUrl)) {
+                    img_identity_card.setClickable(true);
+                } else {
+                    img_identity_card.setClickable(false);
+                }
+                if (!TextUtils.isEmpty(cardUrl)) {
+                    img_card.setClickable(true);
+                } else {
+                    img_card.setClickable(false);
+                }
             }
         }
     }
@@ -292,6 +324,7 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
                 saveBitmap(result);
             } else {
                 img_card.setImageDrawable(getResources().getDrawable(R.mipmap.img_default_picture));
+                img_card.setClickable(false);
             }
         }
 
@@ -319,13 +352,16 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_identity_card:
-                photoType = 1;
-                selectPhoto();
+            case R.id.img_delete:
+                layout_delete.setVisibility(View.GONE);
                 break;
-            case R.id.layout_card:
+            case R.id.layout_identity_card: // 身份证正面
+                photoType = 1;
+//                selectPhoto();
+                break;
+            case R.id.layout_card: // 名片
                 photoType = 2;
-                selectPhoto();
+//                selectPhoto();
                 break;
             case R.id.img_identity_card:
                 list = new ArrayList<>();
@@ -416,7 +452,7 @@ public class RecommendDetailActivity extends BaseActivity implements View.OnClic
              * 如果不实用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
              */
             /*//设置图片的保存路径,作为全局变量
-			String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
+            String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
 			File temp = new File(imageFilePath);
 			photoUri = Uri.fromFile(temp);//获取文件的Uri*/
             ContentValues values = new ContentValues();

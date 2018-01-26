@@ -40,7 +40,7 @@
                     android:background="@color/white"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="哈哈哈"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="15sp"/>
             </RelativeLayout>
@@ -70,7 +70,7 @@
                     android:background="@color/white"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:text="2324"
+                    android:text=""
                     android:textColor="@color/gray_dark"
                     android:textSize="15sp"/>
             </RelativeLayout>

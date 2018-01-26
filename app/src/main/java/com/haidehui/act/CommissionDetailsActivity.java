@@ -22,30 +22,30 @@ import java.util.LinkedHashMap;
  */
 public class CommissionDetailsActivity extends BaseActivity implements View.OnClickListener {
     private String id;
-    private TextView tv_commission;
-    private TextView tv_commiStatus;
-    private TextView tv_serialNumber;
-    private TextView tv_tradeNum;
-    private TextView tv_customerName;
-    private TextView tv_customerMobile;
-    private TextView tv_emergencyName;
-    private TextView tv_emergencyMobile;
-    private TextView tv_projectLocation;
-    private TextView tv_projectName;
-    private TextView tv_houseNum;
-    private TextView tv_houseType;
-    private TextView tv_houseArea;
-    private TextView tv_purchaseAmount;
-    private TextView tv_isCommitAmount;
-    private TextView tv_isSigned;
-    private TextView tv_downPaymentAmount;
-    private TextView tv_repayedRate;
-    private TextView tv_isCommitData;
-    private TextView tv_commissionAmountTotal;
-    private TextView tv_commissionRate;
-    private TextView tv_serviceFee;
-    private TextView tv_actualCommiRepayed;
-    private TextView tv_commissionTime;
+    private TextView tv_commission; // 佣金收益
+    private TextView tv_commiStatus; // 结佣状态
+    private TextView tv_serialNumber; // 流水号
+    private TextView tv_tradeNum; // 成交编号
+    private TextView tv_customerName; // 客户姓名
+    private TextView tv_customerMobile; // 联系电话
+    private TextView tv_emergencyName; // 紧急联系人
+    private TextView tv_emergencyMobile; // 紧急电话
+    private TextView tv_projectLocation; // 房产所在地
+    private TextView tv_projectName; // 项目名称
+    private TextView tv_houseNum; // 房号
+    private TextView tv_houseType; // 户型
+    private TextView tv_houseArea; // 面积
+    private TextView tv_purchaseAmount; // 认购总价
+    private TextView tv_isCommitAmount; // 认购金
+    private TextView tv_isSigned; // 签约状态
+    private TextView tv_downPaymentAmount; // 首付款金额
+    private TextView tv_repayedRate; // 已付款占比
+    private TextView tv_isCommitData; // 客户资料
+    private TextView tv_commissionAmountTotal; // 佣金总额
+    private TextView tv_commissionRate; // 佣金比例
+    private TextView tv_serviceFee; // 服务费用
+    private TextView tv_actualCommiRepayed; // 实结佣金
+    private TextView tv_commissionTime; // 结佣时间
 
     private LinearLayout layout_emergencyName;
     private LinearLayout layout_emergencyMobile;
@@ -124,6 +124,10 @@ public class CommissionDetailsActivity extends BaseActivity implements View.OnCl
         messageId=getIntent().getStringExtra("messageId");
         requestData();
     }
+
+    /**
+     *  获取佣金收获详情页数据
+     */
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("id", id);

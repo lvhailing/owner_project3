@@ -403,16 +403,13 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 ////                                            Toast.makeText(PartnerIdentifyActivity.this, "请上传名片", Toast.LENGTH_SHORT).show();
 ////                                            return;
 ////                                        }
-                if (!TextUtils.isEmpty(email)) {
-                    if (!StringUtil.isEmail(email)) { // 邮箱不为空的前提要判断邮箱格式是否正确
-                        if (!TextUtils.isEmpty(idNo)) {
-                            if (!IdCardCheckUtils.isIdCard((idNo.toUpperCase()))) { // 身份证号不为空的前提要判断身份证格式是否正确
-                                Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    } else {
-                        Toast.makeText(mContext, "请输入正确的邮箱", Toast.LENGTH_LONG).show();
-                    }
+                if (!TextUtils.isEmpty(email) && !StringUtil.isEmail(email)) { // 邮箱不为空的前提要判断邮箱格式是否正确
+                    Toast.makeText(mContext, "请输入正确的邮箱", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                if (!TextUtils.isEmpty(idNo) && !IdCardCheckUtils.isIdCard((idNo.toUpperCase()))) { // 身份证号不为空的前提要判断身份证格式是否正确
+                    Toast.makeText(mContext, "请输入正确的身份证号", Toast.LENGTH_LONG).show();
+                    break;
                 }
                 requestSubmitData(email, idNo, userId, workProvince, workUnit);
 

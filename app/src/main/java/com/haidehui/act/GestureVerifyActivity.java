@@ -37,176 +37,155 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
  * 手势绘制/校验界面
- *
  */
-public class GestureVerifyActivity extends BaseActivity implements
-		View.OnClickListener, Observer {
-	private TextView mTextTip;
-	private FrameLayout mGestureContainer;
-	private GestureContentView mGestureContentView;
-	private TextView mTextForget;
-	private TextView mTextOther;
-	String s = null;
-	private int current_num = 1;
-	private static final int MAX_NUM = 5;
-	public static final String TOMAIN = "6";
+public class GestureVerifyActivity extends BaseActivity implements View.OnClickListener, Observer {
+    private TextView mTextTip;
+    private FrameLayout mGestureContainer;
+    private GestureContentView mGestureContentView;
+    private TextView mTextForget; // 忘记手势密码
+    private TextView mTextOther;
+    String s = null;
+    private int current_num = 1;
+    private static final int MAX_NUM = 5;
+    public static final String TOMAIN = "6";
 
-	private String from = null;
-	private String titleName;
-	private String message;
+    private String from = null;
+    private String titleName;
+    private String message;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		baseSetContentView(R.layout.activity_gesture_verify);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        baseSetContentView(R.layout.activity_gesture_verify);
 
-		from = getIntent().getExtras().getString("from");
-		titleName = getIntent().getStringExtra("title");
-		message= getIntent().getStringExtra("message");
-		initTopTitle();
-		initView();
-	}
-	@Override
-	protected void onResume() {
-		super.onResume();
-		UserLogin.getInstance().addObserver(this);
-		setUpViews();
-	}
-	private void initTopTitle() {
-		TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-		title.setTitle(getResources().getString(R.string.title_null))
-				.setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-				.setCenterText(titleName)
-				.showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        from = getIntent().getExtras().getString("from");
+        titleName = getIntent().getStringExtra("title");
+        message = getIntent().getStringExtra("message");
+        initTopTitle();
+        initView();
+    }
 
-			@Override
-			public void onMenu(int id) {
-			}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserLogin.getInstance().addObserver(this);
+        setUpViews();
+    }
 
-			@Override
-			public void onBack() {
-				finish();
-			}
+    private void initTopTitle() {
+        TitleBar title = (TitleBar) findViewById(R.id.rl_title);
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(titleName).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
-			@Override
-			public void onAction(int id) {
+            @Override
+            public void onMenu(int id) {
+            }
 
-			}
-		});
-	}
-	private void initView() {
-		mTextTip = (TextView) findViewById(R.id.text_title_message);
-		mTextTip.setText(message);
-		mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
-		mTextForget = (TextView) findViewById(R.id.text_forget_gesture);
-		mTextOther = (TextView) findViewById(R.id.text_other_account);
+            @Override
+            public void onBack() {
+                finish();
+            }
+
+            @Override
+            public void onAction(int id) {
+
+            }
+        });
+    }
+
+    private void initView() {
+        mTextTip = (TextView) findViewById(R.id.text_title_message);
+        mTextTip.setText(message);
+        mGestureContainer = (FrameLayout) findViewById(R.id.gesture_container);
+        mTextForget = (TextView) findViewById(R.id.text_forget_gesture);
+        mTextOther = (TextView) findViewById(R.id.text_other_account);
 
 		/*if(netHint_2!=null){
-			netHint_2.setVisibility(View.GONE);
+            netHint_2.setVisibility(View.GONE);
 			llContent.setVisibility(View.VISIBLE);
 		}
 		netFail_2 = false;*/
-	}
+    }
 
-	private void setUpViews() {
-		try {
-			s = DESUtil.decrypt(PreferenceUtil.getGesturePwd());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    private void setUpViews() {
+        try {
+            s = DESUtil.decrypt(PreferenceUtil.getGesturePwd());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		if (from.equals(Urls.ACTIVITY_GESVERIFY)) {
-			mTextForget.setVisibility(View.GONE);
-			mTextOther.setVisibility(View.GONE);
-		}else if (from.equals(Urls.ACTIVITY_ACCOUNT)) {
-			mTextForget.setText("忘记手势密码");
-			mTextForget.setOnClickListener(this);
-		}else if(from.equals(Urls.ACTIVITY_SPLASH)){
-			mTextForget.setText("忘记手势密码");
-			mTextForget.setOnClickListener(this);
-			mTextOther.setOnClickListener(this);
-		}else if(from.equals(Urls.ACTIVITY_GESEDIT)){
-			mTextForget.setText("忘记手势密码");
-			mTextForget.setOnClickListener(this);
-		}else if(from.equals(Urls.ACTIVITY_CHANGE_GESTURE)){
-			mTextForget.setText("忘记手势密码");
-			mTextForget.setOnClickListener(this);
-			mTextOther.setVisibility(View.GONE);
-		}
-		// 初始化一个显示各个点的viewGroup
-		mGestureContentView = new GestureContentView(this, true, s,
-				new GestureDrawline.GestureCallBack() {
+        if (from.equals(Urls.ACTIVITY_GESVERIFY)) {
+            mTextForget.setVisibility(View.GONE);
+            mTextOther.setVisibility(View.GONE);
+        } else if (from.equals(Urls.ACTIVITY_ACCOUNT)) {
+            mTextForget.setText("忘记手势密码");
+            mTextForget.setOnClickListener(this);
+        } else if (from.equals(Urls.ACTIVITY_SPLASH)) { // 从启动页进来
+            mTextForget.setText("忘记手势密码");
+            mTextForget.setOnClickListener(this);
+            mTextOther.setOnClickListener(this);
+        } else if (from.equals(Urls.ACTIVITY_GESEDIT)) {
+            mTextForget.setText("忘记手势密码");
+            mTextForget.setOnClickListener(this);
+        } else if (from.equals(Urls.ACTIVITY_CHANGE_GESTURE)) { // 从设置页面点修改手势密码进来
+            mTextForget.setText("忘记手势密码");
+            mTextForget.setOnClickListener(this);
+            mTextOther.setVisibility(View.GONE);
+        }
+        // 初始化一个显示各个点的viewGroup
+        mGestureContentView = new GestureContentView(this, true, s, new GestureDrawline.GestureCallBack() {
 
-					@Override
-					public void onGestureCodeInput(String inputCode) {
+            @Override
+            public void onGestureCodeInput(String inputCode) {
 
-					}
+            }
 
-					@Override
-					public void checkedSuccess() {
-						mGestureContentView.clearDrawlineState(0L);
-						try {
-							if (from.equals(Urls.ACTIVITY_SPLASH)) {
-								GestureVerifyActivity.this.finish();
+            @Override
+            public void checkedSuccess() {
+                mGestureContentView.clearDrawlineState(0L);
+                try {
+                    if (from.equals(Urls.ACTIVITY_SPLASH)) {
+                        GestureVerifyActivity.this.finish();
 //								UserLogin.getInstance().userlogining(
 //										getApplicationContext(),
 //										DESUtil.decrypt(PreferenceUtil
 //												.getAutoLoginAccount()),
 //										DESUtil.decrypt(PreferenceUtil
 //												.getAutoLoginPwd()), "");
-								Intent i = new Intent(
-										GestureVerifyActivity.this,
-										MainActivity.class);
-
-								startActivity(i);
-							} else if(from.equals(Urls.ACTIVITY_ACCOUNT)){
+                        Intent i = new Intent(GestureVerifyActivity.this, MainActivity.class);
+                        startActivity(i);
+                    } else if (from.equals(Urls.ACTIVITY_ACCOUNT)) {
 //								Intent i = new Intent(
 //										GestureVerifyActivity.this,
 //										AccountActivity.class);
 //								setResult(2000, i);
 //								finish();
-							}else if (from
-									.equals(Urls.ACTIVITY_GESEDIT)) {
-								Toast.makeText(GestureVerifyActivity.this,
-										"设置成功", Toast.LENGTH_SHORT)
-										.show();
-								finish();
-							} else if (from
-									.equals(Urls.ACTIVITY_GESVERIFY)) {
-								UserLogin.getInstance().userlogining(
-										getApplicationContext(),
-										DESUtil.decrypt(PreferenceUtil
-												.getAutoLoginAccount()),
-										DESUtil.decrypt(PreferenceUtil
-												.getAutoLoginPwd()), "");
-								Intent i = new Intent(
-										GestureVerifyActivity.this,
-										MainActivity.class);
-								Toast.makeText(GestureVerifyActivity.this,
-										"设置成功", Toast.LENGTH_SHORT)
-										.show();
-								startActivity(i);
-								finish();
-							}else if(from
-									.equals(Urls.ACTIVITY_CHANGE_GESTURE)){
-								GestureVerifyActivity.this.finish();
-								Intent i = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
-								//判断从账户设置手势密码，点击跳过，再次登录时不会关闭手势密码
-								i.putExtra("skip","skip_from_account");
-								i.putExtra("title", getString(R.string.setting_change_gesture_password));
-								i.putExtra("comeflag", 4);
-								startActivity(i);
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
+                    } else if (from.equals(Urls.ACTIVITY_GESEDIT)) {
+                        Toast.makeText(GestureVerifyActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else if (from.equals(Urls.ACTIVITY_GESVERIFY)) {
+                        UserLogin.getInstance().userlogining(getApplicationContext(), DESUtil.decrypt(PreferenceUtil.getAutoLoginAccount()), DESUtil.decrypt(PreferenceUtil.getAutoLoginPwd()), "");
+                        Intent i = new Intent(GestureVerifyActivity.this, MainActivity.class);
+                        Toast.makeText(GestureVerifyActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                        startActivity(i);
+                        finish();
+                    } else if (from.equals(Urls.ACTIVITY_CHANGE_GESTURE)) {
+                        GestureVerifyActivity.this.finish();
+                        Intent i = new Intent(GestureVerifyActivity.this, GestureEditActivity.class);
+                        //判断从账户设置手势密码，点击跳过，再次登录时不会关闭手势密码
+                        i.putExtra("skip", "skip_from_account");
+                        i.putExtra("title", getString(R.string.setting_change_gesture_password));
+                        i.putExtra("comeflag", 4);
+                        startActivity(i);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-					@Override
-					public void checkedFail() {
-						if (current_num >= MAX_NUM) {
+            @Override
+            public void checkedFail() {
+                if (current_num >= MAX_NUM) {
 							/*Builder builder = new Builder(
 									GestureVerifyActivity.this);
 							builder.setMessage("您输入的手势密码错误次数已达到最大次数，请使用登录密码进行登录");
@@ -236,84 +215,74 @@ public class GestureVerifyActivity extends BaseActivity implements
 							builder.create().show();*/
 
 
-							BasicDialog dialog=new BasicDialog(GestureVerifyActivity.this, new BasicDialog.OnBasicChanged() {
-								@Override
-								public void onConfim() {
+                    BasicDialog dialog = new BasicDialog(GestureVerifyActivity.this, new BasicDialog.OnBasicChanged() {
+                        @Override
+                        public void onConfim() {
 //									delete(position,list.get(position).getId());
-									from = Urls.ACTIVITY_GESVERIFY;
-									Intent intent = new Intent();
-									intent.setClass(
-											GestureVerifyActivity.this,
-											LoginActivity.class);
+                            from = Urls.ACTIVITY_GESVERIFY;
+                            Intent intent = new Intent();
+                            intent.setClass(GestureVerifyActivity.this, LoginActivity.class);
 
-									intent.putExtra("GOTOMAIN", LoginActivity.GOTOMAIN);
-									intent.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
-									PreferenceUtil.setFirstLogin(true);
-									PreferenceUtil.setGesturePwd("");
-									PreferenceUtil.setLogin(false);
-									startActivity(intent);
-									finish();
+                            intent.putExtra("GOTOMAIN", LoginActivity.GOTOMAIN);
+                            intent.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
+                            PreferenceUtil.setFirstLogin(true);
+                            PreferenceUtil.setGesturePwd("");
+                            PreferenceUtil.setLogin(false);
+                            startActivity(intent);
+                            finish();
 
-								}
+                        }
 
-								@Override
-								public void onCancel() {
+                        @Override
+                        public void onCancel() {
 
-								}
-							},"您输入的手势密码错误次数已达到最大次数，请使用登录密码进行登录","确认",false);
-							dialog.show();
+                        }
+                    }, "您输入的手势密码错误次数已达到最大次数，请使用登录密码进行登录", "确认", false);
+                    dialog.show();
 
 
+                } else {
+                    mGestureContentView.clearDrawlineState(1300L);
+                    mTextTip.setVisibility(View.VISIBLE);
+                    String str1, str2, str3;
+                    str1 = "密码错误,您还可以尝试";
+                    str2 = str1 + (MAX_NUM - current_num);
+                    str3 = str2 + "次";
 
-						} else {
-							mGestureContentView.clearDrawlineState(1300L);
-							mTextTip.setVisibility(View.VISIBLE);
-							String str1, str2, str3;
-							str1 = "密码错误,您还可以尝试";
-							str2 = str1 + (MAX_NUM - current_num);
-							str3 = str2 + "次";
-
-							mTextTip.setText(StringUtil.setTextStyle(
-									GestureVerifyActivity.this, str1, str2,
-									str3, R.color.txt_red, R.color.txt_red,
-									R.color.txt_red, 16, 16, 16, 0, 0, 0));
-							// 左右移动动画
-							Animation shakeAnimation = AnimationUtils
-									.loadAnimation(GestureVerifyActivity.this,
-											R.anim.shake);
-							mTextTip.startAnimation(shakeAnimation);
-							current_num++;
-						}
-					}
-				});
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.WRAP_CONTENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT);
-		params.gravity = Gravity.CENTER_HORIZONTAL;
-		mGestureContentView.setLayoutParams(params);
-		// 设置手势解锁显示到哪个布局里面
-		mGestureContentView.setParentView(mGestureContainer);
-	}
+                    mTextTip.setText(StringUtil.setTextStyle(GestureVerifyActivity.this, str1, str2, str3, R.color.txt_red, R.color.txt_red, R.color.txt_red, 16, 16, 16, 0, 0, 0));
+                    // 左右移动动画
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(GestureVerifyActivity.this, R.anim.shake);
+                    mTextTip.startAnimation(shakeAnimation);
+                    current_num++;
+                }
+            }
+        });
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        mGestureContentView.setLayoutParams(params);
+        // 设置手势解锁显示到哪个布局里面
+        mGestureContentView.setParentView(mGestureContainer);
+    }
 
 
-	private String getProtectedMobile(String phoneNumber) {
-		if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 11) {
-			return "";
-		}
-		StringBuilder builder = new StringBuilder();
-		builder.append(phoneNumber.subSequence(0, 3));
-		builder.append("****");
-		builder.append(phoneNumber.subSequence(7, 11));
-		return builder.toString();
-	}
+    private String getProtectedMobile(String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 11) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(phoneNumber.subSequence(0, 3));
+        builder.append("****");
+        builder.append(phoneNumber.subSequence(7, 11));
+        return builder.toString();
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
 			/*case R.id.id_img_back:
 				finish();
 				break;*/
-			case R.id.text_forget_gesture:
+            case R.id.text_forget_gesture: // 忘记手势密码
 
 //					VerifyPassWordDialog dialog_phone = new VerifyPassWordDialog(GestureVerifyActivity.this, new VerifyPassWordDialog.OnVerifyPW() {
 //						@Override
@@ -329,20 +298,21 @@ public class GestureVerifyActivity extends BaseActivity implements
 //					dialog_phone.show();
 
 
-					BasicDialog dialog_1=new BasicDialog(GestureVerifyActivity.this, new BasicDialog.OnBasicChanged() {
-						@Override
-						public void onConfim() {
+                BasicDialog dialog_1 = new BasicDialog(GestureVerifyActivity.this, new BasicDialog.OnBasicChanged() {
+                    @Override
+                    public void onConfim() {
+                        GestureVerifyActivity.this.finish();
 //							delete(position,list.get(position).getId());
-							Intent i_login = new Intent(GestureVerifyActivity.this, LoginActivity.class);
-							i_login.putExtra("GOTOMAIN",LoginActivity.GOTOMAIN);
-							startActivity(i_login);
-						}
+                        Intent i_login = new Intent(GestureVerifyActivity.this, LoginActivity.class);
+                        i_login.putExtra("GOTOMAIN", LoginActivity.GOTOMAIN);
+                        startActivity(i_login);
+                    }
 
-						@Override
-						public void onCancel() {
-						}
-					},"忘记手势密码需要重新登录","确认");
-				dialog_1.show();
+                    @Override
+                    public void onCancel() {
+                    }
+                }, "忘记手势密码需要重新登录", "确认");
+                dialog_1.show();
 
 
 //				CheckVersionDialog dialog = new CheckVersionDialog(GestureVerifyActivity.this,
@@ -361,17 +331,17 @@ public class GestureVerifyActivity extends BaseActivity implements
 //						},"忘记手势密码，需要重新登录并设置手势密码","false");
 //				dialog.show();
 
-				break;
-			case R.id.text_other_account:
-				Intent i_login=new Intent(this,LoginActivity.class);
-				i_login.putExtra("GOTOMAIN",LoginActivity.GOTOMAIN);
-				i_login.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
-				startActivity(i_login);
-				break;
-			default:
-				break;
-		}
-	}
+                break;
+//            case R.id.text_other_account: // 用其他帐号登录
+//                Intent i_login = new Intent(this, LoginActivity.class);
+//                i_login.putExtra("GOTOMAIN", LoginActivity.GOTOMAIN);
+//                i_login.putExtra("not_finish", "not_finish");//判断从手势登录页进登录，不finish
+//                startActivity(i_login);
+//                break;
+            default:
+                break;
+        }
+    }
 	/*private void requestData(String password, final String from) {
 
 		try {
@@ -448,35 +418,35 @@ public class GestureVerifyActivity extends BaseActivity implements
 		builder.create().show();
 	}*/
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 99) {
-			if (resultCode == RESULT_OK) {
-				Intent i = new Intent();
-				i.setClass(GestureVerifyActivity.this, MainActivity.class);
-				startActivity(i);
-				finish();
-			}
-		} else if (requestCode == 88) {
-			if (resultCode == RESULT_OK) {
-				finish();
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 99) {
+            if (resultCode == RESULT_OK) {
+                Intent i = new Intent();
+                i.setClass(GestureVerifyActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        } else if (requestCode == 88) {
+            if (resultCode == RESULT_OK) {
+                finish();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
-	private ResultUserLoginContentBean bean;
+    private ResultUserLoginContentBean bean;
 
-	@Override
-	public void update(Observable observable, Object data) {
-		bean = (ResultUserLoginContentBean) data;
-		if (bean != null) {
-			if (Boolean.parseBoolean(bean.getFlag())) {
-				if (from.equals(Urls.ACTIVITY_SPLASH)) {
-					finish();
-				}
-			}
-		}
-	}
+    @Override
+    public void update(Observable observable, Object data) {
+        bean = (ResultUserLoginContentBean) data;
+        if (bean != null) {
+            if (Boolean.parseBoolean(bean.getFlag())) {
+                if (from.equals(Urls.ACTIVITY_SPLASH)) {
+                    finish();
+                }
+            }
+        }
+    }
 
 }

@@ -24,18 +24,18 @@ import android.text.TextUtils;
  *  客户信息详情
  */
 public class CustomerDetailsActivity extends BaseActivity implements View.OnClickListener {
-    private ImageView img_back;
+    private ImageView iv_back;
 //    private ImageView img_add_follow;
     private String customerId;
-    private TextView tv_name;
-    private TextView tv_phone;
+    private TextView tv_name; // 客户姓名
+    private TextView tv_phone; // 联系电话
 //    private TextView tv_email;
-    private TextView tv_location;
-    private TextView tv_project;
-    private TextView tv_room_number;
-    private TextView tv_area;
-    private TextView tv_total_amount;
-    private TextView tv_time;
+    private TextView tv_location; // 房产所在地
+    private TextView tv_project; // 项目
+    private TextView tv_room_number; // 房号
+    private TextView tv_area; // 面积
+    private TextView tv_total_amount; // 总价
+    private TextView tv_time; // 提交时间
     private CustomerDetails2B data;
 
     @Override
@@ -58,7 +58,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
         ActivityStack stack = ActivityStack.getActivityManage();
         stack.addActivity(this);
 
-        img_back= (ImageView) findViewById(R.id.img_back);
+        iv_back= (ImageView) findViewById(R.id.iv_back);
 //        img_add_follow= (ImageView) findViewById(R.id.img_add_follow);
         tv_name= (TextView) findViewById(R.id.tv_name);
         tv_phone= (TextView) findViewById(R.id.tv_phone);
@@ -70,14 +70,18 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
         tv_total_amount= (TextView) findViewById(R.id.tv_total_amount);
         tv_time= (TextView) findViewById(R.id.tv_time);
 
+        iv_back.setOnClickListener(this);
     }
 
     private void initData() {
         customerId=getIntent().getStringExtra("customerId");
-        img_back.setOnClickListener(this);
-//        img_add_follow.setOnClickListener(this);
+
         requestData();
     }
+
+    /**
+     *  获取客户信息详情数据
+     */
     private void requestData() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
@@ -132,7 +136,7 @@ public class CustomerDetailsActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.img_back:
+            case R.id.iv_back:
                 finish();
                 break;
 //            case R.id.img_add_follow:

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -228,5 +229,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (!TextUtils.isEmpty(resultCode)) {
+                if (resultCode.equals(GOTOMAIN)) {  // 点忘记密码跳转到登录页面时，若用户不登录直接点手机上返回键时，返回到主页
+                    Intent iMain = new Intent(LoginActivity.this, MainActivity.class);
+                    iMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(iMain);
+                    finish();
+                } else {
+                    finish();
+                }
+            } else {
+                finish();
+            }
+        }
+        return false;
+    }
 
 }
