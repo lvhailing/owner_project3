@@ -99,7 +99,7 @@
 
     <!--预约说明会参加日期对话框的进出动画-->
     <style name="date_picker_anim" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/date_picker_enter</item>
-        <item name="@android:windowExitAnimation">@anim/date_picker_exit</item>
+        <item name="android:windowEnterAnimation">@anim/date_picker_enter</item>
+        <item name="android:windowExitAnimation">@anim/date_picker_exit</item>
     </style>
 </resources>

@@ -235,7 +235,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.layout_photo:
+            case R.id.layout_photo: // 头像布局
                 selectPhoto();
                 break;
             case R.id.layout_name:
