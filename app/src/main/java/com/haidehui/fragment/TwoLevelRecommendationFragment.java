@@ -16,12 +16,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.RecommendDetailActivity;
-import com.haidehui.act.WebForShareActivity;
-import com.haidehui.adapter.InvestmentGuideAdapter;
+import com.haidehui.activity.RecommendDetailActivity;
 import com.haidehui.adapter.RecommendationAdapter;
-import com.haidehui.model.InvestmentGuide2B;
-import com.haidehui.model.InvestmentGuide3B;
 import com.haidehui.model.OneLevelRecomendation3B;
 import com.haidehui.model.OneLevelRecommendation2B;
 import com.haidehui.network.BaseParams;

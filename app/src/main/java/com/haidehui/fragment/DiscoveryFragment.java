@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.act.HouseDetailActivity;
-import com.haidehui.act.OverseaProjectDetailActivity;
-import com.haidehui.act.WebForShareActivity;
+import com.haidehui.activity.HouseDetailActivity;
+import com.haidehui.activity.OverseaProjectDetailActivity;
+import com.haidehui.activity.WebForShareActivity;
 import com.haidehui.model.ResultCycleIndex2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
@@ -84,7 +84,7 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
         tv_discovery_tab1 = (TextView) mView.findViewById(R.id.tv_discovery_tab1);
         tv_discovery_tab2 = (TextView) mView.findViewById(R.id.tv_discovery_tab2);
 
-        vp = (ViewPager) mView.findViewById(R.id.vp);
+        vp = (ViewPager) mView.findViewById(R.id.vp_living_room);
         v_line = mView.findViewById(R.id.line);
 
         tv_discovery_tab1.setOnClickListener(this);

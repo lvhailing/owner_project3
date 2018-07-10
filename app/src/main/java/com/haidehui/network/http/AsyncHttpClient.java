@@ -153,6 +153,10 @@ public class AsyncHttpClient {
         // String.format("android-async-http/%s (http://loopj.com/android-async-http)",
         // VERSION));
 
+
+        // 解决了SSL证书验证不通过的问题 （增加了部分手机没有的CA认证）
+        //***************************************************************************
+
         KeyStore trustStore = null;
         try {
             trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -183,8 +187,11 @@ public class AsyncHttpClient {
         }
         sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         SchemeRegistry schemeRegistry = new SchemeRegistry();
-        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-        schemeRegistry.register(new Scheme("https",sf, 443));
+        schemeRegistry.register(new Scheme("http", PlainSocketFactory
+                .getSocketFactory(), 80));
+        schemeRegistry.register(new Scheme("https", sf, 443));
+        //*****************************************************************************
+
         ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, schemeRegistry);
 
         httpContext = new SyncBasicHttpContext(new BasicHttpContext());

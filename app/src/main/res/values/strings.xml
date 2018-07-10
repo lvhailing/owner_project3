@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">海德汇</string>
-    <string name="app_id">dafuweng</string>
-    <string name="app_chinesename">海德汇版本更新</string>
+    <string name="app_id">haidehui</string>
+    <string name="app_chinese_name">海德汇版本更新</string>
 
     <!--首页（公司、团队、平台等介绍）-->
     <string name="company_introduction">&#160;&#160;&#160;&#160;北京君德聚富投资顾问有限公司，自成立以来致力于为国内高净值人群提供专业化、个性化、全方位的海外资产配置服务。作为北京君德财富投资管理股份有限公司的控股子公司君德聚富，让客户充分感受到一站式配置服务的便利，并且秉承一心一意为客户服务的理念，累计服务客户6000多人，客户资产管理规模达到60多亿。致力于做海外资产配置的领航者，持续为客户创造价值！</string>
@@ -11,6 +11,10 @@
 
     <string name="platform_introduction">&#160;&#160;&#160;&#160;君德海外事业合伙人平台产品体系分为七大板块：全球海外房产、海外保险、全球移民、高端医疗、海外高尔夫、海外旅游，留学及就业服务。</string>
     <string name="platform_introduction1">&#160;&#160;&#160;&#160;君德海外事业合伙人平台提供的服务种类包括：产品培训及销售咨询服务，销售体系搭建建议，人才支持，互联网营销支持，海外签约旅游考察安排，海外房产管理等一系列专业海外资产配置周边服务。</string>
+
+    <!-- 首页 -->
+    <string name="oversea_project">海外项目</string>
+    <string name="hot_investment">投资热点</string>
 
     <!-- 登录 -->
     <string name="login_title">一站式海外资产配置平台</string>
@@ -32,7 +36,6 @@
     <string name="sign_agree_two">服务协议。</string>
     <string name="sign_btn_name">立即注册</string>
     <string name="sign_getsms_again">重新获取</string>
-
 
     <!-- 找回密码 -->
     <string name="findpassword_titile">密码找回</string>
@@ -113,7 +116,6 @@
     <string name="set_gesture_pattern">绘制解锁图案</string>
     <string name="set_gesture_pattern_reason">设置手势密码，防止他人未经授权查看</string>
 
-
     <string name="set_gesture_pattern_jump">跳过</string>
     <string name="title_gestureset">设置手势密码</string>
 
@@ -137,16 +139,14 @@
     <string name="withdraw_button">申请提现</string>
     <string name="withdraw_message">确认提现后预计在5个工作日内到账！</string>
 
-
-
     <!-- 邀请好友内容 -->
     <string name="shared_message">海德汇致力于打造最专业的客户服务，提供最前沿的海外产品，组织最舒适的线下体验，承办全方位的社交活动！</string>
-
 
     <!-- 客服电话 -->
     <string name="phone_number_format">4000000314</string>
     <string name="phone_number">4000000314</string>
 
+    <!-- 标题 -->
     <string name="net_fail_text">当前网络不可用，点此检查网络设置</string>
     <string name="title_null"></string>
     <string name="title_hot_house">最热房源</string>
@@ -171,6 +171,7 @@
     <string name="title_add_customer_follow">添加跟踪</string>
     <string name="title_edit_info">修改客户信息</string>
     <string name="title_business_partner">我的事业合伙人</string>
+    <string name="title_mine">我的</string>
 
     <!-- 认购的三种状态 -->
     <string name="btn_subscribed">已认购</string>
@@ -189,7 +190,24 @@
     <string name="tracking_information">已电话联络客户，简单介绍项目；\n已发项目资料，回答客户疑问；\n已和客户面谈，详细介绍项目；
         \n客户已参加公司推介会,深度了解项目；\n再次回访客户，回答客户疑问；\n客户确定赴实地看房团行程；</string>
 
+    <!--我的模块-->
+    <string name="my_business">我的生意</string>
+    <string name="customer_info">客户信息</string>
+    <string name="customer_follow">客户跟踪</string>
+    <string name="subscription_state">认购状态</string>
+    <string name="explain_order">预约说明会</string>
+    <string name="my_account_book">我的账本</string>
+    <string name="my_bank_card">我的银行卡</string>
+    <string name="business_partner_certification">事业合伙人认证</string>
+    <string name="my_business_partner">我的事业合伙人</string>
 
-
+    <!-- 房源详情 -->
+    <string name="house_prise">价格</string>
+    <string name="living_room">居室</string>
+    <string name="house_area">面积</string>
+    <string name="essential_info">基本信息</string>
+    <string name="purchase_cost">购房费用</string>
+    <string name="purchase_flow">购房流程</string>
+    <string name="property_consultant">置业顾问</string>
 
 </resources>

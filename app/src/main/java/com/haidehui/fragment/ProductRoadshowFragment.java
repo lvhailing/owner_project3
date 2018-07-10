@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.WebActivity;
-import com.haidehui.act.WebForShareActivity;
+import com.haidehui.activity.WebForShareActivity;
 import com.haidehui.adapter.ProductRoadShowAdapter;
 import com.haidehui.model.ProductRoadshow2B;
 import com.haidehui.model.ProductRoadshow3B;
@@ -30,8 +28,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.HashMap;
-
-import static com.haidehui.R.id.vs;
 
 
 // 发现--产品路演 列表页

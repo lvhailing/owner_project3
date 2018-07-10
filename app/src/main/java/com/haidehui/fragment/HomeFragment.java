@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -18,12 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.HotHouseListActivity;
-import com.haidehui.act.HouseDetailActivity;
-import com.haidehui.act.OverseaProjectDetailActivity;
-import com.haidehui.act.OverseaProjectListActivity;
-import com.haidehui.act.WebActivity;
-import com.haidehui.act.WebForShareActivity;
+import com.haidehui.activity.HouseDetailActivity;
+import com.haidehui.activity.OverseaProjectDetailActivity;
+import com.haidehui.activity.OverseaProjectListActivity;
+import com.haidehui.activity.WebActivity;
+import com.haidehui.activity.WebForShareActivity;
 import com.haidehui.adapter.BoutiqueHouseAdapter;
 import com.haidehui.common.Urls;
 import com.haidehui.model.HomeIndex2B;
@@ -35,12 +34,9 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
-import com.haidehui.widget.MyExpandViewPager;
 import com.haidehui.widget.MyListView;
 import com.haidehui.widget.MyRollViewPager;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -60,7 +56,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
     private MouldList<HomeIndex3B> boutiqueHouseList = new MouldList<>(); // 精品房源列表
 
-    private TextView tv_hot_house; // 最热房源
+    private TextView tv_hot_investment; // 投资热点
     private TextView tv_oversea_project; // 海外项目
     private TextView tv_customer_service; // 我的客服
     private LinearLayout ll_home_notice; // 公告布局
@@ -74,17 +70,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ResultCycleIndex2B cycleIndex2B; //  ResultCycleIndex2B 类型的对象
     private String linkType; // 轮播图跳转类型（url:h5页面跳转、appProject:app项目详情、appHouse:app房源详情、appVideo:路演视频详情、appInvestGuide:投资指南、none:无跳转）
     private String target; // url时是链接，其他情况为相关id
-    private TextView tv_company_tab1; // 公司
-    private TextView tv_team_tab2; // 团队
-    private TextView tv_platform_tab3; // 平台
-    private MyExpandViewPager expandViewPager;
-    private View v_line; // 公司、团队、平台下面的横线
-    private ArrayList<Fragment> fragments;
-    private int screenWidth; // 屏幕宽度
-    private int line_width; // 下划线宽度
-    private CompanyFragment companyFragment; // 公司
-    private TeamFragment teamFragment; // 团队
-    private PlatFormFragment platFormFragment; // 平台
+//    private TextView tv_company_tab1; // 公司
+//    private TextView tv_team_tab2; // 团队
+//    private TextView tv_platform_tab3; // 平台
+//    private MyExpandViewPager expandViewPager;
+//    private View v_line; // 公司、团队、平台下面的横线
+//    private ArrayList<Fragment> fragments;
+//    private int screenWidth; // 屏幕宽度
+//    private int line_width; // 下划线宽度
+//    private CompanyFragment companyFragment; // 公司
+//    private TeamFragment teamFragment; // 团队
+//    private PlatFormFragment platFormFragment; // 平台
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -123,109 +119,109 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         context = getActivity();
         picList = new MouldList<ResultCycleIndex2B>();
 
-//        rl_empty_house = (RelativeLayout) mView.findViewById(R.id.rl_empty_house);
-//        TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
-//        ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
-//        tv_empty.setText("暂无精品房源");
-//        rl_empty_house.setVisibility(View.GONE);
-//        img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
+        rl_empty_house = (RelativeLayout) mView.findViewById(R.id.rl_empty_house);
+        TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
+        ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
+        tv_empty.setText("暂无精品房源");
+        rl_empty_house.setVisibility(View.GONE);
+        img_empty.setBackgroundResource(R.mipmap.ic_empty_house_resources);
 
-//        scrollView = (ScrollView) mView.findViewById(R.id.scrollView);
+        scrollView = (ScrollView) mView.findViewById(R.id.scrollView);
         ll_vp = (LinearLayout) mView.findViewById(R.id.ll_vp);
         ll_point_container = (LinearLayout) mView.findViewById(R.id.ll_point_container);
-        tv_hot_house = (TextView) mView.findViewById(R.id.tv_hot_house);
+        tv_hot_investment = (TextView) mView.findViewById(R.id.tv_hot_investment);
         tv_oversea_project = (TextView) mView.findViewById(R.id.tv_oversea_project);
         tv_customer_service = (TextView) mView.findViewById(R.id.tv_customer_service);
         tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
         ll_home_notice = (LinearLayout) mView.findViewById(R.id.ll_home_notice);
-//        myListView = (MyListView) mView.findViewById(R.id.lv);
+        myListView = (MyListView) mView.findViewById(R.id.lv);
 
-        tv_company_tab1 = (TextView) mView.findViewById(R.id.tv_company_tab1);
-        tv_team_tab2 = (TextView) mView.findViewById(R.id.tv_team_tab2);
-        tv_platform_tab3 = (TextView) mView.findViewById(R.id.tv_platform_tab3);
-        expandViewPager = (MyExpandViewPager) mView.findViewById(R.id.vp);
-        v_line = mView.findViewById(R.id.line);
+//        tv_company_tab1 = (TextView) mView.findViewById(R.id.tv_company_tab1);
+//        tv_team_tab2 = (TextView) mView.findViewById(R.id.tv_team_tab2);
+//        tv_platform_tab3 = (TextView) mView.findViewById(R.id.tv_platform_tab3);
+//        expandViewPager = (MyExpandViewPager) mView.findViewById(R.id.vp);
+//        v_line = mView.findViewById(R.id.line);
 
         // 默认设置第0个title状态
-        setTabTitleStyle(0);
+//        setTabTitleStyle(0);
 
-        fragments = new ArrayList<Fragment>();
-        companyFragment = new CompanyFragment();
-        teamFragment = new TeamFragment();
-        platFormFragment = new PlatFormFragment();
-        fragments.add(companyFragment);
-        fragments.add(teamFragment);
-        fragments.add(platFormFragment);
+//        fragments = new ArrayList<Fragment>();
+//        companyFragment = new CompanyFragment();
+//        teamFragment = new TeamFragment();
+//        platFormFragment = new PlatFormFragment();
+//        fragments.add(companyFragment);
+//        fragments.add(teamFragment);
+//        fragments.add(platFormFragment);
 
         //屏幕宽度
-        screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+//        screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
 
         // 设置下划线宽度
-        line_width = screenWidth / fragments.size();
-        v_line.getLayoutParams().width = line_width;
-        v_line.requestLayout();
+//        line_width = screenWidth / fragments.size();
+//        v_line.getLayoutParams().width = line_width;
+//        v_line.requestLayout();
 
-        expandViewPager.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
+//        expandViewPager.setAdapter(new FragmentStatePagerAdapter(getActivity().getSupportFragmentManager()) {
+//            @Override
+//            public int getCount() {
+//                return fragments.size();
+//            }
+//
+//            @Override
+//            public Fragment getItem(int arg0) {
+//                return fragments.get(arg0);
+//            }
+//        });
 
-            @Override
-            public Fragment getItem(int arg0) {
-                return fragments.get(arg0);
-            }
-        });
+//        expandViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageSelected(int arg0) {
+//                setTabTitleStyle(arg0);
+//            }
+//
+//            @Override
+//            public void onPageScrolled(int arg0, float arg1, int arg2) {
+//                //此处在手滑动时 会被不停调用
+//                float tagerX = arg0 * line_width + arg2 / fragments.size();
+//                ViewPropertyAnimator.animate(v_line).translationX(tagerX).setDuration(0);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int arg0) {
+//            }
+//        });
 
-        expandViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int arg0) {
-                setTabTitleStyle(arg0);
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-                //此处在手滑动时 会被不停调用
-                float tagerX = arg0 * line_width + arg2 / fragments.size();
-                ViewPropertyAnimator.animate(v_line).translationX(tagerX).setDuration(0);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-
-        tv_hot_house.setOnClickListener(this);
+        tv_hot_investment.setOnClickListener(this);
         tv_oversea_project.setOnClickListener(this);
         tv_customer_service.setOnClickListener(this);
         tv_home_notice.setOnClickListener(this);
         ll_home_notice.setOnClickListener(this);
-        tv_company_tab1.setOnClickListener(this);
-        tv_team_tab2.setOnClickListener(this);
-        tv_platform_tab3.setOnClickListener(this);
+//        tv_company_tab1.setOnClickListener(this);
+//        tv_team_tab2.setOnClickListener(this);
+//        tv_platform_tab3.setOnClickListener(this);
     }
 
     // 修改Tab按钮文字颜色
-    private void setTabTitleStyle(int pos) {
-        if (pos == 0) {
-            tv_company_tab1.setTextColor(getResources().getColor(R.color.txt_orange));
-            tv_team_tab2.setTextColor(getResources().getColor(R.color.txt_light_gray));
-            tv_platform_tab3.setTextColor(getResources().getColor(R.color.txt_light_gray));
-        } else if (pos == 1) {
-            tv_company_tab1.setTextColor(getResources().getColor(R.color.txt_light_gray));
-            tv_team_tab2.setTextColor(getResources().getColor(R.color.txt_orange));
-            tv_platform_tab3.setTextColor(getResources().getColor(R.color.txt_light_gray));
-        } else if (pos == 2) {
-            tv_company_tab1.setTextColor(getResources().getColor(R.color.txt_light_gray));
-            tv_team_tab2.setTextColor(getResources().getColor(R.color.txt_light_gray));
-            tv_platform_tab3.setTextColor(getResources().getColor(R.color.txt_orange));
-        }
-    }
+//    private void setTabTitleStyle(int pos) {
+//        if (pos == 0) {
+//            tv_company_tab1.setTextColor(getResources().getColor(R.color.txt_orange));
+//            tv_team_tab2.setTextColor(getResources().getColor(R.color.txt_light_gray));
+//            tv_platform_tab3.setTextColor(getResources().getColor(R.color.txt_light_gray));
+//        } else if (pos == 1) {
+//            tv_company_tab1.setTextColor(getResources().getColor(R.color.txt_light_gray));
+//            tv_team_tab2.setTextColor(getResources().getColor(R.color.txt_orange));
+//            tv_platform_tab3.setTextColor(getResources().getColor(R.color.txt_light_gray));
+//        } else if (pos == 2) {
+//            tv_company_tab1.setTextColor(getResources().getColor(R.color.txt_light_gray));
+//            tv_team_tab2.setTextColor(getResources().getColor(R.color.txt_light_gray));
+//            tv_platform_tab3.setTextColor(getResources().getColor(R.color.txt_orange));
+//        }
+//    }
 
     //控制线条滚动，每点击一次调用一次
-    private void setLineStyle(int pos) {
-        ViewPropertyAnimator.animate(v_line).translationX(screenWidth / 3 * pos).setDuration(300);
-    }
+//    private void setLineStyle(int pos) {
+//        ViewPropertyAnimator.animate(v_line).translationX(screenWidth / 3 * pos).setDuration(300);
+//    }
 
     private void initData() {
         userId = null;
@@ -235,22 +231,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-//        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
-//            @Override
-//            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Intent intent = new Intent(context, HouseDetailActivity.class);
-//                intent.putExtra("hid", boutiqueHouseList.get(position).getHid());
-//                startActivity(intent);
-//            }
-//        });
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                Intent intent = new Intent(context, HouseDetailActivity.class);
+                intent.putExtra("hid", boutiqueHouseList.get(position).getHid());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_hot_house:  // 最热房源
-                intent = new Intent(context, HotHouseListActivity.class);
-                startActivity(intent);
+            case R.id.tv_hot_investment:  // 投资热点（跳转至最新一条“投资指南”）
+//                intent = new Intent(context, HotHouseListActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.tv_oversea_project: // 海外项目
                 intent = new Intent(context, OverseaProjectListActivity.class);
@@ -280,27 +276,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 }
                 break;
-            case R.id.tv_company_tab1:  // 公司
-                setTabTitleStyle(0);
-                setLineStyle(0);
-                expandViewPager.setCurrentItem(0);
+//            case R.id.tv_company_tab1:  // 公司
+//                setTabTitleStyle(0);
+//                setLineStyle(0);
+//                expandViewPager.setCurrentItem(0);
 //                investmentGuideFr.upDateInvestmentGuideList();
 
-                break;
-            case R.id.tv_team_tab2: // 团队
-                setTabTitleStyle(1);
-                setLineStyle(1);
-                expandViewPager.setCurrentItem(1);
+//                break;
+//            case R.id.tv_team_tab2: // 团队
+//                setTabTitleStyle(1);
+//                setLineStyle(1);
+//                expandViewPager.setCurrentItem(1);
 //                roadShowFr.upDateRoadShowList();
 
-                break;
-            case R.id.tv_platform_tab3: // 平台
-                setTabTitleStyle(2);
-                setLineStyle(2);
-                expandViewPager.setCurrentItem(2);
+//                break;
+//            case R.id.tv_platform_tab3: // 平台
+//                setTabTitleStyle(2);
+//                setLineStyle(2);
+//                expandViewPager.setCurrentItem(2);
 //                roadShowFr.upDateRoadShowList();
 
-                break;
+//                break;
         }
     }
 
@@ -324,27 +320,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 } else {
                     tv_home_notice.setText("暂无公告");
                 }
-//                boutiqueHouseList = homeIndexData.getList();
-//                if (myAdapter == null) {
-//                    myAdapter = new BoutiqueHouseAdapter(context, boutiqueHouseList);
-//                    myListView.setAdapter(myAdapter);
-//                } else {
-//                    myAdapter.setList(boutiqueHouseList);
-//                    myAdapter.notifyDataSetChanged();
-//                }
-//                if (boutiqueHouseList != null && boutiqueHouseList.size() > 0) {
-//                    rl_empty_house.setVisibility(View.GONE);
-//                    myListView.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            scrollView.smoothScrollTo(0, 0);
-//                        }
-//                    }, 50);
-//                } else if (boutiqueHouseList != null && boutiqueHouseList.size() <= 0) {
-//                    rl_empty_house.setVisibility(View.VISIBLE);
-//                } else {
-//                    rl_empty_house.setVisibility(View.VISIBLE);
-//                }
+                boutiqueHouseList = homeIndexData.getList();
+                if (myAdapter == null) {
+                    myAdapter = new BoutiqueHouseAdapter(context, boutiqueHouseList);
+                    myListView.setAdapter(myAdapter);
+                } else {
+                    myAdapter.setList(boutiqueHouseList);
+                    myAdapter.notifyDataSetChanged();
+                }
+                if (boutiqueHouseList != null && boutiqueHouseList.size() > 0) {
+                    rl_empty_house.setVisibility(View.GONE);
+                    myListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.smoothScrollTo(0, 0);
+                        }
+                    }, 50);
+                } else if (boutiqueHouseList != null && boutiqueHouseList.size() <= 0) {
+                    rl_empty_house.setVisibility(View.VISIBLE);
+                } else {
+                    rl_empty_house.setVisibility(View.VISIBLE);
+                }
             }
 
         });

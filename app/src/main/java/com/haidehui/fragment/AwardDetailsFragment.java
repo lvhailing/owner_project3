@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.AccountBookActivity;
+import com.haidehui.activity.AccountBookActivity;
 import com.haidehui.adapter.AccountBookAwardAdapter;
 import com.haidehui.model.AccountBookAward2B;
 import com.haidehui.model.AccountBookAward3B;
@@ -26,7 +26,7 @@ import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.haidehui.act.AwardDetailsActivity;
+import com.haidehui.activity.AwardDetailsActivity;
 import java.util.LinkedHashMap;
 
 /**

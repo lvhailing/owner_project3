@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.act.BaseActivity;
+import com.haidehui.activity.BaseActivity;
 import com.haidehui.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class PhotoPreviewAcForOne extends BaseActivity implements View.OnClickLi
 
     private void initUI() {
         iv_close = (ImageView) findViewById(R.id.iv_close);
-        mViewPager = (ViewPager) findViewById(R.id.vp);
+        mViewPager = (ViewPager) findViewById(R.id.vp_living_room);
         tv_num = (TextView) findViewById(R.id.tv_num);
 
         iv_close.setOnClickListener(this);

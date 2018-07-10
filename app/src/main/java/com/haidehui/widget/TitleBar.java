@@ -29,7 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.act.WebActivity;
+import com.haidehui.activity.WebActivity;
 import com.haidehui.common.Urls;
 import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.ImageLoaderManager;

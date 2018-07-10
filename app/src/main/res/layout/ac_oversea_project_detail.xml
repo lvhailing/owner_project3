@@ -129,6 +129,7 @@
                 android:layout_height="0.5dp"
                 android:background="@color/bg_line"/>
 
+            <!-- 项目居室 下面的轮播图布局 -->
             <LinearLayout
                 android:id="@+id/ll_pro_house_photos"
                 android:layout_width="match_parent"
@@ -159,13 +160,13 @@
 
                     <android.support.v4.view.ViewPager
                         xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/vp"
+                        android:id="@+id/vp_living_room"
                         android:layout_width="match_parent"
                         android:layout_height="164dp"
                         android:background="@mipmap/bg_oversea_project_normal"/>
 
                     <TextView
-                        android:id="@+id/tv_vp_page"
+                        android:id="@+id/tv_living_room_page"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -251,13 +252,13 @@
 
                     <android.support.v4.view.ViewPager
                         xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/vp2"
+                        android:id="@+id/vp_project_plan"
                         android:layout_width="match_parent"
                         android:layout_height="164dp"
                         android:background="@mipmap/bg_oversea_project_normal"/>
 
                     <TextView
-                        android:id="@+id/tv_vp2_page"
+                        android:id="@+id/tv_project_plan_page"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"

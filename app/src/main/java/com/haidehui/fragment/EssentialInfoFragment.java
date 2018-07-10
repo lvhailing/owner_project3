@@ -64,29 +64,33 @@ public class EssentialInfoFragment extends Fragment {
 
     }
 
+    /**
+     *  房源详情 -- 基本信息 模块数据
+     * @param data
+     */
     public void refreshLayoutInfo(HouseDetail2B data) {
-        if (!TextUtils.isEmpty(data.getName())) {
+        if (!TextUtils.isEmpty(data.getName())) { // 房屋名称
             tv_house_name.setText(data.getName());
         }
-        if (!TextUtils.isEmpty(data.getFunction())) {
+        if (!TextUtils.isEmpty(data.getFunction())) { // 房屋功能
             tv_house_function.setText(data.getFunction());
         }
-        if (!TextUtils.isEmpty(data.getCatagory())) {
+        if (!TextUtils.isEmpty(data.getCatagory())) { // 房屋类型
             tv_house_type.setText(data.getCatagory());
         }
-        if (!TextUtils.isEmpty(data.getDecorateStandard())) {
+        if (!TextUtils.isEmpty(data.getDecorateStandard())) { // 装修标准
             tv_decoration_standard.setText(data.getDecorateStandard());
         }
-        if (!TextUtils.isEmpty(data.getTime())) {
+        if (!TextUtils.isEmpty(data.getTime())) { // 年代
             tv_house_year.setText(data.getTime());
         }
-        if (!TextUtils.isEmpty(data.getStory())) {
+        if (!TextUtils.isEmpty(data.getStory())) { // 楼层
             tv_house_floor.setText(data.getStory());
         }
-        if (!TextUtils.isEmpty(data.getPropertyFee())) {
+        if (!TextUtils.isEmpty(data.getPropertyFee())) { // 物业费
             tv_property_fee.setText(data.getPropertyFee());
         }
-        if (!TextUtils.isEmpty(data.getHouseDesc())) {
+        if (!TextUtils.isEmpty(data.getHouseDesc())) { // 房源描述
             tv_house_description.setText(data.getHouseDesc());
         }
     }

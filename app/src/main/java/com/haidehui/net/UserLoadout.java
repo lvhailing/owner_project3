@@ -4,16 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.haidehui.act.MainActivity;
+import com.haidehui.activity.MainActivity;
 import com.haidehui.model.ResultLoginOffContentBean;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.uitls.PreferenceUtil;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 
 public class UserLoadout {

@@ -23,14 +23,14 @@
 
                 <android.support.v4.view.ViewPager
                     xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/vp"
+                    android:id="@+id/vp_living_room"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/vp"
+                    android:layout_alignBottom="@id/vp_living_room"
                     android:background="#80333333"
                     android:paddingBottom="7dp"
                     android:paddingLeft="10dp"
@@ -48,7 +48,7 @@
                         android:textSize="14sp"/>
 
                     <TextView
-                        android:id="@+id/tv_vp_page"
+                        android:id="@+id/tv_living_room_page"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -106,67 +106,19 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="7dp"
                             android:gravity="center_vertical"
-                            android:text="价格"
+                            android:text="@string/house_prise"
                             android:textColor="@color/txt_light_gray"
                             android:textSize="14sp"/>
                     </LinearLayout>
                 </LinearLayout>
 
                 <!--顶部竖线-->
-                <View
-                    android:id="@+id/img_top"
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:background="@color/bg_line_light_gray"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="18dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_house_detail_area"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:gravity="center_horizontal"
-                        android:maxLines="2"
-                        android:text="--"
-                        android:textColor="@color/txt_black"
-                        android:textSize="18sp"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:scaleType="centerInside"
-                            android:src="@mipmap/icon_area"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="7dp"
-                            android:gravity="center_vertical"
-                            android:text="面积"
-                            android:textColor="@color/txt_light_gray"
-                            android:textSize="14sp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                <!--<View-->
+                    <!--android:id="@+id/img_top"-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="18dp"-->
+                    <!--android:background="@color/bg_line_light_gray"/>-->
             </LinearLayout>
 
             <!--中间横线-->
@@ -228,7 +180,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="7dp"
                             android:gravity="center_vertical"
-                            android:text="居室"
+                            android:text="@string/living_room"
                             android:textColor="@color/txt_light_gray"
                             android:textSize="14sp"/>
                     </LinearLayout>
@@ -243,21 +195,21 @@
                     android:layout_marginBottom="18dp"
                     android:background="@color/bg_line_light_gray"/>
 
+                <!-- 面积 布局 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginTop="18dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_house_detail_commission_rate"
+                        android:id="@+id/tv_house_detail_area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:layout_marginTop="15dp"
                         android:gravity="center_horizontal"
                         android:maxLines="2"
                         android:text="--"
@@ -267,6 +219,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
                         android:layout_marginTop="12dp"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -276,19 +229,67 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:scaleType="centerInside"
-                            android:src="@mipmap/icon_brokerage"/>
+                            android:src="@mipmap/icon_area"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="7dp"
                             android:gravity="center_vertical"
-                            android:text="佣金比例"
+                            android:text="@string/house_area"
                             android:textColor="@color/txt_light_gray"
                             android:textSize="14sp"/>
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <!-- 佣金比例 布局 -->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginBottom="18dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_house_detail_commission_rate"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="4dp"-->
+                        <!--android:layout_marginRight="4dp"-->
+                        <!--android:layout_marginTop="15dp"-->
+                        <!--android:gravity="center_horizontal"-->
+                        <!--android:maxLines="2"-->
+                        <!--android:text="&#45;&#45;"-->
+                        <!--android:textColor="@color/txt_black"-->
+                        <!--android:textSize="18sp"/>-->
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="12dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="horizontal">-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_gravity="center_vertical"-->
+                            <!--android:scaleType="centerInside"-->
+                            <!--android:src="@mipmap/icon_brokerage"/>-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:layout_marginLeft="7dp"-->
+                            <!--android:gravity="center_vertical"-->
+                            <!--android:text="佣金比例"-->
+                            <!--android:textColor="@color/txt_light_gray"-->
+                            <!--android:textSize="14sp"/>-->
+                    <!--</LinearLayout>-->
+
+                <!--</LinearLayout>-->
 
             </LinearLayout>
 
@@ -356,20 +357,20 @@
 
                 <Button
                     android:id="@+id/btn_essential_info"
-                    style="@style/btn_house_detail_stytle"
-                    android:text="基本信息"/>
+                    style="@style/btn_house_detail_style"
+                    android:text="@string/essential_info"/>
 
                 <Button
                     android:id="@+id/btn_purchase_cost"
-                    style="@style/btn_house_detail_stytle"
+                    style="@style/btn_house_detail_style"
                     android:layout_marginLeft="1.5dp"
-                    android:text="购房费用"/>
+                    android:text="@string/purchase_cost"/>
 
                 <Button
                     android:id="@+id/btn_purchase_flow"
-                    style="@style/btn_house_detail_stytle"
+                    style="@style/btn_house_detail_style"
                     android:layout_marginLeft="1.5dp"
-                    android:text="购房流程"/>
+                    android:text="@string/purchase_flow"/>
             </LinearLayout>
 
             <FrameLayout
@@ -404,7 +405,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_photo"
-            android:text="置业顾问"
+            android:text="@string/property_consultant"
             android:textColor="@color/white"
             android:textSize="14sp"/>
 

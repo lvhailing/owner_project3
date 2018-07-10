@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.WebActivity;
-import com.haidehui.act.WebForShareActivity;
+import com.haidehui.activity.WebForShareActivity;
 import com.haidehui.adapter.InvestmentGuideAdapter;
 import com.haidehui.model.InvestmentGuide2B;
 import com.haidehui.model.InvestmentGuide3B;

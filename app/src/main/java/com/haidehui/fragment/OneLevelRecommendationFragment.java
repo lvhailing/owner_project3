@@ -16,7 +16,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.RecommendDetailActivity;
+import com.haidehui.activity.RecommendDetailActivity;
 import com.haidehui.adapter.RecommendationAdapter;
 import com.haidehui.model.OneLevelRecomendation3B;
 import com.haidehui.model.OneLevelRecommendation2B;

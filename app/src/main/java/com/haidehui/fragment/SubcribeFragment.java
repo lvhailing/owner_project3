@@ -15,7 +15,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.RengouDetailsActivity;
+import com.haidehui.activity.RengouDetailsActivity;
 import com.haidehui.adapter.RenGouStatusAdapter;
 import com.haidehui.model.RenGou2B;
 import com.haidehui.model.RenGou3B;

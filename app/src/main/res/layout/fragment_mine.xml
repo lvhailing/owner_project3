@@ -29,18 +29,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="我的"
+                    android:text="@string/title_mine"
                     android:textColor="@color/txt_black"
                     android:textSize="18sp"/>
 
                 <ImageView
-                    android:id="@+id/img_email"
+                    android:id="@+id/iv_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@mipmap/img_email"/>
+                    android:src="@mipmap/img_message"/>
             </RelativeLayout>
 
             <TextView
@@ -71,15 +71,16 @@
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:padding="10dp">
-                <!--
-                            <com.haidehui.widget.CircularImage
-                                android:id="@+id/img_photo"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_margin="5dp"
-                                android:src="@mipmap/user_icon"/>-->
+
+                <!--  <com.haidehui.widget.CircularImage
+                      android:id="@+id/img_photo"
+                      android:layout_width="80dp"
+                      android:layout_height="80dp"
+                      android:layout_margin="5dp"
+                      android:src="@mipmap/user_icon"/>-->
+
                 <ImageView
-                    android:id="@+id/img_photo"
+                    android:id="@+id/iv_photo"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_margin="5dp"
@@ -90,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/img_photo"
+                    android:layout_toRightOf="@+id/iv_photo"
                     android:orientation="vertical">
 
                     <TextView
@@ -125,7 +126,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/img_business"
+                    android:id="@+id/iv_business"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -137,8 +138,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/img_business"
-                    android:text="我的生意"
+                    android:layout_toRightOf="@+id/iv_business"
+                    android:text="@string/my_business"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
@@ -176,7 +177,7 @@
                     android:drawablePadding="5dp"
                     android:drawableTop="@mipmap/img_customer_information"
                     android:gravity="center_horizontal"
-                    android:text="客户信息"
+                    android:text="@string/customer_info"
                     android:textSize="13sp"/>
 
                 <TextView
@@ -187,18 +188,18 @@
                     android:drawablePadding="5dp"
                     android:drawableTop="@mipmap/img_customer_follow"
                     android:gravity="center_horizontal"
-                    android:text="客户跟踪"
+                    android:text="@string/customer_follow"
                     android:textSize="13sp"/>
 
                 <TextView
-                    android:id="@+id/tv_rengou_state"
+                    android:id="@+id/tv_subscription_state"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="5dp"
                     android:drawableTop="@mipmap/ic_subscription_state"
                     android:gravity="center_horizontal"
-                    android:text="认购状态"
+                    android:text="@string/subscription_state"
                     android:textSize="13sp"/>
             </LinearLayout>
 
@@ -225,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/iv_explain_order"
-                    android:text="预约说明会"
+                    android:text="@string/explain_order"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
@@ -239,7 +240,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layout_account_book"
+                android:id="@+id/rl_account_book"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -247,7 +248,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/img_account_book"
+                    android:id="@+id/iv_account_book"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -259,8 +260,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/img_account_book"
-                    android:text="我的账本"
+                    android:layout_toRightOf="@+id/iv_account_book"
+                    android:text="@string/my_account_book"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
@@ -268,12 +269,12 @@
                     android:id="@+id/tv_total_commission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/accountset_img_trust"
+                    android:layout_toLeftOf="@+id/iv_arrow"
                     android:textColor="@color/gray_d"
                     android:textSize="16sp"/>
 
                 <ImageView
-                    android:id="@+id/accountset_img_trust"
+                    android:id="@+id/iv_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -284,7 +285,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rl_mine_mybankcard"
+                android:id="@+id/rl_my_bankcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -292,7 +293,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/img_bankcard"
+                    android:id="@+id/iv_bankcard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -302,8 +303,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/img_bankcard"
-                    android:text="我的银行卡"
+                    android:layout_toRightOf="@+id/iv_bankcard"
+                    android:text="@string/my_bank_card"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
@@ -317,7 +318,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layout_identify"
+                android:id="@+id/rl_business_partner_certification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -325,7 +326,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/img_identify"
+                    android:id="@+id/iv_identify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -334,23 +335,23 @@
                     android:src="@mipmap/ic_certification"/>
 
                 <TextView
-                    android:id="@+id/tv_identify"
+                    android:id="@+id/tv_business_partner_certification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/img_identify"
-                    android:text="事业合伙人认证"
+                    android:layout_toRightOf="@+id/iv_identify"
+                    android:text="@string/business_partner_certification"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
                 <ImageView
-                    android:id="@+id/img_sign"
+                    android:id="@+id/iv_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/tv_identify"
-                    android:src="@mipmap/img_unidentify"/>
+                    android:layout_toRightOf="@+id/tv_business_partner_certification"
+                    android:src="@mipmap/img_not_identify"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -416,7 +417,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_business_partner"
-                    android:text="我的事业合伙人"
+                    android:text="@string/my_business_partner"
                     android:textColor="@color/txt_gray"
                     android:textSize="16sp"/>
 
@@ -452,7 +453,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_toRightOf="@+id/img_set"
-                    android:text="设置"
+                    android:text="@string/setting_title"
                     android:textColor="@color/gray_dark"
                     android:textSize="16sp"/>
 
@@ -464,6 +465,8 @@
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/arrow"/>
             </RelativeLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

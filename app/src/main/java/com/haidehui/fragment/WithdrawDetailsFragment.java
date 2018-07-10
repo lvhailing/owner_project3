@@ -16,8 +16,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.AccountBookActivity;
-import com.haidehui.act.WithDrawDetailsActivity;
+import com.haidehui.activity.AccountBookActivity;
+import com.haidehui.activity.WithDrawDetailsActivity;
 import com.haidehui.adapter.AccountBookWithdrawAdapter;
 import com.haidehui.model.AccountBookWithDraw3B;
 import com.haidehui.model.AccountBookWithdraw2B;

@@ -74,7 +74,7 @@ public class HouseDetailAdapter extends PagerAdapter {
      */
     public interface ImageViewListener {
 
-        void onImageClick(int postion);
+        void onImageClick(int position);
     }
 
 

@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.act.AccountBookActivity;
-import com.haidehui.act.CommissionDetailsActivity;
+import com.haidehui.activity.AccountBookActivity;
+import com.haidehui.activity.CommissionDetailsActivity;
 import com.haidehui.adapter.AccountBookCommissionAdapter;
 import com.haidehui.model.AccountBookCommission2B;
 import com.haidehui.model.AccountBookCommission3B;

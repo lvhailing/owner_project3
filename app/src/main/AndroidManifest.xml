@@ -32,7 +32,7 @@
         android:persistent="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".act.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             >
             <intent-filter>
@@ -75,7 +75,7 @@
         </activity>
 
         <activity
-            android:name=".act.MainActivity"
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
@@ -101,159 +101,159 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
-            android:name=".act.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SignActivity"
+            android:name=".activity.SignActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.FindPasswordActivity"
+            android:name=".activity.FindPasswordActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.MessageActivity"
+            android:name=".activity.MessageActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.MessageInfoActivity"
+            android:name=".activity.MessageInfoActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.MessageNoticeActivity"
+            android:name=".activity.MessageNoticeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.MessageOtherActivity"
+            android:name=".activity.MessageOtherActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SettingActivity"
+            android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SettingChangePhoneFirstActivity"
+            android:name=".activity.SettingChangePhoneFirstActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SettingChangePhoneSecondActivity"
+            android:name=".activity.SettingChangePhoneSecondActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SettingChangePhoneThirdActivity"
+            android:name=".activity.SettingChangePhoneThirdActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SettingChangePasswordActivity"
+            android:name=".activity.SettingChangePasswordActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AboutActivity"
+            android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.VersionActivity"
+            android:name=".activity.VersionActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AdviceActivity"
+            android:name=".activity.AdviceActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.WebActivity"
+            android:name=".activity.WebActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.WebForShareActivity"
+            android:name=".activity.WebForShareActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.WebForPdfActivity"
+            android:name=".activity.WebForPdfActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.RecommendActivity"
+            android:name=".activity.RecommendActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.RecommendRuleActivity"
+            android:name=".activity.RecommendRuleActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.RecommendRecordActivity"
+            android:name=".activity.RecommendRecordActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.MyBankActivity"
+            android:name=".activity.MyBankActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AddBankActivity"
+            android:name=".activity.AddBankActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.WithdrawActivity"
+            android:name=".activity.WithdrawActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.WithdrawConfirmActivity"
+            android:name=".activity.WithdrawConfirmActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.GestureEditActivity"
+            android:name=".activity.GestureEditActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.GestureVerifyActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".act.HotHouseListActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".act.OverseaProjectListActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".act.OverseaProjectDetailActivity"
+            android:name=".activity.GestureVerifyActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".act.HouseDetailActivity"
+            android:name=".activity.HotHouseListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.OverseaProjectListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.OverseaProjectDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".act.MyInfoActivity"
+            android:name=".activity.HouseDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".act.MyInfoForNameActivity"
+            android:name=".activity.MyInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.MyInfoForNameActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.CustomerInfoActivity"
+            android:name=".activity.CustomerInfoActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.SubmitCustomerInfoActivity"
+            android:name=".activity.SubmitCustomerInfoActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.CustomerDetailsActivity"
+            android:name=".activity.CustomerDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.PartnerIdentifyActivity"
+            android:name=".activity.PartnerIdentifyActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AccountBookActivity"
+            android:name=".activity.AccountBookActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.CommissionDetailsActivity"
+            android:name=".activity.CommissionDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AwardDetailsActivity"
+            android:name=".activity.AwardDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.WithDrawDetailsActivity"
+            android:name=".activity.WithDrawDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.RenGouStatusActivity"
+            android:name=".activity.RenGouStatusActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.ExplainOrderListActivity"
+            android:name=".activity.ExplainOrderListActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.MyBusinessPartnerActivity"
+            android:name=".activity.MyBusinessPartnerActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AddCustomerActivity"
+            android:name=".activity.AddCustomerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/custom_date_picker_dialog"/>
         <activity
-            android:name=".act.CustomerFollowDetailsActivity"
+            android:name=".activity.CustomerFollowDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.RengouDetailsActivity"
+            android:name=".activity.RengouDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.AddCustomerFollowActivity"
+            android:name=".activity.AddCustomerFollowActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.CustomerTrackingActivity"
+            android:name=".activity.CustomerTrackingActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.EditCustomerInfoActivity"
+            android:name=".activity.EditCustomerInfoActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -265,10 +265,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".act.RecommendDetailActivity"
+            android:name=".activity.RecommendDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".act.EditExplainOrderInfoActivity"
+            android:name=".activity.EditExplainOrderInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/custom_date_picker_dialog"/>
 

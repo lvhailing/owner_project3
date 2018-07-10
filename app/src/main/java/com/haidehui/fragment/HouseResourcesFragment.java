@@ -22,7 +22,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
-import com.haidehui.act.HouseDetailActivity;
+import com.haidehui.activity.HouseDetailActivity;
 import com.haidehui.adapter.HouseResourceListAdapter;
 import com.haidehui.model.HouseList2B;
 import com.haidehui.model.HouseList3B;

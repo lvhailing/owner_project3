@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10.0dip"
             android:paddingRight="0.0dip"
-            android:text="@string/app_chinesename"
+            android:text="@string/app_chinese_name"
             android:textSize="16.0dip" />
     </LinearLayout>
 
