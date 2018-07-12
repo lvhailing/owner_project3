@@ -45,15 +45,15 @@
 
             <TextView
                 android:id="@+id/tv_message_total"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_gravity="right"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shape_circle_orange_red"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="11sp"/>
+                android:textSize="10sp"/>
         </FrameLayout>
 
         <LinearLayout
@@ -239,128 +239,131 @@
                     android:src="@mipmap/arrow"/>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_account_book"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:padding="10dp">
+            <!-- 我的帐本 布局 暂时隐藏 -->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rl_account_book"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:padding="10dp">-->
 
-                <ImageView
-                    android:id="@+id/iv_account_book"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_account_book"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_account_book"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@mipmap/ic_account_book"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/iv_account_book"
-                    android:text="@string/my_account_book"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="16sp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_toRightOf="@+id/iv_account_book"-->
+                    <!--android:text="@string/my_account_book"-->
+                    <!--android:textColor="@color/gray_dark"-->
+                    <!--android:textSize="16sp"/>-->
 
-                <TextView
-                    android:id="@+id/tv_total_commission"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/iv_arrow"
-                    android:textColor="@color/gray_d"
-                    android:textSize="16sp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_total_commission"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_toLeftOf="@+id/iv_arrow"-->
+                    <!--android:textColor="@color/gray_d"-->
+                    <!--android:textSize="16sp"/>-->
 
-                <ImageView
-                    android:id="@+id/iv_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/arrow"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_arrow"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@mipmap/arrow"/>-->
+            <!--</RelativeLayout>-->
 
-            <RelativeLayout
-                android:id="@+id/rl_my_bankcard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:padding="10dp">
+            <!-- 我的银行卡 布局 暂时隐藏 -->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rl_my_bankcard"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="1dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:padding="10dp">-->
 
-                <ImageView
-                    android:id="@+id/iv_bankcard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_bank_card"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_bankcard"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@mipmap/ic_bank_card"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/iv_bankcard"
-                    android:text="@string/my_bank_card"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="16sp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_toRightOf="@+id/iv_bankcard"-->
+                    <!--android:text="@string/my_bank_card"-->
+                    <!--android:textColor="@color/gray_dark"-->
+                    <!--android:textSize="16sp"/>-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/arrow"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@mipmap/arrow"/>-->
+            <!--</RelativeLayout>-->
 
-            <RelativeLayout
-                android:id="@+id/rl_business_partner_certification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:padding="10dp">
+            <!-- 我的事业合伙人认证 布局 暂时隐藏 -->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rl_business_partner_certification"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:padding="10dp">-->
 
-                <ImageView
-                    android:id="@+id/iv_identify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_certification"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_identify"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@mipmap/ic_certification"/>-->
 
-                <TextView
-                    android:id="@+id/tv_business_partner_certification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@+id/iv_identify"
-                    android:text="@string/business_partner_certification"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="16sp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_business_partner_certification"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_toRightOf="@+id/iv_identify"-->
+                    <!--android:text="@string/business_partner_certification"-->
+                    <!--android:textColor="@color/gray_dark"-->
+                    <!--android:textSize="16sp"/>-->
 
-                <ImageView
-                    android:id="@+id/iv_sign"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/tv_business_partner_certification"
-                    android:src="@mipmap/img_not_identify"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_sign"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_toRightOf="@+id/tv_business_partner_certification"-->
+                    <!--android:src="@mipmap/img_not_identify"/>-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/arrow"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@mipmap/arrow"/>-->
+            <!--</RelativeLayout>-->
 
             <RelativeLayout
                 android:id="@+id/rl_recommend"
@@ -434,8 +437,8 @@
                 android:id="@+id/rl_mine_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:padding="10dp">
 

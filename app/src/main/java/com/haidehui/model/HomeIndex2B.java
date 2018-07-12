@@ -9,6 +9,7 @@ public class HomeIndex2B implements IMouldType {
 	private MouldList<HomeIndex3B> list;
 	private String title;
 	private String bid; // 公告id
+	private String guideId; // 最新的资讯id(新增)
 	private String message; //
 	private boolean flag;
 
@@ -34,6 +35,14 @@ public class HomeIndex2B implements IMouldType {
 
 	public void setBid(String bid) {
 		this.bid = bid;
+	}
+
+	public String getGuideId() {
+		return guideId;
+	}
+
+	public void setGuideId(String guideId) {
+		this.guideId = guideId;
 	}
 
 	public String getMessage() {

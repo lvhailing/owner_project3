@@ -69,19 +69,22 @@ import com.haidehui.uitls.IdCardCheckUtils;
 public class PartnerIdentifyActivity extends BaseActivity implements View.OnClickListener {
     private TextView tv_realName;
     private TextView tv_mobile;
-    private RelativeLayout layout_address;
     private TextView tv_workProvince;
+    private TextView tv_remark; // 认证信息提示语
+
     private EditText edt_workUnit;
     private EditText edt_email;
     private EditText edt_idNo;
+
+    private RelativeLayout layout_address;
     private RelativeLayout layout_identity_card; // 身份证正面  布局
-    private ImageView img_identity_card; // 身份证正面
     private RelativeLayout layout_card; // 名片   布局
-    private ImageView img_card; // 名片
-    private Button btn_submit;
-    private TextView tv_remark; // 认证信息提示语
     private RelativeLayout layout_delete;
+
+    private ImageView img_identity_card; // 身份证正面
+    private ImageView img_card; // 名片
     private ImageView img_delete;
+    private Button btn_submit;
 
     private int photoType = 1;
     private boolean isID;
@@ -107,7 +110,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_partner_identify);
+        baseSetContentView(R.layout.activity_partner_identify);
 
         mHandler = new MyHandler();
         mthread = new Thread(myRunnable);
@@ -119,7 +122,8 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_partner_identify)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+             .setCenterText(getResources().getString(R.string.title_partner_identify)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -183,7 +187,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 data = (PartnerIdentify2B) params.result;
                 setData(data);
             }
-
         });
     }
 
@@ -271,11 +274,9 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
     /**
      * 获取网落图片资源
-     *
      * @return
      */
     class ImageViewService extends AsyncTask<String, Void, Bitmap> {
-
         @Override
         protected Bitmap doInBackground(String... params) {
             Bitmap data = getImageBitmap(params[0]);
@@ -359,15 +360,15 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 });
                 dialog.show();
                 break;
-            case R.id.layout_identity_card:
+            case R.id.layout_identity_card: // 身份证正面
                 photoType = 1;
                 selectPhoto();
                 break;
-            case R.id.layout_card:
+            case R.id.layout_card: // 名片
                 photoType = 2;
                 selectPhoto();
                 break;
-            case R.id.img_identity_card:
+            case R.id.img_identity_card: // 身份证正面 (跳转到大图浏览页)
                 list = new ArrayList<>();
                 list.add(data.getIdcardFront());
                 Intent i_identify = new Intent(mContext, PhotoPreviewAcForOne.class);
@@ -498,20 +499,16 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         SelectPhotoDialog mDialog = new SelectPhotoDialog(this, new SelectPhotoDialog.OnSelectPhotoChanged() {
             @Override
             public void onAlbum() {//相册
-
                 pickPhoto();
             }
 
             @Override
             public void onCamera() {//相机
-
                 takePhoto();
             }
-
         });
         mDialog.show();
     }
-
 
     /**
      * 拍照获取图片
@@ -520,7 +517,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         //执行拍照前，应该先判断SD卡是否存在
         String sdState = Environment.getExternalStorageState();
         if (sdState.equals(Environment.MEDIA_MOUNTED)) {
-
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
             /***
              * 需要说明一下，以下操作使用照相机拍照，拍照后的图片会存放在相册中的
@@ -555,7 +551,7 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //			doPhoto(requestCode, data);
-        if (requestCode == SELECT_PIC_BY_TACK_PHOTO) {
+        if (requestCode == SELECT_PIC_BY_TACK_PHOTO) { // 表示用的相机
             Bitmap photoBmp = null;
 
             if (photoUri != null) {
@@ -570,20 +566,17 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
-        } else if (requestCode == GALLERY_REQUEST_CODE) {
+        } else if (requestCode == GALLERY_REQUEST_CODE) {  // 表示用的相册
             if (data == null) {
                 return;
             }
             dialog.setmLoadingTip("正在上传照片，请稍后……");
             startLoading();
             Uri mImageCaptureUri = data.getData();
-
             Bitmap photoBmp = null;
 
             if (mImageCaptureUri != null) {
-
                 try {
                     photoBmp = getBitmapFormUri(PartnerIdentifyActivity.this, mImageCaptureUri);
                     newZoomImage = photoBmp;
@@ -591,7 +584,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         } else if (requestCode == CROP_REQUEST_CODE) {
             if (data == null) {
@@ -610,7 +602,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
 
     /**
      * 通过uri获取图片并进行压缩
-     *
      * @param uri
      */
     public static Bitmap getBitmapFormUri(Activity ac, Uri uri) throws FileNotFoundException, IOException {
@@ -756,7 +747,6 @@ public class PartnerIdentifyActivity extends BaseActivity implements View.OnClic
         byte[] bytes = stream.toByteArray();
 
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
-
         try {
             String idNoName = "";
             String busiName = "";

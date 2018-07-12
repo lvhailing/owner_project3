@@ -182,7 +182,6 @@ public final class ShareUtil {
                     Toast.makeText(context, "分享成功", Toast.LENGTH_SHORT).show();
 
                 } else if (platform.getName().equals("Wechat")) {
-//                    Toast.makeText(context, "weixin share", Toast.LENGTH_SHORT).show();
                     Toast.makeText(context, "分享成功", Toast.LENGTH_SHORT).show();
                 } else if (platform.getName().equals("QZone")) {
 

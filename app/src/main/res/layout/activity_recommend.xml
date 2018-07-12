@@ -57,7 +57,7 @@
                     android:scaleType="fitXY"/>
 
                 <TextView
-                    android:id="@+id/tv_recommend_mycode"
+                    android:id="@+id/tv_recommend_my_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

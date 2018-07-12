@@ -2,6 +2,7 @@ package com.haidehui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,21 +19,19 @@ import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
 
-import android.text.TextUtils;
-
 
 /**
- * 我的 --- 我的信息（修改姓名）
+ * 我的 --- 我的信息（修改自我介绍）
  */
-public class MyInfoForNameActivity extends BaseActivity implements View.OnClickListener {
-    private EditText edt_name;
+public class MyInfoForIntroduceMyselfActivity extends BaseActivity implements View.OnClickListener {
+    private EditText et_introduce_myself;
     private Button btn_save;
-    private String realName;
+    private String introduceMyself;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.activity_info_name);
+        baseSetContentView(R.layout.activity_info_introduce_myself);
 
         initTopTitle();
         initView();
@@ -42,7 +41,8 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_my_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_my_info))
+             .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -61,39 +61,37 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
-        edt_name = (EditText) findViewById(R.id.edt_name);
+        et_introduce_myself = (EditText) findViewById(R.id.et_introduce_myself);
         btn_save = (Button) findViewById(R.id.btn_save);
-
 
         btn_save.setOnClickListener(this);
     }
 
     private void initData() {
-        realName = getIntent().getStringExtra("realName");
-        edt_name.setText(realName);
-        edt_name.requestFocusFromTouch();
+        introduceMyself = getIntent().getStringExtra("selfInfo");
+        et_introduce_myself.setText(introduceMyself);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save:
-                String name = edt_name.getText().toString();
-                if (!TextUtils.isEmpty(name)) {
-                    saveData(name);
+                String introduceMyself = et_introduce_myself.getText().toString();
+                if (!TextUtils.isEmpty(introduceMyself)) {
+                    saveData(introduceMyself);
                 } else {
-                    Toast.makeText(mContext, "请输入您的姓名", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "请输入自我介绍的内容", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
     }
 
     /**
-     * 保存姓名
+     * 保存自我介绍的内容
      */
-    private void saveData(final String nameStr) {
+    private void saveData(final String introduceMyself) {
         HashMap<String, Object> param = new HashMap<>();
-        param.put("realName", nameStr);
+        param.put("selfInfo", introduceMyself);
         param.put("userId", userId);
 
         HtmlRequest.saveName(this, param, new BaseRequester.OnRequestListener() {
@@ -106,17 +104,17 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
                 SubmitCustomer2B data = (SubmitCustomer2B) params.result;
                 if ("true".equals(data.getFlag())) {
 
-                    if (!TextUtils.isEmpty(nameStr)) {
-                        try {
-                            PreferenceUtil.setUserRealName(DESUtil.encrypt(nameStr));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+//                    if (!TextUtils.isEmpty(nameStr)) {
+//                        try {
+//                            PreferenceUtil.setUserRealName(DESUtil.encrypt(nameStr));
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
 
                     Intent intent = new Intent(mContext, MyInfoActivity.class);
-                    intent.putExtra("realName", nameStr);
-                    setResult(1001, intent);
+                    intent.putExtra("introduceMyself", introduceMyself);
+                    setResult(3001, intent);
                     finish();
                 }
             }

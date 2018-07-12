@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/et_introduce_myself"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:hint="输入自我介绍的内容（100字以内）"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_center_orange"
+        android:text="@string/btn_save"
+        android:textColor="@color/white"/>
+</RelativeLayout>

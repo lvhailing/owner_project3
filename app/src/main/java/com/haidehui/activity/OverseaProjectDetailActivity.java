@@ -126,6 +126,7 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private int currentPage;
     private Context context;
     private Dialog imageDialog;
+    private ArrayList<String> topImageList;
 
 
     @Override
@@ -320,6 +321,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private void setView() {
         // ImageLoader 加载顶部图片
         ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
+        topImageList = new ArrayList<>();
+        topImageList.add(overseaProjectDetail.getProjectImg());
 
         if (!TextUtils.isEmpty(overseaProjectDetail.getName())) {
             tv_pro_house_name.setText(overseaProjectDetail.getName());
@@ -402,7 +405,10 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_oversea_detail: // 顶部图片
-                showImageDialog();
+                Intent intent = new Intent(mContext, PhotoPreviewAc.class);
+                intent.putStringArrayListExtra("urls", topImageList);
+                intent.putExtra("currentPos", currentPage);
+                startActivity(intent);
                 break;
 
             case R.id.rl_project_house:   // 项目居室
@@ -474,24 +480,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
                 break;
         }
     }
-    public void showImageDialog(){
-        imageDialog = new Dialog(context,R.style.edit_AlertDialog_style);
-        imageDialog.setContentView(R.layout.activity_start_dialog);
-
-        ImageView imageView = (ImageView) imageDialog.findViewById(R.id.start_img);
-//        imageView.setBackgroundResource(R.mipmap.bg_oversea_project_normal);
-        ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), imageView);
-        imageDialog.show();
-
-
-        imageDialog.setCanceledOnTouchOutside(true); // Sets whether this dialog is
-        Window w = imageDialog.getWindow();
-        WindowManager.LayoutParams lp = w.getAttributes();
-        lp.x = 0;
-        lp.y = 40;
-        imageDialog.onWindowAttributesChanged(lp);
-    }
-
 
     /**
      * 获取海外项目详情页的数据

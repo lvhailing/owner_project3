@@ -1718,7 +1718,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "我的数据：" + data);
+                    Log.i("hh", "我的数据：" + data);
                     Gson gson = new Gson();
                     MineData1B b = gson.fromJson(data, MineData1B.class);
                     return b.getData();

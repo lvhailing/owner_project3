@@ -210,4 +210,13 @@
     <string name="purchase_flow">购房流程</string>
     <string name="property_consultant">置业顾问</string>
 
+    <!-- 我的信息 -->
+    <string name="name">姓名</string>
+    <string name="work_unit">工作单位</string>
+    <string name="et_hint_work_unit">输入工作单位</string>
+    <string name="weChat_code">微信二维码</string>
+    <string name="introduce_myself">自我介绍</string>
+    <string name="btn_save">保存</string>
+
+
 </resources>

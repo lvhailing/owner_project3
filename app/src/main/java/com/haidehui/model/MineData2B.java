@@ -10,8 +10,11 @@ public class MineData2B implements IMouldType {
     private String totalCommission; // 账本额度值
     private String headPhoto; // 头像
     private String checkStatus; // 认证状态
-    private String idNo;        //  身份证号
+    private String idNo; //  身份证号
     private String recommendCode;//推荐码
+    private String workUnit; // 工作单位
+    private String weChatPhoto; // 微信二维码图片
+    private String selfInfo; // 自我介绍
 
     public String getIdNo() {
         return idNo;
@@ -75,5 +78,29 @@ public class MineData2B implements IMouldType {
 
     public void setRecommendCode(String recommendCode) {
         this.recommendCode = recommendCode;
+    }
+
+    public String getWorkUnit() {
+        return workUnit;
+    }
+
+    public void setWorkUnit(String workUnit) {
+        this.workUnit = workUnit;
+    }
+
+    public String getWeChatPhoto() {
+        return weChatPhoto;
+    }
+
+    public void setWeChatPhoto(String weChatPhoto) {
+        this.weChatPhoto = weChatPhoto;
+    }
+
+    public String getSelfInfo() {
+        return selfInfo;
+    }
+
+    public void setSelfInfo(String selfInfo) {
+        this.selfInfo = selfInfo;
     }
 }

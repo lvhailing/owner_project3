@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ResultCycleIndex2B cycleIndex2B; //  ResultCycleIndex2B 类型的对象
     private String linkType; // 轮播图跳转类型（url:h5页面跳转、appProject:app项目详情、appHouse:app房源详情、appVideo:路演视频详情、appInvestGuide:投资指南、none:无跳转）
     private String target; // url时是链接，其他情况为相关id
+    private String guideId; // 最新的资讯id
 //    private TextView tv_company_tab1; // 公司
 //    private TextView tv_team_tab2; // 团队
 //    private TextView tv_platform_tab3; // 平台
@@ -247,6 +248,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_hot_investment:  // 投资热点（跳转至最新一条“投资指南”）
 //                intent = new Intent(context, HotHouseListActivity.class);
 //                startActivity(intent);
+                if (!TextUtils.isEmpty(guideId)) {
+                    intent = new Intent(context, WebForShareActivity.class);
+                    intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                    intent.putExtra("id", guideId);
+                    intent.putExtra("title", "投资热点");
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(context, "暂无最新投资热点", Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.tv_oversea_project: // 海外项目
                 intent = new Intent(context, OverseaProjectListActivity.class);
@@ -315,6 +325,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
 
                 homeIndexData = (HomeIndex2B) params.result;
+                guideId = homeIndexData.getGuideId();
+
                 if (!TextUtils.isEmpty(homeIndexData.getTitle())) {
                     tv_home_notice.setText(homeIndexData.getTitle());
                 } else {

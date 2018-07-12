@@ -19,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.haidehui.common.Urls;
 import com.haidehui.network.http.AsyncHttpClient;
 import com.haidehui.network.http.AsyncHttpResponseHandler;
 import com.haidehui.network.http.RequestParams;
+import com.haidehui.photo_preview.PhotoPreviewAcForOne;
 import com.haidehui.widget.CircularImage;
 import com.haidehui.widget.SelectPhotoDialog;
 import com.haidehui.widget.TitleBar;
@@ -45,67 +47,65 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 /**
  * 我的 --- 我的信息
  */
 public class MyInfoActivity extends BaseActivity implements View.OnClickListener {
-    private RelativeLayout layout_photo;
-    private CircularImage img_photo;
-    private RelativeLayout layout_name;
+    private RelativeLayout rl_photo;
+    private RelativeLayout rl_name; // 姓名
+    private RelativeLayout rl_work_unit; // 工作单位
+    //    private RelativeLayout rl_weChat_code; // 微信二维码
+    private RelativeLayout rl_introduce_myself; // 自我介绍
+
     private TextView tv_name;
+    private TextView tv_work_unit;
+    private TextView tv_introduce_myself;
+    private CircularImage img_photo; // 用户头像
+    private ImageView iv_weChat_code_photo;  // 微信二维码 图片
+    private ImageView img_arrow4;
+
     private String realName;
     private String headPhoto;
+    private String workUnit;
+    private String weChatPhoto;
+    private String introduceMyself;
 
-    /**
-     * 表示选择的是相册--2
-     */
-    private static int GALLERY_REQUEST_CODE = 2;
-    /**
-     * 表示选择的是裁剪--3
-     */
-    private static int CROP_REQUEST_CODE = 3;
+    private int photoType = 1; // 1是头像，2是微信二维码图片
+
+
+    private static int GALLERY_REQUEST_CODE = 2; // 表示选择的是相册--2
+    private static int CROP_REQUEST_CODE = 3; // 表示选择的是裁剪--3
 
     private Bitmap newZoomImage;
     private MyHandler mHandler;
     private Thread mthread;
 
+    private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/"; // 图片保存SD卡位置
+    private final static String IMG_PATH_TWO = Environment.getExternalStorageDirectory() + "/haidehui/imgs2/"; // 图片保存SD卡位置
 
-    /**
-     * 图片保存SD卡位置
-     */
-    private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/";
-    /**
-     * 图片保存SD卡位置
-     */
-    private final static String IMG_PATH_TWO = Environment.getExternalStorageDirectory() + "/haidehui/imgs2/";
+    public static final int SELECT_PIC_BY_TACK_PHOTO = 1; // 使用照相机拍照获取图片
+    public static final int SELECT_PIC_BY_PICK_PHOTO = 2; // 使用相册中的图片
 
-    /***
-     * 使用照相机拍照获取图片
-     */
-    public static final int SELECT_PIC_BY_TACK_PHOTO = 1;
-    /***
-     * 使用相册中的图片
-     */
-    public static final int SELECT_PIC_BY_PICK_PHOTO = 2;
-
-    /**
-     * 获取到的图片路径
-     */
-    private String picPath;
+    private String picPath; // 获取到的图片路径
 
     private Uri photoUri;
 
     private static final String TAG = "MyInfoActivity";
+    private boolean isUserPhoto;
+    private boolean isWechatCodePhoto;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_info);
+        baseSetContentView(R.layout.activity_info);
+
         mHandler = new MyHandler();
         mthread = new Thread(myRunnable);
+
         initTopTitle();
         initView();
         initData();
@@ -133,28 +133,71 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
+        img_photo = (CircularImage) findViewById(R.id.iv_photo);
+
+        rl_photo = (RelativeLayout) findViewById(R.id.rl_photo);
+        rl_name = (RelativeLayout) findViewById(R.id.rl_name);
+        rl_work_unit = (RelativeLayout) findViewById(R.id.rl_work_unit);
+//        rl_weChat_code = (RelativeLayout) findViewById(R.id.rl_weChat_code);
+        rl_introduce_myself = (RelativeLayout) findViewById(R.id.rl_introduce_myself);
+
+        tv_name = (TextView) findViewById(R.id.tv_name);
+        tv_work_unit = (TextView) findViewById(R.id.tv_work_unit);
+        tv_introduce_myself = (TextView) findViewById(R.id.tv_introduce_myself);
+
+        img_arrow4 = (ImageView) findViewById(R.id.img_arrow4);
+        iv_weChat_code_photo = (ImageView) findViewById(R.id.iv_weChat_code_photo);
+
+        rl_photo.setOnClickListener(this);
+        rl_name.setOnClickListener(this);
+        rl_work_unit.setOnClickListener(this);
+        img_arrow4.setOnClickListener(this);
+        iv_weChat_code_photo.setOnClickListener(this);
+        rl_introduce_myself.setOnClickListener(this);
+    }
+
+    private void initData() {
         realName = getIntent().getStringExtra("realName");
         headPhoto = getIntent().getStringExtra("headPhoto");
+        workUnit = getIntent().getStringExtra("workUnit");
+        weChatPhoto = getIntent().getStringExtra("weChatPhoto");
 
-        layout_photo = (RelativeLayout) findViewById(R.id.layout_photo);
-        img_photo = (CircularImage) findViewById(R.id.iv_photo);
-        layout_name = (RelativeLayout) findViewById(R.id.layout_name);
-        tv_name = (TextView) findViewById(R.id.tv_name);
-        tv_name.setText(realName);
+        Log.e("ee", "微信二维码" + weChatPhoto);
+        introduceMyself = getIntent().getStringExtra("selfInfo");
+
+        String photoTypeStr = "";
         if (!TextUtils.isEmpty(headPhoto)) {
             File file = new File(IMG_PATH);
-
-            if(file.exists()){
-               Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
-                img_photo.setImageBitmap(bitmap);
-            }else{
-                new ImageViewService().execute(headPhoto);
+            if (file.exists()) {
+                if (photoType == 1) {
+                    photoTypeStr = "headPhoto";
+                    Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
+                    img_photo.setImageBitmap(bitmap);
+                }
+            } else {
+                new ImageViewService().execute(photoTypeStr);
+            }
+        } else {
+            img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
+        }
+        if (!TextUtils.isEmpty(weChatPhoto)) {
+            File file = new File(IMG_PATH);
+            if (file.exists()) {
+                if (photoType == 2) {
+                    photoTypeStr = "weChatPhoto";
+                    Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
+                    iv_weChat_code_photo.setImageBitmap(bitmap);
+                }
+            } else {
+                new ImageViewService().execute(photoTypeStr);
             }
         } else {
             img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
 
-
+        tv_name.setText(realName);
+        tv_work_unit.setText(workUnit);
+        tv_introduce_myself.setText(introduceMyself);
     }
 
     /**
@@ -163,7 +206,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
      * @return
      */
     class ImageViewService extends AsyncTask<String, Void, Bitmap> {
-
         @Override
         protected Bitmap doInBackground(String... params) {
             Bitmap data = getImageBitmap(params[0]);
@@ -175,13 +217,20 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             super.onPostExecute(result);
 
             if (result != null) {
-                img_photo.setImageBitmap(result);
+                if (photoType == 1) {
+                    img_photo.setImageBitmap(result);
+                } else if (photoType == 2) {
+                    iv_weChat_code_photo.setImageBitmap(result);
+                }
                 saveBitmap2(result);
             } else {
-                img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
+                if (photoType ==1) {
+                    img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
+                } else if (photoType == 2) {
+                    iv_weChat_code_photo.setImageBitmap(result);
+                }
             }
         }
-
     }
 
     private Bitmap getImageBitmap(String url) {
@@ -225,21 +274,40 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void initData() {
-        layout_photo.setOnClickListener(this);
-        layout_name.setOnClickListener(this);
-    }
-
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
-            case R.id.layout_photo: // 头像布局
+            case R.id.rl_photo: // 头像布局
+                photoType = 1;
                 selectPhoto();
                 break;
-            case R.id.layout_name:
-                Intent intent = new Intent(this, MyInfoForNameActivity.class);
+            case R.id.rl_name:
+                intent = new Intent(this, MyInfoForNameActivity.class);
                 intent.putExtra("realName", realName);
                 startActivityForResult(intent, 1000);
+                break;
+            case R.id.rl_work_unit: // 工作单位
+                intent = new Intent(this, MyInfoForWorkUnitActivity.class);
+                intent.putExtra("workUnit", workUnit);
+                startActivityForResult(intent, 2000);
+                break;
+            case R.id.img_arrow4: // 微信二维码
+                photoType = 2;
+                selectPhoto();
+                break;
+            case R.id.iv_weChat_code_photo: // 微信二维码图片
+//                ArrayList list = new ArrayList<>();
+//                list.add(weChatPhoto);
+//                intent = new Intent(mContext, PhotoPreviewAcForOne.class);
+//                intent.putStringArrayListExtra("urls", list);
+//                intent.putExtra("currentPos", 0);
+//                startActivity(intent);
+                break;
+            case R.id.rl_introduce_myself: // 自我介绍
+                intent = new Intent(this, MyInfoForIntroduceMyselfActivity.class);
+                intent.putExtra("selfInfo", introduceMyself);
+                startActivityForResult(intent, 3000);
                 break;
         }
     }
@@ -248,13 +316,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         SelectPhotoDialog mDialog = new SelectPhotoDialog(this, new SelectPhotoDialog.OnSelectPhotoChanged() {
             @Override
             public void onAlbum() {//相册
-
                 pickPhoto();
             }
 
             @Override
             public void onCamera() {//相机
-
                 takePhoto();
             }
 
@@ -277,7 +343,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
              * 如果不实用ContentValues存放照片路径的话，拍照后获取的图片为缩略图不清晰
              */
             /*//设置图片的保存路径,作为全局变量
-			String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
+            String imageFilePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/filename.jpg";
 			File temp = new File(imageFilePath);
 			photoUri = Uri.fromFile(temp);//获取文件的Uri*/
             ContentValues values = new ContentValues();
@@ -310,7 +376,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             if (photoUri != null) {
                 try {
                     photoBmp = getBitmapFormUri(MyInfoActivity.this, photoUri);
-                    if (photoBmp!=null){
+                    if (photoBmp != null) {
                         dialog.setmLoadingTip("正在上传照片，请稍后……");
                         startLoading();
                     }
@@ -319,7 +385,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         } else if (requestCode == GALLERY_REQUEST_CODE) {
             if (data == null) {
@@ -328,11 +393,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             dialog.setmLoadingTip("正在上传照片，请稍后……");
             startLoading();
             Uri mImageCaptureUri = data.getData();
-
             Bitmap photoBmp = null;
 
             if (mImageCaptureUri != null) {
-
                 try {
                     photoBmp = getBitmapFormUri(MyInfoActivity.this, mImageCaptureUri);
                     newZoomImage = photoBmp;
@@ -353,10 +416,20 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             Bitmap bm = extras.getParcelable("data");
             newZoomImage = zoomImage(bm, 600, 300);
 //			sendImage(newZoomImage);
-        } else if (requestCode == 1000 && resultCode == 2000) {
+        } else if (requestCode == 1000 && resultCode == 1001) {
             String nameData = data.getStringExtra("realName");
-            realName=nameData;
+            realName = nameData;
             tv_name.setText(nameData);
+
+        } else if (requestCode == 2000 && resultCode == 2001) {
+            String workUnitData = data.getStringExtra("workUnit");
+            workUnit = workUnitData;
+            tv_work_unit.setText(workUnit);
+
+        } else if (requestCode == 3000 && resultCode == 3001) {
+            String introduceMyselfData = data.getStringExtra("introduceMyself");
+            introduceMyself = introduceMyselfData;
+            tv_introduce_myself.setText(introduceMyself);
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -504,20 +577,39 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         return bitmap;
     }
 
+    /**
+     * 调接口 传图片到服务器
+     *
+     * @param bm
+     */
     private void sendImage(Bitmap bm) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bytes = stream.toByteArray();
 
         String img = new String(Base64.encodeToString(bytes, Base64.DEFAULT));
-
         try {
+            String userPhoto = "";
+            String weChatCodePhoto = "";
+            String photoTypeStr = "";
+            if (photoType == 1) {
+                userPhoto = "userPhoto.jpg";
+                photoTypeStr = "headPhoto";
+            } else if (photoType == 2) {
+                weChatCodePhoto = "weChatCodePhoto.jpg";
+                photoTypeStr = "wechatPhoto";
+            }
             AsyncHttpClient client = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            params.add("photo", img);
-            params.add("name", "headPhoto.jpg");
+            if (photoType == 1) {
+                params.add("photo", img);
+                params.add("name", userPhoto);
+            } else if (photoType == 2) {
+                params.add("photo", img);
+                params.add("name", weChatCodePhoto);
+            }
             params.add("id", userId);
-            params.add("photoType", "headPhoto");
+            params.add("photoType", photoTypeStr);
             String url = Urls.URL_SUBMIT_PHOTO;
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
@@ -529,7 +621,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
 
                 @Override
@@ -548,8 +639,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             super.handleMessage(msg);
             stopLoading();
             if (msg.what == 1) {
-                img_photo.setImageBitmap(newZoomImage);
-            } else {
+                if (photoType == 1) {
+                    img_photo.setImageBitmap(newZoomImage);
+                    isUserPhoto = true;
+                } else if (photoType == 2) {
+                    iv_weChat_code_photo.setImageBitmap(newZoomImage);
+                    isWechatCodePhoto = true;
+                }
             }
         }
 

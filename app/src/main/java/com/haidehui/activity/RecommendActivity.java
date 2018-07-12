@@ -48,12 +48,12 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_recommend_all_friend; // 邀请好友数
     private TextView tv_recommend_all_acount; // 好友为我赚取金额
     private ImageView iv_recommend_invite_code; // 我的邀请二维码
-    private TextView tv_recommend_mycode; // 我的推荐码
+    private TextView tv_recommend_my_code; // 我的推荐码
     private TextView tv_recommend_btn; // 邀请好友
     private TextView tv_recommend_rule;  // 邀请规则
     private TextView tv_recommend_record; // 邀请记录
 
-//    private final static String CACHE = "/dafuweng/imgs";
+//    private final static String CACHE = "/haidehui/imgs";
     private int QR_WIDTH = 360, QR_HEIGHT = 360;
     private String recommendCode = "";  //  邀请码
     private Context context;
@@ -63,7 +63,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_recommend);
+        baseSetContentView(R.layout.activity_recommend);
 
         initTopTitle();
         initView();
@@ -105,7 +105,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         tv_recommend_all_friend = (TextView) findViewById(R.id.tv_recommend_all_friend);
         tv_recommend_all_acount = (TextView) findViewById(R.id.tv_recommend_all_acount);
         iv_recommend_invite_code = (ImageView) findViewById(R.id.iv_recommend_invite_code);
-        tv_recommend_mycode = (TextView) findViewById(R.id.tv_recommend_mycode);
+        tv_recommend_my_code = (TextView) findViewById(R.id.tv_recommend_my_code);
         tv_recommend_btn = (TextView) findViewById(R.id.tv_recommend_btn);
         tv_recommend_rule = (TextView) findViewById(R.id.tv_recommend_rule);
         tv_recommend_record = (TextView) findViewById(R.id.tv_recommend_record);
@@ -123,7 +123,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     public void setView() {
         tv_recommend_all_friend.setText(bean.getTotal() + "位朋友为我赚取了");
         tv_recommend_all_acount.setText("￥" + bean.getTotalAmount() + "元");
-        tv_recommend_mycode.setText("我的推荐码：" + recommendCode);
+        tv_recommend_my_code.setText("我的推荐码：" + recommendCode);
 
         StringBuffer randomNum = new StringBuffer();
         for (int i = 0; i < 6; i++) {
@@ -181,7 +181,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.tv_recommend_btn: // 邀请朋友
+            case R.id.tv_recommend_btn: // 推荐给朋友
                 sharedSDK();
                 break;
             case R.id.tv_recommend_rule: // 邀请规则

@@ -1,5 +1,6 @@
 package com.haidehui.fragment;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +31,7 @@ import com.haidehui.activity.PartnerIdentifyActivity;
 import com.haidehui.activity.RecommendActivity;
 import com.haidehui.activity.RenGouStatusActivity;
 import com.haidehui.activity.SettingActivity;
+import com.haidehui.common.Urls;
 import com.haidehui.model.MineData2B;
 import com.haidehui.model.ResultMessageInfoContentBean;
 import com.haidehui.network.BaseParams;
@@ -49,6 +51,13 @@ import java.net.URL;
 import java.util.HashMap;
 
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.wechat.favorite.WechatFavorite;
+import onekeyshare.OnekeyShare;
+import onekeyshare.ShareContentCustomizeCallback;
 
 /**
  * 底部导航--- 我的模块
@@ -58,18 +67,18 @@ public class MineFragment extends Fragment implements OnClickListener {
     private View mView;
     private ImageView iv_message; // 消息图标
     private ImageView iv_photo; // 头像
-    private ImageView iv_sign;
+//    private ImageView iv_sign;
     private TextView tv_message_total; // 消息总数
     private TextView tv_real_name; // 用户姓名
     private TextView tv_code; // 推荐码
-    private TextView tv_total_commission; // 帐本金额
+//    private TextView tv_total_commission; // 帐本金额
     private TextView tv_customer_info; // 客户信息
     private TextView tv_customer_follow; // 客户跟踪
     private TextView tv_subscription_state; // 认购状态
     private RelativeLayout rl_my_info; // 个人信息布局
-    private RelativeLayout rl_business_partner_certification; // 事业合伙人认证
-    private RelativeLayout rl_account_book; // 我的帐本
-    private RelativeLayout rl_my_bankcard; // 我的银行卡
+//    private RelativeLayout rl_business_partner_certification; // 事业合伙人认证
+//    private RelativeLayout rl_account_book; // 我的帐本
+//    private RelativeLayout rl_my_bankcard; // 我的银行卡
     private RelativeLayout rl_mine_setting;    // 设置
     private String checkStatus = "init";   // 认证状态
     private String userId = "";
@@ -85,6 +94,7 @@ public class MineFragment extends Fragment implements OnClickListener {
     private RelativeLayout rl_recommend; // 推荐海德汇APP给朋友
     private RelativeLayout rl_explain_order; // 预约说明会
     private RelativeLayout rl_business_partner; // 我的事业合伙人
+    private String recommendCode; // 推荐码
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -128,20 +138,20 @@ public class MineFragment extends Fragment implements OnClickListener {
         context = getActivity();
         iv_message = (ImageView) mView.findViewById(R.id.iv_message);
         iv_photo = (ImageView) mView.findViewById(R.id.iv_photo);
-        iv_sign = (ImageView) mView.findViewById(R.id.iv_sign);
+//        iv_sign = (ImageView) mView.findViewById(R.id.iv_sign);
 
         tv_message_total = (TextView) mView.findViewById(R.id.tv_message_total);
         tv_real_name = (TextView) mView.findViewById(R.id.tv_real_name);
         tv_code = (TextView) mView.findViewById(R.id.tv_code);
-        tv_total_commission = (TextView) mView.findViewById(R.id.tv_total_commission);
+//        tv_total_commission = (TextView) mView.findViewById(R.id.tv_total_commission);
         tv_customer_info = (TextView) mView.findViewById(R.id.tv_customer_info);
         tv_customer_follow = (TextView) mView.findViewById(R.id.tv_customer_follow);
         tv_subscription_state = (TextView) mView.findViewById(R.id.tv_subscription_state);
 
         rl_my_info = (RelativeLayout) mView.findViewById(R.id.rl_my_info);
-        rl_business_partner_certification = (RelativeLayout) mView.findViewById(R.id.rl_business_partner_certification);
-        rl_account_book = (RelativeLayout) mView.findViewById(R.id.rl_account_book);
-        rl_my_bankcard = (RelativeLayout) mView.findViewById(R.id.rl_my_bankcard);
+//        rl_business_partner_certification = (RelativeLayout) mView.findViewById(R.id.rl_business_partner_certification);
+//        rl_account_book = (RelativeLayout) mView.findViewById(R.id.rl_account_book);
+//        rl_my_bankcard = (RelativeLayout) mView.findViewById(R.id.rl_my_bankcard);
         rl_recommend = (RelativeLayout) mView.findViewById(R.id.rl_recommend);
         rl_mine_setting = (RelativeLayout) mView.findViewById(R.id.rl_mine_setting);
         rl_explain_order = (RelativeLayout) mView.findViewById(R.id.rl_explain_order);
@@ -153,9 +163,9 @@ public class MineFragment extends Fragment implements OnClickListener {
         tv_customer_info.setOnClickListener(this);
         tv_customer_follow.setOnClickListener(this);
         tv_subscription_state.setOnClickListener(this);
-        rl_business_partner_certification.setOnClickListener(this);
-        rl_account_book.setOnClickListener(this);
-        rl_my_bankcard.setOnClickListener(this);
+//        rl_business_partner_certification.setOnClickListener(this);
+//        rl_account_book.setOnClickListener(this);
+//        rl_my_bankcard.setOnClickListener(this);
         rl_recommend.setOnClickListener(this);
         rl_mine_setting.setOnClickListener(this);
         rl_explain_order.setOnClickListener(this);
@@ -182,10 +192,14 @@ public class MineFragment extends Fragment implements OnClickListener {
                 break;
             case R.id.rl_my_info://跳转我的信息
                 if (data != null) {
-                    if (data.getHeadPhoto() != null && data.getRealName() != null) {
+                    if (data.getHeadPhoto() != null && data.getRealName() != null && data.getWorkUnit() != null
+                            && data.getWeChatPhoto() != null && data.getSelfInfo() != null) {
                         intent = new Intent(context, MyInfoActivity.class);
                         intent.putExtra("headPhoto", data.getHeadPhoto());
                         intent.putExtra("realName", data.getRealName());
+                        intent.putExtra("workUnit", data.getWorkUnit());
+                        intent.putExtra("weChatPhoto", data.getWeChatPhoto());
+                        intent.putExtra("selfInfo", data.getSelfInfo());
                         startActivity(intent);
                     }
                 }
@@ -208,27 +222,29 @@ public class MineFragment extends Fragment implements OnClickListener {
                 intent.putExtra("checkStatus",status);
                 startActivity(intent);
                 break;
-            case R.id.rl_business_partner_certification://跳转事业合伙人认证
-                intent = new Intent(context, PartnerIdentifyActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.rl_account_book://跳转我的账本
-                intent = new Intent(context, AccountBookActivity.class);
-                intent.putExtra("checkStatus",status);
-                startActivity(intent);
-                break;
-            case R.id.rl_my_bankcard:  // 我的银行卡
-                intent = new Intent(context, MyBankActivity.class);
-                intent.putExtra("checkStatus",status);
-                startActivity(intent);
-                break;
-            case R.id.rl_business_partner:  // 点击我的事业合伙人 跳转推荐列表
+//            case R.id.rl_business_partner_certification://跳转事业合伙人认证
+//                intent = new Intent(context, PartnerIdentifyActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.rl_account_book://跳转我的账本
+//                intent = new Intent(context, AccountBookActivity.class);
+//                intent.putExtra("checkStatus",status);
+//                startActivity(intent);
+//                break;
+//            case R.id.rl_my_bankcard:  // 我的银行卡
+//                intent = new Intent(context, MyBankActivity.class);
+//                intent.putExtra("checkStatus",status);
+//                startActivity(intent);
+//                break;
+            case R.id.rl_business_partner:  // 点击我的事业合伙人 跳转事业合伙人推荐列表
                  intent = new Intent(context, MyBusinessPartnerActivity.class);
                  startActivity(intent);
                 break;
-            case R.id.rl_recommend: // 推荐海德汇APP给朋友
-                 intent = new Intent(context, RecommendActivity.class);
-                 startActivity(intent);
+            case R.id.rl_recommend: // 推荐海德汇APP给朋友 （2018.7.11 改为点击直接跳转分享页面）
+//                 intent = new Intent(context, RecommendActivity.class);
+//                 startActivity(intent);
+
+                sharedSDK();
                 break;
             case R.id.rl_mine_setting:  // 设置页面
                 intent = new Intent(context, SettingActivity.class);
@@ -240,7 +256,132 @@ public class MineFragment extends Fragment implements OnClickListener {
         }
     }
 
-    //我的主页面数据
+    private void sharedSDK() {
+        final OnekeyShare oks = new OnekeyShare();
+        // 关闭sso授权
+        oks.disableSSOWhenAuthorize();
+        oks.addHiddenPlatform(WechatFavorite.NAME);// 隐藏微信收藏；
+
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            //自定义分享的回调想要函数
+            @Override
+            public void onShare(Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
+                String url = Urls.URL + "register/" + recommendCode + "/recommend";
+
+                //点击微信好友
+                if("Wechat".equals(platform.getName())){
+                    //微信分享应用 ,此功能需要微信绕开审核，需要使用项目中的wechatdemo.keystore进行签名打包
+                    //由于Onekeyshare没有关于应用分享的参数如setShareType等，我们需要通过自定义 分享来实现
+                    //比如下面设置了setTitle,可以覆盖oks.setTitle里面的title值
+                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setUrl(url);
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+//                    paramsToShare.setExtInfo("应用信息");
+//                    paramsToShare.setFilePath("xxxxx.apk");
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                }
+
+                //点击微信朋友圈
+                if("WechatMoments".equals(platform.getName())){
+                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setUrl(url);
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                }
+
+                //点击QQ空间
+                if ("QZone".equals(platform.getName())){
+//                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                }
+
+                //点击QQ
+                if ("QQ".equals(platform.getName())) {
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setTitle(getString(R.string.login_title));
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setUrl(url);
+                    paramsToShare.setSite(context.getString(R.string.app_name));
+                }
+                //点击信息
+                if ("ShortMessage".equals(platform.getName())) {
+                    paramsToShare.setText(getString(R.string.shared_message) + url);
+                    paramsToShare.setTitleUrl(url);
+                    paramsToShare.setUrl(url);
+                }
+
+            }
+        });
+
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle(getString(R.string.share));
+        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+        // oks.setTitleUrl("http://www.vjinke.com");
+
+        // 自定义分享按钮
+        Bitmap enableLogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.ssdk_logo_lianjie);
+        String label = "复制链接";
+        View.OnClickListener listener = new View.OnClickListener() {
+            public void onClick(View v) {
+                StringBuffer randomNum = new StringBuffer();
+                for (int i = 0; i < 6; i++) {
+                    int t = (int) (Math.random() * 10);
+                    randomNum.append(t);
+                }
+                ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(Urls.URL + "register/" + recommendCode + "/recommend");
+                Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
+            }
+        };
+        oks.setCustomerLogo(enableLogo, label, listener);
+
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+//                Toast.makeText(context,"--------"+platform.getName(),Toast.LENGTH_SHORT).show();
+
+                if (platform.getName().equals("WechatMoments")) {
+
+                } else if (platform.getName().equals("Wechat")) {
+
+                } else if (platform.getName().equals("QZone")) {
+
+                } else if (platform.getName().equals("SinaWeibo")) {
+
+                } else if (platform.getName().equals("ShortMessage")) {
+
+                } else if (platform.getName().equals("QQ")) {
+
+                }
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+            }
+        });
+
+        if (!TextUtils.isEmpty(recommendCode)) {
+            // 启动分享GUI
+            oks.show(getActivity());
+        }
+    }
+
+    /**
+     *  “我的”主页面数据
+     */
     private void requestData() {
         try {
             userId = DESUtil.decrypt(PreferenceUtil.getUserId());
@@ -282,21 +423,25 @@ public class MineFragment extends Fragment implements OnClickListener {
 
         }
         tv_real_name.setText(data.getRealName());
-        tv_code.setText("我的推荐码："+data.getRecommendCode());
-        tv_total_commission.setText(data.getTotalCommission() + "元");
+        recommendCode = data.getRecommendCode();
+        tv_code.setText("我的推荐码："+recommendCode);
+//        tv_total_commission.setText(data.getTotalCommission() + "元");
 
+        // 设置用户头像
         String url = data.getHeadPhoto();
         if (!TextUtils.isEmpty(url)) {
             new ImageViewService().execute(url);
         } else {
             iv_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
-        String status = data.getCheckStatus();
-        if ("success".equals(status)) {
-            iv_sign.setImageResource(R.mipmap.img_identified);
-        } else {
-            iv_sign.setImageResource(R.mipmap.img_not_identify);
-        }
+
+        // 根据事业合伙人认证状态 设置认证图标
+//        String status = data.getCheckStatus();
+//        if ("success".equals(status)) {
+//            iv_sign.setImageResource(R.mipmap.img_identified);
+//        } else {
+//            iv_sign.setImageResource(R.mipmap.img_not_identify);
+//        }
 
         if(!TextUtils.isEmpty(data.getIdNo())) {
             try {
@@ -331,7 +476,6 @@ public class MineFragment extends Fragment implements OnClickListener {
                 iv_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
             }
         }
-
     }
 
     private Bitmap getImageBitmap(String url) {
