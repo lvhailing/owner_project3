@@ -84,7 +84,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private Thread mthread;
 
     private final static String IMG_PATH = Environment.getExternalStorageDirectory() + "/haidehui/imgs/"; // 图片保存SD卡位置
-    private final static String IMG_PATH_TWO = Environment.getExternalStorageDirectory() + "/haidehui/imgs2/"; // 图片保存SD卡位置
+    private final static String IMG_PATH_TWO = Environment.getExternalStorageDirectory() + "/haidehui/imgs2/";
 
     public static final int SELECT_PIC_BY_TACK_PHOTO = 1; // 使用照相机拍照获取图片
     public static final int SELECT_PIC_BY_PICK_PHOTO = 2; // 使用相册中的图片
@@ -161,38 +161,29 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         headPhoto = getIntent().getStringExtra("headPhoto");
         workUnit = getIntent().getStringExtra("workUnit");
         weChatPhoto = getIntent().getStringExtra("weChatPhoto");
-
-        Log.e("ee", "微信二维码" + weChatPhoto);
         introduceMyself = getIntent().getStringExtra("selfInfo");
 
-        String photoTypeStr = "";
         if (!TextUtils.isEmpty(headPhoto)) {
             File file = new File(IMG_PATH);
             if (file.exists()) {
-                if (photoType == 1) {
-                    photoTypeStr = "headPhoto";
-                    Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
-                    img_photo.setImageBitmap(bitmap);
-                }
+                Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
+                img_photo.setImageBitmap(bitmap);
             } else {
-                new ImageViewService().execute(photoTypeStr);
+                new ImageViewService1().execute(headPhoto);
             }
         } else {
             img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
         if (!TextUtils.isEmpty(weChatPhoto)) {
-            File file = new File(IMG_PATH);
+            File file = new File(IMG_PATH_TWO);
             if (file.exists()) {
-                if (photoType == 2) {
-                    photoTypeStr = "weChatPhoto";
-                    Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
-                    iv_weChat_code_photo.setImageBitmap(bitmap);
-                }
+                Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH_TWO + "Test2.png");
+                iv_weChat_code_photo.setImageBitmap(bitmap);
             } else {
-                new ImageViewService().execute(photoTypeStr);
+                new ImageViewService2().execute(weChatPhoto);
             }
         } else {
-            img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
+            iv_weChat_code_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
         }
 
         tv_name.setText(realName);
@@ -201,14 +192,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     }
 
     /**
-     * 获取网落图片资源
-     *
+     * 获取网落图片资源(头像)
      * @return
      */
-    class ImageViewService extends AsyncTask<String, Void, Bitmap> {
+    class ImageViewService1 extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... params) {
-            Bitmap data = getImageBitmap(params[0]);
+            Bitmap data = getHeadPhotoBitmap(params[0]);
             return data;
         }
 
@@ -217,23 +207,15 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             super.onPostExecute(result);
 
             if (result != null) {
-                if (photoType == 1) {
-                    img_photo.setImageBitmap(result);
-                } else if (photoType == 2) {
-                    iv_weChat_code_photo.setImageBitmap(result);
-                }
-                saveBitmap2(result);
+                img_photo.setImageBitmap(result);
+                saveBitmap2(result,1);
             } else {
-                if (photoType ==1) {
-                    img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
-                } else if (photoType == 2) {
-                    iv_weChat_code_photo.setImageBitmap(result);
-                }
+                img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
             }
         }
     }
 
-    private Bitmap getImageBitmap(String url) {
+    private Bitmap getHeadPhotoBitmap(String url) {
         URL imgUrl = null;
         Bitmap bitmap = null;
         try {
@@ -252,12 +234,60 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         return bitmap;
     }
 
-    private Uri saveBitmap2(Bitmap bm) {
+    /**
+     * 获取网落图片资源(微信二维码图片)
+     * @return
+     */
+    class ImageViewService2 extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            Bitmap data = getWechatPhotoBitmap(params[0]);
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                iv_weChat_code_photo.setImageBitmap(result);
+                saveBitmap2(result,2);
+            } else {
+                iv_weChat_code_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
+            }
+        }
+    }
+
+    private Bitmap getWechatPhotoBitmap(String url) {
+        URL imgUrl = null;
+        Bitmap bitmap = null;
+        try {
+            imgUrl = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) imgUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    private Uri saveBitmap2(Bitmap bm,int type) {
+        File img = null;
         File tmpDir = new File(IMG_PATH);
         if (!tmpDir.exists()) {
             tmpDir.mkdirs();
         }
-        File img = new File(IMG_PATH + "Test.png");
+        if (type == 1) {
+            img = new File(IMG_PATH + "headPhoto.png");
+        } else if (type == 2) {
+            img = new File(IMG_PATH + "weChatPhoto.png");
+        }
         try {
             FileOutputStream fos = new FileOutputStream(img);
             bm.compress(Bitmap.CompressFormat.PNG, 70, fos);

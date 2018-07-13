@@ -141,7 +141,6 @@
             android:layout_height="35dp"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@id/img_arrow4"
-            android:background="@mipmap/ic_launcher"
             android:scaleType="fitXY"/>
     </RelativeLayout>
 

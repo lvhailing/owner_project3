@@ -21,8 +21,7 @@
             android:background="@color/white"
             android:gravity="left"
             android:hint="输入自我介绍的内容（100字以内）"
-            android:maxLength="10"
-            android:singleLine="true"
+            android:maxLength="100"
             android:textColor="@color/gray_dark"
             android:textSize="15sp"/>
     </RelativeLayout>

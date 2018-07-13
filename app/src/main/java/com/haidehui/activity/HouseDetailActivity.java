@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,7 +26,10 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.photo_preview.PhotoPreviewAc;
+import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +58,6 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tv_house_detail_house_type; //  居室类型
 //    private TextView tv_house_detail_commission_rate; // 佣金比例
     private TextView tv_house_detail_address; // 地址
-    private Intent intent;
     private int currentPage;
     private int flag = 1;
     private TitleBar titleBar;
@@ -62,7 +66,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_house_detail);
+        baseSetContentView(R.layout.activity_house_detail);
 
         initTopTitle();
         initView();
@@ -148,17 +152,23 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+        Intent intent;
+
         resetBtnTextAnaBg();
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         switch (v.getId()) {
             case R.id.rl_house_detail_addr:   // 地址点击监听
-                intent = new Intent(mContext, PhotoPreviewAc.class);
-                ArrayList<String> locationImgs = new ArrayList<>();
-                locationImgs.add(houseDetail.getLocationImg());
-                intent.putStringArrayListExtra("urls", locationImgs);
-                startActivity(intent);
+                String imgUrl = houseDetail.getLocationImg();
+                if (StringUtil.isValidURI(imgUrl)) {
+                    intent = new Intent(mContext, PhotoPreviewAc.class);
+                    ArrayList<String> locationImage = new ArrayList<>();
+                    locationImage.add(imgUrl);
+                    intent.putStringArrayListExtra("urls", locationImage);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.btn_essential_info:  // 基本信息
                 flag = 1;
@@ -189,7 +199,7 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
                 transaction.replace(R.id.fragment_container, purchaseFlowFragment);
                 transaction.commit();
                 break;
-            case R.id.rl_phone:
+            case R.id.rl_phone: // 置业顾问电话
                 intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + getString(R.string.phone_number));
                 intent.setData(data);

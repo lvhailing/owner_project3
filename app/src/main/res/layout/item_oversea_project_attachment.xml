@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
             android:layout_marginRight="28dp"
-            android:layout_toRightOf="@id/iv_addr"
+            android:layout_toRightOf="@id/iv_address"
             android:text="--"
             android:textColor="@color/gray_dark"
             android:textSize="16sp"/>
