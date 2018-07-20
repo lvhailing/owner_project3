@@ -1,10 +1,13 @@
 package com.haidehui.fragment;
 
+import android.Manifest;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,15 +22,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.activity.AccountBookActivity;
 import com.haidehui.activity.CustomerInfoActivity;
 import com.haidehui.activity.CustomerTrackingActivity;
 import com.haidehui.activity.ExplainOrderListActivity;
 import com.haidehui.activity.MessageActivity;
-import com.haidehui.activity.MyBankActivity;
 import com.haidehui.activity.MyBusinessPartnerActivity;
 import com.haidehui.activity.MyInfoActivity;
-import com.haidehui.activity.PartnerIdentifyActivity;
 import com.haidehui.activity.RecommendActivity;
 import com.haidehui.activity.RenGouStatusActivity;
 import com.haidehui.activity.SettingActivity;
@@ -55,9 +55,12 @@ import android.widget.Toast;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.wechat.favorite.WechatFavorite;
-import onekeyshare.OnekeyShare;
-import onekeyshare.ShareContentCustomizeCallback;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.haidehui.activity.RecommendActivity.getSDPath;
+
 
 /**
  * 底部导航--- 我的模块
@@ -96,6 +99,8 @@ public class MineFragment extends Fragment implements OnClickListener {
     private RelativeLayout rl_business_partner; // 我的事业合伙人
     private String recommendCode; // 推荐码
 
+    private final static String CACHE = "/haidehui/imgs";
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -112,6 +117,15 @@ public class MineFragment extends Fragment implements OnClickListener {
             mView = inflater.inflate(R.layout.fragment_mine, container, false);
             try {
                 initView(mView);
+
+                // 动态设置 手机权限（6.0以后的需要）
+                String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                if (!EasyPermissions.hasPermissions(getActivity(), perms)) {
+                    EasyPermissions.requestPermissions(getActivity(), "需要访问手机存储权限！", 10086, perms);
+                } else {
+                    saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_share_logo)), "haidehui.png");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -170,6 +184,43 @@ public class MineFragment extends Fragment implements OnClickListener {
         rl_mine_setting.setOnClickListener(this);
         rl_explain_order.setOnClickListener(this);
         rl_business_partner.setOnClickListener(this);
+    }
+
+    /**
+     * 保存图片的方法 保存到sdcard
+     *
+     * @throws Exception
+     */
+    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
+        String filePath = isExistsFilePath();
+        FileOutputStream fos = null;
+        File file = new File(filePath, imageName);
+        try {
+            fos = new FileOutputStream(file);
+            if (null != fos) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取缓存文件夹目录 如果不存在创建 否则则创建文件夹
+     *
+     * @return filePath
+     */
+    private static String isExistsFilePath() {
+        String filePath = getSDPath() + CACHE;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return filePath;
     }
 
     @Override
@@ -260,7 +311,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         final OnekeyShare oks = new OnekeyShare();
         // 关闭sso授权
         oks.disableSSOWhenAuthorize();
-        oks.addHiddenPlatform(WechatFavorite.NAME);// 隐藏微信收藏；
+//        oks.addHiddenPlatform(WechatFavorite.NAME);// 隐藏微信收藏；
 
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             //自定义分享的回调想要函数
@@ -280,8 +331,9 @@ public class MineFragment extends Fragment implements OnClickListener {
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
 //                    paramsToShare.setExtInfo("应用信息");
 //                    paramsToShare.setFilePath("xxxxx.apk");
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    // ImagePath是用来分享本地图片的，必须要在sdcard下的图片路径才可测试分享
 //                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                 }
 
                 //点击微信朋友圈
@@ -291,7 +343,8 @@ public class MineFragment extends Fragment implements OnClickListener {
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                 }
 
                 //点击QQ空间
@@ -300,17 +353,19 @@ public class MineFragment extends Fragment implements OnClickListener {
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImagePath("/sdcard/haidehui/imgs/haidehui.png");
                 }
 
                 //点击QQ
                 if ("QQ".equals(platform.getName())) {
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setTitle(getString(R.string.login_title));
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setSite(context.getString(R.string.app_name));
+                    // setImagePath方法是从本地sd卡获取图片，有时获取不到，图片无法显示，导致 QQ分享失败
+                    paramsToShare.setImagePath("/sdcard/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImageUrl("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3208696326,3417130916&fm=173&s=2FE67A221AB13BAB5634185B0100C060&w=343&h=345&img.JPG");
                 }
                 //点击信息
                 if ("ShortMessage".equals(platform.getName())) {
@@ -517,6 +572,11 @@ public class MineFragment extends Fragment implements OnClickListener {
             return null;
         }
 
+    }
+
+    private Bitmap drawableToBitamp(Drawable drawable) {
+        BitmapDrawable bd = (BitmapDrawable) drawable;
+        return bd.getBitmap();
     }
 
 }

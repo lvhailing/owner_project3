@@ -40,7 +40,6 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
     public static final String WEBTYPE_HTML = "html "; // h5网页
     public static final String WEBTYPE_PROJECT_MATERIAL_DETAIL = "project_material_detail "; // 项目材料预览
 
-
     public String title;
     private TextView tv_web_title; // 标题
     private ImageView iv_back; // 返回按钮
@@ -52,7 +51,8 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
     private String roadShowDetailTitle; // 标题
     private String speaker; // 演讲嘉宾
     private String roadShowTime; // 发布时间
-    private String id;
+    private String id; //编号
+    private String userId; // 用户Id
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -60,11 +60,14 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_web);
+
         type = getIntent().getStringExtra("type");
         url = getIntent().getStringExtra("url");
+        id = getIntent().getExtras().getString("id");
+        userId = getIntent().getExtras().getString("uid");
+
         initView();
 
-        id = getIntent().getExtras().getString("id");
         requestInvestmentGuideDetailData();
         requestRoadShowDetailData();
     }
@@ -165,11 +168,11 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
 
         if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
             iv_btn_share.setVisibility(View.VISIBLE);
-            url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + getIntent().getExtras().getString("id");
+            url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + getIntent().getExtras().getString("id")+ "/" + "0";
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
             iv_btn_share.setVisibility(View.VISIBLE);
-            url = Urls.URL_ROADSHOWVIDEO_VIEW + getIntent().getExtras().getString("id");
+            url = Urls.URL_ROADSHOWVIDEO_VIEW + getIntent().getExtras().getString("id")+ "/" + "0";
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_HTML)) { // 打开H5网页
 
@@ -223,11 +226,11 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
             case R.id.iv_btn_share: // 分享按钮
                 String url = null;
                 if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
-                    url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + id;
+                    url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + id+ "/" + userId;
                     ShareUtil.sharedSDK(this, investMentGuideTitle, investMentGuideBrief, url);
                 } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
                     String text = speaker + roadShowTime;
-                    url = Urls.URL_ROADSHOWVIDEO_VIEW + id;
+                    url = Urls.URL_ROADSHOWVIDEO_VIEW + id+ "/" + userId;
                     ShareUtil.sharedSDK(this, roadShowDetailTitle, text, url);
                 }
                 break;

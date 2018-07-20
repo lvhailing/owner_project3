@@ -10,21 +10,19 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Toast;
 
 import com.haidehui.R;
-import com.haidehui.common.Urls;
 
 import java.util.HashMap;
-import java.util.List;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.wechat.favorite.WechatFavorite;
-import onekeyshare.OnekeyShare;
-import onekeyshare.ShareContentCustomizeCallback;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 /**
  *  分享时调用的方法
@@ -34,7 +32,7 @@ public final class ShareUtil {
         final OnekeyShare oks = new OnekeyShare();
 
         oks.disableSSOWhenAuthorize();// 关闭sso授权
-        oks.addHiddenPlatform(WechatFavorite.NAME); // 隐藏微信收藏；
+//        oks.addHiddenPlatform(WechatFavorite.NAME); // 隐藏微信收藏；
 
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
@@ -47,7 +45,8 @@ public final class ShareUtil {
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                     //测试图片地址（网络获取）
 //                    paramsToShare.setImageUrl("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3208696326,3417130916&fm=173&s=2FE67A221AB13BAB5634185B0100C060&w=343&h=345&img.JPG");
                 }
@@ -58,7 +57,8 @@ public final class ShareUtil {
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setTitle(title);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                     paramsToShare.setUrl(url);
                 }
 
@@ -69,18 +69,21 @@ public final class ShareUtil {
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                 }
 
                 //点击QQ
                 if ("QQ".equals(platform.getName())) {
                     paramsToShare.setText(text);
                     paramsToShare.setTitle( title);
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setSite(context.getString(R.string.app_name));
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                 }
+
                 //点击信息
                 if ("ShortMessage".equals(platform.getName())) {
                     paramsToShare.setText(text+url);
@@ -207,5 +210,10 @@ public final class ShareUtil {
 
         // 启动分享GUI
         oks.show(context);
+    }
+
+    private static Bitmap drawableToBitamp(Drawable drawable) {
+        BitmapDrawable bd = (BitmapDrawable) drawable;
+        return bd.getBitmap();
     }
 }

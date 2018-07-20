@@ -40,7 +40,9 @@ import java.util.List;
 
 import static com.haidehui.activity.RecommendActivity.getSDPath;
 
-
+/**
+ *  APP 启动页
+ */
 public class SplashActivity extends FragmentActivity {
 
     private Thread mThread;
@@ -51,7 +53,6 @@ public class SplashActivity extends FragmentActivity {
 
     private ArrayList<Fragment> fgList;
     private ImageView[] indicator_imgs = new ImageView[3];// 存放引到图片数组
-
 
     private ViewPager mViewPager;
     private String pushBean = null;
@@ -65,11 +66,11 @@ public class SplashActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ac_splash);
+        setContentView(R.layout.activity_splash);
         initView(PreferenceUtil.isFirst());
 
         try {
-            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "haidehui.png");
+            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_share_logo)), "haidehui.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,7 +107,6 @@ public class SplashActivity extends FragmentActivity {
 
     /**
      * 保存图片的方法 保存到sdcard
-     *
      * @throws Exception
      */
     public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
@@ -165,12 +165,10 @@ public class SplashActivity extends FragmentActivity {
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         isForeground = true;
-
     }
 
     @Override
@@ -179,14 +177,13 @@ public class SplashActivity extends FragmentActivity {
         isForeground = false;
     }
 
-
     private void initView(boolean is) {
-        ImageView iv = (ImageView) findViewById(R.id.splash_img);
-        mViewPager = (ViewPager) findViewById(R.id.splashviewpager);
+        ImageView iv_splash = (ImageView) findViewById(R.id.iv_splash);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager_splash);
 
-        iv.setVisibility(View.VISIBLE);
+        iv_splash.setVisibility(View.VISIBLE);
         mViewPager.setVisibility(View.GONE);
-        iv.setBackgroundResource(R.mipmap.splash);
+        iv_splash.setBackgroundResource(R.mipmap.splash);
 
         //	设置状态
 //		PreferenceUtil.setLogin(true);
@@ -210,7 +207,6 @@ public class SplashActivity extends FragmentActivity {
         PreferenceUtil.setFirst(false);
         unbindDrawables(mViewPager);
         System.gc();
-
 
         super.onDestroy();
     }

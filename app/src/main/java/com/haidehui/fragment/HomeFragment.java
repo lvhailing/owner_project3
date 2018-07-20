@@ -388,6 +388,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             //第一次从后台获取到数据
             rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
             rollViewPager.setCycle(true);
+
+            // 轮播图 图片的点击监听
             rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
                 @Override
                 public void onMyClick(int position) {
@@ -410,17 +412,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             intent.putExtra("hid", target);
                             startActivity(intent);
                         } else if (linkType.equals("appVideo")) { // 路演视频详情
-                            intent = new Intent(context, WebForShareActivity.class);
-                            intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
-                            intent.putExtra("id", target);
-                            intent.putExtra("title", "产品路演详情");
-                            startActivity(intent);
+                            if (PreferenceUtil.isLogin()) { //  用户登录情况下加载路演视频详情页要传用户的userId：roadshowvideo/view/id/uid
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", PreferenceUtil.getUserId()); // // uid 代表用户的userId
+                                intent.putExtra("title", "产品路演详情");
+                                startActivity(intent);
+                            } else { //  用户未登录情况下加载路演视频详情页用户的userId传成 0：roadshowvideo/view/id/0
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", "0");
+                                intent.putExtra("title", "产品路演详情");
+                                startActivity(intent);
+                            }
                         } else if (linkType.equals("appInvestGuide")) { // 投资指南详情
-                            intent = new Intent(context, WebForShareActivity.class);
-                            intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
-                            intent.putExtra("id", target);
-                            intent.putExtra("title", "投资指南详情");
-                            startActivity(intent);
+                            if (PreferenceUtil.isLogin()) {  // 用户登录情况下加载投资指南详情页要传用户的userId：investmentGuide/detail/id/uid
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", PreferenceUtil.getUserId());  // uid 代表用户的userId
+                                intent.putExtra("title", "投资指南详情");
+                                startActivity(intent);
+                            } else { // 用户未登录情况下加载投资指南详情页用户的userId传成 0：investmentGuide/detail/id/0
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", "0");
+                                intent.putExtra("title", "投资指南详情");
+                                startActivity(intent);
+                            }
                         } else if (linkType.equals("none")) { // 无跳转
                         }
                     }

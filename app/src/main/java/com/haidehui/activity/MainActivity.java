@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageView iv_house_resources;
     private ImageView iv_discovery;
     private ImageView iv_home;
-    private ImageView mIvmine;
+    private ImageView iv_mine;
 
     private TextView tv_house_resources;
     private TextView tv_discovery;
@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         iv_home = (ImageView) findViewById(R.id.iv_home);
         iv_house_resources = (ImageView) findViewById(R.id.iv_house_resources);
         iv_discovery = (ImageView) findViewById(R.id.iv_discovery);
-        mIvmine = (ImageView) findViewById(R.id.iv_mine);
+        iv_mine = (ImageView) findViewById(R.id.iv_mine);
 
         tv_home = (TextView) findViewById(R.id.tv_home);
         tv_house_resources = (TextView) findViewById(R.id.tv_house_resources);
@@ -146,7 +146,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         };
 
         mViewPager.setAdapter(mAdapter);
-
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -192,7 +191,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-//        Log.i("hh", "主页---MainActivity----onResume");
     }
 
     private void setTab(int pos) {
@@ -215,7 +213,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case 3:
                 tv_mine.setTextColor(Color.parseColor("#8a0002"));
-                mIvmine.setImageResource(R.mipmap.bg_mine_pressed);
+                iv_mine.setImageResource(R.mipmap.bg_mine_pressed);
                 break;
 
         }
@@ -232,7 +230,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         iv_home.setImageResource(R.mipmap.bg_home_normal);
         iv_house_resources.setImageResource(R.mipmap.bg_house_resources_normal);
         iv_discovery.setImageResource(R.mipmap.bg_discovery_normal);
-        mIvmine.setImageResource(R.mipmap.bg_mine_normal);
+        iv_mine.setImageResource(R.mipmap.bg_mine_normal);
     }
 
     //检查版本更新
@@ -248,7 +246,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         if (!b.getVersion().equals(SystemInfo.sVersionName)) {
                             CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this, new CheckVersionDialog.OnCheckVersion() {
                                 @Override
-                                public void onConfim() {
+                                public void onConfirm() {
                                     Intent updateIntent = new Intent(MainActivity.this, AppUpgradeService.class);
                                     updateIntent.putExtra("titleId", R.string.app_chinese_name);
                                     updateIntent.putExtra("downloadUrl", b.getUrl());

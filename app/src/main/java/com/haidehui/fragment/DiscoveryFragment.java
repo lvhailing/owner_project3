@@ -21,6 +21,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.MyRollViewPager;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -72,7 +73,6 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
-//        Log.i("hh", "发现----Fragment----onResume");
     }
 
     private void initView(View mView) {
@@ -228,17 +228,37 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
                             intent.putExtra("hid", target);
                             startActivity(intent);
                         } else if (linkType.equals("appVideo")) { // 路演视频详情
-                            intent = new Intent(context, WebForShareActivity.class);
-                            intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
-                            intent.putExtra("id", target);
-                            intent.putExtra("title", "产品路演详情");
-                            startActivity(intent);
+                            if (PreferenceUtil.isLogin()) {
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", PreferenceUtil.getUserId());
+                                intent.putExtra("title", "产品路演详情");
+                                startActivity(intent);
+                            } else {
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", "0");
+                                intent.putExtra("title", "产品路演详情");
+                                startActivity(intent);
+                            }
                         } else if (linkType.equals("appInvestGuide")) { // 投资指南详情
-                            intent = new Intent(context, WebForShareActivity.class);
-                            intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
-                            intent.putExtra("id", target);
-                            intent.putExtra("title", "投资指南详情");
-                            startActivity(intent);
+                            if (PreferenceUtil.isLogin()) {  // 用户登录情况下加载投资指南详情页要传用户的userId：investmentGuide/detail/id/uid
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", PreferenceUtil.getUserId());
+                                intent.putExtra("title", "投资指南详情");
+                                startActivity(intent);
+                            } else { // 用户未登录情况下加载投资指南详情页用户的userId传成 0：investmentGuide/detail/id/0
+                                intent = new Intent(context, WebForShareActivity.class);
+                                intent.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
+                                intent.putExtra("id", target);
+                                intent.putExtra("uid", "0");
+                                intent.putExtra("title", "投资指南详情");
+                                startActivity(intent);
+                            }
                         } else if (linkType.equals("none")) { // 无跳转
                         }
                     }

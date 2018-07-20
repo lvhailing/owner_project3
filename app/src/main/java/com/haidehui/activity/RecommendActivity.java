@@ -1,11 +1,14 @@
 package com.haidehui.activity;
 
+import android.Manifest;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -29,15 +32,16 @@ import com.haidehui.network.HtmlRequest;
 import com.haidehui.widget.TitleBar;
 
 import java.io.File;
-import java.util.HashMap;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.wechat.favorite.WechatFavorite;
-import onekeyshare.OnekeyShare;
-import onekeyshare.ShareContentCustomizeCallback;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
+import pub.devrel.easypermissions.EasyPermissions;
+
 
 /**
  * 推荐好友
@@ -53,7 +57,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_recommend_rule;  // 邀请规则
     private TextView tv_recommend_record; // 邀请记录
 
-//    private final static String CACHE = "/haidehui/imgs";
+    private final static String CACHE = "/haidehui/imgs";
     private int QR_WIDTH = 360, QR_HEIGHT = 360;
     private String recommendCode = "";  //  邀请码
     private Context context;
@@ -69,11 +73,19 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         initView();
         initData();
 
-//        try {
-//            saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_logo_bg_white)), "dafuweng.png");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+            if (!EasyPermissions.hasPermissions(this, perms)) {
+                EasyPermissions.requestPermissions(this, "需要访问手机存储权限！", 10086, perms);
+            } else {
+                saveImage(drawableToBitamp(getResources().getDrawable(R.mipmap.img_share_logo)), "haidehui.png");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -153,31 +165,6 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
@@ -203,12 +190,11 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         final OnekeyShare oks = new OnekeyShare();
         // 关闭sso授权
         oks.disableSSOWhenAuthorize();
-        oks.addHiddenPlatform(WechatFavorite.NAME);// 隐藏微信收藏；
+//        oks.addHiddenPlatform(WechatFavorite.NAME);// 隐藏微信收藏；
 
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
-            //自定义分享的回调想要函数
             @Override
-            public void onShare(Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
+            public void onShare(cn.sharesdk.framework.Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
                 String url = Urls.URL + "register/" + recommendCode + "/recommend";
 
                 //点击微信好友
@@ -220,7 +206,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setUrl(url);
-                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setShareType(cn.sharesdk.framework.Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
 //                    paramsToShare.setExtInfo("应用信息");
 //                    paramsToShare.setFilePath("xxxxx.apk");
                     paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
@@ -233,7 +219,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setUrl(url);
-                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setShareType(cn.sharesdk.framework.Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
                     paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 }
 
@@ -242,7 +228,7 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 //                    paramsToShare.setTitle(getString(R.string.login_title));
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setTitleUrl(url);
-                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
+                    paramsToShare.setShareType(cn.sharesdk.framework.Platform.SHARE_WEBPAGE);// 如果分享网页，这个一定要加
                     paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
                 }
 
@@ -250,7 +236,10 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                 if ("QQ".equals(platform.getName())) {
                     paramsToShare.setText(getString(R.string.shared_message) + url);
                     paramsToShare.setTitle(getString(R.string.login_title));
-                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImagePath("/sdcard/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() + "/haidehui/imgs/haidehui.png");
+//                    Log.i("hdh", "地址：---- " +Environment.getExternalStorageDirectory()+ "/haidehui/imgs/haidehui.png" );
+//                    paramsToShare.setImageData(drawableToBitamp(getResources().getDrawable(R.mipmap.img_share_logo)));
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setSite(context.getString(R.string.app_name));
@@ -261,10 +250,8 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                 }
-
             }
         });
-
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(getString(R.string.share));
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
@@ -287,34 +274,35 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
         };
         oks.setCustomerLogo(enableLogo, label, listener);
 
-        oks.setCallback(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                Toast.makeText(context,"--------"+platform.getName(),Toast.LENGTH_SHORT).show();
+        // 2018.7.18  升级3.2.0版本时，无法正确导包，故先注掉此处代码
+//        oks.setCallback(new PlatformActionListener() {
+//            @Override
+//            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+////                Toast.makeText(context,"--------"+platform.getName(),Toast.LENGTH_SHORT).show();
+//
+//                if (platform.getName().equals("WechatMoments")) {
+//
+//                } else if (platform.getName().equals("Wechat")) {
+//
+//                } else if (platform.getName().equals("QZone")) {
+//
+//                } else if (platform.getName().equals("SinaWeibo")) {
+//
+//                } else if (platform.getName().equals("ShortMessage")) {
+//
+//                } else if (platform.getName().equals("QQ")) {
+//
+//                }
+//            }
 
-                if (platform.getName().equals("WechatMoments")) {
-
-                } else if (platform.getName().equals("Wechat")) {
-
-                } else if (platform.getName().equals("QZone")) {
-
-                } else if (platform.getName().equals("SinaWeibo")) {
-
-                } else if (platform.getName().equals("ShortMessage")) {
-
-                } else if (platform.getName().equals("QQ")) {
-
-                }
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-            }
-        });
+//            @Override
+//            public void onError(Platform platform, int i, Throwable throwable) {
+//            }
+//
+//            @Override
+//            public void onCancel(Platform platform, int i) {
+//            }
+//        });
 
         if (!TextUtils.isEmpty(recommendCode)) {
             // 启动分享GUI
@@ -355,7 +343,6 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             }
             // 生成二维码图片的格式，使用ARGB_8888
             Bitmap bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
-
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
 
             if (logoBm != null) {
@@ -455,37 +442,33 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
             bitmap = null;
             e.getStackTrace();
         }
-
         return bitmap;
     }
 
-
     /**
      * 保存图片的方法 保存到sdcard
-     *
      * @throws Exception
      */
-//    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
-//        String filePath = isExistsFilePath();
-//        FileOutputStream fos = null;
-//        File file = new File(filePath, imageName);
-//        try {
-//            fos = new FileOutputStream(file);
-//            if (null != fos) {
-//                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
-//                fos.flush();
-//                fos.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void saveImage(Bitmap bitmap, String imageName) throws Exception {
+        String filePath = isExistsFilePath();
+        FileOutputStream fos = null;
+        File file = new File(filePath, imageName);
+        try {
+            fos = new FileOutputStream(file);
+            if (null != fos) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 获取sd卡的缓存路径， 一般在卡中sdCard就是这个目录
-     *
      * @return SDPath
      */
     public static String getSDPath() {
@@ -501,21 +484,20 @@ public class RecommendActivity extends BaseActivity implements View.OnClickListe
 
     /**
      * 获取缓存文件夹目录 如果不存在创建 否则则创建文件夹
-     *
      * @return filePath
      */
-//    private static String isExistsFilePath() {
-//        String filePath = getSDPath() + CACHE;
-//        File file = new File(filePath);
-//        if (!file.exists()) {
-//            file.mkdirs();
-//        }
-//        return filePath;
-//    }
+    private static String isExistsFilePath() {
+        String filePath = getSDPath() + CACHE;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return filePath;
+    }
 
-//    private Bitmap drawableToBitamp(Drawable drawable) {
-//        BitmapDrawable bd = (BitmapDrawable) drawable;
-//        return bd.getBitmap();
-//    }
+    private Bitmap drawableToBitamp(Drawable drawable) {
+        BitmapDrawable bd = (BitmapDrawable) drawable;
+        return bd.getBitmap();
+    }
 
 }

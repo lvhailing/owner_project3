@@ -167,7 +167,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             File file = new File(IMG_PATH);
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH + "Test.png");
-                img_photo.setImageBitmap(bitmap);
+                if (bitmap != null) {
+                    img_photo.setImageBitmap(bitmap);
+                }else {
+                    new ImageViewService1().execute(headPhoto);
+                }
             } else {
                 new ImageViewService1().execute(headPhoto);
             }
@@ -178,7 +182,11 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             File file = new File(IMG_PATH_TWO);
             if (file.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(IMG_PATH_TWO + "Test2.png");
-                iv_weChat_code_photo.setImageBitmap(bitmap);
+                if (bitmap != null) {
+                    iv_weChat_code_photo.setImageBitmap(bitmap);
+                } else {
+                    new ImageViewService2().execute(weChatPhoto);
+                }
             } else {
                 new ImageViewService2().execute(weChatPhoto);
             }
@@ -193,6 +201,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     /**
      * 获取网落图片资源(头像)
+     *
      * @return
      */
     class ImageViewService1 extends AsyncTask<String, Void, Bitmap> {
@@ -208,7 +217,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
             if (result != null) {
                 img_photo.setImageBitmap(result);
-                saveBitmap2(result,1);
+                saveBitmap2(result, 1);
             } else {
                 img_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
             }
@@ -236,6 +245,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     /**
      * 获取网落图片资源(微信二维码图片)
+     *
      * @return
      */
     class ImageViewService2 extends AsyncTask<String, Void, Bitmap> {
@@ -251,7 +261,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
             if (result != null) {
                 iv_weChat_code_photo.setImageBitmap(result);
-                saveBitmap2(result,2);
+                saveBitmap2(result, 2);
             } else {
                 iv_weChat_code_photo.setImageDrawable(getResources().getDrawable(R.mipmap.user_icon));
             }
@@ -277,7 +287,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         return bitmap;
     }
 
-    private Uri saveBitmap2(Bitmap bm,int type) {
+    private Uri saveBitmap2(Bitmap bm, int type) {
         File img = null;
         File tmpDir = new File(IMG_PATH);
         if (!tmpDir.exists()) {
@@ -312,7 +322,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 photoType = 1;
                 selectPhoto();
                 break;
-            case R.id.rl_name:
+            case R.id.rl_name: // 用户姓名
                 intent = new Intent(this, MyInfoForNameActivity.class);
                 intent.putExtra("realName", realName);
                 startActivityForResult(intent, 1000);
@@ -365,7 +375,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         //执行拍照前，应该先判断SD卡是否存在
         String sdState = Environment.getExternalStorageState();
         if (sdState.equals(Environment.MEDIA_MOUNTED)) {
-
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//"android.media.action.IMAGE_CAPTURE"
             /***
              * 需要说明一下，以下操作使用照相机拍照，拍照后的图片会存放在相册中的
@@ -379,7 +388,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             ContentValues values = new ContentValues();
             photoUri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, photoUri);
-            /**-----------------*/
             startActivityForResult(intent, SELECT_PIC_BY_TACK_PHOTO);
         } else {
             Toast.makeText(this, "内存卡不存在", Toast.LENGTH_LONG).show();

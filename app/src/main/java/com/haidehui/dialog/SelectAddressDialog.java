@@ -106,7 +106,7 @@ public class SelectAddressDialog extends Dialog implements DialogInterface.OnCan
 
     private void initView(View mView) {
 
-        txtConfim = (TextView) mView.findViewById(R.id.dialog_btn_confim);
+        txtConfim = (TextView) mView.findViewById(R.id.dialog_btn_confirm);
         txtCancel = (TextView) mView.findViewById(R.id.dialog_btn_cancel);
         txtConfim.setOnClickListener(confimListener);
         txtCancel.setOnClickListener(cancelListener);

@@ -19,12 +19,10 @@ import com.haidehui.uitls.NetworkUtils;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.SystemInfo;
 import com.haidehui.uitls.CityDataHelper;
-import com.mob.MobSDK;
 
 import java.io.InputStream;
 import java.util.HashSet;
 
-import cn.sharesdk.framework.ShareSDK;
 import okhttp3.OkHttpClient;
 
 public class MyApplication extends Application {
@@ -42,7 +40,6 @@ public class MyApplication extends Application {
     public static MyApplication getInstance() {
         return instance;
     }
-
 
     @Override
     public void onCreate() {
@@ -62,7 +59,6 @@ public class MyApplication extends Application {
         ImageLoader.getInstance().initImageLoader(getResources(), 1);
         APNManager.getInstance().checkNetworkType(this);
 
-
         //拷贝数据库文件
         dataHelper = CityDataHelper.getInstance(this);
         InputStream in = this.getResources().openRawResource(R.raw.province);
@@ -73,7 +69,10 @@ public class MyApplication extends Application {
 
         //3.X版本以上含3.X版本，ShareSDK 初始化
         // 通过代码注册你的AppKey和AppSecret
-        MobSDK.init(instance, "1ea86a798f5d6", "69d1ab82675b878c6061887a6ab49279");
+//        MobSDK.init(instance, "1ea86a798f5d6", "69d1ab82675b878c6061887a6ab49279");
+
+        //3.1.4版本 ShareSDK 初始化
+//        MobSDK.init(this);
     }
 
     public interface NetListener {

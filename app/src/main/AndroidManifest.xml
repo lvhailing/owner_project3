@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.haidehui">
 
     <!-- Push service 运行需要的权限 -->
@@ -30,7 +31,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:persistent="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:name">
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
@@ -58,10 +60,10 @@
             <!--</intent-filter>-->
 
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>-->
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+            <!--</intent-filter>-->
 
             <!--集成line客户端登录授权，需要添如下格式的过滤器-->
             <intent-filter>
@@ -95,89 +97,108 @@
         </activity>
 
         <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.SignActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.FindPasswordActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.MessageActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MessageInfoActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.MessageNoticeActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.MessageOtherActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.SettingChangePhoneFirstActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.SettingChangePhoneSecondActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.SettingChangePhoneThirdActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.SettingChangePasswordActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.VersionActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.AdviceActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.WebForShareActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.WebForPdfActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.RecommendActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.RecommendRuleActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.RecommendRecordActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.MyBankActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.AddBankActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.WithdrawActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.WithdrawConfirmActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.GestureEditActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.GestureVerifyActivity"
             android:screenOrientation="portrait"/>
@@ -301,12 +322,12 @@
         <service android:name=".service.AppUpgradeService"/>
 
         <!-- 通过AndroidManifest配置AppKey和AppSecret，如果你选择通过代码配置，则不需要配置以下meta-data -->
-        <meta-data
-            android:name="Mob-AppKey"
-            android:value="1ea86a798f5d6"/>
-        <meta-data
-            android:name="Mob-AppSecret"
-            android:value="69d1ab82675b878c6061887a6ab49279"/>
+        <!--<meta-data-->
+            <!--android:name="Mob-AppKey"-->
+            <!--android:value="1ea86a798f5d6"/>-->
+        <!--<meta-data-->
+            <!--android:name="Mob-AppSecret"-->
+            <!--android:value="69d1ab82675b878c6061887a6ab49279"/>-->
 
     </application>
 

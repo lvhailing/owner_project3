@@ -43,7 +43,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseSetContentView(R.layout.ac_login);
+        baseSetContentView(R.layout.activity_login);
         initTopTitle();
         initView();
 

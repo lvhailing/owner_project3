@@ -1,23 +1,11 @@
 apply plugin: 'android-library'
+apply plugin: 'com.mob.sdk'
+apply from: '../MobSDK.gradle'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile 'com.android.support:support-v4:24.2.1'
-    compile files('libs/MobCommons-2017.1024.1907.jar')
-    compile files('libs/MobTools-2017.1024.1907.jar')
-    compile files('libs/ShareSDK-Core-3.1.1.jar')
-    compile files('libs/ShareSDK-Email-3.1.1.jar')
-    compile files('libs/ShareSDK-QQ-3.1.1.jar')
-    compile files('libs/ShareSDK-QZone-3.1.1.jar')
-    compile files('libs/ShareSDK-ShortMessage-3.1.1.jar')
-    compile files('libs/ShareSDK-SinaWeibo-3.1.1.jar')
-    compile files('libs/ShareSDK-TencentWeibo-3.1.1.jar')
-    compile files('libs/ShareSDK-Wechat-3.1.1.jar')
-    compile files('libs/ShareSDK-Wechat-Core-3.1.1.jar')
-    compile files('libs/ShareSDK-Wechat-Favorite-3.1.1.jar')
-    compile files('libs/ShareSDK-Wechat-Moments-3.1.1.jar')
 }
-
 android {
     compileSdkVersion 24
     buildToolsVersion '26.0.2'
@@ -51,7 +39,6 @@ task makeJar(type: Copy) {
     from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename ('classes.jar', 'pulllibrary.jar')
+    rename('classes.jar', 'pulllibrary.jar')
 }
-
 makeJar.dependsOn(build)
