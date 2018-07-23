@@ -11,14 +11,21 @@ package cn.sharesdk.onekeyshare.themes.classic;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import calendar.utils.ViewUtils;
 import cn.sharesdk.framework.CustomPlatform;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
@@ -30,173 +37,197 @@ import cn.sharesdk.onekeyshare.OnekeyShareThemeImpl;
 import com.mob.tools.gui.MobViewPager;
 import com.mob.tools.utils.ResHelper;
 
-/** 九宫格的抽象类 */
+/**
+ * 九宫格的抽象类
+ */
 public abstract class PlatformPage extends OnekeySharePage {
-	private ClassicTheme impl;
-	/** 点击九格宫，展示编辑界面，要执行的子线程 */
-	private Runnable beforeFinish;
-	/** 九宫格显示时的动画 */
-	private Animation animShow;
-	/** 九宫格隐藏时的动画 */
-	private Animation animHide;
-	private LinearLayout llPanel;
-	private boolean finished;
+    private ClassicTheme impl;
+    /**
+     * 点击九格宫，展示编辑界面，要执行的子线程
+     */
+    private Runnable beforeFinish;
+    /**
+     * 九宫格显示时的动画
+     */
+    private Animation animShow;
+    /**
+     * 九宫格隐藏时的动画
+     */
+    private Animation animHide;
+    private LinearLayout llPanel;
+    private boolean finished;
 
-	public PlatformPage(OnekeyShareThemeImpl impl) {
-		super(impl);
-		this.impl = ResHelper.forceCast(impl);
-	}
+    public PlatformPage(OnekeyShareThemeImpl impl) {
+        super(impl);
+        this.impl = ResHelper.forceCast(impl);
+    }
 
-	public void onCreate() {
-		activity.getWindow().setBackgroundDrawable(new ColorDrawable(0x4c000000));
-		initAnims();
+    public void onCreate() {
+        activity.getWindow().setBackgroundDrawable(new ColorDrawable(0x4c000000));
+        initAnims();
 
-		LinearLayout llPage = new LinearLayout(activity);
-		llPage.setOrientation(LinearLayout.VERTICAL);
-		activity.setContentView(llPage);
+        LinearLayout llPage = new LinearLayout(activity);
+        llPage.setOrientation(LinearLayout.VERTICAL);
+        activity.setContentView(llPage);
 
-		TextView vTop = new TextView(activity);
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		lp.weight = 1;
-		vTop.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				finish();
-			}
-		});
-		llPage.addView(vTop, lp);
+        TextView vTop = new TextView(activity);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        lp.weight = 1;
+        vTop.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        llPage.addView(vTop, lp);
 
-		llPanel = new LinearLayout(activity);
-		llPanel.setOrientation(LinearLayout.VERTICAL);
-		lp = new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		llPanel.setAnimation(animShow);
-		llPage.addView(llPanel, lp);
+        llPanel = new LinearLayout(activity);
+        llPanel.setOrientation(LinearLayout.VERTICAL);
+        lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        llPanel.setAnimation(animShow);
+        llPage.addView(llPanel, lp);
 
-		MobViewPager mvp = new MobViewPager(activity);
-		ArrayList<Object> cells = collectCells();
-		PlatformPageAdapter adapter = newAdapter(cells);
-		lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, adapter.getPanelHeight());
-		llPanel.addView(mvp, lp);
+        MobViewPager mvp = new MobViewPager(activity);
+        ArrayList<Object> cells = collectCells();
+        PlatformPageAdapter adapter = newAdapter(cells);
+        lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, adapter.getPanelHeight());
+        llPanel.addView(mvp, lp);
 
-		IndicatorView vInd = new IndicatorView(activity);
-		lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, adapter.getBottomHeight());
-		llPanel.addView(vInd, lp);
+        IndicatorView vInd = new IndicatorView(activity);
+        lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, adapter.getBottomHeight());
+        llPanel.addView(vInd, lp);
 
-		vInd.setScreenCount(adapter.getCount());
-		vInd.onScreenChange(0, 0);
-		adapter.setIndicator(vInd);
-		mvp.setAdapter(adapter);
-	}
+        vInd.setScreenCount(adapter.getCount());
+        vInd.onScreenChange(0, 0);
+        adapter.setIndicator(vInd);
+        mvp.setAdapter(adapter);
 
-	protected abstract PlatformPageAdapter newAdapter(ArrayList<Object> cells);
+        /**
+         * 增加取消按钮layout
+         */
+        lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp.setMargins(0,20,0,0);
+        LinearLayout buttonLayout2 = new LinearLayout(activity);
+        buttonLayout2.setBackgroundColor(Color.WHITE);
 
-	protected ArrayList<Object> collectCells() {
-		ArrayList<Object> cells = new ArrayList<Object>();
+        LinearLayout.LayoutParams lp22 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lp22.setMargins(0,0,0,0);
+        Button button2 = new Button(activity);
+        button2.setText("取消分享");
+        button2.setMinHeight(ViewUtils.px2dip(activity,200));
+        button2.setGravity(Gravity.CENTER);
+        button2.setTextSize(16);
+        button2.setTextColor(Color.parseColor("#ff3392c9"));
+        button2.setBackgroundColor(Color.WHITE);
+        button2.setOnClickListener(new  OnClickListener() {
+            @Override public void onClick (View v){
+                // TODO Auto-generated method stub
+                finish();
+            }
+        });
+        buttonLayout2.addView(button2,lp22);
+        llPanel.addView(buttonLayout2,lp);
+    }
 
-		Platform[] platforms = ShareSDK.getPlatformList();
-		if (platforms == null) {
-			platforms = new Platform[0];
-		}
-		HashMap<String, String> hides = getHiddenPlatforms();
-		if (hides == null) {
-			hides = new HashMap<String, String>();
-		}
-		for (Platform p : platforms) {
-			if (!hides.containsKey(p.getName())) {
-				cells.add(p);
-			}
-		}
+    protected abstract PlatformPageAdapter newAdapter(ArrayList<Object> cells);
 
-		ArrayList<CustomerLogo> customers = getCustomerLogos();
-		if (customers != null && customers.size() > 0) {
-			cells.addAll(customers);
-		}
+    protected ArrayList<Object> collectCells() {
+        ArrayList<Object> cells = new ArrayList<Object>();
 
-		return cells;
-	}
+        Platform[] platforms = ShareSDK.getPlatformList();
+        if (platforms == null) {
+            platforms = new Platform[0];
+        }
+        HashMap<String, String> hides = getHiddenPlatforms();
+        if (hides == null) {
+            hides = new HashMap<String, String>();
+        }
+        for (Platform p : platforms) {
+            if (!hides.containsKey(p.getName())) {
+                cells.add(p);
+            }
+        }
 
-	public final void showEditPage(final Platform platform) {
-		beforeFinish = new Runnable() {
-			public void run() {
-				boolean isSilent = isSilent();
-				boolean isCustomPlatform = platform instanceof CustomPlatform;
-				boolean isUseClientToShare = isUseClientToShare(platform);
-				if (isSilent || isCustomPlatform || isUseClientToShare) {
-					shareSilently(platform);
-				} else {
-					ShareParams sp = formateShareData(platform);
-					if (sp != null) {
-						// 编辑分享内容的统计
-						ShareSDK.logDemoEvent(3, platform);
-						sp.setOpenCustomEven(true);
-						if (getCustomizeCallback() != null) {
-							getCustomizeCallback().onShare(platform, sp);
-						}
-						impl.showEditPage(activity, platform, sp);
-					}
-				}
-			}
-		};
-		finish();
-	}
+        ArrayList<CustomerLogo> customers = getCustomerLogos();
+        if (customers != null && customers.size() > 0) {
+            cells.addAll(customers);
+        }
 
-	public final void performCustomLogoClick(final View v, final CustomerLogo logo) {
-		beforeFinish = new Runnable() {
-			public void run() {
-				logo.listener.onClick(v);
-			}
-		};
-		finish();
-	}
+        return cells;
+    }
 
-	private void initAnims() {
-		animShow = new TranslateAnimation(
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 1,
-				Animation.RELATIVE_TO_SELF, 0);
-		animShow.setDuration(300);
+    public final void showEditPage(final Platform platform) {
+        beforeFinish = new Runnable() {
+            public void run() {
+                boolean isSilent = isSilent();
+                boolean isCustomPlatform = platform instanceof CustomPlatform;
+                boolean isUseClientToShare = isUseClientToShare(platform);
+                if (isSilent || isCustomPlatform || isUseClientToShare) {
+                    shareSilently(platform);
+                } else {
+                    ShareParams sp = formateShareData(platform);
+                    if (sp != null) {
+                        // 编辑分享内容的统计
+                        ShareSDK.logDemoEvent(3, platform);
+                        sp.setOpenCustomEven(true);
+                        if (getCustomizeCallback() != null) {
+                            getCustomizeCallback().onShare(platform, sp);
+                        }
+                        impl.showEditPage(activity, platform, sp);
+                    }
+                }
+            }
+        };
+        finish();
+    }
 
-		animHide = new TranslateAnimation(
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 0,
-				Animation.RELATIVE_TO_SELF, 1);
-		animHide.setDuration(300);
-	}
+    public final void performCustomLogoClick(final View v, final CustomerLogo logo) {
+        beforeFinish = new Runnable() {
+            public void run() {
+                logo.listener.onClick(v);
+            }
+        };
+        finish();
+    }
 
-	public boolean onFinish() {
-		if (finished) {
-			finished = false;
-			return false;
-		}
+    private void initAnims() {
+        animShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0);
+        animShow.setDuration(300);
 
-		animHide.setAnimationListener(new Animation.AnimationListener() {
-			public void onAnimationStart(Animation animation) {
+        animHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
+        animHide.setDuration(300);
+    }
 
-			}
+    public boolean onFinish() {
+        if (finished) {
+            finished = false;
+            return false;
+        }
 
-			public void onAnimationRepeat(Animation animation) {
+        animHide.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationStart(Animation animation) {
 
-			}
+            }
 
-			public void onAnimationEnd(Animation animation) {
-				if (beforeFinish == null) {
-					// 取消分享菜单的统计
-					ShareSDK.logDemoEvent(2, null);
-				} else {
-					beforeFinish.run();
-					beforeFinish = null;
-				}
+            public void onAnimationRepeat(Animation animation) {
 
-				finished = true;
-				finish();
-			}
-		});
-		llPanel.clearAnimation();
-		llPanel.setAnimation(animHide);
-		llPanel.setVisibility(View.GONE);
-		return true;
-	}
+            }
+
+            public void onAnimationEnd(Animation animation) {
+                if (beforeFinish == null) {
+                    // 取消分享菜单的统计
+                    ShareSDK.logDemoEvent(2, null);
+                } else {
+                    beforeFinish.run();
+                    beforeFinish = null;
+                }
+
+                finished = true;
+                finish();
+            }
+        });
+        llPanel.clearAnimation();
+        llPanel.setAnimation(animHide);
+        llPanel.setVisibility(View.GONE);
+        return true;
+    }
 }

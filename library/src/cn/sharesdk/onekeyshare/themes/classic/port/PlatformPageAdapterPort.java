@@ -22,8 +22,8 @@ public class PlatformPageAdapterPort extends PlatformPageAdapter {
 	private static final int DESIGN_SEP_LINE_WIDTH = 1;
 	private static final int DESIGN_LOGO_HEIGHT = 76;
 	private static final int DESIGN_PADDING_TOP = 20;
-	private static final int PAGE_SIZE_P = 12;
-	private static final int LINE_SIZE_P = 4;
+	private static final int PAGE_SIZE_P = 6; // 原值 12
+	private static final int LINE_SIZE_P = 3; // 原值 4
 
 	public PlatformPageAdapterPort(PlatformPage page, ArrayList<Object> cells) {
 		super(page, cells);
@@ -39,13 +39,13 @@ public class PlatformPageAdapterPort extends PlatformPageAdapter {
 		logoHeight = (int) (DESIGN_LOGO_HEIGHT * ratio);
 		paddingTop = (int) (DESIGN_PADDING_TOP * ratio);
 		bottomHeight = (int) (DESIGN_BOTTOM_HEIGHT * ratio);
-		cellHeight = (screenWidth - sepLineWidth * 3) / 4;
+		cellHeight = (screenWidth - sepLineWidth * 3) /4;
 		if (plats.size() <= lineSize) {
 			panelHeight = cellHeight + sepLineWidth;
 		} else if (plats.size() <= PAGE_SIZE_P - lineSize) {
 			panelHeight = (cellHeight + sepLineWidth) * 2;
 		} else {
-			panelHeight = (cellHeight + sepLineWidth) * 3;
+			panelHeight = (cellHeight + sepLineWidth) * 2;
 		}
 	}
 

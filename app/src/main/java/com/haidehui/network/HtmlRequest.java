@@ -2699,13 +2699,13 @@ public class HtmlRequest extends BaseRequester {
 
 
     /**
-     * 保存姓名
+     * 保存姓名、工作单位、自我介绍
      *
      * @param context
      * @param param
      * @param listener
      */
-    public static void saveName(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
+    public static void saveUserInfos(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_SAVE_NAME;
 
@@ -2726,6 +2726,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "用户信息修改: " + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();

@@ -13,8 +13,6 @@ import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
-import com.haidehui.uitls.DESUtil;
-import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.util.HashMap;
@@ -89,14 +87,15 @@ public class MyInfoForWorkUnitActivity extends BaseActivity implements View.OnCl
     }
 
     /**
-     * 保存工作单位
+     * 调接口保存工作单位
      */
     private void saveData(final String workUnit) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("workUnit", workUnit);
         param.put("userId", userId);
+        param.put("saveField", "workUnit");
 
-        HtmlRequest.saveName(this, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.saveUserInfos(this, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {

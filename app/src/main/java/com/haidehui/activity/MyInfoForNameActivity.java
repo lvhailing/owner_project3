@@ -42,7 +42,8 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_my_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+             .setCenterText(getResources().getString(R.string.title_my_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -77,7 +78,7 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_save:
+            case R.id.btn_save:  // 保存
                 String name = edt_name.getText().toString();
                 if (!TextUtils.isEmpty(name)) {
                     saveData(name);
@@ -89,14 +90,15 @@ public class MyInfoForNameActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
-     * 保存姓名
+     * 调接口保存姓名
      */
     private void saveData(final String nameStr) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("realName", nameStr);
         param.put("userId", userId);
+        param.put("saveField", "realName");
 
-        HtmlRequest.saveName(this, param, new BaseRequester.OnRequestListener() {
+        HtmlRequest.saveUserInfos(this, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
                 if (params.result == null) {

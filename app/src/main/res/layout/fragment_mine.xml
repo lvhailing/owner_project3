@@ -53,7 +53,8 @@
                 android:background="@drawable/shape_circle_orange_red"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="10sp"/>
+                android:textSize="10sp"
+                android:visibility="gone"/>
         </FrameLayout>
 
         <LinearLayout

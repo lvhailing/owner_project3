@@ -24,6 +24,7 @@ import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
 import com.haidehui.network.types.MouldList;
+import com.haidehui.uitls.DESUtil;
 import com.haidehui.uitls.PreferenceUtil;
 import com.haidehui.uitls.ViewUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -40,6 +41,7 @@ public class InvestmentGuideFragment extends Fragment {
     private MouldList<InvestmentGuide3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
     private ViewSwitcher vs;
+    private String userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +66,12 @@ public class InvestmentGuideFragment extends Fragment {
 
     private void initView(View mView) {
         context = getActivity();
+
+        try {
+            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         vs = (ViewSwitcher) mView.findViewById(R.id.vs);
         TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
@@ -103,7 +111,7 @@ public class InvestmentGuideFragment extends Fragment {
                     Intent i_web = new Intent(getActivity(), WebForShareActivity.class);
                     i_web.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
                     i_web.putExtra("id", totalList.get(position - 1).getId());
-                    i_web.putExtra("uid", PreferenceUtil.getUserId());
+                    i_web.putExtra("uid", userId);
                     i_web.putExtra("title", "投资指南详情");
                     startActivity(i_web);
                 } else {

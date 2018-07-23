@@ -57,7 +57,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private RelativeLayout rl_photo;
     private RelativeLayout rl_name; // 姓名
     private RelativeLayout rl_work_unit; // 工作单位
-    //    private RelativeLayout rl_weChat_code; // 微信二维码
+        private RelativeLayout rl_weChat_code; // 微信二维码
     private RelativeLayout rl_introduce_myself; // 自我介绍
 
     private TextView tv_name;
@@ -66,15 +66,13 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private CircularImage img_photo; // 用户头像
     private ImageView iv_weChat_code_photo;  // 微信二维码 图片
     private ImageView img_arrow4;
+    private int photoType = 1; // 1是头像，2是微信二维码图片
 
     private String realName;
     private String headPhoto;
     private String workUnit;
     private String weChatPhoto;
     private String introduceMyself;
-
-    private int photoType = 1; // 1是头像，2是微信二维码图片
-
 
     private static int GALLERY_REQUEST_CODE = 2; // 表示选择的是相册--2
     private static int CROP_REQUEST_CODE = 3; // 表示选择的是裁剪--3
@@ -114,7 +112,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_my_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+             .setCenterText(getResources().getString(R.string.title_my_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -201,7 +200,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
 
     /**
      * 获取网落图片资源(头像)
-     *
      * @return
      */
     class ImageViewService1 extends AsyncTask<String, Void, Bitmap> {
@@ -332,7 +330,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 intent.putExtra("workUnit", workUnit);
                 startActivityForResult(intent, 2000);
                 break;
-            case R.id.img_arrow4: // 微信二维码
+            case R.id.rl_weChat_code: // 微信二维码
                 photoType = 2;
                 selectPhoto();
                 break;

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -365,6 +366,7 @@ public class MineFragment extends Fragment implements OnClickListener {
                     paramsToShare.setSite(context.getString(R.string.app_name));
                     // setImagePath方法是从本地sd卡获取图片，有时获取不到，图片无法显示，导致 QQ分享失败
                     paramsToShare.setImagePath("/sdcard/haidehui/imgs/haidehui.png");
+                    // setImageUrl方法是在线获取网络图片
 //                    paramsToShare.setImageUrl("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3208696326,3417130916&fm=173&s=2FE67A221AB13BAB5634185B0100C060&w=343&h=345&img.JPG");
                 }
                 //点击信息
@@ -445,6 +447,7 @@ public class MineFragment extends Fragment implements OnClickListener {
         }
         HashMap<String, Object> param = new HashMap<>();
         param.put("userId", userId);
+        Log.i("hhh", "用户userId: --- " + userId);
         HtmlRequest.getMineData(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
@@ -475,7 +478,6 @@ public class MineFragment extends Fragment implements OnClickListener {
                 tv_message_total.setVisibility(View.VISIBLE);
                 tv_message_total.setText(data.getMessageTotal());
             }
-
         }
         tv_real_name.setText(data.getRealName());
         recommendCode = data.getRecommendCode();
@@ -498,6 +500,7 @@ public class MineFragment extends Fragment implements OnClickListener {
 //            iv_sign.setImageResource(R.mipmap.img_not_identify);
 //        }
 
+        // 保存身户身份证号到sp文件
         if(!TextUtils.isEmpty(data.getIdNo())) {
             try {
                 PreferenceUtil.setIdNo(DESUtil.encrypt(data.getIdNo()));
