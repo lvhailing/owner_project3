@@ -105,7 +105,7 @@ public abstract class PlatformPage extends OnekeySharePage {
          * 增加取消按钮layout
          */
         lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        lp.setMargins(0,20,0,0);
+        lp.setMargins(0,0,0,0);
         LinearLayout buttonLayout2 = new LinearLayout(activity);
         buttonLayout2.setBackgroundColor(Color.WHITE);
 
@@ -113,7 +113,7 @@ public abstract class PlatformPage extends OnekeySharePage {
         lp22.setMargins(0,0,0,0);
         Button button2 = new Button(activity);
         button2.setText("取消分享");
-        button2.setMinHeight(ViewUtils.px2dip(activity,200));
+        button2.setMinHeight(ViewUtils.px2dip(activity,140));
         button2.setGravity(Gravity.CENTER);
         button2.setTextSize(16);
         button2.setTextColor(Color.parseColor("#ff3392c9"));

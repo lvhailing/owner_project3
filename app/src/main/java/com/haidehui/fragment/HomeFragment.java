@@ -49,9 +49,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout ll_vp; //顶部轮播图
     private LinearLayout ll_point_container; // 轮播图下面的圆点
     private MouldList<ResultCycleIndex2B> picList;
-    /**
-     * 精品房源相关数据暂且隐藏，此处现换成公司、团队、平台等介绍
-     */
     private MyListView myListView; // 精品房源推荐列表
     private BoutiqueHouseAdapter myAdapter; // 精品房源 Adapter
     private MouldList<HomeIndex3B> boutiqueHouseList = new MouldList<>(); // 精品房源列表
@@ -68,9 +65,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private MyRollViewPager rollViewPager;
     private RelativeLayout rl_empty_house; // 无精品房源 显示的布局
     private ResultCycleIndex2B cycleIndex2B; //  ResultCycleIndex2B 类型的对象
-    private String linkType; // 轮播图跳转类型（url:h5页面跳转、appProject:app项目详情、appHouse:app房源详情、appVideo:路演视频详情、appInvestGuide:投资指南、none:无跳转）
+    /**
+     *  轮播图跳转类型:
+     *  url:h5页面跳转 、none:无跳转
+     *  appProject:app项目详情 、appHouse:app房源详情 、
+     *  appVideo:路演视频详情、appInvestGuide:投资指南
+     */
+    private String linkType;
     private String target; // url时是链接，其他情况为相关id
     private String guideId; // 最新的资讯id
+    private TextView tv_show_tips; // 我也是有底线的  提示语
+
+    // 公司、团队、平台等又换回原来的精品房源推荐列表（2018.7.10改版）
 //    private TextView tv_company_tab1; // 公司
 //    private TextView tv_team_tab2; // 团队
 //    private TextView tv_platform_tab3; // 平台
@@ -136,6 +142,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_home_notice = (TextView) mView.findViewById(R.id.tv_home_notice);
         ll_home_notice = (LinearLayout) mView.findViewById(R.id.ll_home_notice);
         myListView = (MyListView) mView.findViewById(R.id.lv);
+        tv_show_tips = (TextView) mView.findViewById(R.id.tv_show_tips);
 
 //        tv_company_tab1 = (TextView) mView.findViewById(R.id.tv_company_tab1);
 //        tv_team_tab2 = (TextView) mView.findViewById(R.id.tv_team_tab2);
@@ -232,7 +239,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+        // 精品房源列表点击监听
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(context, HouseDetailActivity.class);
@@ -246,7 +254,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_hot_investment:  // 投资热点（跳转至最新一条“投资指南”）
-//                intent = new Intent(context, HotHouseListActivity.class);
+//                intent = new Intent(context, HotHouseListActivity.class); // 最热房源 点击跳转到最热房源列表
 //                startActivity(intent);
                 if (!TextUtils.isEmpty(guideId)) {
                     intent = new Intent(context, WebForShareActivity.class);
@@ -332,6 +340,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 } else {
                     tv_home_notice.setText("暂无公告");
                 }
+
+                // 获取精品房源列表数据
                 boutiqueHouseList = homeIndexData.getList();
                 if (myAdapter == null) {
                     myAdapter = new BoutiqueHouseAdapter(context, boutiqueHouseList);
@@ -342,6 +352,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
                 if (boutiqueHouseList != null && boutiqueHouseList.size() > 0) {
                     rl_empty_house.setVisibility(View.GONE);
+                    // 精品房源最多显示八个 + 我也是有底线的
+                    if (boutiqueHouseList.size() == 8) {
+                        tv_show_tips.setVisibility(View.VISIBLE);
+                    }
                     myListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -364,6 +378,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void requestCycleIndex() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("params", "params");
+
         HtmlRequest.getHomeCycleIndex(context, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {

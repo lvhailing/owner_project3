@@ -149,6 +149,18 @@
             android:listSelector="#00000000"
             android:scrollbars="none"/>
 
+        <TextView
+            android:id="@+id/tv_show_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="我也是有底线的"
+            android:textColor="@color/txt_light_gray"
+            android:textSize="12sp"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:id="@+id/rl_empty_house"
             android:layout_width="match_parent"

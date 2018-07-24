@@ -105,7 +105,7 @@ public class SettingChangePhoneFirstActivity extends BaseActivity{
         title.setTitle(getResources().getString(R.string.title_null))
 
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .addAction(new TitleBar.Action(2, 0, R.color.blue_light),SettingChangePhoneFirstActivity.this.getResources().getString(R.string.setting_change_phone_next),R.drawable.shape_center_gray)
+                .addAction(new TitleBar.Action(2, 0, R.color.light_blue1),SettingChangePhoneFirstActivity.this.getResources().getString(R.string.setting_change_phone_next),R.drawable.shape_center_gray)
                 .setCenterText(getResources().getString(R.string.setting_change_phone_first_title))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 

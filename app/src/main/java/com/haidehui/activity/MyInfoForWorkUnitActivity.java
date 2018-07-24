@@ -77,11 +77,12 @@ public class MyInfoForWorkUnitActivity extends BaseActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.btn_save: // 保存
                 String workUnit = et_work_unit.getText().toString();
-                if (!TextUtils.isEmpty(workUnit)) {
+                    // “工作单位”不录入信息也可以保存
                     saveData(workUnit);
-                } else {
-                    Toast.makeText(mContext, "请输入工作单位", Toast.LENGTH_LONG).show();
-                }
+//                if (!TextUtils.isEmpty(workUnit)) {
+//                } else {
+//                    Toast.makeText(mContext, "请输入工作单位", Toast.LENGTH_LONG).show();
+//                }
                 break;
         }
     }

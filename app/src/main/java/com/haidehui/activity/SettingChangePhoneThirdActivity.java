@@ -148,7 +148,7 @@ public class SettingChangePhoneThirdActivity extends BaseActivity implements Vie
         title.setTitle(getResources().getString(R.string.title_null))
 
                 .setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
-                .addAction(new TitleBar.Action(2, 0, R.color.blue_light),SettingChangePhoneThirdActivity.this.getResources().getString(R.string.setting_change_phone_third_submit),R.drawable.shape_center_gray)
+                .addAction(new TitleBar.Action(2, 0, R.color.light_blue1),SettingChangePhoneThirdActivity.this.getResources().getString(R.string.setting_change_phone_third_submit),R.drawable.shape_center_gray)
                 .setCenterText(getResources().getString(R.string.setting_change_phone_third_title))
                 .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 

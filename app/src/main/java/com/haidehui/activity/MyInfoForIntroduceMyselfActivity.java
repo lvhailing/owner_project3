@@ -75,11 +75,12 @@ public class MyInfoForIntroduceMyselfActivity extends BaseActivity implements Vi
         switch (v.getId()) {
             case R.id.btn_save: // 保存
                 String introduceMyself = et_introduce_myself.getText().toString();
-                if (!TextUtils.isEmpty(introduceMyself)) {
-                    saveData(introduceMyself);
-                } else {
-                    Toast.makeText(mContext, "请输入自我介绍的内容", Toast.LENGTH_LONG).show();
-                }
+                // “自我介绍”字段，不录入信息也可以保存
+                saveData(introduceMyself);
+//                if (!TextUtils.isEmpty(introduceMyself)) {
+//                } else {
+//                    Toast.makeText(mContext, "请输入自我介绍的内容", Toast.LENGTH_LONG).show();
+//                }
                 break;
         }
     }
