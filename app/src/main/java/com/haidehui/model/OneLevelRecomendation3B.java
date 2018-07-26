@@ -9,6 +9,7 @@ public class OneLevelRecomendation3B implements IMouldType {
 	private String mobile ; // 手机号
 	private String realName ; // 姓名
 	private String checkStatus ; //  init未认证（未填写认证信息） submit待认证(提交认证信息待审核) success - 认证成功 fail - 认证失败
+	private String workUnit; // 工作单位
 
 	public String getUserId() {
 		return userId;
@@ -40,5 +41,13 @@ public class OneLevelRecomendation3B implements IMouldType {
 
 	public void setCheckStatus(String checkStatus) {
 		this.checkStatus = checkStatus;
+	}
+
+	public String getWorkUnit() {
+		return workUnit;
+	}
+
+	public void setWorkUnit(String workUnit) {
+		this.workUnit = workUnit;
 	}
 }

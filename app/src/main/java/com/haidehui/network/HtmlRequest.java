@@ -2789,7 +2789,7 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
-     *  我的事业合伙人  一级推荐列表
+     *  （我的事业合伙人） 获取一级、二级推荐列表 数据
      * @param context
      * @param param
      * @param listener
@@ -2816,7 +2816,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "一级推荐列表:" + data);
+//                    Log.i("hh", "一级推荐列表:" + data);
 
                     Gson gson = new Gson();
                     OneLevelRecommendation1B b = gson.fromJson(data, OneLevelRecommendation1B.class);
@@ -2864,7 +2864,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "预约说明会列表:" + data);
+//                    Log.i("hh", "预约说明会列表:" + data);
                     Gson gson = new Gson();
                     ExplainOrder1B b = gson.fromJson(data, ExplainOrder1B.class);
                     return b.getData();
@@ -2910,7 +2910,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "预约说明会新增客户调的接口：" + data);
+//                    Log.i("hh", "预约说明会新增客户调的接口：" + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();
@@ -2956,7 +2956,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "预约说明会修改客户信息时调的接口：" + data);
+//                    Log.i("hh", "预约说明会修改客户信息时调的接口：" + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();
@@ -3003,7 +3003,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "预约说明会列表  删除客户信息：" + data);
+//                    Log.i("hh", "预约说明会列表  删除客户信息：" + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();
@@ -3011,7 +3011,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -3021,4 +3020,5 @@ public class HtmlRequest extends BaseRequester {
             }
         });
     }
+
 }

@@ -137,21 +137,22 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         rl_photo = (RelativeLayout) findViewById(R.id.rl_photo);
         rl_name = (RelativeLayout) findViewById(R.id.rl_name);
         rl_work_unit = (RelativeLayout) findViewById(R.id.rl_work_unit);
-//        rl_weChat_code = (RelativeLayout) findViewById(R.id.rl_weChat_code);
+        rl_weChat_code = (RelativeLayout) findViewById(R.id.rl_weChat_code);
         rl_introduce_myself = (RelativeLayout) findViewById(R.id.rl_introduce_myself);
 
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_work_unit = (TextView) findViewById(R.id.tv_work_unit);
         tv_introduce_myself = (TextView) findViewById(R.id.tv_introduce_myself);
 
-        img_arrow4 = (ImageView) findViewById(R.id.img_arrow4);
+//        img_arrow4 = (ImageView) findViewById(R.id.img_arrow4);
         iv_weChat_code_photo = (ImageView) findViewById(R.id.iv_weChat_code_photo);
 
         rl_photo.setOnClickListener(this);
         rl_name.setOnClickListener(this);
         rl_work_unit.setOnClickListener(this);
-        img_arrow4.setOnClickListener(this);
-        iv_weChat_code_photo.setOnClickListener(this);
+        rl_weChat_code.setOnClickListener(this);
+//        img_arrow4.setOnClickListener(this);
+//        iv_weChat_code_photo.setOnClickListener(this);
         rl_introduce_myself.setOnClickListener(this);
     }
 

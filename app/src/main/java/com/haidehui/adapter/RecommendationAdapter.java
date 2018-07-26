@@ -50,10 +50,11 @@ public class RecommendationAdapter extends BaseAdapter {
         Holder holder = null;
         if (convertView == null) {
             holder = new Holder();
-            convertView = inflater.inflate(R.layout.item_one_level_recommendation, null);
+            convertView = inflater.inflate(R.layout.item_recommendation, null);
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             holder.tv_phone = (TextView) convertView.findViewById(R.id.tv_phone);
-            holder.tv_recommend_status = (TextView) convertView.findViewById(R.id.tv_recommend_status);
+//            holder.tv_recommend_status = (TextView) convertView.findViewById(R.id.tv_recommend_status);
+            holder.tv_work_unit = (TextView) convertView.findViewById(R.id.tv_work_unit);
             convertView.setTag(holder);
         } else {
             holder = (Holder) convertView.getTag();
@@ -61,17 +62,18 @@ public class RecommendationAdapter extends BaseAdapter {
 
         String realName = list.get(position).getRealName();
         String mobile = list.get(position).getMobile();
-        String recommendationStatus = list.get(position).getCheckStatus();
+//        String recommendationStatus = list.get(position).getCheckStatus();
+        String workUnit = list.get(position).getWorkUnit();
 
-        if (recommendationStatus.equals("init")) {
-            recommendationStatus = "未认证";
-        } else if (recommendationStatus.equals("submit")) {
-            recommendationStatus = "待认证";
-        } else if (recommendationStatus.equals("success")) {
-            recommendationStatus = "认证成功";
-        } else if (recommendationStatus.equals("fail")) {
-            recommendationStatus = "认证失败";
-        }
+//        if (recommendationStatus.equals("init")) {
+//            recommendationStatus = "未认证";
+//        } else if (recommendationStatus.equals("submit")) {
+//            recommendationStatus = "待认证";
+//        } else if (recommendationStatus.equals("success")) {
+//            recommendationStatus = "认证成功";
+//        } else if (recommendationStatus.equals("fail")) {
+//            recommendationStatus = "认证失败";
+//        }
         if (!TextUtils.isEmpty(realName)) {
             holder.tv_name.setText(realName);
         } else {
@@ -84,18 +86,25 @@ public class RecommendationAdapter extends BaseAdapter {
             holder.tv_phone.setText("--");
         }
 
-        if (!TextUtils.isEmpty(recommendationStatus)) {
-            holder.tv_recommend_status.setText(recommendationStatus);
+        if (!TextUtils.isEmpty(workUnit)) {
+            holder.tv_work_unit.setText(workUnit);
         } else {
-            holder.tv_recommend_status.setText("--");
+            holder.tv_work_unit.setText("--");
         }
+
+//        if (!TextUtils.isEmpty(recommendationStatus)) {
+//            holder.tv_recommend_status.setText(recommendationStatus);
+//        } else {
+//            holder.tv_recommend_status.setText("--");
+//        }
         return convertView;
     }
 
     class Holder {
         TextView tv_name; // 姓名
         TextView tv_phone; // 电话
-        TextView tv_recommend_status; // 认证状态
+//        TextView tv_recommend_status; // 认证状态
+        TextView tv_work_unit; // 工作单位
 
     }
 }

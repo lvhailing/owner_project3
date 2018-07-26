@@ -100,14 +100,14 @@ public class TwoLevelRecommendationFragment extends Fragment {
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                Intent intent = new Intent(getActivity(), RecommendDetailActivity.class);
-                intent.putExtra("userId", totalList.get(position - 1).getUserId());
-                startActivity(intent);
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+//                Intent intent = new Intent(getActivity(), RecommendDetailActivity.class);
+//                intent.putExtra("userId", totalList.get(position - 1).getUserId());
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

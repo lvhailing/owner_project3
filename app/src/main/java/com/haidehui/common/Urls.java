@@ -305,7 +305,7 @@ public class Urls {
     // 验证用户是否打开APP
     public static final String URL_APP_OPEN = EC_HOST + "android/app/open";
 
-   //我的事业合伙人  一级推荐列表
+   //我的事业合伙人  一级、二级推荐列表
     public static final String URL_ACCOUNT_RECOMMEND_LIST = EC_HOST + "account/myRecommendList";
 
    //预约说明会-列表
