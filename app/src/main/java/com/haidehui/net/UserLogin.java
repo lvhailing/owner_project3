@@ -113,30 +113,20 @@ public class UserLogin extends Observable {
 						if (b.getData() != null) {
 							if (Boolean.parseBoolean(b.getData().getFlag())) {
 								try {
-									PreferenceUtil.setAutoLoginAccount(DESUtil
-											.encrypt(mobile));
-									PreferenceUtil.setAutoLoginPwd(DESUtil
-											.encrypt(password));
-									PreferenceUtil.setPhone(DESUtil.encrypt(b
-											.getData().getMobile()));
-									PreferenceUtil.setUserId(DESUtil.encrypt(b
-											.getData().getUserId()));
-									if(!TextUtils.isEmpty(b.getData()
-											.getRealName())){
-										PreferenceUtil.setUserRealName(DESUtil.encrypt(b.getData()
-												.getRealName()));
+									PreferenceUtil.setAutoLoginAccount(DESUtil.encrypt(mobile));
+									PreferenceUtil.setAutoLoginPwd(DESUtil.encrypt(password));
+									PreferenceUtil.setPhone(DESUtil.encrypt(b.getData().getMobile()));
+									PreferenceUtil.setUserId(DESUtil.encrypt(b.getData().getUserId()));
+									if(!TextUtils.isEmpty(b.getData().getRealName())){
+										PreferenceUtil.setUserRealName(DESUtil.encrypt(b.getData().getRealName()));
 									}
 
-									if(!TextUtils.isEmpty(b
-											.getData().getIdNo())){
-										PreferenceUtil.setIdNo(DESUtil.encrypt(b
-												.getData().getIdNo()));
+									if(!TextUtils.isEmpty(b.getData().getIdNo())){
+										PreferenceUtil.setIdNo(DESUtil.encrypt(b.getData().getIdNo()));
 									}
 
-									if(!TextUtils.isEmpty(b
-											.getData().getCheckStatus())){
-										PreferenceUtil.setCheckStatus(DESUtil.encrypt(b
-												.getData().getCheckStatus()));
+									if(!TextUtils.isEmpty(b.getData().getCheckStatus())){
+										PreferenceUtil.setCheckStatus(DESUtil.encrypt(b.getData().getCheckStatus()));
 									}
 
 									PreferenceUtil.setLogin(true);
@@ -144,12 +134,10 @@ public class UserLogin extends Observable {
 									e.printStackTrace();
 								}
 							} else {
-								Toast.makeText(context, b.getData().getMessage(),
-										Toast.LENGTH_LONG).show();
+								Toast.makeText(context, b.getData().getMessage(), Toast.LENGTH_LONG).show();
 							}
 							
 						} else {
-							
 //							PreferenceUtil.setAutoLoginAccount("");
 							PreferenceUtil.setAutoLoginPwd("");
 							PreferenceUtil.setLogin(false);

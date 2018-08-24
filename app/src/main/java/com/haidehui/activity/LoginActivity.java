@@ -70,30 +70,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         tv_login_sign = (TextView) findViewById(R.id.tv_login_sign);
         ll_login_phone_service = (LinearLayout) findViewById(R.id.ll_login_phone_service);
 
-
         btn_login.setOnClickListener(this);
         tv_login_sign.setOnClickListener(this);
         ll_login_phone_service.setOnClickListener(this);
         tv_login_forget_password.setOnClickListener(this);
         btn_login.setClickable(false);
+
         et_login_phone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 if (TextUtils.isEmpty(editable)) {
-
                     btn_login.setClickable(false);
                     btn_login.setBackgroundResource(R.drawable.shape_center_gray);
-
                 } else {
                     if (TextUtils.isEmpty(et_login_password.getText().toString())) {
                         btn_login.setClickable(false);
@@ -102,7 +98,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         btn_login.setClickable(true);
                         btn_login.setBackgroundResource(R.drawable.shape_center_orange);
                     }
-
                 }
             }
         });
@@ -129,12 +124,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         btn_login.setClickable(true);
                         btn_login.setBackgroundResource(R.drawable.shape_center_orange);
                     }
-
-
                 }
             }
         });
-
     }
 
     public void initTopTitle() {

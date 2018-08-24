@@ -102,21 +102,24 @@ public class ProductRoadshowFragment extends Fragment {
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //item  点击监听
+        /**
+         *  产品路演列表  item  点击监听
+         */
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                if (PreferenceUtil.isLogin()) {
+                if (PreferenceUtil.isLogin()) { // 用户登录时：跳转到路演详情页时显示打电话、微信小卡片
                     Intent i_web = new Intent(getActivity(), WebForShareActivity.class);
                     i_web.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
                     i_web.putExtra("id", totalList.get(position - 1).getId());
                     i_web.putExtra("uid", userId);
                     i_web.putExtra("title", "产品路演详情");
                     startActivity(i_web);
-                } else {
+                } else { // 用户未登录时：跳转到路演详情页不显示小卡片
                     Intent i_web = new Intent(getActivity(), WebForShareActivity.class);
                     i_web.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
                     i_web.putExtra("id", totalList.get(position - 1).getId());
-                    i_web.putExtra("uid", "0");
+                    i_web.putExtra("uid", "0"); // 用户未登录时，用户id传“0”
                     i_web.putExtra("title", "产品路演详情");
                     startActivity(i_web);
                 }

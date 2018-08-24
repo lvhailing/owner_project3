@@ -44,8 +44,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         initView();
         initData();
-
-
     }
 
     public void initView() {
@@ -84,7 +82,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.setting_title)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.setting_title))
+             .showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
@@ -144,23 +143,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
 
         switch (view.getId()) {
-
-            case R.id.rl_setting_change_phone:
-
+            case R.id.rl_setting_change_phone: // 修改手机号
                 Intent i_change_phone = new Intent(this, SettingChangePhoneFirstActivity.class);
                 startActivity(i_change_phone);
-
                 break;
-
-            case R.id.ib_setting_gesture:
-
+            case R.id.ib_setting_gesture: // 手势密码开关
                 if (PreferenceUtil.isGestureChose()) {
                     ib_setting_gesture.setImageResource(R.mipmap.img_set_off);
                     rl_setting_change_gesture_password.setVisibility(View.GONE);
                     PreferenceUtil.setGestureChose(false);
-
                 } else {
-
                     Intent i = new Intent(this, GestureEditActivity.class);
                     i.putExtra("from", Urls.ACTIVITY_GESEDIT);
                     i.putExtra("title", getResources().getString(R.string.setup_gesture_code));
@@ -170,48 +162,34 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 //                    ib_setting_gesture.setImageResource(R.mipmap.img_set_on);
 //                    rl_setting_change_gesture_password.setVisibility(View.VISIBLE);
 //                    PreferenceUtil.setGestureChose(true);
-
                 }
-
                 break;
-
             case R.id.rl_setting_change_gesture_password: // 修改手势密码
-
                 Intent i = new Intent(SettingActivity.this, GestureVerifyActivity.class);
                 i.putExtra("from", Urls.ACTIVITY_CHANGE_GESTURE);
                 i.putExtra("title", getResources().getString(R.string.title_changegesture));
                 i.putExtra("message", getResources().getString(R.string.set_gesture_pattern_old));
                 startActivityForResult(i, 1001);
-
                 break;
-
             case R.id.rl_setting_change_password: // 修改登录密码
                 Intent i_change = new Intent(SettingActivity.this, SettingChangePasswordActivity.class);
                 startActivity(i_change);
-
                 break;
-
             case R.id.rl_setting_service_agreement:     // 服务协议
                 Intent i_service = new Intent(SettingActivity.this, WebActivity.class);
                 i_service.putExtra("type", WebActivity.WEBTYPE_SIGN_AGREEMENT);
                 i_service.putExtra("title", getResources().getString(R.string.setting_service_agreement));
                 i_service.putExtra("url", Urls.URL_SERVICE_AGREEMENT);
                 startActivity(i_service);
-
                 break;
-
             case R.id.rl_setting_privacy_agreement: //  隐私协议（作废）
                 Intent i_privacy = new Intent(SettingActivity.this, WebActivity.class);
                 startActivity(i_privacy);
-
                 break;
-
             case R.id.rl_setting_advice:  // 意见反馈
                 Intent i_advice = new Intent(SettingActivity.this, AdviceActivity.class);
                 startActivity(i_advice);
-
                 break;
-
             case R.id.rl_setting_about: // 关于我们
                 Intent i_about = new Intent(SettingActivity.this, WebActivity.class);
                 i_about.putExtra("type", WebActivity.WEBTYPE_ABOUT_US);
@@ -219,7 +197,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 i_about.putExtra("url", Urls.URL_ABOUT_US);
                 startActivity(i_about);
                 break;
-
             case R.id.rl_setting_version:       //  版本号
 //                Intent i_version = new Intent(SettingActivity.this,VersionActivity.class);
 //                startActivity(i_version);
@@ -229,19 +206,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 i_version.putExtra("url", Urls.URL_VERSION + SystemInfo.sVersionName);
                 startActivity(i_version);
                 break;
-            case R.id.tv_setting_logout:
-
+            case R.id.tv_setting_logout: // 退出登录
                 UserLoadout out = new UserLoadout(SettingActivity.this, userId);
                 out.requestData();
                 finish();
-
                 break;
-
 
             default:
-
                 break;
-
 
         }
 

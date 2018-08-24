@@ -220,12 +220,12 @@ public class Urls {
     public static final String URL_ROADSHOWVIDEO_LIST = EC_HOST + "roadshowvideo/list";
 
     // 发现-- 投资指南详情
-    public static final String URL_INVESTMENTGUIDE_DETAIL = EC_HOST + "investmentguide/detail"; // 只用于加载H5
-    public static final String URL_INVESTMENTGUIDE_DETAIL_APP = EC_HOST + "investmentguide/detail/app";// 返回分享时所需的标题和简介
+    public static final String URL_INVESTMENTGUIDE_DETAIL = EC_HOST + "investmentguide/detail"; // 点投资指南列表 跳转投资指南详情（加载H5用这个）
+    public static final String URL_INVESTMENTGUIDE_DETAIL_APP = EC_HOST + "investmentguide/detail/app";// 点轮播图跳转投资指南详情页时调的接口（轮播图单独调用的 返回数据的接口）
 
     // 发现-- 路演详情
-    public static final String URL_ROADSHOWVIDEO_VIEW = EC_HOST + "roadshowvideo/view/"; // 只用于加载H5
-    public static final String URL_ROADSHOWVIDEO_DETAIL = EC_HOST + "roadshowvideo/detail"; // 返回分享时所需的标题和简介
+    public static final String URL_ROADSHOWVIDEO_VIEW = EC_HOST + "roadshowvideo/view/"; // 点产品路演列表 跳转路演详情 （加载H5用这个）
+    public static final String URL_ROADSHOWVIDEO_DETAIL = EC_HOST + "roadshowvideo/detail"; // 点轮播图跳转路演详情页时调的接口（轮播图单独调用的 返回数据的接口）
 
     //意见反馈
     public static final String URL_ADVICE = EC_HOST + "problem/reply/save";

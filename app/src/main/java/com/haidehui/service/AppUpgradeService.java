@@ -132,7 +132,7 @@ public class AppUpgradeService extends Service {
 				R.string.app_name, completingIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
-		mNotification.icon = R.mipmap.img_logo;
+		mNotification.icon = R.mipmap.icon_downloading_logo;
 		mNotification.tickerText = "开始下载";
 		mNotification.contentIntent = mPendingIntent;
 		mNotification.contentView.setProgressBar(R.id.app_upgrade_progressbar,

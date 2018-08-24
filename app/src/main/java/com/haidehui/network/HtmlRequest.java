@@ -1107,6 +1107,7 @@ public class HtmlRequest extends BaseRequester {
     public static void loginoff(final Context context, LinkedHashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_LOGINOFF;
+
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
             @Override
             public Object doTask(BaseParams params) {
@@ -1127,6 +1128,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     data = DESUtil.decrypt(result);
+                    Log.i("hh", "退出登录时调的接口:" + data);
                     ResultLoginOffBean b = json.fromJson(data, ResultLoginOffBean.class);
                     return b.getData();
                 } catch (Exception e) {
@@ -1222,7 +1224,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "首页数据:" + data);
+//                    Log.i("hh", "首页数据:" + data);
 
                     Gson gson = new Gson();
                     HomeIndex1B b = gson.fromJson(data, HomeIndex1B.class);
@@ -1454,7 +1456,7 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
-     * 发现-- 获取轮播图
+     * 发现-- 获取轮播图数据
      *
      * @param context  上下文
      * @param listener 监听
@@ -1481,7 +1483,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "发现轮播图:" + data);
+                    Log.i("hh", "发现轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -1627,7 +1629,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "路演列表数据:" + data);
+//                    Log.i("hh", "路演列表数据:" + data);
 
                     Gson gson = new Gson();
                     ProductRoadshow1B b = gson.fromJson(data, ProductRoadshow1B.class);
@@ -1647,10 +1649,15 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-
+    /**
+     * 获取路演详情
+     * @param context
+     * @param param
+     * @param listener
+     */
     public static void getRoadShowDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
-        final String url = Urls.URL_ROADSHOWVIDEO_DETAIL;
+        final String url = Urls.URL_ROADSHOWVIDEO_VIEW;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
             @Override
@@ -1670,7 +1677,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "路演详情数据:" + data);
+                    Log.i("hh", "路演详情数据:" + data);
 
                     Gson gson = new Gson();
                     RoadShowDetail1B b = gson.fromJson(data, RoadShowDetail1B.class);

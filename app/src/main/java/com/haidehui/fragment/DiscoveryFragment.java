@@ -134,15 +134,12 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
 //                ObjectAnimator oa = ObjectAnimator.ofFloat(v_line, "translationX", tagerX);
 //                oa.setDuration(0);
 //                oa.start();
-
             }
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-
-
     }
 
     // 修改文字的颜色
@@ -182,11 +179,12 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
                 roadShowFr.upDateRoadShowList();
 
                 break;
-
         }
     }
 
-    // 请求轮播图数据
+    /**
+     *  请求轮播图数据
+     */
     private void requestCycleIndex() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("params", "params");
@@ -206,7 +204,10 @@ public class DiscoveryFragment extends Fragment implements View.OnClickListener 
             //第一次从后台获取到数据
             rollViewPager = new MyRollViewPager(context, picList, ll_point_container);
             rollViewPager.setCycle(true);
+
+            // 轮播图点击监听
             rollViewPager.setOnMyListener(new MyRollViewPager.MyClickListener() {
+
                 @Override
                 public void onMyClick(int position) {
                     if (picList != null && picList.size() > 0) {

@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
 
-    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_gray"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <RelativeLayout
             android:id="@+id/rl_setting_change_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bg_white"
             android:gravity="center_vertical"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -27,9 +25,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_change_phone"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp"
-
-                />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -39,9 +35,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -59,9 +53,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_gesture_password"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
-
-
+                android:textSize="16sp"/>
 
             <ImageButton
                 android:id="@+id/ib_setting_gesture"
@@ -69,15 +61,12 @@
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@mipmap/img_set_on"
+                android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:layout_marginBottom="8dip"
-                />
-
-
+                android:background="@null"
+                android:scaleType="fitXY"
+                android:src="@mipmap/img_set_on"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -95,7 +84,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_change_gesture_password"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -105,9 +94,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -125,7 +112,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_change_password"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -135,9 +122,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -155,7 +140,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_service_agreement"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -165,9 +150,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -177,8 +160,7 @@
             android:layout_marginTop="1dip"
             android:background="@color/bg_white"
             android:gravity="center_vertical"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -187,7 +169,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_privacy_agreement"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -197,9 +179,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -217,7 +197,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_advice"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -227,9 +207,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -247,7 +225,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_about"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -257,9 +235,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
-
-
+                android:src="@mipmap/img_arrow_right"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -277,7 +253,7 @@
                 android:layout_marginLeft="15dip"
                 android:text="@string/setting_version"
                 android:textColor="@color/txt_gray"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <ImageView
                 android:id="@+id/iv_setting_version_arrow"
@@ -288,34 +264,30 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
-                android:src="@mipmap/img_arrow_right" />
+                android:src="@mipmap/img_arrow_right"/>
+
             <TextView
                 android:id="@+id/tv_setting_version_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.0.0"
                 android:layout_centerVertical="true"
-                android:textColor="@color/txt_gray"
-                android:textSize="16sp"
                 android:layout_toLeftOf="@id/iv_setting_version_arrow"
-                />
-
+                android:text="1.0.0"
+                android:textColor="@color/txt_gray"
+                android:textSize="16sp"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_setting_logout"
             android:layout_width="match_parent"
             android:layout_height="42dip"
-            android:text="@string/setting_logout"
-            android:layout_marginTop="20dip"
-            android:gravity="center"
-            android:background="@drawable/shape_center_orange"
-            android:textColor="@color/txt_white"
             android:layout_marginLeft="15dip"
             android:layout_marginRight="15dip"
-            />
-
+            android:layout_marginTop="20dip"
+            android:background="@drawable/shape_center_orange"
+            android:gravity="center"
+            android:text="@string/setting_logout"
+            android:textColor="@color/txt_white"/>
     </LinearLayout>
-
 
 </ScrollView>

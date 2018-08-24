@@ -68,12 +68,16 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
 
         initView();
 
-        requestInvestmentGuideDetailData();
-        requestRoadShowDetailData();
+        // 发现-- 轮播图点击时根据不同的类型调取相应的数据
+        if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 如果是投资指南则调投资指南的接口
+            requestInvestmentGuideDetailData();
+        } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 如果是产品路演则调路演的接口
+            requestRoadShowDetailData();
+        }
     }
 
     /**
-     * 获取投资指南详情（返回分享时所需的标题、简介）
+     * 发现-- 轮播图点击跳转投资指南详情时调的接口
      */
     private void requestInvestmentGuideDetailData() {
         HashMap<String, Object> param = new HashMap<>();
@@ -95,7 +99,7 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
     }
 
     /**
-     * 获取路演详情（返回分享时所需的标题、简介）
+     * 发现-- 轮播图点击跳转路演详情页时调的接口
      */
     private void requestRoadShowDetailData() {
         HashMap<String, Object> param = new HashMap<>();
@@ -116,10 +120,8 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
         });
     }
 
-
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     private void initView() {
-
         ActivityStack stack = ActivityStack.getActivityManage();
         stack.addActivity(this);
 
@@ -168,23 +170,21 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
 
         if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
             iv_btn_share.setVisibility(View.VISIBLE);
-            url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + getIntent().getExtras().getString("id")+ "/" + "0";
+            url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + id+ "/" +userId; //
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
             iv_btn_share.setVisibility(View.VISIBLE);
-            url = Urls.URL_ROADSHOWVIDEO_VIEW + getIntent().getExtras().getString("id")+ "/" + "0";
+            url = Urls.URL_ROADSHOWVIDEO_VIEW + id+ "/" +userId; //
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_HTML)) { // 打开H5网页
 
-        } else if (type.equals(WEBTYPE_PROJECT_MATERIAL_DETAIL)) {
+        } else if (type.equals(WEBTYPE_PROJECT_MATERIAL_DETAIL)) { // 项目材料预览
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         }
-
 
         HtmlRequest.synCookies(this, url);
 
         mWebview.loadUrl(url);
-
     }
 
     public class MyJavaScriptinterface {

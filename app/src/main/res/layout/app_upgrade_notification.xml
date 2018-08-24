@@ -17,7 +17,7 @@
             android:layout_width="24.0dip"
             android:layout_height="fill_parent"
             android:scaleType="fitCenter"
-            android:src="@mipmap/img_logo" />
+            android:src="@mipmap/icon_downloading_logo" />
 
         <TextView
             android:layout_width="wrap_content"

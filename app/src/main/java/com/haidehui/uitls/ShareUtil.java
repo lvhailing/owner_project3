@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
@@ -69,7 +70,13 @@ public final class ShareUtil {
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
-                    paramsToShare.setImagePath("sdcard/haidehui/imgs/haidehui.png");
+                    /**
+                     * 原来用Environment.getExternalStorageDirectory()+"/haidehui/imgs/haidehui.png"这个路径分享出去获取不到图片，
+                     * 必须是写死路径："sdcard/haidehui/imgs/haidehui.png"才可以正确显示图片，2018.8.21 修改如来保分享的问题时发现
+                     * 现在用Environment.getExternalStorageDirectory() +"/haidehui/imgs/haidehui.png"这个路径又可以正确获取到图了，特此作下记录！
+                     */
+//                    paramsToShare.setImagePath("sdcard/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() +"/haidehui/imgs/haidehui.png");
 //                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                 }
 
@@ -80,7 +87,8 @@ public final class ShareUtil {
                     paramsToShare.setTitleUrl(url);
                     paramsToShare.setUrl(url);
                     paramsToShare.setSite(context.getString(R.string.app_name));
-                    paramsToShare.setImagePath("sdcard/haidehui/imgs/haidehui.png");
+//                    paramsToShare.setImagePath("sdcard/haidehui/imgs/haidehui.png");
+                    paramsToShare.setImagePath(Environment.getExternalStorageDirectory() +"/haidehui/imgs/haidehui.png");
 //                    paramsToShare.setImageData(drawableToBitamp(context.getResources().getDrawable(R.mipmap.img_share_logo)));
                 }
 

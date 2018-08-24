@@ -119,7 +119,7 @@ public class MineFragment extends Fragment implements OnClickListener {
             try {
                 initView(mView);
 
-                // 动态设置 手机权限（6.0以后的需要）
+                // 6.0以后的手机系统需要动态设置 手机权限
                 String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE};
                 if (!EasyPermissions.hasPermissions(getActivity(), perms)) {
