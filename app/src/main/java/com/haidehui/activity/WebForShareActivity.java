@@ -170,11 +170,11 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
 
         if (type.equals(WEBTYPE_INVESTMENT_GUIDE_DETAILS)) { // 投资指南详情
             iv_btn_share.setVisibility(View.VISIBLE);
-            url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + id+ "/" +userId; //
+            url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + id+ "/" +"0"; //
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
             iv_btn_share.setVisibility(View.VISIBLE);
-            url = Urls.URL_ROADSHOWVIDEO_VIEW + id+ "/" +userId; //
+            url = Urls.URL_ROADSHOWVIDEO_VIEW + id+ "/" +"0"; //
             tv_web_title.setText(getIntent().getExtras().getString("title"));
         } else if (type.equals(WEBTYPE_HTML)) { // 打开H5网页
 

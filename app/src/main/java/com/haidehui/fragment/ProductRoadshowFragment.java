@@ -41,7 +41,7 @@ public class ProductRoadshowFragment extends Fragment {
     private MouldList<ProductRoadshow3B> totalList = new MouldList<>();
     private int currentPage = 1;    //当前页
     private ViewSwitcher vs;
-    private String userId;
+    private String userId = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,12 +64,6 @@ public class ProductRoadshowFragment extends Fragment {
 
     private void initView(View mView) {
         context = getActivity();
-
-        try {
-            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         vs = (ViewSwitcher) mView.findViewById(R.id.vs);
         TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
@@ -109,6 +103,12 @@ public class ProductRoadshowFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 if (PreferenceUtil.isLogin()) { // 用户登录时：跳转到路演详情页时显示打电话、微信小卡片
+                    try {
+                        userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     Intent i_web = new Intent(getActivity(), WebForShareActivity.class);
                     i_web.putExtra("type", WebForShareActivity.WEBTYPE_ROADSHOW_DETAILS);
                     i_web.putExtra("id", totalList.get(position - 1).getId());
