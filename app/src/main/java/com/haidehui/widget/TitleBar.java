@@ -811,14 +811,14 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    //启动分享
-                    if (flag.equals("1000")) {
+                    // 项目详情及房源详情的分享
+                    if (flag.equals("1000")) { // 项目详情页分享
                         if (!PreferenceUtil.isLogin()) { // 用户没登录
                             shareUrl = Urls.URL_PROJECT_H5_DETAIL + "/" + shareId + "/0";
                         } else {  // 用户登录,分享时要拼上用户的userId
                             shareUrl = Urls.URL_PROJECT_H5_DETAIL + "/" + shareId + "/" + userId;
                         }
-                    } else if (flag.equals("1001")) {
+                    } else if (flag.equals("1001")) { // 房源详情页分享
                         if (!PreferenceUtil.isLogin()) { // 用户没登录
                             shareUrl = Urls.URL_HOUSE_H5_DETAIL + "/" + shareId + "/0";
                         } else { // 用户登录,分享时要拼上用户的userId
@@ -826,6 +826,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                         }
                     }
                     if (!TextUtils.isEmpty(shareId)) {
+                        //启动分享
                         ShareUtil.sharedSDK(mContext, shareTitle, shareText, shareUrl);
                     }
                     break;
@@ -1016,7 +1017,6 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             Action act = getItem(position);
             Holder holder = null;
             if (convertView == null) {
-
                 holder = new Holder();
                 inflater = LayoutInflater.from(mContext);
                 convertView = inflater.inflate(R.layout.titlemenu_left, null);
@@ -1025,8 +1025,7 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
                 // holder.text.setLayoutParams(new
                 // RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 // RelativeLayout.LayoutParams.MATCH_PARENT));
-                // holder.text.setPadding(ViewUtils.dip2px(mContext, 10), 0, 0,
-                // 0);
+                // holder.text.setPadding(ViewUtils.dip2px(mContext, 10), 0, 0, 0);
                 holder.text.setTextSize(16);
                 holder.text.setTextColor(Color.WHITE);
                 holder.text.setBackgroundResource(act.background);
@@ -1051,10 +1050,8 @@ public class TitleBar extends RelativeLayout implements OnClickListener {
             }
             if (act.isTextColorRed) {
                 holder.text.setTextColor(mContext.getResources().getColor(R.color.txt_red));
-
             } else {
                 holder.text.setTextColor(Color.WHITE);
-
             }
             return convertView;
         }

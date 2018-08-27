@@ -41,14 +41,16 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
     public static final String WEBTYPE_PROJECT_MATERIAL_DETAIL = "project_material_detail "; // 项目材料预览
 
     public String title;
-    private TextView tv_web_title; // 标题
+    private TextView tv_web_title; // H5页显示的标题
     private ImageView iv_back; // 返回按钮
     private ImageView iv_btn_share; // 分享按钮
+
     private InvestmentGuideDetail2B investMentGuideDetail;
     private String investMentGuideTitle; // 投资指南分享时的标题
     public String investMentGuideBrief; // 投资指南分享时的简介
+
     private RoadShowDetail2B roadShowDetail;
-    private String roadShowDetailTitle; // 标题
+    private String roadShowDetailTitle; // 路演的标题
     private String speaker; // 演讲嘉宾
     private String roadShowTime; // 发布时间
     private String id; //编号
@@ -229,7 +231,7 @@ public class WebForShareActivity extends Activity implements View.OnClickListene
                     url = Urls.URL_INVESTMENTGUIDE_DETAIL + "/" + id+ "/" + userId;
                     ShareUtil.sharedSDK(this, investMentGuideTitle, investMentGuideBrief, url);
                 } else if (type.equals(WEBTYPE_ROADSHOW_DETAILS)) { // 路演详情
-                    String text = speaker + roadShowTime;
+                    String text = speaker + roadShowTime; // 这个test是分享出去时显示的标题及内容
                     url = Urls.URL_ROADSHOWVIDEO_VIEW + id+ "/" + userId;
                     ShareUtil.sharedSDK(this, roadShowDetailTitle, text, url);
                 }

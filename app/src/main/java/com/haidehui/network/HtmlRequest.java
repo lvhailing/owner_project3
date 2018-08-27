@@ -1371,7 +1371,12 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-    // 海外项目详情页数据
+    /**
+     * 海外项目详情页数据
+     * @param context
+     * @param param
+     * @param listener
+     */
     public static void getOverseaDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_PROJECT_DETAIL;
@@ -1413,7 +1418,12 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-    // 房源-- 房源列表数据
+    /**
+     * 房源-- 房源列表数据
+     * @param context
+     * @param param
+     * @param listener
+     */
     public static void getHouseList(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_HOUSE_LIST;
@@ -1657,7 +1667,7 @@ public class HtmlRequest extends BaseRequester {
      */
     public static void getRoadShowDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
-        final String url = Urls.URL_ROADSHOWVIDEO_VIEW;
+        final String url = Urls.URL_ROADSHOWVIDEO_DETAIL;
 
         getTaskManager().addTask(new MyAsyncTask(buildParams(context, listener, url)) {
             @Override

@@ -39,25 +39,31 @@ import java.util.HashMap;
  */
 public class HouseDetailActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager vp;
-    private TextView tv_vp_page;
     private ImageView image;
     private ArrayList<ImageView> imageList;
-    private TextView tv_house_name;
+    private ArrayList<String> houseImgList; // 房源图片列表
     private HouseDetailAdapter mAdapter;
+    private HouseDetail2B houseDetail;
     private RelativeLayout rl_house_detail_addr; // 地址布局
-    private Button btn_essential_info, btn_purchase_cost, btn_purchase_flow; // 基本信息、购房费用、购房流程
+    private RelativeLayout rl_phone;
+
+    private Button btn_essential_info; // 基本信息
+    private Button  btn_purchase_cost; // 购房费用
+    private Button  btn_purchase_flow; // 购房流程
+
     private EssentialInfoFragment essentialInfoFragment; // 购房基本信息
     private PurchaseCostFragment purchaseCostFragment; // 购房费用
     private PurchaseFlowFragment purchaseFlowFragment; // 购房流程
-    private RelativeLayout rl_phone;
-    private String hid; // 房源编号
-    private HouseDetail2B houseDetail;
-    private ArrayList<String> houseImgList; // 房源图片列表
+
+    private TextView tv_vp_page;
+    private TextView tv_house_name;
     private TextView tv_house_detail_price ; // 价格
     private TextView tv_house_detail_area ; //  面积
     private TextView tv_house_detail_house_type; //  居室类型
 //    private TextView tv_house_detail_commission_rate; // 佣金比例
     private TextView tv_house_detail_address; // 地址
+
+    private String hid; // 房源编号
     private int currentPage;
     private int flag = 1;
     private TitleBar titleBar;
@@ -78,12 +84,12 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
         titleBar.showLeftImg(true);
         titleBar.setFromActivity("1001");
         titleBar.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.mipmap.icon_back)
-                .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title).setOnActionListener(new TitleBar.OnActionListener() {
+                .setCenterText(getResources().getString(R.string.title_house_detail)).showMore(false).setTitleRightButton(R.drawable.ic_share_title)
+                .setOnActionListener(new TitleBar.OnActionListener() {
 
             @Override
             public void onMenu(int id) {
             }
-
 
             @Override
             public void onBack() {
@@ -238,12 +244,6 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
      * 获取最热房源详情页的数据
      */
     private void requestDetailData() {
-       /* String userId = null;
-        try {
-            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
         HashMap<String, Object> param = new HashMap<>();
         param.put("hid", hid);
         param.put("userId", userId);

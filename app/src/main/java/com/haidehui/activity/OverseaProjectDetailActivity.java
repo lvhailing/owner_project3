@@ -74,7 +74,6 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     private TextView tv_pro_decoration_standard; // 装修标准
     private TextView tv_pro_house_desc; // 项目描述
 
-
     private ViewPager vp_living_room; // 项目居室 轮播图
     private ViewPager vp_project_plan; // 项目规划 轮播图
     private int currentPos; // 项目居室图 当前位置
@@ -228,13 +227,14 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
         requestDetailData(); // 获取海外项目详情页数据
 
-        project_material_list.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 项目材料列表 点击监听
+        // 项目材料列表 点击监听
+        project_material_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 //                Intent intent = new Intent(mContext, WebActivity.class);
 //                intent.putExtra("type", WebActivity.WEBTYPE_PROJECT_MATERIAL_DETAIL);
 //                intent.putExtra("url", attachmentList.get(position).getPath());
-//                在线打开的代码
+//                PDF在线打开的代码
 //                String nameEncode=attachmentList.get(position).getName();
 //                String pathUrlEncode=attachmentList.get(position).getPath();
 //                try{
@@ -262,7 +262,8 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             }
         });
 
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // 相关房源列表 点击监听
+        // 相关房源列表 点击监听
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Intent intent = new Intent(mContext, HouseDetailActivity.class);
@@ -273,6 +274,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         });
     }
 
+    /**
+     *  项目居室轮播图回调监听
+     */
     private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         public void onPageScrollStateChanged(int arg0) {
         }
@@ -286,6 +290,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         }
     }
 
+    /**
+     *  项目规划轮播图回调监听
+     */
     private class MyPlanImgOnPageChangeListener implements ViewPager.OnPageChangeListener {
         public void onPageScrollStateChanged(int arg0) {
         }
@@ -299,7 +306,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         }
     }
 
-    // 项目居室图片切换时更新数字
+    /**
+     * 项目居室图片切换时更新数字
+     */
     private void updateLivingRoomNum() {
         if (houseTypeImgList.size() > 0) {
             tv_living_room_page.setText(currentPos + 1 + "/" + houseTypeImgList.size());
@@ -308,7 +317,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
         }
     }
 
-    // 项目规划图片切换时更新数字
+    /**
+     * 项目规划图片切换时更新数字
+     */
     private void updateProjectPlanImgNum() {
         if (projectPlanImgList.size() > 0) {
             tv_project_plan_page.setText(currentPlanImgPos + 1 + "/" + projectPlanImgList.size());
@@ -319,10 +330,14 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
 
 
     private void setView() {
-        // ImageLoader 加载顶部图片
-        ImageLoader.getInstance().displayImage(overseaProjectDetail.getProjectImg(), iv_oversea_detail);
-        topImageList = new ArrayList<>();
-        topImageList.add(overseaProjectDetail.getProjectImg());
+        String topProductImg = overseaProjectDetail.getProjectImg();
+        if (!TextUtils.isEmpty(topProductImg)) {
+            // ImageLoader 加载顶部图片
+            ImageLoader.getInstance().displayImage(topProductImg, iv_oversea_detail);
+
+            topImageList = new ArrayList<>();
+            topImageList.add(topProductImg);
+        }
 
         if (!TextUtils.isEmpty(overseaProjectDetail.getName())) {
             tv_pro_house_name.setText(overseaProjectDetail.getName());
@@ -405,10 +420,14 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_oversea_detail: // 顶部图片
-                Intent intent = new Intent(mContext, PhotoPreviewAc.class);
-                intent.putStringArrayListExtra("urls", topImageList);
-                intent.putExtra("currentPos", currentPage);
-                startActivity(intent);
+                if(topImageList != null && !topImageList.isEmpty()){
+                    Intent intent = new Intent(mContext, PhotoPreviewAc.class);
+                    intent.putStringArrayListExtra("urls", topImageList);
+                    intent.putExtra("currentPos", currentPage);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(this,"暂无项目图片",Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.rl_project_house:   // 项目居室

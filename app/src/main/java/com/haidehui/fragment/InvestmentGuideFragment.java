@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,11 @@ public class InvestmentGuideFragment extends Fragment {
     private void initView(View mView) {
         context = getActivity();
 
+//        try {
+//            userId = DESUtil.decrypt(PreferenceUtil.getUserId());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         vs = (ViewSwitcher) mView.findViewById(R.id.vs);
         TextView tv_empty = (TextView) mView.findViewById(R.id.tv_empty);
         ImageView img_empty = (ImageView) mView.findViewById(R.id.img_empty);
@@ -108,7 +114,6 @@ public class InvestmentGuideFragment extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
 
                     Intent i_web = new Intent(getActivity(), WebForShareActivity.class);
                     i_web.putExtra("type", WebForShareActivity.WEBTYPE_INVESTMENT_GUIDE_DETAILS);
