@@ -17,6 +17,7 @@ import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.OnNoDoubleClickUtil;
 import com.haidehui.widget.TitleBar;
 
 import java.text.ParseException;
@@ -34,7 +35,7 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
     private EditText et_phone; // 联系电话
     private RelativeLayout rl_date_participation; // 参加日期 布局
     private TextView tv_date; // 参加日期 展示
-    private Button btn_submit;
+    private Button btn_submit; // 立即提交
 
     private long currentTime = System.currentTimeMillis();
     private String date;
@@ -112,7 +113,9 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
                     Toast.makeText(mContext, "请选择参加日期", Toast.LENGTH_LONG).show();
                     return;
                 }
-                requestData(userId, customerName, customerPhone, date);
+                if (OnNoDoubleClickUtil.isFastClick()){
+                    requestData(userId, customerName, customerPhone, date);
+                }
                 break;
         }
     }
@@ -150,6 +153,13 @@ public class AddCustomerActivity extends BaseActivity implements View.OnClickLis
         return true;
     }
 
+    /**
+     * 预约说明会新增客户信息
+     * @param userId
+     * @param customerName
+     * @param customerPhone
+     * @param meetingTime
+     */
     private void requestData(String userId, String customerName, String customerPhone, String meetingTime) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("userId", userId);

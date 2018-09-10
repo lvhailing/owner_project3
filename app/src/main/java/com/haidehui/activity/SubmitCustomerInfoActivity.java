@@ -12,6 +12,7 @@ import com.haidehui.model.SubmitCustomer2B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
+import com.haidehui.uitls.OnNoDoubleClickUtil;
 import com.haidehui.uitls.StringUtil;
 import com.haidehui.widget.TitleBar;
 
@@ -20,7 +21,7 @@ import java.util.HashMap;
 import android.text.TextUtils;
 
 /**
- * 提交客户信息
+ * 添加客户信息（提交页面）
  */
 public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnClickListener {
     private EditText et_name; // 客户姓名
@@ -45,7 +46,8 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
     private void initTopTitle() {
         TitleBar title = (TitleBar) findViewById(R.id.rl_title);
         title.showLeftImg(true);
-        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back).setCenterText(getResources().getString(R.string.title_submit_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
+        title.setTitle(getResources().getString(R.string.title_null)).setLogo(R.drawable.icons, false).setIndicator(R.drawable.back)
+             .setCenterText(getResources().getString(R.string.title_submit_info)).showMore(false).setOnActionListener(new TitleBar.OnActionListener() {
             @Override
             public void onMenu(int id) {
             }
@@ -78,7 +80,7 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_submit:  // 立即提交
+            case R.id.btn_submit:  // 立即提交 (姓名、电话是必填项)
                 String customerName = et_name.getText().toString();
                 String customerPhone = et_phone.getText().toString();
 //                String customerEmail = et_email.getText().toString();
@@ -101,7 +103,9 @@ public class SubmitCustomerInfoActivity extends BaseActivity implements View.OnC
 //                                Toast.makeText(mContext, "请输入邮箱地址", Toast.LENGTH_LONG).show();
 //                                et_email.requestFocusFromTouch();
 //                            }
-                            requestData(area, customerName, customerPhone, houseLocation, houseProject, roomNumber, totalPrice);
+                            if (OnNoDoubleClickUtil.isFastClick()) {
+                                requestData(area, customerName, customerPhone, houseLocation, houseProject, roomNumber, totalPrice);
+                            }
                         } else {
                             Toast.makeText(mContext, "请输入正确的联系电话", Toast.LENGTH_LONG).show();
                             et_phone.requestFocusFromTouch();

@@ -3,10 +3,10 @@ package com.haidehui.model;
 
 import com.haidehui.network.types.IMouldType;
 
-public class ResultMessageBean implements IMouldType {
+public class Message1B implements IMouldType {
 	private String check;
 	private String code;
-	private ResultMessageContentBean data;
+	private Message2B data;
 	private String msg;
 
 	public String getCheck() {
@@ -25,11 +25,11 @@ public class ResultMessageBean implements IMouldType {
 		this.code = code;
 	}
 
-	public ResultMessageContentBean getData() {
+	public Message2B getData() {
 		return data;
 	}
 
-	public void setData(ResultMessageContentBean data) {
+	public void setData(Message2B data) {
 		this.data = data;
 	}
 

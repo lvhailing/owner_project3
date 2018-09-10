@@ -204,7 +204,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     * 请求列表数据
+     * 请求客户信息列表数据
      */
     private void requestListData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
@@ -260,10 +260,15 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    /**
+     *  删除客户信息
+     * @param customerId
+     */
     private void deleteData(String customerId) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("customerId", customerId);
         param.put("userId", userId);
+
         HtmlRequest.deleteCustomerInFo(this, param, new BaseRequester.OnRequestListener() {
                     @Override
                     public void onRequestFinished(BaseParams params) {
@@ -284,7 +289,7 @@ public class CustomerInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_submit:
+            case R.id.btn_submit: // 添加客户信息
                 if (status != null && !TextUtils.isEmpty(status) && status.equals("success")) {
                     Intent intent = new Intent(this, SubmitCustomerInfoActivity.class);
                     startActivityForResult(intent, 1000);

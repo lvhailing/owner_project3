@@ -124,7 +124,10 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
 
     }
 
-    private void requestListData() {  // 获取海外项目列表数据
+    /**
+     * 获取海外项目列表数据
+     */
+    private void requestListData() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", currentPage + "");
         param.put("userId", userId);
@@ -136,6 +139,7 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
                             if (params.result == null) {
                                 vs.setDisplayedChild(1);
                                 Toast.makeText(mContext, "加载失败，请确认网络通畅", Toast.LENGTH_LONG).show();
+
                                 listView.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -174,7 +178,6 @@ public class OverseaProjectListActivity extends BaseActivity implements View.OnC
                         }
 
                     }
-
             );
         } catch (Exception e) {
             e.printStackTrace();

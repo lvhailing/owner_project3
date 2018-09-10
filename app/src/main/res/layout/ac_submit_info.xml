@@ -68,6 +68,7 @@
                 android:gravity="right"
                 android:hint="输入联系电话"
                 android:singleLine="true"
+                android:maxLength="11"
                 android:textColor="@color/gray_dark"
                 android:textSize="15sp"/>
         </RelativeLayout>

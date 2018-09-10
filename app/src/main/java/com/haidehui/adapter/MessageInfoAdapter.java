@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.model.ResultMessageContentBean;
-import com.haidehui.model.ResultMessageItemContentBean;
+import com.haidehui.model.Message3B;
 import com.haidehui.network.types.MouldList;
 
 /**
@@ -20,10 +19,10 @@ import com.haidehui.network.types.MouldList;
 public class MessageInfoAdapter extends BaseAdapter{
 
     private Context context;
-    private MouldList<ResultMessageItemContentBean> list;
+    private MouldList<Message3B> list;
     private LayoutInflater inflater;
 
-    public MessageInfoAdapter(Context context, MouldList<ResultMessageItemContentBean> list) {
+    public MessageInfoAdapter(Context context, MouldList<Message3B> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);

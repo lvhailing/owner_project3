@@ -286,21 +286,31 @@ public class HouseDetailActivity extends BaseActivity implements View.OnClickLis
 
         if (!TextUtils.isEmpty(houseDetail.getName())) {
             tv_house_name.setText(houseDetail.getName());
+        }else {
+            tv_house_name.setText("--");
         }
         if (!TextUtils.isEmpty(houseDetail.getPrice())) {
             tv_house_detail_price.setText(houseDetail.getPrice() + "万元");
+        }else{
+            tv_house_detail_price.setText("--");
         }
         if (!TextUtils.isEmpty(houseDetail.getArea())) {
-            tv_house_detail_area.setText(houseDetail.getArea());
+            tv_house_detail_area.setText(houseDetail.getArea() + "m²");
+        }else {
+            tv_house_detail_area.setText("--");
         }
         if (!TextUtils.isEmpty(houseDetail.getHouseType())) {
             tv_house_detail_house_type.setText(houseDetail.getHouseType());
+        }else {
+            tv_house_detail_house_type.setText("--");
         }
 //        if (!TextUtils.isEmpty(houseDetail.getCommissionRate())) {
 //            tv_house_detail_commission_rate.setText(houseDetail.getCommissionRate());
 //        }
         if (!TextUtils.isEmpty(houseDetail.getLocation())) {
             tv_house_detail_address.setText(houseDetail.getLocation());
+        }else {
+            tv_house_detail_address.setText("--");
         }
 
         essentialInfoFragment.refreshLayoutInfo(houseDetail);

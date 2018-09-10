@@ -3,32 +3,31 @@ package com.haidehui.model;
 import com.haidehui.network.types.IMouldType;
 
 /**
- * 消息列表item bean
+ * （公告、帐本）消息列表item bean
  * Created by hasee on 2017/6/8.
  */
 
-public class ResultMessageItemContentBean implements IMouldType{
+public class Message3B implements IMouldType{
 
     /**
      * 公告
      */
-    private String title;       //  公告标题
-    private String description;     //  内容
-    private String sendTime;        //  发送时间
-    private String bulletinId;          //  公告编号
-    private String readState;          //  是否阅读（yes:已阅读；no:未阅读）
-
+    private String title;  //公告标题
+    private String description;  //内容
+    private String sendTime;  // 发送时间
+    private String bulletinId;   // 公告编号
+    private String readState; // 是否阅读（yes:已阅读；no:未阅读）
 
     /**
      * 账本消息
      */
-    private String busiPriv;        //
-    private String busiType;        //  类型'withdrawCash'提现  , 'registerCash'下载奖励 , 'commissionOver'佣金收益,' awardredemption'活动奖励
-    private String content;         //  金额
-    private String createTime;      //  时间
-    private String id;          //
-    private String status;      //  是否已读状态 unread未读   read已读
-    private String topic;      //   类型名称
+    private String busiPriv;  //
+    private String busiType; // 账本类型（withdrawCash：提现、registerCash：下载奖励、commissionOver：佣金收益、awardredemption：活动奖励）
+    private String content; // 金额
+    private String createTime; // 时间
+    private String id; //
+    private String status; // 是否已读状态 unread未读   read已读
+    private String topic; // 类型名称
 
 
     public String getBusiPriv() {

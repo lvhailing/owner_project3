@@ -178,7 +178,7 @@ public class RecommendRecordActivity extends BaseActivity {
 //    public void test(){
 //        list = new MouldList<ResultMessageContentBean>();
 //        for(int i=0;i<10;i++){
-//            ResultMessageContentBean b = new ResultMessageContentBean();
+//            Message2B b = new Message2B();
 //            b.setName("haha"+i);
 //            b.setDate("一级"+i);
 //            b.setNum("100"+i);

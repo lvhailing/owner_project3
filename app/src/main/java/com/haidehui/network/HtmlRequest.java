@@ -33,7 +33,7 @@ import com.haidehui.model.RenGouDetails1B;
 import com.haidehui.model.ResultCheckVersionBean;
 import com.haidehui.model.ResultCycleIndexContent1B;
 import com.haidehui.model.ResultLoginOffBean;
-import com.haidehui.model.ResultMessageBean;
+import com.haidehui.model.Message1B;
 import com.haidehui.model.ResultMessageInfoBean;
 import com.haidehui.model.ResultMyBankListBean;
 import com.haidehui.model.ResultRecommendInfoBean;
@@ -677,7 +677,7 @@ public class HtmlRequest extends BaseRequester {
                 try {
                     Gson json = new Gson();
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "获取邀请记录信息:" + data);
+//                    Log.i("hh", "获取邀请记录信息:" + data);
                     ResultRecommendRecordBean b = json.fromJson(data, ResultRecommendRecordBean.class);
                     return b.getData();
 
@@ -1031,7 +1031,7 @@ public class HtmlRequest extends BaseRequester {
                 try {
                     String data = DESUtil.decrypt(result);
                     Gson json = new Gson();
-                    ResultMessageBean b = json.fromJson(data, ResultMessageBean.class);
+                    Message1B b = json.fromJson(data, Message1B.class);
                     return b.getData();
 
                 } catch (Exception e) {
@@ -1079,8 +1079,9 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
+                    Log.i("hh", "公告消息列表数据:" + data);
                     Gson json = new Gson();
-                    ResultMessageBean b = json.fromJson(data, ResultMessageBean.class);
+                    Message1B b = json.fromJson(data, Message1B.class);
                     return b.getData();
 
                 } catch (Exception e) {
@@ -1128,7 +1129,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     data = DESUtil.decrypt(result);
-                    Log.i("hh", "退出登录时调的接口:" + data);
+//                    Log.i("hh", "退出登录时调的接口:" + data);
                     ResultLoginOffBean b = json.fromJson(data, ResultLoginOffBean.class);
                     return b.getData();
                 } catch (Exception e) {
@@ -1196,7 +1197,7 @@ public class HtmlRequest extends BaseRequester {
     }
 
     /**
-     * 首页
+     * 获取首页除轮播图以外的数据
      *
      * @param context  上下文
      * @param listener 监听
@@ -1224,7 +1225,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "首页数据:" + data);
+                    Log.i("hh", "首页数据:" + data);
 
                     Gson gson = new Gson();
                     HomeIndex1B b = gson.fromJson(data, HomeIndex1B.class);
@@ -1244,7 +1245,12 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-    // 首页-- 最热房源列表数据
+    /**
+     * 首页-- 最热房源列表数据
+     * @param context
+     * @param param
+     * @param listener
+     */
     public static void getHotHouseData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_INDEX_HOTLIST;
@@ -1266,7 +1272,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-                    Log.i("hh", "最热房源列表数据:" + result);
+//                    Log.i("hh", "最热房源列表数据:" + result);
 
                     Gson gson = new Gson();
                     HotHouse1B b = gson.fromJson(result, HotHouse1B.class);
@@ -1287,7 +1293,12 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-    // 首页-- 海外项目列表数据
+    /**
+     * 首页-- 海外项目列表数据
+     * @param context
+     * @param param
+     * @param listener
+     */
     public static void getOverseaListData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_PROJECT_LIST;
@@ -1329,7 +1340,12 @@ public class HtmlRequest extends BaseRequester {
         });
     }
 
-    // 房源详情页数据
+    /**
+     * 房源详情页数据
+     * @param context
+     * @param param
+     * @param listener
+     */
     public static void getHouseDetailData(final Context context, HashMap<String, Object> param, OnRequestListener listener) {
         final String data = getResult(param);
         final String url = Urls.URL_HOUSE_DETAIL;
@@ -1351,7 +1367,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-//                    Log.i("hh", "房源详情:" + result);
+                    Log.i("hh", "房源详情:" + result);
 
                     Gson gson = new Gson();
                     HouseDetail1B b = gson.fromJson(result, HouseDetail1B.class);
@@ -1445,7 +1461,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     result = DESUtil.decrypt(result);
-//                    Log.i("hh", "房源列表列表数据:" + result);
+                    Log.i("hh", "房源列表列表数据:" + result);
 
                     Gson gson = new Gson();
                     HouseList1B b = gson.fromJson(result, HouseList1B.class);
@@ -1493,7 +1509,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "发现轮播图:" + data);
+//                    Log.i("hh", "发现轮播图:" + data);
 
                     Gson gson = new Gson();
                     ResultCycleIndexContent1B b = gson.fromJson(data, ResultCycleIndexContent1B.class);
@@ -1542,7 +1558,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "投资指南列表数据:" + data);
+//                    Log.i("hh", "投资指南列表数据:" + data);
 
                     Gson gson = new Gson();
                     InvestmentGuide1B b = gson.fromJson(data, InvestmentGuide1B.class);
@@ -1590,7 +1606,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "投资指南详情数据:" + data);
+//                    Log.i("hh", "投资指南详情数据:" + data);
 
                     Gson gson = new Gson();
                     InvestmentGuideDetail1B b = gson.fromJson(data, InvestmentGuideDetail1B.class);
@@ -1687,7 +1703,7 @@ public class HtmlRequest extends BaseRequester {
                 }
                 try {
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "路演详情数据:" + data);
+//                    Log.i("hh", "路演详情数据:" + data);
 
                     Gson gson = new Gson();
                     RoadShowDetail1B b = gson.fromJson(data, RoadShowDetail1B.class);
@@ -1735,7 +1751,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "我的数据：" + data);
+//                    Log.i("hh", "我的数据：" + data);
                     Gson gson = new Gson();
                     MineData1B b = gson.fromJson(data, MineData1B.class);
                     return b.getData();
@@ -1801,7 +1817,6 @@ public class HtmlRequest extends BaseRequester {
 
     /**
      * 佣金收益列表
-     *
      * @param context
      * @param param
      * @param listener
@@ -1891,7 +1906,6 @@ public class HtmlRequest extends BaseRequester {
 
     /**
      * 提现记录列表
-     *
      * @param context
      * @param param
      * @param listener
@@ -2144,7 +2158,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "事业合伙人认证:" + data);
+//                    Log.i("hh", "事业合伙人认证:" + data);
                     Gson gson = new Gson();
                     PartnerIdentify1B b = gson.fromJson(data, PartnerIdentify1B.class);
                     return b.getData();
@@ -2191,7 +2205,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "提交--事业合伙人认证:" + data);
+//                    Log.i("hh", "提交--事业合伙人认证:" + data);
                     Gson gson = new Gson();
                     SubmitPartnerIdentify1B b = gson.fromJson(data, SubmitPartnerIdentify1B.class);
                     return b.getData();
@@ -2337,7 +2351,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -2382,7 +2395,6 @@ public class HtmlRequest extends BaseRequester {
                     e.printStackTrace();
                     return null;
                 }
-
             }
 
             @Override
@@ -2558,7 +2570,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "客户跟踪列表:" + data);
+//                    Log.i("hh", "客户跟踪列表:" + data);
                     Gson gson = new Gson();
                     Tracking1B b = gson.fromJson(data, Tracking1B.class);
                     return b.getData();
@@ -2605,7 +2617,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "客户跟踪详情:" + data);
+//                    Log.i("hh", "客户跟踪详情:" + data);
 
                     Gson gson = new Gson();
                     TrackingDetails1B b = gson.fromJson(data, TrackingDetails1B.class);
@@ -2743,7 +2755,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-                    Log.i("hh", "用户信息修改: " + data);
+//                    Log.i("hh", "用户信息修改: " + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();
@@ -2927,7 +2939,7 @@ public class HtmlRequest extends BaseRequester {
                         return null;
                     }
                     String data = DESUtil.decrypt(result);
-//                    Log.i("hh", "预约说明会新增客户调的接口：" + data);
+                    Log.i("hh", "预约说明会新增客户调的接口：" + data);
                     Gson gson = new Gson();
                     SubmitCustomer1B b = gson.fromJson(data, SubmitCustomer1B.class);
                     return b.getData();

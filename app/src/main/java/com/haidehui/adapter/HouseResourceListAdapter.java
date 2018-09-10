@@ -52,6 +52,7 @@ public class HouseResourceListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_boutique_house, null);
             holder.iv_boutique_house = (ImageView) convertView.findViewById(R.id.iv_boutique_house);
             holder.tv_house_name = (TextView) convertView.findViewById(R.id.tv_house_name);
+            holder.tv_house_type = (TextView) convertView.findViewById(R.id.tv_house_type);
             holder.tv_house_area = (TextView) convertView.findViewById(R.id.tv_house_area);
             holder.tv_house_price = (TextView) convertView.findViewById(R.id.tv_house_price);
             convertView.setTag(holder);
@@ -72,8 +73,13 @@ public class HouseResourceListAdapter extends BaseAdapter {
         } else {
             holder.tv_house_name.setText("--");
         }
-        if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(area)) {
-            holder.tv_house_area.setText(type + " / " + area);
+        if (!TextUtils.isEmpty(type)) {
+            holder.tv_house_type.setText(type + " / ");
+        } else {
+            holder.tv_house_type.setText("--/");
+        }
+        if (!TextUtils.isEmpty(area)) {
+            holder.tv_house_area.setText(area + "m²");
         } else {
             holder.tv_house_area.setText("--");
         }
@@ -88,6 +94,7 @@ public class HouseResourceListAdapter extends BaseAdapter {
     class Holder {
         ImageView iv_boutique_house;
         TextView tv_house_name;
+        TextView tv_house_type;
         TextView tv_house_area;
         TextView tv_house_price;
     }

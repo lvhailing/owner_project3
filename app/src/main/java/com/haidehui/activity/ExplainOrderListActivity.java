@@ -134,7 +134,6 @@ public class ExplainOrderListActivity extends BaseActivity implements View.OnCli
                 });
                 mDialog.show();
                 return true;
-
             }
         });
 

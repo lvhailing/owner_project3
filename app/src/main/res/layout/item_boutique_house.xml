@@ -14,26 +14,26 @@
         android:id="@+id/rl_house_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
+        android:background="@color/white"
         android:paddingBottom="5dp"
-        android:background="@color/white">
+        android:paddingTop="5dp">
 
         <ImageView
             android:id="@+id/iv_boutique_house"
             android:layout_width="112dp"
             android:layout_height="78dp"
-            android:layout_margin="12dp"
             android:layout_centerVertical="true"
-            android:scaleType="fitXY"
-            android:background="@mipmap/bg_home_list_normal"/>
+            android:layout_margin="12dp"
+            android:background="@mipmap/bg_home_list_normal"
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="14dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="14dp"
-            android:layout_marginBottom="14dp"
-           android:layout_centerVertical="true"
             android:layout_toRightOf="@id/iv_boutique_house"
             android:orientation="vertical">
 
@@ -46,14 +46,29 @@
                 android:text="--"
                 android:textSize="16sp"/>
 
-            <TextView
-                android:id="@+id/tv_house_area"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="--"
-                android:textColor="@color/txt_light_gray"
-                android:textSize="14sp"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_house_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="--"
+                    android:textColor="@color/txt_light_gray"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tv_house_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="--"
+                    android:textColor="@color/txt_light_gray"
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_house_price"

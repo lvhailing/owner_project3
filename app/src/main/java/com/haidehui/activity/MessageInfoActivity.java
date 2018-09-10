@@ -11,8 +11,8 @@ import android.widget.ViewSwitcher;
 
 import com.haidehui.R;
 import com.haidehui.adapter.MessageInfoAdapter;
-import com.haidehui.model.ResultMessageContentBean;
-import com.haidehui.model.ResultMessageItemContentBean;
+import com.haidehui.model.Message2B;
+import com.haidehui.model.Message3B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -30,13 +30,13 @@ import java.util.LinkedHashMap;
 public class MessageInfoActivity extends BaseActivity{
 
     private PullToRefreshListView listview_message_info;
-    private MouldList<ResultMessageItemContentBean> list;
+    private MouldList<Message3B> list;
     private Context context;
     private ViewSwitcher vs_messgae_info;
     private int page = 1;
     private int cachePage_pro = page;
     private MessageInfoAdapter infoAdapter;
-    private ResultMessageContentBean infoBean;
+    private Message2B infoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +54,9 @@ public class MessageInfoActivity extends BaseActivity{
     }
 
     public void test(){
-        list = new MouldList<ResultMessageItemContentBean>();
+        list = new MouldList<Message3B>();
         for(int i=0;i<10;i++){
-            ResultMessageItemContentBean bean = new ResultMessageItemContentBean();
+            Message3B bean = new Message3B();
             bean.setDescription("-----");
             bean.setDescription("-----");
             bean.setDescription("-----");
@@ -138,8 +138,8 @@ public class MessageInfoActivity extends BaseActivity{
 
     public void initView(){
 
-        list = new MouldList<ResultMessageItemContentBean>();
-        infoBean = new ResultMessageContentBean();
+        list = new MouldList<Message3B>();
+        infoBean = new Message2B();
         context = this;
         listview_message_info = (PullToRefreshListView) findViewById(R.id.listview_message_info);
         vs_messgae_info = (ViewSwitcher) findViewById(R.id.vs_messgae_info);
@@ -184,7 +184,7 @@ public class MessageInfoActivity extends BaseActivity{
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        infoBean = (ResultMessageContentBean)params.result;
+                        infoBean = (Message2B)params.result;
 //                        list = infoBean.getList();
 //                        setView();
                         if(infoBean.getList()!=null){

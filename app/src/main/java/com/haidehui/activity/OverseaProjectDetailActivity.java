@@ -56,11 +56,15 @@ import java.util.HashMap;
 public class OverseaProjectDetailActivity extends BaseActivity implements View.OnClickListener {
     private ScrollView scrollView;
 
-    private boolean isShowHouse = false; //刚进来此页面时，项目居室内容默认是不显示的
-    private boolean isShowPlan = false; //刚进来此页面时，项目规划内容默认是不显示的
-    private boolean isShowFacilities = false; //刚进来此页面时，配套设施内容默认是不显示的
-    private boolean isShowLocation = false; //刚进来此页面时，地理位置内容默认是不显示的
-    private boolean isShowProjectMaterial = false; //刚进来此页面时，项目材料内容默认是不显示的
+    /**
+     *  刚进来此页面时，项目居室、项目规划、配套设施、
+     *  地理位置、项目材料等内容默认都不显示
+     */
+    private boolean isShowHouse = false;
+    private boolean isShowPlan = false;
+    private boolean isShowFacilities = false;
+    private boolean isShowLocation = false;
+    private boolean isShowProjectMaterial = false;
 
     private ImageView iv_oversea_detail; // 顶部图片
     private TextView tv_pro_house_name; //  房子名称
@@ -346,7 +350,9 @@ public class OverseaProjectDetailActivity extends BaseActivity implements View.O
             tv_pro_house_price.setText(overseaProjectDetail.getPrice() + "万元起");
         }
         if (!TextUtils.isEmpty(overseaProjectDetail.getArea())) {
-            tv_pro_house_area.setText("面积" + overseaProjectDetail.getArea());
+            tv_pro_house_area.setText("面积" + overseaProjectDetail.getArea()+"㎡");
+        }else {
+            tv_pro_house_area.setText("--");
         }
         if (!TextUtils.isEmpty(overseaProjectDetail.getChineseName())) {
             tv_pro_name.setText(overseaProjectDetail.getChineseName());

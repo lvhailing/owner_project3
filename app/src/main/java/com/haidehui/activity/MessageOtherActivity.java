@@ -12,8 +12,8 @@ import android.widget.ViewSwitcher;
 import com.haidehui.R;
 import com.haidehui.adapter.MessageOtherAdapter;
 import com.haidehui.common.Urls;
-import com.haidehui.model.ResultMessageContentBean;
-import com.haidehui.model.ResultMessageItemContentBean;
+import com.haidehui.model.Message2B;
+import com.haidehui.model.Message3B;
 import com.haidehui.network.BaseParams;
 import com.haidehui.network.BaseRequester;
 import com.haidehui.network.HtmlRequest;
@@ -31,13 +31,13 @@ import java.util.LinkedHashMap;
 public class MessageOtherActivity extends BaseActivity{
 
     private PullToRefreshListView listview_message_other;
-    private MouldList<ResultMessageItemContentBean> list;
+    private MouldList<Message3B> list;
     private Context context;
     private ViewSwitcher vs_messgae_other;
     private int page = 1;
     private int cachePage_pro = page;
     private MessageOtherAdapter otherAdapter;
-    private ResultMessageContentBean infoBean;
+    private Message2B infoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +92,8 @@ public class MessageOtherActivity extends BaseActivity{
 
     public void initView(){
 
-        list = new MouldList<ResultMessageItemContentBean>();
-        infoBean = new ResultMessageContentBean();
+        list = new MouldList<Message3B>();
+        infoBean = new Message2B();
         context = this;
         listview_message_other = (PullToRefreshListView) findViewById(R.id.listview_message_other);
         vs_messgae_other = (ViewSwitcher) findViewById(R.id.vs_messgae_other);
@@ -140,7 +140,7 @@ public class MessageOtherActivity extends BaseActivity{
             public void onRequestFinished(BaseParams params) {
                 if (params != null) {
                     if (params.result != null) {
-                        infoBean = (ResultMessageContentBean)params.result;
+                        infoBean = (Message2B)params.result;
 //                        list = infoBean.getList();
 //                        setView();
                         if(infoBean.getList()!=null){
@@ -208,9 +208,9 @@ public class MessageOtherActivity extends BaseActivity{
 
     public void test(){
 
-//        list = new MouldList<ResultMessageContentBean>();
+//        list = new MouldList<Message2B>();
 //        for(int i=0;i<10;i++){
-//            ResultMessageContentBean b = new ResultMessageContentBean();
+//            Message2B b = new Message2B();
 //            b.setName("置业顾问认证"+i);
 //            b.setDate("2012-5-"+i);
 //            b.setNum("+20"+i+".00");

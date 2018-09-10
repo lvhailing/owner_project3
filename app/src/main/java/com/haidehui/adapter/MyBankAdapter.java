@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.haidehui.R;
-import com.haidehui.model.ResultMessageContentBean;
 import com.haidehui.model.ResultMyBankListContentItemBean;
 import com.haidehui.network.types.MouldList;
 import com.haidehui.uitls.StringUtil;

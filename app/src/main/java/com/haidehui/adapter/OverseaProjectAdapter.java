@@ -74,7 +74,7 @@ public class OverseaProjectAdapter extends BaseAdapter {
             holder.tv_oversea_price.setText("--");
         }
         if (!TextUtils.isEmpty(list.get(position).getArea())) {
-            holder.tv_oversea_area.setText("面积" + list.get(position).getArea());
+            holder.tv_oversea_area.setText("面积" + list.get(position).getArea()+"㎡");
         } else {
             holder.tv_oversea_area.setText("--");
         }
