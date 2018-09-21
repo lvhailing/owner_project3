@@ -1,5 +1,6 @@
 package com.haidehui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -38,6 +39,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
@@ -67,17 +70,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private File destDir = null;
     private File destFile = null;
+    private Intent updateIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseSetContentView(R.layout.activity_main);
 
+//        initRequestPermissions();
         initTopTitle();
         initView();
         initVP();
         setSelect(0);
         initData();
+    }
+
+    private void initRequestPermissions() {
+//        String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//
+//        if (!EasyPermissions.hasPermissions(mContext, perms)) {
+//            EasyPermissions.requestPermissions(mContext, "请允许权限进行下载安装", 110, perms);
+//        }
     }
 
     @Override
@@ -233,10 +246,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         iv_mine.setImageResource(R.mipmap.bg_mine_normal);
     }
 
-    //检查版本更新
+    /**
+     * 检查版本更新
+     */
     private void requestData() {
         LinkedHashMap<String, Object> param = new LinkedHashMap<>();
         param.put("type", "android");
+
         HtmlRequest.checkVersion(this, param, new BaseRequester.OnRequestListener() {
             @Override
             public void onRequestFinished(BaseParams params) {
@@ -244,21 +260,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     final ResultCheckVersionContentBean b = (ResultCheckVersionContentBean) params.result;
                     if (!TextUtils.isEmpty(b.getVersion())) {
                         if (!b.getVersion().equals(SystemInfo.sVersionName)) {
-                            CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this, new CheckVersionDialog.OnCheckVersion() {
-                                @Override
-                                public void onConfirm() {
-                                    Intent updateIntent = new Intent(MainActivity.this, AppUpgradeService.class);
-                                    updateIntent.putExtra("titleId", R.string.app_chinese_name);
-                                    updateIntent.putExtra("downloadUrl", b.getUrl());
-                                    MainActivity.this.startService(updateIntent);
-                                }
+                            String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-                                @Override
-                                public void onCancel() {
-                                }
-                            }, "发现新版本,是否更新", b.getForcedUpgrade());
-                            dialog.setCancelable(false);
-                            dialog.show();
+                            if (!EasyPermissions.hasPermissions(mContext, perms)) {
+                                EasyPermissions.requestPermissions(mContext, "请允许权限进行下载安装", 110, perms);
+                            }
+
+                            showDialog(b);
                         } else {
                             if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                                 if (destDir == null) {
@@ -266,13 +274,59 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 }
                             }
                         }
-
                     }
-
                 }
             }
         });
     }
+
+    /**
+     *  提示更新的弹框
+     * @param b
+     */
+    public void showDialog(final ResultCheckVersionContentBean b){
+        CheckVersionDialog dialog = new CheckVersionDialog(MainActivity.this, new CheckVersionDialog.OnCheckVersion() {
+            @Override
+            public void onConfirm() {
+                updateIntent = new Intent(MainActivity.this, AppUpgradeService.class);
+                updateIntent.putExtra("titleId", R.string.app_chinese_name);
+                updateIntent.putExtra("downloadUrl", b.getUrl());
+
+//                String[] perms = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//
+//                if (!EasyPermissions.hasPermissions(mContext, perms)) {
+//                    EasyPermissions.requestPermissions(mContext, "请允许权限进行下载安装", 110, perms);
+//
+//                } else {
+//                }
+                    MainActivity.this.startService(updateIntent);
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        }, "发现新版本,是否更新", b.getForcedUpgrade());
+
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+//    private static int REQUESTPERMISSION = 110 ;
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if(requestCode == REQUESTPERMISSION){
+//            if(permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    if(updateIntent!=null)
+//                        startService(updateIntent);
+//                }else{
+//                    //提示没有权限，安装不了咯
+//                    Toast.makeText(this, "抱歉，您没有权限安装此应用", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
     private boolean isAppInstalled(String uri) {
         PackageManager pm = getPackageManager();

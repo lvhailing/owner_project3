@@ -1,6 +1,7 @@
 package com.haidehui.uitls;
 
-import com.mob.tools.network.SSLSocketFactoryEx;
+
+import com.haidehui.network.http.SSLSocketFactoryEx;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -53,9 +54,8 @@ public class DownloadUtils {
 		public void downloaded();
 	}
 
-	public static long download(String urlStr, File dest, boolean append,
-								DownloadListener downloadListener) throws Exception {
-		
+	public static long download(String urlStr, File dest, boolean append, DownloadListener downloadListener) throws Exception {
+
 		int downloadProgress = 0;
 		long remoteSize = 0;
 		int currentSize = 0;
@@ -91,8 +91,7 @@ public class DownloadUtils {
 		HttpClient httpClient;
 
 		try {
-			KeyStore trustStore = KeyStore.getInstance(KeyStore
-					.getDefaultType());
+			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 			trustStore.load(null, null);
 
 			SSLSocketFactory sf = new SSLSocketFactoryEx(trustStore);
@@ -107,19 +106,11 @@ public class DownloadUtils {
 					.getSocketFactory(), 80));
 			registry.register(new Scheme("https", sf, 443));
 
-			ClientConnectionManager ccm = new ThreadSafeClientConnManager(
-					params, registry);
-
-
+			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
 			httpClient = new DefaultHttpClient(ccm,params);
-
 		} catch (Exception e) {
 			httpClient = new DefaultHttpClient(params);
 		}
-
-
-
-
 
 		InputStream is = null;
 		FileOutputStream os = null;
@@ -128,10 +119,8 @@ public class DownloadUtils {
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				is = response.getEntity().getContent();
 				remoteSize = response.getEntity().getContentLength();
-				org.apache.http.Header contentEncoding = response
-						.getFirstHeader("Content-Encoding");
-				if (contentEncoding != null
-						&& contentEncoding.getValue().equalsIgnoreCase("gzip")) {
+				org.apache.http.Header contentEncoding = response.getFirstHeader("Content-Encoding");
+				if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
 					is = new GZIPInputStream(is);
 				}
 				os = new FileOutputStream(dest, append);
@@ -204,11 +193,9 @@ public class DownloadUtils {
 		HttpConnectionParams.setSoTimeout(params, DATA_TIMEOUT);
 		HttpClient httpClient = new DefaultHttpClient(params);
 
-
 		InputStream is = null;
 		FileOutputStream os = null;
 		try {
-
 			SSLContext sc = SSLContext.getInstance("TLS");
 			sc.init(null, new TrustManager[] { new X509TrustManager() {
 						@Override
